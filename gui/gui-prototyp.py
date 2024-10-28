@@ -424,6 +424,7 @@ class Profil(tk.Frame):
 
         self.configure(bg='white')
 
+
         # Header für die Hauptseite
         header = ttk.Label(self, text="Profil", anchor="center", style="Header.TLabel")
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
