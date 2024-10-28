@@ -270,158 +270,119 @@ class Ubersicht(tk.Frame):
                                 command=lambda: controller.show_frame(Ubersicht))
         all_button.pack(pady=10, anchor='w')
 #Gruppe 1
+        def show_dropdown_grp1():
+            dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg='#D9D9D9', fg='black')
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Admin))
+            dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Stats))
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profil))
+            dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(Einstellungen))
+            dropdown_menu.post(grp1_button.winfo_rootx(), grp1_button.winfo_rooty() + grp1_button.winfo_height())
+
         grp1_button = tk.Button(verzeichniss, text="Gruppe 1", bd=0, bg='#D9D9D9', fg='black',
                                 font=("Inter", 20, 'bold'),
-                                command=lambda: controller.show_frame(Ubersicht))
-        grp1_button = tk.Button(verzeichniss, text="Gruppe 1", bd=0, bg='#D9D9D9', fg='black',
-                                font=("Inter", 20, 'bold'),
-                                command=lambda: show_dropdown())
+                                command=show_dropdown_grp1)
         grp1_button.pack(pady=10, anchor='w')
 
-        def show_dropdown():
+#Gruppe 2
+        def show_dropdown_grp2():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg='#D9D9D9', fg='black')
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Admin))
             dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Stats))
             dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profil))
             dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(Einstellungen))
-            dropdown_menu.place(relx=0.21, rely=0.5, relwidth=0.103, relheight=0.032)
-            dropdown_menu.post(grp1_button.winfo_rootx(), grp1_button.winfo_rooty() + grp1_button.winfo_height())
-#Gruppe 2
+            dropdown_menu.post(grp2_button.winfo_rootx(), grp2_button.winfo_rooty() + grp2_button.winfo_height())
+
         grp2_button = tk.Button(verzeichniss, text="Gruppe 2", bd=0, bg='#D9D9D9', fg='black',
                                 font=("Inter", 20, 'bold'),
-                                command=lambda: controller.show_frame(Ubersicht))
-        grp2_button = tk.Button(verzeichniss, text="Gruppe 2", bd=0, bg='#D9D9D9', fg='black',
-                                font=("Inter", 20, 'bold'),
-                                command=lambda: show_dropdown())
+                                command=show_dropdown_grp2)
         grp2_button.pack(pady=10, anchor='w')
 
-        def show_dropdown():
+# Gruppe 3
+        def show_dropdown_grp3():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg='#D9D9D9', fg='black')
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Admin))
             dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Stats))
             dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profil))
             dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(Einstellungen))
+            dropdown_menu.post(grp3_button.winfo_rootx(), grp3_button.winfo_rooty() + grp3_button.winfo_height())
 
-            dropdown_menu.post(grp2_button.winfo_rootx(), grp2_button.winfo_rooty() + grp2_button.winfo_height())
-#Gruppe 3
         grp3_button = tk.Button(verzeichniss, text="Gruppe 3", bd=0, bg='#D9D9D9', fg='black',
                                 font=("Inter", 20, 'bold'),
-                                command=lambda: controller.show_frame(Ubersicht))
-        grp3_button = tk.Button(verzeichniss, text="Gruppe 3", bd=0, bg='#D9D9D9', fg='black',
-                                font=("Inter", 20, 'bold'),
-                                command=lambda: show_dropdown())
+                                command=show_dropdown_grp3)
         grp3_button.pack(pady=10, anchor='w')
 
-        def show_dropdown():
+#Gruppe 4
+        def show_dropdown_grp4():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg='#D9D9D9', fg='black')
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Admin))
             dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Stats))
             dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profil))
             dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(Einstellungen))
+            dropdown_menu.post(grp4_button.winfo_rootx(), grp4_button.winfo_rooty() + grp4_button.winfo_height())
 
-            dropdown_menu.post(grp3_button.winfo_rootx(), grp3_button.winfo_rooty() + grp3_button.winfo_height())
-#Gruppe 4
         grp4_button = tk.Button(verzeichniss, text="Gruppe 4", bd=0, bg='#D9D9D9', fg='black',
                                 font=("Inter", 20, 'bold'),
-                                command=lambda: controller.show_frame(Ubersicht))
-        grp4_button = tk.Button(verzeichniss, text="Gruppe 4", bd=0, bg='#D9D9D9', fg='black',
-                                font=("Inter", 20, 'bold'),
-                                command=lambda: show_dropdown())
+                                command=show_dropdown_grp4)
         grp4_button.pack(pady=10, anchor='w')
 
-        def show_dropdown():
+# Gruppe 5
+        def show_dropdown_grp5():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg='#D9D9D9', fg='black')
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Admin))
             dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Stats))
             dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profil))
             dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(Einstellungen))
+            dropdown_menu.post(grp5_button.winfo_rootx(), grp5_button.winfo_rooty() + grp5_button.winfo_height())
 
-            dropdown_menu.post(grp4_button.winfo_rootx(), grp4_button.winfo_rooty() + grp4_button.winfo_height())
-#Gruppe 5
         grp5_button = tk.Button(verzeichniss, text="Gruppe 5", bd=0, bg='#D9D9D9', fg='black',
                                 font=("Inter", 20, 'bold'),
-                                command=lambda: controller.show_frame(Ubersicht))
-        grp5_button = tk.Button(verzeichniss, text="Gruppe 5", bd=0, bg='#D9D9D9', fg='black',
-                                font=("Inter", 20, 'bold'),
-                                command=lambda: show_dropdown())
+                                command=show_dropdown_grp5)
         grp5_button.pack(pady=10, anchor='w')
 
-        def show_dropdown():
+# Gruppe 6
+        def show_dropdown_grp6():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg='#D9D9D9', fg='black')
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Admin))
             dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Stats))
             dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profil))
             dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(Einstellungen))
+            dropdown_menu.post(grp6_button.winfo_rootx(), grp6_button.winfo_rooty() + grp6_button.winfo_height())
 
-            dropdown_menu.post(grp5_button.winfo_rootx(), grp5_button.winfo_rooty() + grp5_button.winfo_height())
-#Grupe 6
-        grp6_button = tk.Button(verzeichniss, text="Gruppe 6", bd=0, bg='#D9D9D9', fg='black',
-                                 font=("Inter", 20, 'bold'),
-                                 command=lambda: controller.show_frame(Ubersicht))
         grp6_button = tk.Button(verzeichniss, text="Gruppe 6", bd=0, bg='#D9D9D9', fg='black',
                                 font=("Inter", 20, 'bold'),
-                                command=lambda: show_dropdown())
+                                command=show_dropdown_grp6)
         grp6_button.pack(pady=10, anchor='w')
 
-        def show_dropdown():
+# Gruppe 7
+        def show_dropdown_grp7():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg='#D9D9D9', fg='black')
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Admin))
             dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Stats))
             dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profil))
             dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(Einstellungen))
-
-            dropdown_menu.post(grp6_button.winfo_rootx(), grp6_button.winfo_rooty() + grp6_button.winfo_height())
-#Gruppe 7
-        grp7_button = tk.Button(verzeichniss, text="Gruppe 7", bd=0, bg='#D9D9D9', fg='#D9D9D9',
-                                 font=("Inter", 20, 'bold'),
-                                 command=lambda: controller.show_frame(Ubersicht))
-
-        grp7_button = tk.Button(verzeichniss, text="Gruppe 7", bd=0, bg='#D9D9D9', fg='black',
-                                 font=("Inter", 20, 'bold'),
-                                 command=lambda: controller.show_frame(Ubersicht))
-        grp7_button = tk.Button(verzeichniss, text="Gruppe 7", bd=0, bg='#D9D9D9', fg='black',
-                                font=("Inter", 20, 'bold'),
-                                command=lambda: show_dropdown())  # Button öffnet Dropdown-Menü
-        grp7_button.pack(pady=10, anchor='w')
-
-        # Funktion zur Anzeige des Dropdown-Menüs
-        def show_dropdown():
-            dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg='#D9D9D9', fg='black')
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Admin))
-            dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Stats))
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profil))
-            dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(Einstellungen))
-
-            # Dropdown-Menü unterhalb des Buttons "Gruppe 8" anzeigen
             dropdown_menu.post(grp7_button.winfo_rootx(), grp7_button.winfo_rooty() + grp7_button.winfo_height())
 
-        grp7_button = tk.Button(verzeichniss, text="Gruppe 7", bd=0, bg='#D9D9D9', fg='#D9D9D9',
-                                 font=("Inter", 20, 'bold'),
-                                 command=lambda: controller.show_frame(Ubersicht))
-        #grp8_button.pack(pady=10, anchor='w')
-
-#Gruppe 8
-        grp8_button = tk.Button(verzeichniss, text="Gruppe 8", bd=0, bg='#D9D9D9', fg='black',
+        grp7_button = tk.Button(verzeichniss, text="Gruppe 7", bd=0, bg='#D9D9D9', fg='black',
                                 font=("Inter", 20, 'bold'),
-                                command=lambda: show_dropdown())
-        grp8_button.pack(pady=10, anchor='w')
+                                command=show_dropdown_grp7)
+        grp7_button.pack(pady=10, anchor='w')
 
-        def show_dropdown():
+# Gruppe 8
+        def show_dropdown_grp8():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg='#D9D9D9', fg='black')
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Admin))
             dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Stats))
             dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profil))
             dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(Einstellungen))
-
             dropdown_menu.post(grp8_button.winfo_rootx(), grp8_button.winfo_rooty() + grp8_button.winfo_height())
 
-        login.place(relx=0.95, rely=0.5, anchor="center")
-        profil.place(relx=0.90, rely=0.5, anchor="center")
-        mainpage.place(relx=0.85, rely=0.5, anchor="center")
+        grp8_button = tk.Button(verzeichniss, text="Gruppe 8", bd=0, bg='#D9D9D9', fg='black',
+                                font=("Inter", 20, 'bold'),
+                                command=show_dropdown_grp8)
+        grp8_button.pack(pady=10, anchor='w')
+
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.2, relheight=0.85)
-
-
 class Profil(tk.Frame):
 
     def __init__(self, parent, controller):
@@ -478,8 +439,6 @@ class Profil(tk.Frame):
 
         profilbild.place(relx=0.2, rely=0.15, anchor='nw')
 
-
-
 class Admin(tk.Frame):
 
     def __init__(self, parent, controller):
@@ -527,8 +486,6 @@ class Admin(tk.Frame):
 
         self.admin_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.2, relheight=0.85)
-
-
 
 class Stats(tk.Frame):
 
@@ -674,7 +631,6 @@ class Einstellungen(tk.Frame):
         # Use an instance variable for switch_value
         self.switch_value = True
 
-        # Defining a function to toggle between light and dark theme
         def toggle():
             # Access the instance variable using self
             if self.switch_value:
@@ -702,7 +658,6 @@ class Einstellungen(tk.Frame):
 
                 # Changes the window and frame to light theme
                 self.config(bg="white")  # Change the background of the main window
-
                 self.einstellung_frame.config(bg="white")
                 self.config(bg="#D9D9D9")
                 verzeichniss.config(bg="#D9D9D9")
@@ -746,9 +701,6 @@ class Einstellungen(tk.Frame):
         color_dropdown.set("Farbeschema")  # Default text
         color_dropdown.place(relx=0.21, rely=0.5, relwidth=0.103, relheight=0.032)  # Adjust positioning as needed
         color_dropdown.bind("<<ComboboxSelected>>", change_header_color)
-
-
-
 
         datenbank_label = tk.Label(self.einstellung_frame, text="Datenbank", bg='white', fg='#858383', font=("Inter", 19))
         datenbank_label.place(relx=0.0, rely=0.59)
