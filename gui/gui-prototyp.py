@@ -19,7 +19,7 @@ class GuiTest(tk.Tk):
 
         self.frames = {}
 
-        for F in (LogInWindow, MainPage, MainPageS2, Ubersicht, Profil, Admin, Stats, Einstellungen):
+        for F in (LogInWindow, MainPage, MainPageS2, Ubersicht, Gerateansicht, Profil, Admin, Stats, Einstellungen):
             frame = F(container, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
@@ -263,12 +263,20 @@ class Ubersicht(tk.Frame):
         self.imgmainpage = tk.PhotoImage(
             file="assets/Z.png")
 
+        login.place(relx=0.95, rely=0.5, anchor="center")
+        profil.place(relx=0.90, rely=0.5, anchor="center")
+
         mainpage = tk.Button(header, image=self.imgmainpage, bd=0, bg='#DF4807',
                             command=lambda: controller.show_frame(MainPage))
 
         all_button = tk.Button(verzeichniss, text="Alle anzeigen", bd=0, bg='#D9D9D9', fg='black', font=("Inter", 20, 'bold'),
                                 command=lambda: controller.show_frame(Ubersicht))
+
         all_button.pack(pady=10, anchor='w')
+
+        switch_button = tk.Button(self.ubersicht_frame, text="switch", bg='#081424', fg='white', font=("Inter", 20, 'bold'),
+                                 command=Gerateansicht)
+        switch_button.grid(row=4, column=0, pady=20)
 #Gruppe 1
         def show_dropdown_grp1():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg='#D9D9D9', fg='black')
@@ -278,7 +286,7 @@ class Ubersicht(tk.Frame):
             dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(Einstellungen))
             dropdown_menu.post(grp1_button.winfo_rootx(), grp1_button.winfo_rooty() + grp1_button.winfo_height())
 
-        grp1_button = tk.Button(verzeichniss, text="Gruppe 1", bd=0, bg='#D9D9D9', fg='black',
+        grp1_button = tk.Button(verzeichniss, text="Gruppe 1   ", bd=0, bg='#D9D9D9', fg='black',
                                 font=("Inter", 20, 'bold'),
                                 command=show_dropdown_grp1)
         grp1_button.pack(pady=10, anchor='w')
@@ -292,7 +300,7 @@ class Ubersicht(tk.Frame):
             dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(Einstellungen))
             dropdown_menu.post(grp2_button.winfo_rootx(), grp2_button.winfo_rooty() + grp2_button.winfo_height())
 
-        grp2_button = tk.Button(verzeichniss, text="Gruppe 2", bd=0, bg='#D9D9D9', fg='black',
+        grp2_button = tk.Button(verzeichniss, text="Gruppe 2   ", bd=0, bg='#D9D9D9', fg='black',
                                 font=("Inter", 20, 'bold'),
                                 command=show_dropdown_grp2)
         grp2_button.pack(pady=10, anchor='w')
@@ -306,7 +314,7 @@ class Ubersicht(tk.Frame):
             dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(Einstellungen))
             dropdown_menu.post(grp3_button.winfo_rootx(), grp3_button.winfo_rooty() + grp3_button.winfo_height())
 
-        grp3_button = tk.Button(verzeichniss, text="Gruppe 3", bd=0, bg='#D9D9D9', fg='black',
+        grp3_button = tk.Button(verzeichniss, text="Gruppe 3   ", bd=0, bg='#D9D9D9', fg='black',
                                 font=("Inter", 20, 'bold'),
                                 command=show_dropdown_grp3)
         grp3_button.pack(pady=10, anchor='w')
@@ -320,7 +328,7 @@ class Ubersicht(tk.Frame):
             dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(Einstellungen))
             dropdown_menu.post(grp4_button.winfo_rootx(), grp4_button.winfo_rooty() + grp4_button.winfo_height())
 
-        grp4_button = tk.Button(verzeichniss, text="Gruppe 4", bd=0, bg='#D9D9D9', fg='black',
+        grp4_button = tk.Button(verzeichniss, text="Gruppe 4   ", bd=0, bg='#D9D9D9', fg='black',
                                 font=("Inter", 20, 'bold'),
                                 command=show_dropdown_grp4)
         grp4_button.pack(pady=10, anchor='w')
@@ -334,7 +342,7 @@ class Ubersicht(tk.Frame):
             dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(Einstellungen))
             dropdown_menu.post(grp5_button.winfo_rootx(), grp5_button.winfo_rooty() + grp5_button.winfo_height())
 
-        grp5_button = tk.Button(verzeichniss, text="Gruppe 5", bd=0, bg='#D9D9D9', fg='black',
+        grp5_button = tk.Button(verzeichniss, text="Gruppe 5   ", bd=0, bg='#D9D9D9', fg='black',
                                 font=("Inter", 20, 'bold'),
                                 command=show_dropdown_grp5)
         grp5_button.pack(pady=10, anchor='w')
@@ -348,7 +356,7 @@ class Ubersicht(tk.Frame):
             dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(Einstellungen))
             dropdown_menu.post(grp6_button.winfo_rootx(), grp6_button.winfo_rooty() + grp6_button.winfo_height())
 
-        grp6_button = tk.Button(verzeichniss, text="Gruppe 6", bd=0, bg='#D9D9D9', fg='black',
+        grp6_button = tk.Button(verzeichniss, text="Gruppe 6   ", bd=0, bg='#D9D9D9', fg='black',
                                 font=("Inter", 20, 'bold'),
                                 command=show_dropdown_grp6)
         grp6_button.pack(pady=10, anchor='w')
@@ -362,7 +370,7 @@ class Ubersicht(tk.Frame):
             dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(Einstellungen))
             dropdown_menu.post(grp7_button.winfo_rootx(), grp7_button.winfo_rooty() + grp7_button.winfo_height())
 
-        grp7_button = tk.Button(verzeichniss, text="Gruppe 7", bd=0, bg='#D9D9D9', fg='black',
+        grp7_button = tk.Button(verzeichniss, text="Gruppe 7   ", bd=0, bg='#D9D9D9', fg='black',
                                 font=("Inter", 20, 'bold'),
                                 command=show_dropdown_grp7)
         grp7_button.pack(pady=10, anchor='w')
@@ -376,13 +384,39 @@ class Ubersicht(tk.Frame):
             dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(Einstellungen))
             dropdown_menu.post(grp8_button.winfo_rootx(), grp8_button.winfo_rooty() + grp8_button.winfo_height())
 
-        grp8_button = tk.Button(verzeichniss, text="Gruppe 8", bd=0, bg='#D9D9D9', fg='black',
+        grp8_button = tk.Button(verzeichniss, text="Gruppe 8   ", bd=0, bg='#D9D9D9', fg='black',
                                 font=("Inter", 20, 'bold'),
                                 command=show_dropdown_grp8)
         grp8_button.pack(pady=10, anchor='w')
 
+
+        header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
+        verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
+class Gerateansicht(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.configure(bg='white')
+
+        header = ttk.Label(self, text="Geräteansicht", anchor="center", style="Header.TLabel")
+        verzeichniss = ttk.Label(self, style="Footer.TLabel")
+        self.gerateansicht_frame = tk.Frame(self, bg='white')
+        self.gerateansicht_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
+
+        self.imglogin = tk.PhotoImage(
+            file="assets/X.png")
+        self.imgmainpage = tk.PhotoImage(
+            file="assets/Z.png")
+        self.imgProfileTest = tk.PhotoImage(file="assets/profile.png")
+
+        style = ttk.Style()
+        style.configure("Header.TLabel", foreground='white', background='#DF4807', font=("Inter", 50, 'bold'))
+        style.configure("Footer.TLabel", background='#D9D9D9')
+
+        gerateansicht_frame = tk.Frame(self, bg='white')
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.2, relheight=0.85)
+        gerateansicht_frame.place(relx=0.5, rely=0.5, anchor="center")
+
 class Profil(tk.Frame):
 
     def __init__(self, parent, controller):
@@ -485,7 +519,7 @@ class Admin(tk.Frame):
         einstellungen_button.pack(pady=10, anchor='w')
 
         self.admin_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
-        verzeichniss.place(relx=0, rely=0.15, relwidth=0.2, relheight=0.85)
+        verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
 
 class Stats(tk.Frame):
 
@@ -533,7 +567,7 @@ class Stats(tk.Frame):
         einstellungen_button.pack(pady=10, anchor='w')
 
         self.stats_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
-        verzeichniss.place(relx=0, rely=0.15, relwidth=0.2, relheight=0.85)
+        verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
 
 class Einstellungen(tk.Frame):
 
@@ -590,7 +624,7 @@ class Einstellungen(tk.Frame):
                                  command=lambda: controller.show_frame(Einstellungen))
         einstellungen_button.pack(pady=10, anchor='w')
 
-        verzeichniss.place(relx=0, rely=0.15, relwidth=0.2, relheight=0.85)
+        verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
 
 # Seiteninhalt
 
