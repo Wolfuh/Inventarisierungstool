@@ -734,13 +734,18 @@ class Einstellungen(tk.Frame):
                                    activebackground=Darkmode_Black)
                 # Changes the window and frame to dark theme
                 self.config(bg=Darkmode_Black)  # Change the background of the main window
-                self.einstellung_frame.config(bg=Darkmode_Grey)
-                self.config(bg=Darkmode_Grey)
+                self.einstellung_frame.config(bg=Darkmode_Black)
+                self.config(bg=Darkmode_Black)
                 verzeichniss.config(bg=Darkmode_Grey)
                 user_button.config(bg=Darkmode_Grey, fg="white")
                 admin_button.config(bg=Darkmode_Grey, fg="white")
                 stats_button.config(bg=Darkmode_Grey, fg="white")
                 einstellungen_button.config(bg=Darkmode_Grey, fg="white")
+
+                addSpalten_button.config(bg=Darkmode_Black, fg="white")
+                addTyp_button.config(bg=Darkmode_Black, fg="white")
+                addGerat_button.config(bg=Darkmode_Black, fg="white")
+                addStatus_button.config(bg=Darkmode_Black, fg="white")
 
                 details_label.config(bg=Darkmode_Black, fg="white")
                 darstellung_label.config(bg=Darkmode_Black, fg="white")
@@ -761,6 +766,10 @@ class Einstellungen(tk.Frame):
                 admin_button.config(bg=SRH_Grey, fg="black")
                 stats_button.config(bg=SRH_Grey, fg="black")
                 einstellungen_button.config(bg=SRH_Grey, fg="black")
+                addSpalten_button.config(bg=SRH_Grey, fg="black")
+                addTyp_button.config(bg=SRH_Grey, fg="black")
+                addGerat_button.config(bg=SRH_Grey, fg="black")
+                addStatus_button.config(bg=SRH_Grey, fg="black")
 
                 details_label.config(bg="white", fg="black")
                 darstellung_label.config(bg="white", fg="black")
@@ -785,7 +794,7 @@ class Einstellungen(tk.Frame):
             elif selected_color == "Blau":
                 self.header.configure(background=SRH_Blau)
                 login.config(bg=SRH_Blau)
-                mainpage.config(bg=SRH_Orange)
+                mainpage.config(bg=SRH_Blau)
             elif selected_color == "Lila":
                 self.header.configure(background="#c7afe2")
                 login.config(bg="#c7afe2")
@@ -801,19 +810,19 @@ class Einstellungen(tk.Frame):
         datenbank_label = tk.Label(self.einstellung_frame, text="Datenbank", bg='white', fg='#858383', font=("Inter", 19))
         datenbank_label.place(relx=0.0, rely=0.59)
 
-        addSpalten_button = tk.Button(self.einstellung_frame, text="Spalte   +",  bd=0, bg='white', fg='black', font=("Inter", 16),
+        addSpalten_button = tk.Button(self.einstellung_frame, text="Spalte\t+",  bd=0, bg='white', fg='black', font=("Inter", 16),
                                 command=lambda: print("Spalte hinzugefügt"))
         addSpalten_button.place(relx=0.01, rely=0.64, relheight=0.032)
 
-        addStatus_button = tk.Button(self.einstellung_frame, text="Status   +",  bd=0, bg='white', fg='black', font=("Inter", 16),
+        addStatus_button = tk.Button(self.einstellung_frame, text="Status\t+",  bd=0, bg='white', fg='black', font=("Inter", 16),
                                 command=lambda: print("Status hinzugefügt"))
         addStatus_button.place(relx=0.01, rely=0.69, relheight=0.032)
 
-        addTyp_button = tk.Button(self.einstellung_frame, text="Typ       +",  bd=0, bg='white', fg='black', font=("Inter", 16),
+        addTyp_button = tk.Button(self.einstellung_frame, text="Typ\t+",  bd=0, bg='white', fg='black', font=("Inter", 16),
                                 command=lambda: print("Typ hinzugefügt"))
         addTyp_button.place(relx=0.01, rely=0.74, relheight=0.032)
 
-        addGerat_button = tk.Button(self.einstellung_frame, text="Gerät    +",  bd=0, bg='white', fg='black', font=("Inter", 16),
+        addGerat_button = tk.Button(self.einstellung_frame, text="Gerät\t+",  bd=0, bg='white', fg='black', font=("Inter", 16),
                                 command=lambda: controller.show_frame(Gerateansicht))
         addGerat_button.place(relx=0.01, rely=0.79, relheight=0.032)
 
