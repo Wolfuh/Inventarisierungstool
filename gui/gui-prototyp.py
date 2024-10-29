@@ -398,25 +398,50 @@ class Gerateansicht(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.configure(bg='white')
 
+        # Konfiguration der Grid-Struktur für die gesamte Seite
+        self.columnconfigure(0, weight=1)
+        self.columnconfigure(1, weight=1)
+        self.columnconfigure(2, weight=1)
+        self.rowconfigure(0, weight=1)
+
+        # Header und Verzeichnis-Label erstellen
         header = ttk.Label(self, text="Geräteansicht", anchor="center", style="Header.TLabel")
         verzeichniss = ttk.Label(self, style="Footer.TLabel")
+
+        # Frame für Hauptinhalt der Geräteansicht erstellen
         self.gerateansicht_frame = tk.Frame(self, bg='white')
         self.gerateansicht_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
 
-        self.imglogin = tk.PhotoImage(
-            file="assets/X.png")
-        self.imgmainpage = tk.PhotoImage(
-            file="assets/Z.png")
-        self.imgProfileTest = tk.PhotoImage(file="assets/profile.png")
+        # Bilder laden
+        self.imglogin = tk.PhotoImage(file="assets/X.png")
+        self.imgmainpage = tk.PhotoImage(file="assets/greyback.png")
+        self.imgprofil = load_image("assets/Y.png")
 
+        # Stil für Header und Footer anpassen
         style = ttk.Style()
         style.configure("Header.TLabel", foreground='white', background='#DF4807', font=("Inter", 50, 'bold'))
         style.configure("Footer.TLabel", background='#D9D9D9')
 
-        gerateansicht_frame = tk.Frame(self, bg='white')
+        # Buttons hinzufügen
+        login = tk.Button(header, image=self.imglogin, bd=0, bg='#DF4807',
+                          command=lambda: controller.show_frame(LogInWindow))
+        profil = tk.Button(header, image=self.imgprofil, bd=0, bg='#DF4807',
+                           command=lambda: controller.show_frame(Profil))
+
+        # Mainpage-Button innerhalb von gerateansicht_frame, an der gleichen Position wie das profilbild in Profil
+        mainpage = tk.Button(self, image=self.imgmainpage, bd=0, bg='white',
+                             command=lambda: controller.show_frame(Ubersicht))
+        #Seiteninhalt
+
+
+
+        # Positionierung
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
-        gerateansicht_frame.place(relx=0.5, rely=0.5, anchor="center")
+        login.place(relx=0.95, rely=0.5, anchor="center")
+        profil.place(relx=0.90, rely=0.5, anchor="center")
+        mainpage.place(relx=0.16, rely=0.16, anchor='nw')  # Anpassen der Position des mainpage-Buttons
+
 
 class Profil(tk.Frame):
 
@@ -740,6 +765,24 @@ class Einstellungen(tk.Frame):
 
         datenbank_label = tk.Label(self.einstellung_frame, text="Datenbank", bg='white', fg='#858383', font=("Inter", 19))
         datenbank_label.place(relx=0.0, rely=0.59)
+
+        addSpalten_button = tk.Button(self.einstellung_frame, text="Spalte   +",  bd=0, bg='white', fg='black', font=("Inter", 16),
+                                command=lambda: print("Spalte hinzugefügt"))
+        addSpalten_button.place(relx=0.01, rely=0.64, relheight=0.032)
+
+        addStatus_button = tk.Button(self.einstellung_frame, text="Status   +",  bd=0, bg='white', fg='black', font=("Inter", 16),
+                                command=lambda: print("Status hinzugefügt"))
+        addStatus_button.place(relx=0.01, rely=0.69, relheight=0.032)
+
+        addTyp_button = tk.Button(self.einstellung_frame, text="Typ       +",  bd=0, bg='white', fg='black', font=("Inter", 16),
+                                command=lambda: print("Typ hinzugefügt"))
+        addTyp_button.place(relx=0.01, rely=0.74, relheight=0.032)
+
+        addGerat_button = tk.Button(self.einstellung_frame, text="Gerät    +",  bd=0, bg='white', fg='black', font=("Inter", 16),
+                                command=lambda: controller.show_frame(Gerateansicht))
+        addGerat_button.place(relx=0.01, rely=0.79, relheight=0.032)
+
+
         self.einstellung_frame.place(relx=0.15, rely=0.15, relwidth=1, relheight=0.85)
         self.header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
 
