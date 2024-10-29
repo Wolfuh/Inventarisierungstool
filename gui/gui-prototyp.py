@@ -400,6 +400,7 @@ class Ubersicht(tk.Frame):
         grp8_button.pack(pady=10, anchor='w')
 
 #Seiteninhalt
+        #Filter
 
         #Tabelle
         lst = [(1, 'IT-18', 'hfsfdfs', 'PC', 'Aktiv', 'frei'),
@@ -766,10 +767,10 @@ class Einstellungen(tk.Frame):
                 admin_button.config(bg=SRH_Grey, fg="black")
                 stats_button.config(bg=SRH_Grey, fg="black")
                 einstellungen_button.config(bg=SRH_Grey, fg="black")
-                addSpalten_button.config(bg=SRH_Grey, fg="black")
-                addTyp_button.config(bg=SRH_Grey, fg="black")
-                addGerat_button.config(bg=SRH_Grey, fg="black")
-                addStatus_button.config(bg=SRH_Grey, fg="black")
+                addSpalten_button.config(bg="white", fg="black")
+                addTyp_button.config(bg="white", fg="black")
+                addGerat_button.config(bg="white", fg="black")
+                addStatus_button.config(bg="white", fg="black")
 
                 details_label.config(bg="white", fg="black")
                 darstellung_label.config(bg="white", fg="black")
