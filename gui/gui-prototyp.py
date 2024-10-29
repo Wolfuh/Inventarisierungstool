@@ -3,6 +3,15 @@ from tkinter import ttk, messagebox
 import os
 from tkinter import *
 
+# Farben der SRH (Corporate Design)
+SRH_Orange = "#df4807"
+SRH_Grey = "#d9d9d9"
+SRH_Blau = "#10749c"
+
+# Darkmode
+Darkmode_Black = "#121212"
+Darkmode_Grey = "#2d2d2d"
+
 class GuiTest(tk.Tk):
 
     def __init__(self, *args, **kwargs):
@@ -50,8 +59,8 @@ class LogInWindow(tk.Frame):
         bottom = ttk.Label(self, style="Footer.TLabel")
 
         style = ttk.Style()
-        style.configure("Header.TLabel", foreground='white', background='#DF4807', font=("Inter", 50, 'bold'))
-        style.configure("Footer.TLabel", background='#D9D9D9')
+        style.configure("Header.TLabel", foreground='white', background=SRH_Orange, font=("Inter", 50, 'bold'))
+        style.configure("Footer.TLabel", background=SRH_Grey)
 
         def login():
             username = "1"
@@ -110,9 +119,9 @@ class MainPage(tk.Frame):
         self.imgbildgr8 = tk.PhotoImage(file="assets/Gruppe8.png")
         self.imgseitevor = tk.PhotoImage(file="assets/Seitevor.png")
 
-        login = tk.Button(header, image=self.imglogin, bd=0, bg='#DF4807',
+        login = tk.Button(header, image=self.imglogin, bd=0, bg=SRH_Orange,
                             command=lambda: controller.show_frame(LogInWindow))
-        profil = tk.Button(header, image=self.imgprofil, bd=0, bg='#DF4807',
+        profil = tk.Button(header, image=self.imgprofil, bd=0, bg=SRH_Orange,
                             command=lambda: controller.show_frame(Profil))
         bildgr1 = tk.Button(self, image=self.imgbildgr1, bd=0, bg='white',
                                command=lambda: controller.show_frame(Ubersicht))
@@ -136,8 +145,8 @@ class MainPage(tk.Frame):
                         command=lambda: controller.show_frame(MainPageS2))
 
         style = ttk.Style()
-        style.configure("Header.TLabel", foreground='white', background='#DF4807', font=("Inter", 55, 'bold'))
-        style.configure("Footer.TLabel", background='#D9D9D9')
+        style.configure("Header.TLabel", foreground='white', background=SRH_Orange, font=("Inter", 55, 'bold'))
+        style.configure("Footer.TLabel", background=SRH_Grey)
 
         login.place(relx=0.95, rely=0.5, anchor="center")
         profil.place(relx=0.90, rely=0.5, anchor="center")
@@ -185,9 +194,9 @@ class MainPageS2(tk.Frame):
         #self.imgbildgr8 = tk.PhotoImage(file="assets/Gruppe8.png")
         self.imgseitevor = tk.PhotoImage(file="assets/Seitevor.png")
         self.imgseiteback = tk.PhotoImage(file="assets/Seiteback.png")
-        login = tk.Button(header, image=self.imglogin, bd=0, bg='#DF4807',
+        login = tk.Button(header, image=self.imglogin, bd=0, bg=SRH_Orange,
                             command=lambda: controller.show_frame(LogInWindow))
-        profil = tk.Button(header, image=self.imgprofil, bd=0, bg='#DF4807',
+        profil = tk.Button(header, image=self.imgprofil, bd=0, bg=SRH_Orange,
                             command=lambda: controller.show_frame(Profil))
         bildgr1 = tk.Button(self, image=self.imgbildgr1, bd=0, bg='white',
                                command=lambda: controller.show_frame(Ubersicht))
@@ -213,8 +222,8 @@ class MainPageS2(tk.Frame):
                         command=lambda: controller.show_frame(MainPage))
 
         style = ttk.Style()
-        style.configure("Header.TLabel", foreground='white', background='#DF4807', font=("Inter", 55, 'bold'))
-        style.configure("Footer.TLabel", background='#D9D9D9')
+        style.configure("Header.TLabel", foreground='white', background=SRH_Orange, font=("Inter", 55, 'bold'))
+        style.configure("Footer.TLabel", background=SRH_Grey)
 
         login.place(relx=0.95, rely=0.5, anchor="center")
         profil.place(relx=0.90, rely=0.5, anchor="center")
@@ -241,10 +250,10 @@ class Ubersicht(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.configure(bg='white')
         style = ttk.Style()
-        style.configure("Header.TLabel", foreground='white', background='#DF4807', font=("Inter", 55, 'bold'))
-        style.configure("Footer.TLabel", background='#D9D9D9')
+        style.configure("Header.TLabel", foreground='white', background=SRH_Orange, font=("Inter", 55, 'bold'))
+        style.configure("Footer.TLabel", background=SRH_Grey)
         header = ttk.Label(self, text="Geräteübersicht", anchor="center", style="Header.TLabel")
-        verzeichniss = tk.Frame(self, bg='#D9D9D9')
+        verzeichniss = tk.Frame(self, bg=SRH_Grey)
         self.ubersicht_frame = tk.Frame(self, bg='white')
         self.ubersicht_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
 
@@ -256,30 +265,30 @@ class Ubersicht(tk.Frame):
         self.imglogin = load_image("assets/X.png")
         self.imgprofil = load_image("assets/Y.png")
 
-        login = tk.Button(header, image=self.imglogin, bd=0, bg='#DF4807',
+        login = tk.Button(header, image=self.imglogin, bd=0, bg=SRH_Orange,
                             command=lambda: controller.show_frame(LogInWindow))
-        profil = tk.Button(header, image=self.imgprofil, bd=0, bg='#DF4807',
+        profil = tk.Button(header, image=self.imgprofil, bd=0, bg=SRH_Orange,
                             command=lambda: controller.show_frame(Profil))
         self.imgmainpage = tk.PhotoImage(
             file="assets/Z.png")
 
-        mainpage = tk.Button(header, image=self.imgmainpage, bd=0, bg='#DF4807',
+        mainpage = tk.Button(header, image=self.imgmainpage, bd=0, bg=SRH_Orange,
                             command=lambda: controller.show_frame(MainPage))
 
-        all_button = tk.Button(verzeichniss, text="Alle anzeigen", bd=0, bg='#D9D9D9', fg='black', font=("Inter", 20, 'bold'),
+        all_button = tk.Button(verzeichniss, text="Alle anzeigen", bd=0, bg=SRH_Grey, fg='black', font=("Inter", 20, 'bold'),
                                 command=lambda: controller.show_frame(Ubersicht))
         all_button.pack(pady=10, anchor='w')
 #Gruppe 1
-        grp1_button = tk.Button(verzeichniss, text="Gruppe 1", bd=0, bg='#D9D9D9', fg='black',
+        grp1_button = tk.Button(verzeichniss, text="Gruppe 1", bd=0, bg=SRH_Grey, fg='black',
                                 font=("Inter", 20, 'bold'),
                                 command=lambda: controller.show_frame(Ubersicht))
-        grp1_button = tk.Button(verzeichniss, text="Gruppe 1", bd=0, bg='#D9D9D9', fg='black',
+        grp1_button = tk.Button(verzeichniss, text="Gruppe 1", bd=0, bg=SRH_Grey, fg='black',
                                 font=("Inter", 20, 'bold'),
                                 command=lambda: show_dropdown())
         grp1_button.pack(pady=10, anchor='w')
 
         def show_dropdown():
-            dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg='#D9D9D9', fg='black')
+            dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=SRH_Grey, fg='black')
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Admin))
             dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Stats))
             dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profil))
@@ -287,16 +296,16 @@ class Ubersicht(tk.Frame):
             dropdown_menu.place(relx=0.21, rely=0.5, relwidth=0.103, relheight=0.032)
             dropdown_menu.post(grp1_button.winfo_rootx(), grp1_button.winfo_rooty() + grp1_button.winfo_height())
 #Gruppe 2
-        grp2_button = tk.Button(verzeichniss, text="Gruppe 2", bd=0, bg='#D9D9D9', fg='black',
+        grp2_button = tk.Button(verzeichniss, text="Gruppe 2", bd=0, bg=SRH_Grey, fg='black',
                                 font=("Inter", 20, 'bold'),
                                 command=lambda: controller.show_frame(Ubersicht))
-        grp2_button = tk.Button(verzeichniss, text="Gruppe 2", bd=0, bg='#D9D9D9', fg='black',
+        grp2_button = tk.Button(verzeichniss, text="Gruppe 2", bd=0, bg=SRH_Grey, fg='black',
                                 font=("Inter", 20, 'bold'),
                                 command=lambda: show_dropdown())
         grp2_button.pack(pady=10, anchor='w')
 
         def show_dropdown():
-            dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg='#D9D9D9', fg='black')
+            dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=SRH_Grey, fg='black')
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Admin))
             dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Stats))
             dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profil))
@@ -304,16 +313,16 @@ class Ubersicht(tk.Frame):
 
             dropdown_menu.post(grp2_button.winfo_rootx(), grp2_button.winfo_rooty() + grp2_button.winfo_height())
 #Gruppe 3
-        grp3_button = tk.Button(verzeichniss, text="Gruppe 3", bd=0, bg='#D9D9D9', fg='black',
+        grp3_button = tk.Button(verzeichniss, text="Gruppe 3", bd=0, bg=SRH_Grey, fg='black',
                                 font=("Inter", 20, 'bold'),
                                 command=lambda: controller.show_frame(Ubersicht))
-        grp3_button = tk.Button(verzeichniss, text="Gruppe 3", bd=0, bg='#D9D9D9', fg='black',
+        grp3_button = tk.Button(verzeichniss, text="Gruppe 3", bd=0, bg=SRH_Grey, fg='black',
                                 font=("Inter", 20, 'bold'),
                                 command=lambda: show_dropdown())
         grp3_button.pack(pady=10, anchor='w')
 
         def show_dropdown():
-            dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg='#D9D9D9', fg='black')
+            dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=SRH_Grey, fg='black')
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Admin))
             dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Stats))
             dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profil))
@@ -321,16 +330,16 @@ class Ubersicht(tk.Frame):
 
             dropdown_menu.post(grp3_button.winfo_rootx(), grp3_button.winfo_rooty() + grp3_button.winfo_height())
 #Gruppe 4
-        grp4_button = tk.Button(verzeichniss, text="Gruppe 4", bd=0, bg='#D9D9D9', fg='black',
+        grp4_button = tk.Button(verzeichniss, text="Gruppe 4", bd=0, bg=SRH_Grey, fg='black',
                                 font=("Inter", 20, 'bold'),
                                 command=lambda: controller.show_frame(Ubersicht))
-        grp4_button = tk.Button(verzeichniss, text="Gruppe 4", bd=0, bg='#D9D9D9', fg='black',
+        grp4_button = tk.Button(verzeichniss, text="Gruppe 4", bd=0, bg=SRH_Grey, fg='black',
                                 font=("Inter", 20, 'bold'),
                                 command=lambda: show_dropdown())
         grp4_button.pack(pady=10, anchor='w')
 
         def show_dropdown():
-            dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg='#D9D9D9', fg='black')
+            dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=SRH_Grey, fg='black')
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Admin))
             dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Stats))
             dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profil))
@@ -338,16 +347,16 @@ class Ubersicht(tk.Frame):
 
             dropdown_menu.post(grp4_button.winfo_rootx(), grp4_button.winfo_rooty() + grp4_button.winfo_height())
 #Gruppe 5
-        grp5_button = tk.Button(verzeichniss, text="Gruppe 5", bd=0, bg='#D9D9D9', fg='black',
+        grp5_button = tk.Button(verzeichniss, text="Gruppe 5", bd=0, bg=SRH_Grey, fg='black',
                                 font=("Inter", 20, 'bold'),
                                 command=lambda: controller.show_frame(Ubersicht))
-        grp5_button = tk.Button(verzeichniss, text="Gruppe 5", bd=0, bg='#D9D9D9', fg='black',
+        grp5_button = tk.Button(verzeichniss, text="Gruppe 5", bd=0, bg=SRH_Grey, fg='black',
                                 font=("Inter", 20, 'bold'),
                                 command=lambda: show_dropdown())
         grp5_button.pack(pady=10, anchor='w')
 
         def show_dropdown():
-            dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg='#D9D9D9', fg='black')
+            dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=SRH_Grey, fg='black')
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Admin))
             dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Stats))
             dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profil))
@@ -355,16 +364,16 @@ class Ubersicht(tk.Frame):
 
             dropdown_menu.post(grp5_button.winfo_rootx(), grp5_button.winfo_rooty() + grp5_button.winfo_height())
 #Grupe 6
-        grp6_button = tk.Button(verzeichniss, text="Gruppe 6", bd=0, bg='#D9D9D9', fg='black',
+        grp6_button = tk.Button(verzeichniss, text="Gruppe 6", bd=0, bg=SRH_Grey, fg='black',
                                  font=("Inter", 20, 'bold'),
                                  command=lambda: controller.show_frame(Ubersicht))
-        grp6_button = tk.Button(verzeichniss, text="Gruppe 6", bd=0, bg='#D9D9D9', fg='black',
+        grp6_button = tk.Button(verzeichniss, text="Gruppe 6", bd=0, bg=SRH_Grey, fg='black',
                                 font=("Inter", 20, 'bold'),
                                 command=lambda: show_dropdown())
         grp6_button.pack(pady=10, anchor='w')
 
         def show_dropdown():
-            dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg='#D9D9D9', fg='black')
+            dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=SRH_Grey, fg='black')
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Admin))
             dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Stats))
             dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profil))
@@ -372,21 +381,21 @@ class Ubersicht(tk.Frame):
 
             dropdown_menu.post(grp6_button.winfo_rootx(), grp6_button.winfo_rooty() + grp6_button.winfo_height())
 #Gruppe 7
-        grp7_button = tk.Button(verzeichniss, text="Gruppe 7", bd=0, bg='#D9D9D9', fg='#D9D9D9',
+        grp7_button = tk.Button(verzeichniss, text="Gruppe 7", bd=0, bg=SRH_Grey, fg=SRH_Grey,
                                  font=("Inter", 20, 'bold'),
                                  command=lambda: controller.show_frame(Ubersicht))
 
-        grp7_button = tk.Button(verzeichniss, text="Gruppe 7", bd=0, bg='#D9D9D9', fg='black',
+        grp7_button = tk.Button(verzeichniss, text="Gruppe 7", bd=0, bg=SRH_Grey, fg='black',
                                  font=("Inter", 20, 'bold'),
                                  command=lambda: controller.show_frame(Ubersicht))
-        grp7_button = tk.Button(verzeichniss, text="Gruppe 7", bd=0, bg='#D9D9D9', fg='black',
+        grp7_button = tk.Button(verzeichniss, text="Gruppe 7", bd=0, bg=SRH_Grey, fg='black',
                                 font=("Inter", 20, 'bold'),
                                 command=lambda: show_dropdown())  # Button öffnet Dropdown-Menü
         grp7_button.pack(pady=10, anchor='w')
 
         # Funktion zur Anzeige des Dropdown-Menüs
         def show_dropdown():
-            dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg='#D9D9D9', fg='black')
+            dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=SRH_Grey, fg='black')
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Admin))
             dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Stats))
             dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profil))
@@ -395,19 +404,19 @@ class Ubersicht(tk.Frame):
             # Dropdown-Menü unterhalb des Buttons "Gruppe 8" anzeigen
             dropdown_menu.post(grp7_button.winfo_rootx(), grp7_button.winfo_rooty() + grp7_button.winfo_height())
 
-        grp7_button = tk.Button(verzeichniss, text="Gruppe 7", bd=0, bg='#D9D9D9', fg='#D9D9D9',
+        grp7_button = tk.Button(verzeichniss, text="Gruppe 7", bd=0, bg=SRH_Grey, fg=SRH_Grey,
                                  font=("Inter", 20, 'bold'),
                                  command=lambda: controller.show_frame(Ubersicht))
         #grp8_button.pack(pady=10, anchor='w')
 
 #Gruppe 8
-        grp8_button = tk.Button(verzeichniss, text="Gruppe 8", bd=0, bg='#D9D9D9', fg='black',
+        grp8_button = tk.Button(verzeichniss, text="Gruppe 8", bd=0, bg=SRH_Grey, fg='black',
                                 font=("Inter", 20, 'bold'),
                                 command=lambda: show_dropdown())
         grp8_button.pack(pady=10, anchor='w')
 
         def show_dropdown():
-            dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg='#D9D9D9', fg='black')
+            dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=SRH_Grey, fg='black')
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Admin))
             dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Stats))
             dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profil))
@@ -434,7 +443,7 @@ class Profil(tk.Frame):
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
 
 
-        verzeichniss = tk.Frame(self, bg='#D9D9D9')
+        verzeichniss = tk.Frame(self, bg=SRH_Grey)
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.2, relheight=0.85)
         self.profil_frame = tk.Frame(self, bg='white')
         self.profil_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
@@ -446,9 +455,9 @@ class Profil(tk.Frame):
         self.imgProfileTest = tk.PhotoImage(file="assets/profile.png")
 
 
-        login = tk.Button(header, image=self.imglogin, bd=0, bg='#DF4807',
+        login = tk.Button(header, image=self.imglogin, bd=0, bg=SRH_Orange,
                             command=lambda: controller.show_frame(LogInWindow))
-        mainpage = tk.Button(header, image=self.imgmainpage, bd=0, bg='#DF4807',
+        mainpage = tk.Button(header, image=self.imgmainpage, bd=0, bg=SRH_Orange,
                             command=lambda: controller.show_frame(MainPage))
         profilbild = tk.Button(self, image=self.imgProfileTest, bd=0, bg='white',
                                command=lambda: controller.show_frame(MainPage))
@@ -457,21 +466,21 @@ class Profil(tk.Frame):
         mainpage.place(relx=0.90, rely=0.5, anchor="center")
 
 
-        user_button = tk.Button(verzeichniss, text="User", bd=0, bg='#D9D9D9', fg='black', font=("Inter", 20, 'bold'),
+        user_button = tk.Button(verzeichniss, text="User", bd=0, bg=SRH_Grey, fg='black', font=("Inter", 20, 'bold'),
                                 command=lambda: controller.show_frame(Profil))
         user_button.pack(pady=10, anchor='w')
 
-        admin_button = tk.Button(verzeichniss, text="Administration", bd=0, bg='#D9D9D9', fg='black',
+        admin_button = tk.Button(verzeichniss, text="Administration", bd=0, bg=SRH_Grey, fg='black',
                                  font=("Inter", 20, 'bold'),
                                  command=lambda: controller.show_frame(Admin))
         admin_button.pack(pady=10, anchor='w')
 
-        stats_button = tk.Button(verzeichniss, text="Statistiken", bd=0, bg='#D9D9D9', fg='black',
+        stats_button = tk.Button(verzeichniss, text="Statistiken", bd=0, bg=SRH_Grey, fg='black',
                                  font=("Inter", 20, 'bold'),
                                  command=lambda: controller.show_frame(Stats))
         stats_button.pack(pady=10, anchor='w')
 
-        einstellungen_button = tk.Button(verzeichniss, text="Einstellungen", bd=0, bg='#D9D9D9', fg='black',
+        einstellungen_button = tk.Button(verzeichniss, text="Einstellungen", bd=0, bg=SRH_Grey, fg='black',
                                  font=("Inter", 20, 'bold'),
                                  command=lambda: controller.show_frame(Einstellungen))
         einstellungen_button.pack(pady=10, anchor='w')
@@ -490,7 +499,7 @@ class Admin(tk.Frame):
         header = ttk.Label(self, text="Administration", anchor="center", style="Header.TLabel")
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
 
-        verzeichniss = tk.Frame(self, bg='#D9D9D9')
+        verzeichniss = tk.Frame(self, bg=SRH_Grey)
         self.admin_frame = tk.Frame(self, bg='white')
 
         self.imglogin = tk.PhotoImage(
@@ -498,29 +507,29 @@ class Admin(tk.Frame):
         self.imgmainpage = tk.PhotoImage(
             file="assets/Z.png")
 
-        login = tk.Button(header, image=self.imglogin, bd=0, bg='#DF4807',
+        login = tk.Button(header, image=self.imglogin, bd=0, bg=SRH_Orange,
                             command=lambda: controller.show_frame(LogInWindow))
-        mainpage = tk.Button(header, image=self.imgmainpage, bd=0, bg='#DF4807',
+        mainpage = tk.Button(header, image=self.imgmainpage, bd=0, bg=SRH_Orange,
                             command=lambda: controller.show_frame(MainPage))
 
         login.place(relx=0.95, rely=0.5, anchor="center")
         mainpage.place(relx=0.90, rely=0.5, anchor="center")
 
-        user_button = tk.Button(verzeichniss, text="User", bd=0, bg='#D9D9D9', fg='black', font=("Inter", 20, 'bold'),
+        user_button = tk.Button(verzeichniss, text="User", bd=0, bg=SRH_Grey, fg='black', font=("Inter", 20, 'bold'),
                                 command=lambda: controller.show_frame(Profil))
         user_button.pack(pady=10, anchor='w')
 
-        admin_button = tk.Button(verzeichniss, text="Administration", bd=0, bg='#D9D9D9', fg='black',
+        admin_button = tk.Button(verzeichniss, text="Administration", bd=0, bg=SRH_Grey, fg='black',
                                  font=("Inter", 20, 'bold'),
                                  command=lambda: controller.show_frame(Admin))
         admin_button.pack(pady=10, anchor='w')
 
-        stats_button = tk.Button(verzeichniss, text="Statistiken", bd=0, bg='#D9D9D9', fg='black',
+        stats_button = tk.Button(verzeichniss, text="Statistiken", bd=0, bg=SRH_Grey, fg='black',
                                  font=("Inter", 20, 'bold'),
                                  command=lambda: controller.show_frame(Stats))
         stats_button.pack(pady=10, anchor='w')
 
-        einstellungen_button = tk.Button(verzeichniss, text="Einstellungen", bd=0, bg='#D9D9D9', fg='black',
+        einstellungen_button = tk.Button(verzeichniss, text="Einstellungen", bd=0, bg=SRH_Grey, fg='black',
                                  font=("Inter", 20, 'bold'),
                                  command=lambda: controller.show_frame(Einstellungen))
         einstellungen_button.pack(pady=10, anchor='w')
@@ -540,7 +549,7 @@ class Stats(tk.Frame):
         header = ttk.Label(self, text="Statistiken", anchor="center", style="Header.TLabel")
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
 
-        verzeichniss = tk.Frame(self, bg='#D9D9D9')
+        verzeichniss = tk.Frame(self, bg=SRH_Grey)
         self.stats_frame = tk.Frame(self, bg='white')
 
         self.imglogin = tk.PhotoImage(
@@ -548,29 +557,29 @@ class Stats(tk.Frame):
         self.imgmainpage = tk.PhotoImage(
             file="assets/Z.png")
 
-        login = tk.Button(header, image=self.imglogin, bd=0, bg='#DF4807',
+        login = tk.Button(header, image=self.imglogin, bd=0, bg=SRH_Orange,
                             command=lambda: controller.show_frame(LogInWindow))
-        mainpage = tk.Button(header, image=self.imgmainpage, bd=0, bg='#DF4807',
+        mainpage = tk.Button(header, image=self.imgmainpage, bd=0, bg=SRH_Orange,
                             command=lambda: controller.show_frame(MainPage))
 
         login.place(relx=0.95, rely=0.5, anchor="center")
         mainpage.place(relx=0.90, rely=0.5, anchor="center")
 
-        user_button = tk.Button(verzeichniss, text="User", bd=0, bg='#D9D9D9', fg='black', font=("Inter", 20, 'bold'),
+        user_button = tk.Button(verzeichniss, text="User", bd=0, bg=SRH_Grey, fg='black', font=("Inter", 20, 'bold'),
                                 command=lambda: controller.show_frame(Profil))
         user_button.pack(pady=10, anchor='w')
 
-        admin_button = tk.Button(verzeichniss, text="Administration", bd=0, bg='#D9D9D9', fg='black',
+        admin_button = tk.Button(verzeichniss, text="Administration", bd=0, bg=SRH_Grey, fg='black',
                                  font=("Inter", 20, 'bold'),
                                  command=lambda: controller.show_frame(Admin))
         admin_button.pack(pady=10, anchor='w')
 
-        stats_button = tk.Button(verzeichniss, text="Statistiken", bd=0, bg='#D9D9D9', fg='black',
+        stats_button = tk.Button(verzeichniss, text="Statistiken", bd=0, bg=SRH_Grey, fg='black',
                                  font=("Inter", 20, 'bold'),
                                  command=lambda: controller.show_frame(Stats))
         stats_button.pack(pady=10, anchor='w')
 
-        einstellungen_button = tk.Button(verzeichniss, text="Einstellungen", bd=0, bg='#D9D9D9', fg='black',
+        einstellungen_button = tk.Button(verzeichniss, text="Einstellungen", bd=0, bg=SRH_Grey, fg='black',
                                  font=("Inter", 20, 'bold'),
                                  command=lambda: controller.show_frame(Einstellungen))
         einstellungen_button.pack(pady=10, anchor='w')
@@ -593,7 +602,7 @@ class Einstellungen(tk.Frame):
 
         self.header = ttk.Label(self, text="Einstellungen", anchor="center", style="Header.TLabel")
         self.header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
-        verzeichniss = tk.Frame(self, bg='#D9D9D9')
+        verzeichniss = tk.Frame(self, bg=SRH_Grey)
 
         self.einstellung_frame = tk.Frame(self, bg='white')
 
@@ -605,30 +614,30 @@ class Einstellungen(tk.Frame):
         self.imgmainpage = tk.PhotoImage(
             file="assets/Z.png")
 
-        login = tk.Button(self.header, image=self.imglogin, bd=0,bg="#DF4807",
+        login = tk.Button(self.header, image=self.imglogin, bd=0,bg=SRH_Orange,
                             command=lambda: controller.show_frame(LogInWindow))
-        mainpage = tk.Button(self.header, image=self.imgmainpage, bd=0,bg="#DF4807",
+        mainpage = tk.Button(self.header, image=self.imgmainpage, bd=0,bg=SRH_Orange,
                             command=lambda: controller.show_frame(MainPage))
         #login_label = tk.Button(self.header, text="🚪",bd=0, fg='#858383', font=("Inter", 19), command=lambda: controller.show_frame(LogInWindow))
         #login_label.place(relx=0.70, rely=0.5, anchor="center")
         login.place(relx=0.95, rely=0.5, anchor="center")
         mainpage.place(relx=0.90, rely=0.5, anchor="center")
 
-        user_button = tk.Button(verzeichniss, text="User", bd=0, bg='#D9D9D9', fg='black', font=("Inter", 20, 'bold'),
+        user_button = tk.Button(verzeichniss, text="User", bd=0, bg=SRH_Grey, fg='black', font=("Inter", 20, 'bold'),
                                 command=lambda: controller.show_frame(Profil))
         user_button.pack(pady=10, anchor='w')
 
-        admin_button = tk.Button(verzeichniss, text="Administration", bd=0, bg='#D9D9D9', fg='black',
+        admin_button = tk.Button(verzeichniss, text="Administration", bd=0, bg=SRH_Grey, fg='black',
                                  font=("Inter", 20, 'bold'),
                                  command=lambda: controller.show_frame(Admin))
         admin_button.pack(pady=10, anchor='w')
 
-        stats_button = tk.Button(verzeichniss, text="Statistiken", bd=0, bg='#D9D9D9', fg='black',
+        stats_button = tk.Button(verzeichniss, text="Statistiken", bd=0, bg=SRH_Grey, fg='black',
                                  font=("Inter", 20, 'bold'),
                                  command=lambda: controller.show_frame(Stats))
         stats_button.pack(pady=10, anchor='w')
 
-        einstellungen_button = tk.Button(verzeichniss, text="Einstellungen", bd=0, bg='#D9D9D9', fg='black',
+        einstellungen_button = tk.Button(verzeichniss, text="Einstellungen", bd=0, bg=SRH_Grey, fg='black',
                                  font=("Inter", 20, 'bold'),
                                  command=lambda: controller.show_frame(Einstellungen))
         einstellungen_button.pack(pady=10, anchor='w')
@@ -640,7 +649,7 @@ class Einstellungen(tk.Frame):
         details_label = tk.Label(self.einstellung_frame, text="Details", bg='white', fg='#858383', font=("Inter", 19))
         details_label.place(relx=0.0, rely=0.15)
 
-        format_drop = tk.Button(self.einstellung_frame, text="Format exportieren in", bd=0, bg='white', fg='#D9D9D9',
+        format_drop = tk.Button(self.einstellung_frame, text="Format exportieren in", bd=0, bg='white', fg=SRH_Grey,
                                 font=("Inter", 20, 'bold'),
                                 command=lambda: controller.show_frame())
 
@@ -678,21 +687,21 @@ class Einstellungen(tk.Frame):
         def toggle():
             # Access the instance variable using self
             if self.switch_value:
-                self.switch.config(image=self.dark, bg="#121212",
-                                   activebackground="#121212")
+                self.switch.config(image=self.dark, bg=Darkmode_Black,
+                                   activebackground=Darkmode_Black)
                 # Changes the window and frame to dark theme
-                self.config(bg="#121212")  # Change the background of the main window
-                self.einstellung_frame.config(bg="#121212")
-                self.config(bg="#2d2d2d")
-                verzeichniss.config(bg="#2d2d2d")
-                user_button.config(bg="#2d2d2d", fg="white")
-                admin_button.config(bg="#2d2d2d", fg="white")
-                stats_button.config(bg="#2d2d2d", fg="white")
-                einstellungen_button.config(bg="#2d2d2d", fg="white")
+                self.config(bg=Darkmode_Black)  # Change the background of the main window
+                self.einstellung_frame.config(bg=Darkmode_Black)
+                self.config(bg=Darkmode_Grey)
+                verzeichniss.config(bg=Darkmode_Grey)
+                user_button.config(bg=Darkmode_Grey, fg="white")
+                admin_button.config(bg=Darkmode_Grey, fg="white")
+                stats_button.config(bg=Darkmode_Grey, fg="white")
+                einstellungen_button.config(bg=Darkmode_Grey, fg="white")
 
-                details_label.config(bg="#121212", fg="white")
-                darstellung_label.config(bg="#121212", fg="white")
-                datenbank_label.config(bg="#121212", fg="white")
+                details_label.config(bg=Darkmode_Black, fg="white")
+                darstellung_label.config(bg=Darkmode_Black, fg="white")
+                datenbank_label.config(bg=Darkmode_Black, fg="white")
                 # Change the background of the frame
                 self.switch_value = False
 
@@ -704,12 +713,12 @@ class Einstellungen(tk.Frame):
                 self.config(bg="white")  # Change the background of the main window
 
                 self.einstellung_frame.config(bg="white")
-                self.config(bg="#D9D9D9")
-                verzeichniss.config(bg="#D9D9D9")
-                user_button.config(bg="#D9D9D9", fg="black")
-                admin_button.config(bg="#D9D9D9", fg="black")
-                stats_button.config(bg="#D9D9D9", fg="black")
-                einstellungen_button.config(bg="#D9D9D9", fg="black")
+                self.config(bg=SRH_Grey)
+                verzeichniss.config(bg=SRH_Grey)
+                user_button.config(bg=SRH_Grey, fg="black")
+                admin_button.config(bg=SRH_Grey, fg="black")
+                stats_button.config(bg=SRH_Grey, fg="black")
+                einstellungen_button.config(bg=SRH_Grey, fg="black")
 
                 details_label.config(bg="white", fg="black")
                 darstellung_label.config(bg="white", fg="black")
@@ -728,13 +737,13 @@ class Einstellungen(tk.Frame):
         def change_header_color(event):
             selected_color = color_dropdown.get()
             if selected_color == "Orange":
-                self.header.configure(background="#DF4807")
-                login.config(bg="#DF4807")
-                mainpage.config(bg="#DF4807")
+                self.header.configure(background=SRH_Orange)
+                login.config(bg=SRH_Orange)
+                mainpage.config(bg=SRH_Orange)
             elif selected_color == "Blau":
-                self.header.configure(background="#10749c")
-                login.config(bg="#10749c")
-                mainpage.config(bg="#10749c")
+                self.header.configure(background=SRH_Blau)
+                login.config(bg=SRH_Blau)
+                mainpage.config(bg=SRH_Blau)
             elif selected_color == "Lila":
                 self.header.configure(background="#c7afe2")
                 login.config(bg="#c7afe2")
