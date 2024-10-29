@@ -27,6 +27,8 @@ def get_all_data() -> list[tuple[str,str]]: # type: ignore
 all_users = get_all_data()
 print(all_users)
 
+    
+
 while True:
     action = input("Was möchten sie tun?\n"
                     "1: Anmelden\n"
@@ -46,7 +48,7 @@ while True:
             continue
 
         BothIsKnown = any(user.lower() == existing_user.lower() and password == existing_password for (existing_user, existing_password) in all_users)
-        #OneIsKnown = any(user.lower() == existing_user.lower() for (existing_user,_) in all_users)
+        
         if BothIsKnown:
             print("erfolgreich eingeloggt")
             logged_in = True
@@ -55,12 +57,27 @@ while True:
         else:
             print ("benutzername oder passwort ist falsch")
             addUser(user, password)
+
     elif action == '2':
+        while True:
+            user = input("name: ")
+            
+            if user == '' or user == ' ':
+                print("abgebrochen")
+                break
+
+            OneIsKnown = any(user.lower() == existing_user.lower() for (existing_user,_) in all_users)
+            if OneIsKnown:
+                print("Benutzer bereits vergeben")
+                continue
+            password = input("passwort: ")
+            if password == '' or password == ' ':
+                print("abgebrochen")
+                break
+            addUser(user, password)
+            print("benutzer erfogreich hinzugefügt")
+    elif action == '3':
+        all_users = get_all_data()
+        print(all_users)
+    else:
         break
-
-
-
-
-
-    all_users = get_all_data()
-    print(all_users)
