@@ -284,9 +284,7 @@ class Ubersicht(tk.Frame):
 
         all_button.pack(pady=10, anchor='w')
 
-        switch_button = tk.Button(self.ubersicht_frame, text="switch", bg='#081424', fg='white', font=("Inter", 20, 'bold'),
-                                 command=lambda: controller.show_frame(Gerateansicht))
-        switch_button.grid(row=4, column=0, pady=20)
+
 #Gruppe 1
         def show_dropdown_grp1():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=SRH_Grey, fg='black')
@@ -400,7 +398,37 @@ class Ubersicht(tk.Frame):
         grp8_button.pack(pady=10, anchor='w')
 
 #Seiteninhalt
-        #Filter
+        #switch_button = tk.Button(self, text="switch", bg='#081424', fg='white',
+                                  #font=("Inter", 20, 'bold'),
+                                  #command=lambda: controller.show_frame(Gerateansicht))
+        #switch_button.grid(row=4, column=0, pady=20)
+        #Bilder
+        self.imgFilter = load_image("assets/Filter_Button.png")
+        self.imgSuche = load_image("assets/Search.png")
+        self.imgHinzufugen = load_image("assets/Hinzufügen_Button.png")
+        self.imgAktionen = load_image("assets/Aktionen_Button.png")
+
+        #Filterfunktion
+        def show_dropdown_Filter():
+            dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg='white', fg='black')
+            dropdown_menu.add_command(label="→ Status", command=lambda: print("nach Status sortieren"))
+            dropdown_menu.add_command(label="→ ID", command=lambda: print("nach ID sortieren"))
+            dropdown_menu.add_command(label="→ Typ", command=lambda: print("nach Typ sortieren"))
+            dropdown_menu.add_command(label="→ Andere", command=lambda: print("nach anderen sortieren"))
+            dropdown_menu.post(Filter_button.winfo_rootx(), Filter_button.winfo_rooty() + Filter_button.winfo_height())
+
+        Filter_button = tk.Button(self.ubersicht_frame, image=self.imgFilter, bd=0, bg='white', fg='black',
+                                font=("Inter", 20, 'bold'),
+                                command=show_dropdown_Filter)
+        Filter_button.place(relx=0, rely=0.1)
+        #Suche
+        suche_button = tk.Button(self.ubersicht_frame, image=self.imgSuche, bd=0, bg='white', command=lambda: print(f"nach {suche_entry} gesucht"))
+        suche_entry = tk.Entry(self.ubersicht_frame, bg='#D9D9D9', bd=0, font=("Inter", 10))
+
+        suche_button.grid(row=1, column=1, pady=10)
+        suche_entry.grid(row=1, column=0, pady=10)
+
+
 
         #Tabelle
         lst = [(1, 'IT-18', 'hfsfdfs', 'PC', 'Aktiv', 'frei'),
