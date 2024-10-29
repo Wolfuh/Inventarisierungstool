@@ -20,24 +20,21 @@ def addUser(name, passw):
     my_dbc.execute(sql)
     my_db.commit()
 
-def get_all_data() -> list[tuple[str,str]]: # type: ignore
+def get_all_data() -> list[tuple[str, str]]:  # type: ignore
     my_dbc.execute("SELECT * FROM name")
     nutzer = my_dbc.fetchall()
     return nutzer
 all_users = get_all_data()
-print(all_users)
-
-    
 
 while True:
     action = input("Was möchten sie tun?\n"
-                    "1: Anmelden\n"
-                    "2: Benutzer anlegen\n"
-                    "3: datenbank ansehen\n"
-                    "Ihre Auswahl: ")
-    
+                   "1: Anmelden\n"
+                   "2: Benutzer anlegen\n"
+                   "3: datenbank ansehen\n"
+                   "Ihre Auswahl: ")
+
     if action == '1':
-    
+
         user = input("name: ")
         if user == '' or user == ' ':
             print("abgebrochen")
@@ -48,25 +45,22 @@ while True:
             continue
 
         BothIsKnown = any(user.lower() == existing_user.lower() and password == existing_password for (existing_user, existing_password) in all_users)
-        
+
         if BothIsKnown:
             print("erfolgreich eingeloggt")
             logged_in = True
-        #elif OneIsKnown:
-        #    print ("benutzer richtig, aber passwort ist falsch")
         else:
-            print ("benutzername oder passwort ist falsch")
-            addUser(user, password)
+            print("benutzername oder passwort ist falsch")
 
     elif action == '2':
         while True:
             user = input("name: ")
-            
+
             if user == '' or user == ' ':
                 print("abgebrochen")
                 break
 
-            OneIsKnown = any(user.lower() == existing_user.lower() for (existing_user,_) in all_users)
+            OneIsKnown = any(user.lower() == existing_user.lower() for (existing_user, _) in all_users)
             if OneIsKnown:
                 print("Benutzer bereits vergeben")
                 continue
