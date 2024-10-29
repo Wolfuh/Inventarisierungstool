@@ -502,8 +502,22 @@ class Gerateansicht(tk.Frame):
         mainpage = tk.Button(self, image=self.imgmainpage, bd=0, bg='white',
                              command=lambda: controller.show_frame(Ubersicht))
         #Seiteninhalt
+        tree = ttk.Treeview(self.gerateansicht_frame, columns=("c1", "c2", "c3", "c4", "c5", "c6"), show="headings", height=5)
+        scroll = ttk.Scrollbar(self.gerateansicht_frame, orient='vertical', command=tree.yview)
+        scroll.grid(row=0, column=1)
+        tree.configure(yscrollcommand=scroll.set)
 
-
+        tree.column("#1", anchor=CENTER, width=50)
+        tree.heading("#1", text="das")
+        tree.column("#2", anchor=CENTER, width=100)
+        tree.heading("#2", text="ist")
+        tree.column("#3", anchor=CENTER, width=200)
+        tree.heading("#3", text="ein")
+        tree.column("#4", anchor=CENTER, width=230)
+        tree.heading("#4", text="Test")
+        tree.column("#5", anchor=CENTER, width=235)
+        tree.heading("#5", text="hilfe")
+        tree.grid(row=0, column=0)
 
         # Positionierung
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
