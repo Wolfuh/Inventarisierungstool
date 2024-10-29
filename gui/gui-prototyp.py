@@ -8,19 +8,21 @@ SRH_Orange = "#df4807"
 SRH_Grey = "#d9d9d9"
 SRH_Blau = "#10749c"
 
-# Darkmode
+# Darkmode_Farben
 Darkmode_Black = "#121212"
 Darkmode_Grey = "#2d2d2d"
 
 class GuiTest(tk.Tk):
 
     def __init__(self, *args, **kwargs):
+        """Intialisiert das Hauptfenster und erstellt alle Seiten-Frames"""
         super().__init__(*args, **kwargs)
 
         self.title("Prototyp")
         self.resizable(False, False)
         self.geometry("1920x1080")
 
+        # Hauptcontainer für alle Frames
         container = tk.Frame(self)
         container.pack(side="top", fill="both", expand=True)
         container.grid_rowconfigure(0, weight=1)
@@ -28,6 +30,7 @@ class GuiTest(tk.Tk):
 
         self.frames = {}
 
+        # Erstellung und Speicherung der Instanzen aller Seiten
         for F in (LogInWindow, MainPage, MainPageS2, Ubersicht, Gerateansicht, Profil, Admin, Stats, Einstellungen):
             frame = F(container, self)
             self.frames[F] = frame
@@ -39,22 +42,22 @@ class GuiTest(tk.Tk):
         frame = self.frames[cont]
         frame.tkraise()
 
-
 def load_image(image_path):
+    """Lädt ein Bild aus dem Pfad, gibt ein PhotoImage-Objekt zurück oder None bei fehlendem Bild."""
     if os.path.exists(image_path):
         return tk.PhotoImage(file=image_path)
     else:
         print(f"Warnung: Bild '{image_path}' nicht gefunden.")
         return None
 
-
 class LogInWindow(tk.Frame):
-
+    """Errstellung des Login-Fensters mit Benutername- und Passwort-Eingabefeldern.
+        Zeigt die Hauptseite bei erfolgreichem Login an und gibt eine Fehlermeldung bei falschem"""
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.configure(bg='white')
 
-
+        # Konfiguration des Kopf- und Fußbereich
         header = ttk.Label(self, text="Login", anchor="center", style="Header.TLabel")
         bottom = ttk.Label(self, style="Footer.TLabel")
 
@@ -63,6 +66,7 @@ class LogInWindow(tk.Frame):
         style.configure("Footer.TLabel", background=SRH_Grey)
 
         def login():
+            # Überprüfung der Anmeldedaten und zeigt die Hauptseite bei Erfolg an
             username = "1"
             password = "1"
             if username_entry.get() == username and password_entry.get() == password:
@@ -73,6 +77,7 @@ class LogInWindow(tk.Frame):
                 messagebox.showinfo(title="Fehler", message="Passwort oder Benutzername falsch")
                 password_entry.delete(0, 'end')
 
+        # Erstellung der Login-Elemente
         login_frame = tk.Frame(self, bg='white')
         username_label = tk.Label(login_frame, text="Benutzername", bg='white', font=("Inter", 19))
         username_entry = tk.Entry(login_frame, bg='white', font=("Inter", 15))
@@ -80,7 +85,7 @@ class LogInWindow(tk.Frame):
         password_entry = tk.Entry(login_frame, show="*", bg='white', font=("Inter", 15))
         login_button = tk.Button(login_frame, text="Login", bg='#081424', fg='white', font=("Inter", 20, 'bold'),
                                  command=login)
-
+        # Layout der Login-Elemente
         username_label.grid(row=0, column=0, pady=10)
         username_entry.grid(row=1, column=0, pady=10)
         password_label.grid(row=2, column=0, pady=10)
@@ -92,21 +97,25 @@ class LogInWindow(tk.Frame):
         login_frame.place(relx=0.5, rely=0.5, anchor="center")
 
 class MainPage(tk.Frame):
-
+    """Erstellt die Startseite mit Navigations- und Funktionsbuttons sowie Bildgurppen
+       Ermöglicht den Zugriff auf Login, Profil und Übersichtsseiten"""
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.configure(bg='white')
 
+        # Konfiguration des Kopf- und Fußbereich
         header = ttk.Label(self, text="Startseite", anchor="center", style="Header.TLabel")
         bottom = ttk.Label(self, style="Footer.TLabel")
         self.main_frame = tk.Frame(self, bg='white')
         self.main_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.65)
 
+        # Fenster- und Button-Anordnung festlegen
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=1)
         self.columnconfigure(2, weight=1)
         self.rowconfigure(0, weight=1)
 
+        # laden der Bilder für die Buttons und der Gruppen
         self.imglogin = load_image("assets/X.png")
         self.imgprofil = load_image("assets/Y.png")
         self.imgbildgr1 = tk.PhotoImage(file="assets/Gruppe1.png")
@@ -119,6 +128,7 @@ class MainPage(tk.Frame):
         self.imgbildgr8 = tk.PhotoImage(file="assets/Gruppe8.png")
         self.imgseitevor = tk.PhotoImage(file="assets/Seitevor.png")
 
+        # Platzierung der Buttons
         login = tk.Button(header, image=self.imglogin, bd=0, bg=SRH_Orange,
                             command=lambda: controller.show_frame(LogInWindow))
         profil = tk.Button(header, image=self.imgprofil, bd=0, bg=SRH_Orange,
@@ -144,6 +154,8 @@ class MainPage(tk.Frame):
         seitevor = tk.Button(self, image=self.imgseitevor, bd=0, bg='white', fg='#1E1E1E', font=("Inter", 16),
                         command=lambda: controller.show_frame(MainPageS2))
 
+        # Festlegung des Styles für Header- und Footer Labels, Positionierung der Navigationsbuttons im Header, die
+        # Anordnung der Bildgruppen-Buttons in einem Rasterlayout, sowie Platzierungen.
         style = ttk.Style()
         style.configure("Header.TLabel", foreground='white', background='#DF4807', font=("Inter", 55, 'bold'))
         style.configure("Footer.TLabel", background=SRH_Grey)
@@ -167,21 +179,25 @@ class MainPage(tk.Frame):
         bottom.place(relx=0, rely=0.85, relwidth=1, relheight=0.13)
 
 class MainPageS2(tk.Frame):
-
+    """Repräsentiert die zweite Seite der Startseite mit weiteren Gruppen und Navigation.
+       Ermöglicht die Navigation zurück zur Hauptseite oder zu zusätzlichen Detailansichten."""
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.configure(bg='white')
 
+        # Erstellung vom header und Footer und Konfiguration des Hauptanzeigenbereiches
         header = ttk.Label(self, text="Startseite", anchor="center", style="Header.TLabel")
         bottom = ttk.Label(self, style="Footer.TLabel")
         self.main2_frame = tk.Frame(self, bg='white')
         self.main2_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.65)
 
+        # Layout Festlegung der flexiblen Skalierung
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=1)
         self.columnconfigure(2, weight=1)
         self.rowconfigure(0, weight=1)
 
+        # laden der Bilder für Buttons und Gruppen, Buttons für die Navigation (Login, Profil und Bildgruppen)
         self.imglogin = load_image("assets/X.png")
         self.imgprofil = load_image("assets/Y.png")
         self.imgbildgr1 = tk.PhotoImage(file="assets/Gruppe1.png")
@@ -214,6 +230,8 @@ class MainPageS2(tk.Frame):
                                command=lambda: controller.show_frame(Ubersicht))
         #bildgr8 = tk.Button(self, image=self.imgbildgr8, bd=0, bg='white',
                               # command=lambda: controller.show_frame(Ubersicht))
+
+        # Buttons zum Wechseln zwischen den Hauptseiten und "Alle anzeigen" Button für die Übersichtsseite
         all = tk.Button(self, text="Alle anzeigen", bd=0, bg='white', fg=SRH_Blau, font=("Inter", 20),
                            command=lambda: controller.show_frame(Ubersicht))
         seitevor = tk.Button(self, image=self.imgseitevor, bd=0, bg='white', fg='#1E1E1E', font=("Inter", 16),
@@ -221,6 +239,7 @@ class MainPageS2(tk.Frame):
         seiteback = tk.Button(self, image=self.imgseiteback, bd=0, bg='white', fg='#1E1E1E', font=("Inter", 16),
                         command=lambda: controller.show_frame(MainPage))
 
+        # Style Konfiguration für Header und Footer, Platzierung der Buttons, Header und Footer
         style = ttk.Style()
         style.configure("Header.TLabel", foreground='white', background=SRH_Orange, font=("Inter", 55, 'bold'))
         style.configure("Footer.TLabel", background=SRH_Grey)
