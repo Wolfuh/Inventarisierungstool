@@ -422,13 +422,19 @@ class Ubersicht(tk.Frame):
                                 command=show_dropdown_Filter)
         Filter_button.place(relx=0, rely=0.1)
         #Suche
-        suche_button = tk.Button(self.ubersicht_frame, image=self.imgSuche, bd=0, bg='white', command=lambda: print(f"nach {suche_entry} gesucht"))
-        suche_entry = tk.Entry(self.ubersicht_frame, bg='#D9D9D9', bd=0, font=("Inter", 10))
+        suche_button = tk.Button(self.ubersicht_frame, image=self.imgSuche, bd=0, bg=SRH_Grey, command=lambda: print(f"nach {suche_entry} gesucht"))
+        suche_entry = tk.Entry(self.ubersicht_frame, bg='#D9D9D9', bd=0, font=("Inter", 12))
 
-        suche_button.grid(row=1, column=1, pady=10)
-        suche_entry.grid(row=1, column=0, pady=10)
+        suche_button.place(relx=0.1, rely=0.1, relheight=0.04, relwidth=0.02)
+        suche_entry.place(relx=0.12, rely=0.1, relwidth=0.33, relheight=0.04)
 
+        #Hinzufügen
+        Hinzufugen_button = tk.Button(self.ubersicht_frame, image=self.imgHinzufugen, bd=0, bg='white', command=lambda: controller.show_frame(Gerateansicht))
+        Hinzufugen_button.place(relx=0.5, rely=0.1)
 
+        #Aktionen
+        Aktionen_button = tk.Button(self.ubersicht_frame, image=self.imgAktionen, bd=0, bg='white', command=lambda: print("Aktionen werden ausgeführt"))
+        Aktionen_button.place(relx=0.6, rely=0.1)
 
         #Tabelle
         lst = [(1, 'IT-18', 'hfsfdfs', 'PC', 'Aktiv', 'frei'),
