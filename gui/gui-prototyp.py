@@ -255,6 +255,7 @@ class Ubersicht(tk.Frame):
         header = ttk.Label(self, text="Geräteübersicht", anchor="center", style="Header.TLabel")
         verzeichniss = tk.Frame(self, bg=SRH_Grey)
         self.ubersicht_frame = tk.Frame(self, bg='white')
+        self.tabelle_frame = tk.Frame(self, bg='white')
         self.ubersicht_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
 
         self.columnconfigure(0, weight=1)
@@ -398,9 +399,34 @@ class Ubersicht(tk.Frame):
                                 command=show_dropdown_grp8)
         grp8_button.pack(pady=10, anchor='w')
 
+#Seiteninhalt
 
+        #Tabelle
+        lst = [(1, 'IT-18', 'hfsfdfs', 'PC', 'Aktiv', 'frei'),
+               (2, 'IT-98', 'gdsg', 'PC', 'Aktiv', 'frei'),
+               (3, 'IT-08', 'hfsfggwerdfs', 'PC', 'in Reperatur', '/'),
+               (4, 'IT-58', 'fdghrth', 'PC', 'Aktiv', 'frei'),
+               (5, 'IT-38', '324fd', 'PC', 'kaputt', '/'),
+               (6, 'IT-28', 'gfg56', 'PC', 'Aktiv', 'gebucht')
+               ]
+
+        for i in range(len(lst)):
+            for j in range(len(lst[0])):
+                e = tk.Entry(self.tabelle_frame, width=10, fg='black', bd=0, font=('Inter', 14))
+                e.grid(row=i, column=j, padx=3, pady=3, ipady=3, sticky="nsew")
+                e.insert(tk.END, lst[i][j])
+
+        # Konfiguriere die Spalten für gleiche Breite
+        for j in range(len(lst[0])):
+            self.tabelle_frame.grid_columnconfigure(j, weight=1)
+
+        # Setze explizite Mindesthöhe für Zeile 5
+        self.tabelle_frame.grid_rowconfigure(5, minsize=10)  # Falls die Höhe manuell angepasst werden soll
+
+        # Platziere die Elemente
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
+        self.tabelle_frame.place(relx=0.15, rely=0.3, relwidth=0.85, relheight=0.5)  # Frame für Tabelle definieren
 
 class Gerateansicht(tk.Frame):
     def __init__(self, parent, controller):
