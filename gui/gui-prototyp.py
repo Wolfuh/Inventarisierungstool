@@ -6,7 +6,7 @@ from tkinter import *
 class GuiTest(tk.Tk):
 
     def __init__(self, *args, **kwargs):
-        tk.Tk.__init__(self, *args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         self.title("Prototyp")
         self.resizable(False, False)
@@ -275,7 +275,7 @@ class Ubersicht(tk.Frame):
         all_button.pack(pady=10, anchor='w')
 
         switch_button = tk.Button(self.ubersicht_frame, text="switch", bg='#081424', fg='white', font=("Inter", 20, 'bold'),
-                                 command=Gerateansicht)
+                                 command=lambda: controller.show_frame(Gerateansicht))
         switch_button.grid(row=4, column=0, pady=20)
 #Gruppe 1
         def show_dropdown_grp1():
@@ -392,6 +392,7 @@ class Ubersicht(tk.Frame):
 
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
+
 class Gerateansicht(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -414,7 +415,7 @@ class Gerateansicht(tk.Frame):
 
         gerateansicht_frame = tk.Frame(self, bg='white')
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
-        verzeichniss.place(relx=0, rely=0.15, relwidth=0.2, relheight=0.85)
+        verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
         gerateansicht_frame.place(relx=0.5, rely=0.5, anchor="center")
 
 class Profil(tk.Frame):
@@ -431,7 +432,7 @@ class Profil(tk.Frame):
 
 
         verzeichniss = tk.Frame(self, bg='#D9D9D9')
-        verzeichniss.place(relx=0, rely=0.15, relwidth=0.2, relheight=0.85)
+        verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
         self.profil_frame = tk.Frame(self, bg='white')
         self.profil_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
 
@@ -472,7 +473,7 @@ class Profil(tk.Frame):
                                  command=lambda: controller.show_frame(Einstellungen))
         einstellungen_button.pack(pady=10, anchor='w')
 
-        profilbild.place(relx=0.2, rely=0.15, anchor='nw')
+        profilbild.place(relx=0.16, rely=0.16, anchor='nw')
 
 class Admin(tk.Frame):
 
@@ -642,7 +643,7 @@ class Einstellungen(tk.Frame):
         format_drop = tk.Button(self.einstellung_frame, text="Format exportieren in ↴", bd=1, bg='white', fg='black',
                                 font=("Inter", 12),
                                 command=lambda: show_dropdown())  # Button öffnet Dropdown-Menü
-        format_drop.place(relx=0.0, rely=0.20)
+        format_drop.place(relx=0.01, rely=0.20)
 
         # Funktion zur Anzeige des Dropdown-Menüs
         def show_dropdown():
@@ -713,7 +714,7 @@ class Einstellungen(tk.Frame):
                              bd=0, bg="white",
                              activebackground="white",
                              command=toggle)
-        self.switch.place(relx=0.21, rely=0.46)
+        self.switch.place(relx=0.16, rely=0.46)
 
         def change_header_color(event):
             selected_color = color_dropdown.get()
@@ -734,12 +735,12 @@ class Einstellungen(tk.Frame):
         color_options = ["Orange", "Blau", "Lila"]
         color_dropdown = ttk.Combobox(self, values=color_options, state="readonly")
         color_dropdown.set("Farbeschema")  # Default text
-        color_dropdown.place(relx=0.21, rely=0.5, relwidth=0.103, relheight=0.032)  # Adjust positioning as needed
+        color_dropdown.place(relx=0.16, rely=0.5, relwidth=0.103, relheight=0.032)  # Adjust positioning as needed
         color_dropdown.bind("<<ComboboxSelected>>", change_header_color)
 
         datenbank_label = tk.Label(self.einstellung_frame, text="Datenbank", bg='white', fg='#858383', font=("Inter", 19))
         datenbank_label.place(relx=0.0, rely=0.59)
-        self.einstellung_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
+        self.einstellung_frame.place(relx=0.15, rely=0.15, relwidth=1, relheight=0.85)
         self.header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
 
 app = GuiTest()
