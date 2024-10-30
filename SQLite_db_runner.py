@@ -18,3 +18,4 @@ my_dbc.execute("""INSERT INTO roles
                ('user',1,1,0,0,0,0,0,0),
                ('guest',0,0,0,0,0,0,0,0)""")
 my_db.commit()
+#mrbeast
