@@ -109,7 +109,7 @@ class MainPage(tk.Frame):
         self.main_frame = tk.Frame(self, bg='white')
         self.main_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.65)
 
-        # Fenster- und Button-Anordnung festlegen
+        # Layout Festlegung der flexiblen Skalierung der Mainpage
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=1)
         self.columnconfigure(2, weight=1)
@@ -191,7 +191,7 @@ class MainPageS2(tk.Frame):
         self.main2_frame = tk.Frame(self, bg='white')
         self.main2_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.65)
 
-        # Layout Festlegung der flexiblen Skalierung
+        # Layout Festlegung der flexiblen Skalierung der Mainpage2
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=1)
         self.columnconfigure(2, weight=1)
@@ -264,10 +264,13 @@ class MainPageS2(tk.Frame):
         bottom.place(relx=0, rely=0.85, relwidth=1, relheight=0.13)
 
 class Ubersicht(tk.Frame):
-
+    """Repraesentiert die Geraeteuebersichtsseite der Anwendung. Zeigt eine Liste oder Tabelle der verfügbaren
+       Geräte und bietet Optionen für die Navigation zurück zur Hauptseite, zum Login und zu Benutzerprofilen """
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.configure(bg='white')
+
+        # Stilkonfiguration für Header und Footer, Erstellung vom Header und des Überschriftbereiches.
         style = ttk.Style()
         style.configure("Header.TLabel", foreground='white', background=SRH_Orange, font=("Inter", 55, 'bold'))
         style.configure("Footer.TLabel", background=SRH_Grey)
@@ -277,14 +280,17 @@ class Ubersicht(tk.Frame):
         self.tabelle_frame = tk.Frame(self, bg='white')
         self.ubersicht_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
 
+        # Layout Festlegung der flexiblen Skalierung der Übersichtsseite
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=1)
         self.columnconfigure(2, weight=1)
         self.rowconfigure(0, weight=1)
 
+        # Laden der Bilder für die Navigation und Header Buttons
         self.imglogin = load_image("assets/X.png")
         self.imgprofil = load_image("assets/Y.png")
 
+        # Login und Profil Buttons im Header-Bereich, Platzierung der Buttons, Header und Sidebar
         login = tk.Button(header, image=self.imglogin, bd=0, bg=SRH_Orange,
                             command=lambda: controller.show_frame(LogInWindow))
         profil = tk.Button(header, image=self.imgprofil, bd=0, bg=SRH_Orange,
@@ -298,6 +304,7 @@ class Ubersicht(tk.Frame):
         mainpage = tk.Button(header, image=self.imgmainpage, bd=0, bg=SRH_Orange,
                             command=lambda: controller.show_frame(MainPage))
 
+        # "Alle Anzeigen" Button in der Seitenleiste
         all_button = tk.Button(verzeichniss, text="Alle anzeigen", bd=0, bg=SRH_Grey, fg='black', font=("Inter", 20, 'bold'),
                                 command=lambda: controller.show_frame(Ubersicht))
 
@@ -558,7 +565,7 @@ class Profil(tk.Frame):
         header = ttk.Label(self, text="Profil", anchor="center", style="Header.TLabel")
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
 
-
+        # Seitennavigation und laden der Bilder für Buttons
         verzeichniss = tk.Frame(self, bg=SRH_Grey)
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
         self.profil_frame = tk.Frame(self, bg='white')
@@ -570,7 +577,7 @@ class Profil(tk.Frame):
             file="assets/Z.png")
         self.imgProfileTest = tk.PhotoImage(file="assets/profile.png")
 
-
+        # Positionierung der Buttons
         login = tk.Button(header, image=self.imglogin, bd=0, bg=SRH_Orange,
                             command=lambda: controller.show_frame(LogInWindow))
         mainpage = tk.Button(header, image=self.imgmainpage, bd=0, bg=SRH_Orange,
@@ -581,7 +588,7 @@ class Profil(tk.Frame):
         login.place(relx=0.95, rely=0.5, anchor="center")
         mainpage.place(relx=0.90, rely=0.5, anchor="center")
 
-
+        # Seitennavigations-Buttons für Benutzer, Admin, Statistiken und Einstellungen
         user_button = tk.Button(verzeichniss, text="User", bd=0, bg=SRH_Grey, fg='black', font=("Inter", 20, 'bold'),
                                 command=lambda: controller.show_frame(Profil))
         user_button.pack(pady=10, anchor='w')
@@ -607,12 +614,13 @@ class Admin(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-
         self.configure(bg='white')
 
+        # Header-Label für die Profilseite
         header = ttk.Label(self, text="Administration", anchor="center", style="Header.TLabel")
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
 
+        # Seitennavigation und laden der Bilder
         verzeichniss = tk.Frame(self, bg=SRH_Grey)
         self.admin_frame = tk.Frame(self, bg='white')
 
@@ -621,6 +629,8 @@ class Admin(tk.Frame):
         self.imgmainpage = tk.PhotoImage(
             file="assets/Z.png")
 
+        # Positionierung und Seitennavigations-Buttons für Benutzer, Admin, Statistiken und Einstellungen, Login,
+        # Hauptseite und Profilbild
         login = tk.Button(header, image=self.imglogin, bd=0, bg=SRH_Orange,
                             command=lambda: controller.show_frame(LogInWindow))
         mainpage = tk.Button(header, image=self.imgmainpage, bd=0, bg=SRH_Orange,
@@ -658,17 +668,21 @@ class Stats(tk.Frame):
 
         self.configure(bg='white')
 
+        # Header-Label für die Statistikseite
         header = ttk.Label(self, text="Statistiken", anchor="center", style="Header.TLabel")
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
 
+        # Navigationsleiste auf der linken Seite
         verzeichniss = tk.Frame(self, bg=SRH_Grey)
         self.stats_frame = tk.Frame(self, bg='white')
 
+        # Bilder für die Login- und Hauptseite-Buttons laden
         self.imglogin = tk.PhotoImage(
             file="assets/X.png")
         self.imgmainpage = tk.PhotoImage(
             file="assets/Z.png")
 
+        # Header-Navigationsbuttons (Login und Hauptseite), Platzierung der Header-Buttons
         login = tk.Button(header, image=self.imglogin, bd=0, bg=SRH_Orange,
                             command=lambda: controller.show_frame(LogInWindow))
         mainpage = tk.Button(header, image=self.imgmainpage, bd=0, bg=SRH_Orange,
@@ -677,6 +691,7 @@ class Stats(tk.Frame):
         login.place(relx=0.95, rely=0.5, anchor="center")
         mainpage.place(relx=0.90, rely=0.5, anchor="center")
 
+        # Linksseitige Navigationsbutton für verschiedene Ansichten
         user_button = tk.Button(verzeichniss, text="User", bd=0, bg=SRH_Grey, fg='black', font=("Inter", 20, 'bold'),
                                 command=lambda: controller.show_frame(Profil))
         user_button.pack(pady=10, anchor='w')
@@ -696,6 +711,7 @@ class Stats(tk.Frame):
                                  command=lambda: controller.show_frame(Einstellungen))
         einstellungen_button.pack(pady=10, anchor='w')
 
+        # Platzierung des Hauptinhaltsbereichs und der Navigationsleiste
         self.stats_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
 
@@ -707,20 +723,23 @@ class Einstellungen(tk.Frame):
 
         self.configure(bg='white')
 
+        # Layout Festlegung der flexiblen Skalierung der Einstellungen
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=1)
         self.columnconfigure(2, weight=1)
         self.rowconfigure(0, weight=1)
 
+        # Header-Label für die Seite "Einstellungen"
         self.header = ttk.Label(self, text="Einstellungen", anchor="center", style="Header.TLabel")
         self.header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
+
+        # Seitenmenü (Verzeichnis) und Hauptinhaltsbereich (Einstellung)
         verzeichniss = tk.Frame(self, bg=SRH_Grey)
-
         self.einstellung_frame = tk.Frame(self, bg='white')
-
 
         einstellungen_frame = ttk.Label(self, text="Einstellungen", anchor="center", style="Einstellungen.TLabel")
 
+        # Navigationsbuttons im Header (Login und Mainpage)
         self.imglogin = tk.PhotoImage(
             file="assets/X.png")
         self.imgmainpage = tk.PhotoImage(
@@ -732,6 +751,7 @@ class Einstellungen(tk.Frame):
                             command=lambda: controller.show_frame(MainPage))
         #login_label = tk.Button(self.header, text="🚪",bd=0, fg='#858383', font=("Inter", 19), command=lambda: controller.show_frame(LogInWindow))
         #login_label.place(relx=0.70, rely=0.5, anchor="center")
+        # Platzierung der Header-Navigationsbuttons, Linksseitige Navigationsbuttons für andere Ansichten (Profil, Admin, Stats, EinstellungenO
         login.place(relx=0.95, rely=0.5, anchor="center")
         mainpage.place(relx=0.90, rely=0.5, anchor="center")
 
@@ -754,13 +774,16 @@ class Einstellungen(tk.Frame):
                                  command=lambda: controller.show_frame(Einstellungen))
         einstellungen_button.pack(pady=10, anchor='w')
 
+        # Platziung des Verzeichnisses (Navigationsleiste)
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
 
 # Seiteninhalt
 
+        # Label für die Details-Sektion
         details_label = tk.Label(self.einstellung_frame, text="Details", bg='white', fg='#858383', font=("Inter", 19))
         details_label.place(relx=0.0, rely=0.15)
 
+        # Dropdown für Exportformat
         format_drop = tk.Button(self.einstellung_frame, text="Format exportieren in", bd=0, bg='white', fg=SRH_Grey,
                                 font=("Inter", 20, 'bold'),
                                 command=lambda: controller.show_frame())
@@ -773,7 +796,7 @@ class Einstellungen(tk.Frame):
                                 command=lambda: show_dropdown())  # Button öffnet Dropdown-Menü
         format_drop.place(relx=0.01, rely=0.20)
 
-        # Funktion zur Anzeige des Dropdown-Menüs
+        # Funktion zur Anzeige des Dropdown-Menüs für Exportoptionen
         def show_dropdown():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=1, bg='white', fg='black')
             dropdown_menu.add_command(label="→ Excel", command=lambda: print("Excel ausgewählt"))
@@ -783,25 +806,25 @@ class Einstellungen(tk.Frame):
 
             dropdown_menu.post(format_drop.winfo_rootx(), format_drop.winfo_rooty() + format_drop.winfo_height())
 
-
+        # Darstellung Label
         darstellung_label = tk.Label(self.einstellung_frame, text="Darstellung", bg='white', fg='#858383', font=("Inter", 19))
         darstellung_label.place(relx=0.0, rely=0.32)
 
 
-        # Store the images as instance variables to avoid garbage collection
+        # Bildvariablen zur Theme-Umschaltung
         self.light = PhotoImage(file="assets/switchoff.png")
         self.dark = PhotoImage(file="assets/switchon.png")
 
-        # Use an instance variable for switch_value
+        # Theme-Umschaltvariable
         self.switch_value = True
 
         def toggle():
-            # Access the instance variable using self
+            # Greife auf die Instanzvariable mit self zu
             if self.switch_value:
                 self.switch.config(image=self.dark, bg=Darkmode_Black,
                                    activebackground=Darkmode_Black)
-                # Changes the window and frame to dark theme
-                self.config(bg=Darkmode_Black)  # Change the background of the main window
+                # Wechsel zum Darkmode
+                self.config(bg=Darkmode_Black)  # Aendere den Hintergrund des Hauptfensters
                 self.einstellung_frame.config(bg=Darkmode_Black)
                 self.config(bg=Darkmode_Black)
                 verzeichniss.config(bg=Darkmode_Grey)
@@ -822,11 +845,10 @@ class Einstellungen(tk.Frame):
                 self.switch_value = False
 
             else:
+                # Wechsel zum Lightmode
                 self.switch.config(image=self.light, bg="white",
                                    activebackground="white")
-
-                # Changes the window and frame to light theme
-                self.config(bg="white")  # Change the background of the main window
+                self.config(bg="white")  # Aendere den Hintergrund des Hauptfensters
                 self.einstellung_frame.config(bg="white")
                 self.config(bg=SRH_Grey)
                 verzeichniss.config(bg=SRH_Grey)
@@ -843,10 +865,10 @@ class Einstellungen(tk.Frame):
                 darstellung_label.config(bg="white", fg="black")
                 datenbank_label.config(bg="white", fg="black")
 
-                # Change the background of the frame
+                # Aendert den Hintergrund vom Frame
                 self.switch_value = True
 
-        # Creating a button to toggle between light and dark themes
+        # Button zum Umschalten des Themes
         self.switch = Button(self, image=self.light,
                              bd=0, bg="white",
                              activebackground="white",
@@ -854,6 +876,7 @@ class Einstellungen(tk.Frame):
         self.switch.place(relx=0.16, rely=0.46)
 
         def change_header_color(event):
+            # Dropdown zur Auswahl der Header-Farbe
             selected_color = color_dropdown.get()
             if selected_color == "Orange":
                 self.header.configure(background=SRH_Orange)
@@ -868,13 +891,14 @@ class Einstellungen(tk.Frame):
                 login.config(bg="#c7afe2")
                 mainpage.config(bg="#c7afe2")
 
-        # Creating a dropdown menu to select header color
+        # Combobox zur Auswahl der Header-Farbe
         color_options = ["Orange", "Blau", "Lila"]
         color_dropdown = ttk.Combobox(self, values=color_options, state="readonly")
         color_dropdown.set("Farbeschema")  # Default text
         color_dropdown.place(relx=0.16, rely=0.5, relwidth=0.103, relheight=0.032)  # Adjust positioning as needed
         color_dropdown.bind("<<ComboboxSelected>>", change_header_color)
 
+        # Datenbank-Sektion und Buttons zur Verwaltung der Datenbankelemente
         datenbank_label = tk.Label(self.einstellung_frame, text="Datenbank", bg='white', fg='#858383', font=("Inter", 19))
         datenbank_label.place(relx=0.0, rely=0.59)
 
@@ -894,7 +918,7 @@ class Einstellungen(tk.Frame):
                                 command=lambda: controller.show_frame(Gerateansicht))
         addGerat_button.place(relx=0.01, rely=0.79, relheight=0.032)
 
-
+        # Platzierung der Hauptframe-Bereiche
         self.einstellung_frame.place(relx=0.15, rely=0.15, relwidth=1, relheight=0.85)
         self.header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
 
