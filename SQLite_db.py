@@ -40,11 +40,11 @@ while True:
 
     if action == '1':
 
-        user = input("name: ").strip()
+        user = input("name: ").strip()  #leerzeichen werden entfernt
         if user == '':
             print("da muss schon was stehen")
             continue
-        password = input("passwort: ").strip()
+        password = input("passwort: ").strip()  #leerzeichen werden entfernt
         if password == '' or password == ' ':
             print("abgebrochen")
             continue
@@ -77,7 +77,7 @@ while True:
             add_user(user, password)
             print("benutzer erfogreich hinzugefügt")
             break
-        
+
     elif action == '3':
         all_users = get_all_data()
         print(all_users)
