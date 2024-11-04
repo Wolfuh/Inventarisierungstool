@@ -818,53 +818,17 @@ class Einstellungen(tk.Frame):
         # Theme-Umschaltvariable
         self.switch_value = True
 
-        def toggle():
-            # Greife auf die Instanzvariable mit self zu
+        def toggle(self):
+            """Schaltet zwischen Dark- und Light-Mode und aktualisiert alle Frames"""
+            # Dark Mode aktivieren/deaktivieren basierend auf dem aktuellen Status
             if self.switch_value:
-                self.switch.config(image=self.dark, bg=Darkmode_Black,
-                                   activebackground=Darkmode_Black)
-                # Wechsel zum Darkmode
-                self.config(bg=Darkmode_Black)  # Aendere den Hintergrund des Hauptfensters
-                self.einstellung_frame.config(bg=Darkmode_Black)
-                self.config(bg=Darkmode_Black)
-                verzeichniss.config(bg=Darkmode_Grey)
-                user_button.config(bg=Darkmode_Grey, fg="white")
-                admin_button.config(bg=Darkmode_Grey, fg="white")
-                stats_button.config(bg=Darkmode_Grey, fg="white")
-                einstellungen_button.config(bg=Darkmode_Grey, fg="white")
-
-                addSpalten_button.config(bg=Darkmode_Black, fg="white")
-                addTyp_button.config(bg=Darkmode_Black, fg="white")
-                addGerat_button.config(bg=Darkmode_Black, fg="white")
-                addStatus_button.config(bg=Darkmode_Black, fg="white")
-
-                details_label.config(bg=Darkmode_Black, fg="white")
-                darstellung_label.config(bg=Darkmode_Black, fg="white")
-                datenbank_label.config(bg=Darkmode_Black, fg="white")
-                # Change the background of the frame
+                # Dark Mode Farben anwenden
+                self.switch.config(image=self.dark, bg=Darkmode_Black, activebackground=Darkmode_Black)
+                self.config(bg=Darkmode_Black) # Hintergrund des Hauptfensters
                 self.switch_value = False
-
             else:
-                # Wechsel zum Lightmode
-                self.switch.config(image=self.light, bg="white",
-                                   activebackground="white")
-                self.config(bg="white")  # Aendere den Hintergrund des Hauptfensters
-                self.einstellung_frame.config(bg="white")
-                self.config(bg=SRH_Grey)
-                verzeichniss.config(bg=SRH_Grey)
-                user_button.config(bg=SRH_Grey, fg="black")
-                admin_button.config(bg=SRH_Grey, fg="black")
-                stats_button.config(bg=SRH_Grey, fg="black")
-                einstellungen_button.config(bg=SRH_Grey, fg="black")
-                addSpalten_button.config(bg="white", fg="black")
-                addTyp_button.config(bg="white", fg="black")
-                addGerat_button.config(bg="white", fg="black")
-                addStatus_button.config(bg="white", fg="black")
-
-                details_label.config(bg="white", fg="black")
-                darstellung_label.config(bg="white", fg="black")
-                datenbank_label.config(bg="white", fg="black")
-
+                # Light Mode Farben anwenden
+                self.switch.config
                 # Aendert den Hintergrund vom Frame
                 self.switch_value = True
 
