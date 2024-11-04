@@ -17,6 +17,10 @@ def add_user(name, passw):
     my_dbc.execute(sql, (name,passw))
     my_db.commit()
 
+def delete_user(zu_löschender_user):
+    sql = """DELETE FROM users WHERE user_first_name = ?"""
+    my_dbc.execute(sql, (zu_löschender_user,))
+    my_db.commit()
 
 def get_all_data() -> list[tuple]: # type: ignore
     my_dbc.execute("SELECT * FROM users")
@@ -31,15 +35,16 @@ while True:
                    "1: Anmelden\n"
                    "2: Benutzer anlegen\n"
                    "3: datenbank ansehen\n"
+                   "4: Nutzer per Name entfernen (Debug)\n"
                    "Ihre Auswahl: ")
 
     if action == '1':
 
-        user = input("name: ")
-        if user == '' or user == ' ':
-            print("abgebrochen")
+        user = input("name: ").strip()
+        if user == '':
+            print("da muss schon was stehen")
             continue
-        password = input("passwort: ")
+        password = input("passwort: ").strip()
         if password == '' or password == ' ':
             print("abgebrochen")
             continue
@@ -55,10 +60,10 @@ while True:
 
     elif action == '2':
         while True:
-            user = input("name: ")
+            user = input("name: ").strip()
 
-            if user == '' or user == ' ':
-                print("abgebrochen")
+            if user == '' or len(user) < 3 or len(user) > 16:
+                print("Benutzername muss zwischen 6 und 16 zeichen sein")
                 break
 
             OneIsKnown = any(user.lower() == existing_user[1].lower() for existing_user in all_users)
@@ -66,14 +71,24 @@ while True:
                 print("Benutzer bereits vergeben")
                 continue
             password = input("passwort: ")
-            if password == '' or password == ' ':
-                print("abgebrochen")
+            if password == '' or len(password) < 6 or len(password) > 16:
+                print("passwort muss zwischen 6 und 16 zeichen sein")
                 break
             add_user(user, password)
             print("benutzer erfogreich hinzugefügt")
             break
+        
     elif action == '3':
         all_users = get_all_data()
         print(all_users)
+
+    elif action == '4':
+        user_to_delete = input("Der zu löschende Name: ")
+        if  any(user_to_delete.lower() == existing_user[1].lower() for existing_user in all_users):
+            delete_user(user_to_delete)
+            print("Nutzer erfolgreich entfernt")
+        else:
+            print("Nutzer nicht gefunden")
     else:
+        my_db.close()
         break
