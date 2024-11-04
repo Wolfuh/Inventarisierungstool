@@ -92,3 +92,4 @@ while True:
     else:
         my_db.close()
         break
+#reteil
