@@ -1,6 +1,6 @@
 import sqlite3
 
-my_db = sqlite3.connect('users.db')
+my_db = sqlite3.connect('./db/users.db')
 my_dbc = my_db.cursor()
 
 
@@ -62,7 +62,7 @@ while True:
         while True:
             user = input("name: ").strip()
 
-            if user == '' or len(user) < 3 or len(user) > 16:
+            if user == '' or len(user) < 6 or len(user) > 16:
                 print("Benutzername muss zwischen 6 und 16 zeichen sein")
                 break
 
