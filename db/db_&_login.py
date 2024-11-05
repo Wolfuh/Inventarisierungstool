@@ -1,7 +1,14 @@
+import sqlite3
 import tkinter as tk
 from tkinter import ttk, messagebox
 import os
 from tkinter import *
+
+
+
+#from gui_prototyp import GuiText
+
+
 
 # Farben der SRH (Corporate Design)
 SRH_Orange = "#df4807"
@@ -11,6 +18,9 @@ SRH_Blau = "#10749c"
 # Darkmode_Farben
 Darkmode_Black = "#121212"
 Darkmode_Grey = "#2d2d2d"
+
+
+
 
 class GuiTest(tk.Tk):
 
@@ -67,15 +77,29 @@ class LogInWindow(tk.Frame):
 
         def login():
             # Überprüfung der Anmeldedaten und zeigt die Hauptseite bei Erfolg an
-            username = "1"
-            password = "1"
-            if username_entry.get() == username and password_entry.get() == password:
+            my_db = sqlite3.connect('./db/users.db')     # verbindung db
+            my_dbc = my_db.cursor()                     # cursor erstellen
+
+            username = username_entry.get()  # strip = leerzeichen werden entfernt
+            password = password_entry.get()
+            password_hex = password                                                 # verschlüsseltes passwort
+            
+            my_dbc.execute("""
+                           SELECT * FROM users WHERE user_first_name = ? AND password = ?
+                           """, (username, password_hex))
+            
+            res = my_dbc.fetchone()
+
+            if res[5] == password_hex:
                 controller.show_frame(MainPage)
                 username_entry.delete(0, 'end')
                 password_entry.delete(0, 'end')
             else:
                 messagebox.showinfo(title="Fehler", message="Passwort oder Benutzername falsch")
                 password_entry.delete(0, 'end')
+
+
+
 
         # Erstellung der Login-Elemente
         login_frame = tk.Frame(self, bg='white')
@@ -116,17 +140,17 @@ class MainPage(tk.Frame):
         self.rowconfigure(0, weight=1)
 
         # laden der Bilder für die Buttons und der Gruppen
-        self.imglogin = load_image("assets/X.png")
-        self.imgprofil = load_image("assets/Y.png")
-        self.imgbildgr1 = tk.PhotoImage(file="assets/Gruppe1.png")
-        self.imgbildgr2 = tk.PhotoImage(file="assets/Gruppe2.png")
-        self.imgbildgr3 = tk.PhotoImage(file="assets/Gruppe3.png")
-        self.imgbildgr4 = tk.PhotoImage(file="assets/Gruppe4.png")
-        self.imgbildgr5 = tk.PhotoImage(file="assets/Gruppe5.png")
-        self.imgbildgr6 = tk.PhotoImage(file="assets/Gruppe6.png")
-        self.imgbildgr7 = tk.PhotoImage(file="assets/Gruppe7.png")
-        self.imgbildgr8 = tk.PhotoImage(file="assets/Gruppe8.png")
-        self.imgseitevor = tk.PhotoImage(file="assets/Seitevor.png")
+        self.imglogin = load_image("gui\\assets/X.png")
+        self.imgprofil = load_image("gui\\assets/Y.png")
+        self.imgbildgr1 = tk.PhotoImage(file="gui\\assets/Gruppe1.png")
+        self.imgbildgr2 = tk.PhotoImage(file="gui\\assets/Gruppe2.png")
+        self.imgbildgr3 = tk.PhotoImage(file="gui\\assets/Gruppe3.png")
+        self.imgbildgr4 = tk.PhotoImage(file="gui\\assets/Gruppe4.png")
+        self.imgbildgr5 = tk.PhotoImage(file="gui\\assets/Gruppe5.png")
+        self.imgbildgr6 = tk.PhotoImage(file="gui\\assets/Gruppe6.png")
+        self.imgbildgr7 = tk.PhotoImage(file="gui\\assets/Gruppe7.png")
+        self.imgbildgr8 = tk.PhotoImage(file="gui\\assets/Gruppe8.png")
+        self.imgseitevor = tk.PhotoImage(file="gui\\assets/Seitevor.png")
 
         # Platzierung der Buttons
         login = tk.Button(header, image=self.imglogin, bd=0, bg=SRH_Orange,
@@ -198,18 +222,18 @@ class MainPageS2(tk.Frame):
         self.rowconfigure(0, weight=1)
 
         # laden der Bilder für Buttons und Gruppen, Buttons für die Navigation (Login, Profil und Bildgruppen)
-        self.imglogin = load_image("assets/X.png")
-        self.imgprofil = load_image("assets/Y.png")
-        self.imgbildgr1 = tk.PhotoImage(file="assets/Gruppe1.png")
-        self.imgbildgr2 = tk.PhotoImage(file="assets/Gruppe2.png")
-        self.imgbildgr3 = tk.PhotoImage(file="assets/Gruppe3.png")
-        self.imgbildgr4 = tk.PhotoImage(file="assets/Gruppe4.png")
-        self.imgbildgr5 = tk.PhotoImage(file="assets/Gruppe5.png")
-        self.imgbildgr6 = tk.PhotoImage(file="assets/Gruppe6.png")
-        self.imgbildgr7 = tk.PhotoImage(file="assets/Gruppe7.png")
-        #self.imgbildgr8 = tk.PhotoImage(file="assets/Gruppe8.png")
-        self.imgseitevor = tk.PhotoImage(file="assets/Seitevor.png")
-        self.imgseiteback = tk.PhotoImage(file="assets/Seiteback.png")
+        self.imglogin = load_image("gui\\assets/X.png")
+        self.imgprofil = load_image("gui\\assets/Y.png")
+        self.imgbildgr1 = tk.PhotoImage(file="gui\\assets/Gruppe1.png")
+        self.imgbildgr2 = tk.PhotoImage(file="gui\\assets/Gruppe2.png")
+        self.imgbildgr3 = tk.PhotoImage(file="gui\\assets/Gruppe3.png")
+        self.imgbildgr4 = tk.PhotoImage(file="gui\\assets/Gruppe4.png")
+        self.imgbildgr5 = tk.PhotoImage(file="gui\\assets/Gruppe5.png")
+        self.imgbildgr6 = tk.PhotoImage(file="gui\\assets/Gruppe6.png")
+        self.imgbildgr7 = tk.PhotoImage(file="gui\\assets/Gruppe7.png")
+        #self.imgbildgr8 = tk.PhotoImage(file="gui\\assets/Gruppe8.png")
+        self.imgseitevor = tk.PhotoImage(file="gui\\assets/Seitevor.png")
+        self.imgseiteback = tk.PhotoImage(file="gui\\assets/Seiteback.png")
         login = tk.Button(header, image=self.imglogin, bd=0, bg=SRH_Orange,
                             command=lambda: controller.show_frame(LogInWindow))
         profil = tk.Button(header, image=self.imgprofil, bd=0, bg=SRH_Orange,
@@ -287,8 +311,8 @@ class Ubersicht(tk.Frame):
         self.rowconfigure(0, weight=1)
 
         # Laden der Bilder für die Navigation und Header Buttons
-        self.imglogin = load_image("assets/X.png")
-        self.imgprofil = load_image("assets/Y.png")
+        self.imglogin = load_image("gui\\assets/X.png")
+        self.imgprofil = load_image("gui\\assets/Y.png")
 
         # Login und Profil Buttons im Header-Bereich, Platzierung der Buttons, Header und Sidebar
         login = tk.Button(header, image=self.imglogin, bd=0, bg=SRH_Orange,
@@ -296,7 +320,7 @@ class Ubersicht(tk.Frame):
         profil = tk.Button(header, image=self.imgprofil, bd=0, bg=SRH_Orange,
                             command=lambda: controller.show_frame(Profil))
         self.imgmainpage = tk.PhotoImage(
-            file="assets/Z.png")
+            file="gui\\assets/Z.png")
 
         login.place(relx=0.95, rely=0.5, anchor="center")
         profil.place(relx=0.90, rely=0.5, anchor="center")
@@ -429,10 +453,10 @@ class Ubersicht(tk.Frame):
                                   #command=lambda: controller.show_frame(Gerateansicht))
         #switch_button.grid(row=4, column=0, pady=20)
         #Bilder
-        self.imgFilter = load_image("assets/Filter_Button.png")
-        self.imgSuche = load_image("assets/Search.png")
-        self.imgHinzufugen = load_image("assets/Hinzufügen_Button.png")
-        self.imgAktionen = load_image("assets/Aktionen_Button.png")
+        self.imgFilter = load_image("gui\\assets/Filter_Button.png")
+        self.imgSuche = load_image("gui\\assets/Search.png")
+        self.imgHinzufugen = load_image("gui\\assets/Hinzufügen_Button.png")
+        self.imgAktionen = load_image("gui\\assets/Aktionen_Button.png")
 
         #Filterfunktion
         def show_dropdown_Filter():
@@ -509,9 +533,9 @@ class Gerateansicht(tk.Frame):
         self.gerateansicht_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
 
         # Bilder laden
-        self.imglogin = tk.PhotoImage(file="assets/X.png")
-        self.imgmainpage = tk.PhotoImage(file="assets/greyback.png")
-        self.imgprofil = load_image("assets/Y.png")
+        self.imglogin = tk.PhotoImage(file="gui\\assets/X.png")
+        self.imgmainpage = tk.PhotoImage(file="gui\\assets/greyback.png")
+        self.imgprofil = load_image("gui\\assets/Y.png")
 
         # Stil für Header und Footer anpassen
         style = ttk.Style()
@@ -572,10 +596,10 @@ class Profil(tk.Frame):
         self.profil_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
 
         self.imglogin = tk.PhotoImage(
-            file="assets/X.png")
+            file="gui\\assets/X.png")
         self.imgmainpage = tk.PhotoImage(
-            file="assets/Z.png")
-        self.imgProfileTest = tk.PhotoImage(file="assets/profile.png")
+            file="gui\\assets/Z.png")
+        self.imgProfileTest = tk.PhotoImage(file="gui\\assets/profile.png")
 
         # Positionierung der Buttons
         login = tk.Button(header, image=self.imglogin, bd=0, bg=SRH_Orange,
@@ -625,9 +649,9 @@ class Admin(tk.Frame):
         self.admin_frame = tk.Frame(self, bg='white')
 
         self.imglogin = tk.PhotoImage(
-            file="assets/X.png")
+            file="gui\\assets/X.png")
         self.imgmainpage = tk.PhotoImage(
-            file="assets/Z.png")
+            file="gui\\assets/Z.png")
 
         # Positionierung und Seitennavigations-Buttons für Benutzer, Admin, Statistiken und Einstellungen, Login,
         # Hauptseite und Profilbild
@@ -678,9 +702,9 @@ class Stats(tk.Frame):
 
         # Bilder für die Login- und Hauptseite-Buttons laden
         self.imglogin = tk.PhotoImage(
-            file="assets/X.png")
+            file="gui\\assets/X.png")
         self.imgmainpage = tk.PhotoImage(
-            file="assets/Z.png")
+            file="gui\\assets/Z.png")
 
         # Header-Navigationsbuttons (Login und Hauptseite), Platzierung der Header-Buttons
         login = tk.Button(header, image=self.imglogin, bd=0, bg=SRH_Orange,
@@ -722,7 +746,6 @@ class Einstellungen(tk.Frame):
         tk.Frame.__init__(self, parent)
 
         self.configure(bg='white')
-        self.switch_value = True
 
         # Layout Festlegung der flexiblen Skalierung der Einstellungen
         self.columnconfigure(0, weight=1)
@@ -742,9 +765,9 @@ class Einstellungen(tk.Frame):
 
         # Navigationsbuttons im Header (Login und Mainpage)
         self.imglogin = tk.PhotoImage(
-            file="assets/X.png")
+            file="gui\\assets/X.png")
         self.imgmainpage = tk.PhotoImage(
-            file="assets/Z.png")
+            file="gui\\assets/Z.png")
 
         login = tk.Button(self.header, image=self.imglogin, bd=0,bg=SRH_Orange,
                             command=lambda: controller.show_frame(LogInWindow))
@@ -813,62 +836,67 @@ class Einstellungen(tk.Frame):
 
 
         # Bildvariablen zur Theme-Umschaltung
-        try:
-            self.light = PhotoImage(file="assets/switchoff.png")
-            self.dark = PhotoImage(file="assets/switchon.png")
-        except EXCEPTION as e:
-            print(f"Fehler beim laden der Bilder: {e}")
-            return # Beende falls die Bilder nicht geladen werden können
+        self.light = PhotoImage(file="gui\\assets/switchoff.png")
+        self.dark = PhotoImage(file="gui\\assets/switchon.png")
+
+        # Theme-Umschaltvariable
+        self.switch_value = True
 
         def toggle():
+            # Greife auf die Instanzvariable mit self zu
             if self.switch_value:
-                apply_darkmode()
-                self.switch.config(image=self.dark, bg="black", activebackground="black")
+                self.switch.config(image=self.dark, bg=Darkmode_Black,
+                                   activebackground=Darkmode_Black)
+                # Wechsel zum Darkmode
+                self.config(bg=Darkmode_Black)  # Aendere den Hintergrund des Hauptfensters
+                self.einstellung_frame.config(bg=Darkmode_Black)
+                self.config(bg=Darkmode_Black)
+                verzeichniss.config(bg=Darkmode_Grey)
+                user_button.config(bg=Darkmode_Grey, fg="white")
+                admin_button.config(bg=Darkmode_Grey, fg="white")
+                stats_button.config(bg=Darkmode_Grey, fg="white")
+                einstellungen_button.config(bg=Darkmode_Grey, fg="white")
+
+                addSpalten_button.config(bg=Darkmode_Black, fg="white")
+                addTyp_button.config(bg=Darkmode_Black, fg="white")
+                addGerat_button.config(bg=Darkmode_Black, fg="white")
+                addStatus_button.config(bg=Darkmode_Black, fg="white")
+
+                details_label.config(bg=Darkmode_Black, fg="white")
+                darstellung_label.config(bg=Darkmode_Black, fg="white")
+                datenbank_label.config(bg=Darkmode_Black, fg="white")
+                # Change the background of the frame
                 self.switch_value = False
+
             else:
-                apply_lightmode()
-                self.switch.config(image=self.light, bg="white", activebackground="white")
+                # Wechsel zum Lightmode
+                self.switch.config(image=self.light, bg="white",
+                                   activebackground="white")
+                self.config(bg="white")  # Aendere den Hintergrund des Hauptfensters
+                self.einstellung_frame.config(bg="white")
+                self.config(bg=SRH_Grey)
+                verzeichniss.config(bg=SRH_Grey)
+                user_button.config(bg=SRH_Grey, fg="black")
+                admin_button.config(bg=SRH_Grey, fg="black")
+                stats_button.config(bg=SRH_Grey, fg="black")
+                einstellungen_button.config(bg=SRH_Grey, fg="black")
+                addSpalten_button.config(bg="white", fg="black")
+                addTyp_button.config(bg="white", fg="black")
+                addGerat_button.config(bg="white", fg="black")
+                addStatus_button.config(bg="white", fg="black")
+
+                details_label.config(bg="white", fg="black")
+                darstellung_label.config(bg="white", fg="black")
+                datenbank_label.config(bg="white", fg="black")
+
+                # Aendert den Hintergrund vom Frame
                 self.switch_value = True
 
-        #Funktion zum Anwenden des Darkmode
-        def apply_darkmode():
-            self.config(bg=Darkmode_Black)
-            self.einstellung_frame.config(bg=Darkmode_Black)
-            verzeichniss.config(bg=Darkmode_Grey)
-            user_button.config(bg=Darkmode_Grey, fg="white")
-            admin_button.config(bg=Darkmode_Grey, fg="white")
-            stats_button.config(bg=Darkmode_Grey, fg="white")
-            einstellungen_button.config(bg=Darkmode_Grey, fg="white")
-
-            addSpalten_button.config(bg=Darkmode_Black, fg="white")
-            addTyp_button.config(bg=Darkmode_Black, fg="white")
-            addGerat_button.config(bg=Darkmode_Black, fg="white")
-            addStatus_button.config(bg=Darkmode_Black, fg="white")
-
-            details_label.config(bg=Darkmode_Black, fg="white")
-            darstellung_label.config(bg=Darkmode_Black, fg="white")
-            datenbank_label.config(bg=Darkmode_Black, fg="white")
-        #Funktion zum Anwenden des Lightmodes
-        def apply_lightmode():
-            self.config(bg="white")
-            self.einstellung_frame.config(bg="white")
-            verzeichniss.config(bg=SRH_Grey)
-            user_button.config(bg=SRH_Grey, fg="black")
-            admin_button.config(bg=SRH_Grey, fg="black")
-            stats_button.config(bg=SRH_Grey, fg="black")
-            einstellungen_button.config(bg=SRH_Grey, fg="black")
-
-            addSpalten_button.config(bg="white", fg="black")
-            addTyp_button.config(bg="white", fg="black")
-            addGerat_button.config(bg="white", fg="black")
-            addStatus_button.config(bg="white", fg="black")
-
-            details_label.config(bg="white", fg="black")
-            darstellung_label.config(bg="white", fg="black")
-            datenbank_label.config(bg="white", fg="black")
-
-        # Button zur Umschaltung des Themes
-        self.switch = tk.Button(self, image=self.light, bd=0, bg="white", activebackground="white", command=toggle)
+        # Button zum Umschalten des Themes
+        self.switch = Button(self, image=self.light,
+                             bd=0, bg="white",
+                             activebackground="white",
+                             command=toggle)
         self.switch.place(relx=0.16, rely=0.46)
 
         def change_header_color(event):
