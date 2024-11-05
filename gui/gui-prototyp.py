@@ -830,7 +830,7 @@ class Einstellungen(tk.Frame):
                 self.switch.config(image=self.light, bg="white", activebackground="white")
                 self.switch_value = True
 
-        #Funktion zum Anwenden des Darkmodes
+        #Funktion zum Anwenden des Darkmode
         def apply_darkmode():
             self.config(bg=Darkmode_Black)
             self.einstellung_frame.config(bg=Darkmode_Black)
