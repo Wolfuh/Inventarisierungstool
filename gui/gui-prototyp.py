@@ -722,6 +722,7 @@ class Einstellungen(tk.Frame):
         tk.Frame.__init__(self, parent)
 
         self.configure(bg='white')
+        self.switch_value = True
 
         # Layout Festlegung der flexiblen Skalierung der Einstellungen
         self.columnconfigure(0, weight=1)
@@ -812,31 +813,62 @@ class Einstellungen(tk.Frame):
 
 
         # Bildvariablen zur Theme-Umschaltung
-        self.light = PhotoImage(file="assets/switchoff.png")
-        self.dark = PhotoImage(file="assets/switchon.png")
+        try:
+            self.light = PhotoImage(file="assets/switchoff.png")
+            self.dark = PhotoImage(file="assets/switchon.png")
+        except EXCEPTION as e:
+            print(f"Fehler beim laden der Bilder: {e}")
+            return # Beende falls die Bilder nicht geladen werden können
 
-        # Theme-Umschaltvariable
-        self.switch_value = True
-
-        def toggle(self):
-            """Schaltet zwischen Dark- und Light-Mode und aktualisiert alle Frames"""
-            # Dark Mode aktivieren/deaktivieren basierend auf dem aktuellen Status
+        def toggle():
             if self.switch_value:
-                # Dark Mode Farben anwenden
-                self.switch.config(image=self.dark, bg=Darkmode_Black, activebackground=Darkmode_Black)
-                self.config(bg=Darkmode_Black) # Hintergrund des Hauptfensters
+                apply_darkmode()
+                self.switch.config(image=self.dark, bg="black", activebackground="black")
                 self.switch_value = False
             else:
-                # Light Mode Farben anwenden
-                self.switch.config
-                # Aendert den Hintergrund vom Frame
+                apply_lightmode()
+                self.switch.config(image=self.light, bg="white", activebackground="white")
                 self.switch_value = True
 
-        # Button zum Umschalten des Themes
-        self.switch = Button(self, image=self.light,
-                             bd=0, bg="white",
-                             activebackground="white",
-                             command=toggle)
+        #Funktion zum Anwenden des Darkmodes
+        def apply_darkmode():
+            self.config(bg=Darkmode_Black)
+            self.einstellung_frame.config(bg=Darkmode_Black)
+            verzeichniss.config(bg=Darkmode_Grey)
+            user_button.config(bg=Darkmode_Grey, fg="white")
+            admin_button.config(bg=Darkmode_Grey, fg="white")
+            stats_button.config(bg=Darkmode_Grey, fg="white")
+            einstellungen_button.config(bg=Darkmode_Grey, fg="white")
+
+            addSpalten_button.config(bg=Darkmode_Black, fg="white")
+            addTyp_button.config(bg=Darkmode_Black, fg="white")
+            addGerat_button.config(bg=Darkmode_Black, fg="white")
+            addStatus_button.config(bg=Darkmode_Black, fg="white")
+
+            details_label.config(bg=Darkmode_Black, fg="white")
+            darstellung_label.config(bg=Darkmode_Black, fg="white")
+            datenbank_label.config(bg=Darkmode_Black, fg="white")
+        #Funktion zum Anwenden des Lightmodes
+        def apply_lightmode():
+            self.config(bg="white")
+            self.einstellung_frame.config(bg="white")
+            verzeichniss.config(bg=SRH_Grey)
+            user_button.config(bg=SRH_Grey, fg="black")
+            admin_button.config(bg=SRH_Grey, fg="black")
+            stats_button.config(bg=SRH_Grey, fg="black")
+            einstellungen_button.config(bg=SRH_Grey, fg="black")
+
+            addSpalten_button.config(bg="white", fg="black")
+            addTyp_button.config(bg="white", fg="black")
+            addGerat_button.config(bg="white", fg="black")
+            addStatus_button.config(bg="white", fg="black")
+
+            details_label.config(bg="white", fg="black")
+            darstellung_label.config(bg="white", fg="black")
+            datenbank_label.config(bg="white", fg="black")
+
+        # Button zur Umschaltung des Themes
+        self.switch = tk.Button(self, image=self.light, bd=0, bg="white", activebackground="white", command=toggle)
         self.switch.place(relx=0.16, rely=0.46)
 
         def change_header_color(event):
