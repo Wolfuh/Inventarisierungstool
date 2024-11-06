@@ -4,25 +4,27 @@ my_db = sqlite3.connect('./db/users.db')
 my_dbc = my_db.cursor()
 
 
-#Tabelle erstellen: CREATE TABLE tabellenname (N_überschrift1 TEXT, N_überschrift2 BOOLEAN)
-#Daten einfügen:    INSERT INTO tabellenname (überschrift1, überschrift2) VALUES (N_wert2 TEXT, N-wert2 BOOLEAN)
-#Daten ändern:      UPDATE tabellenname SET überschrift1 = N_wert1 WHERE bedingung 
+# Tabelle erstellen: CREATE TABLE tabellenname (N_überschrift1 TEXT, N_überschrift2 BOOLEAN)
+# Daten einfügen:    INSERT INTO tabellenname (überschrift1, überschrift2) VALUES (N_wert2 TEXT, N-wert2 BOOLEAN)
+# Daten ändern:      UPDATE tabellenname SET überschrift1 = N_wert1 WHERE bedingung
 #   z.B. """UPDATE rollen2 SET add_user = 0 WHERE name = 'nutzer'"""
-#ausführen: my_dbc.execute(sql)
+# ausführen: my_dbc.execute(sql)
 #           my_db.commit()
-print("hello World")
+
 
 def add_user(name, passw):
     sql = "INSERT INTO users (user_first_name, password) VALUES (?, ?)"
-    my_dbc.execute(sql, (name,passw))
+    my_dbc.execute(sql, (name, passw))
     my_db.commit()
 
-def delete_user(zu_löschender_user):
+
+def delete_user(zu_loeschender_user):
     sql = """DELETE FROM users WHERE user_first_name = ?"""
-    my_dbc.execute(sql, (zu_löschender_user,))
+    my_dbc.execute(sql, (zu_loeschender_user,))
     my_db.commit()
 
-def get_all_data() -> list[tuple]: # type: ignore
+
+def get_all_data() -> list[tuple]:  # type: ignore
     my_dbc.execute("SELECT * FROM users")
     nutzer = my_dbc.fetchall()
     return nutzer
@@ -40,17 +42,17 @@ while True:
 
     if action == '1':
 
-        user = input("name: ").strip()  #leerzeichen werden entfernt
+        user = input("name: ").strip()  # leerzeichen werden entfernt
         if user == '':
             print("da muss schon was stehen")
             continue
-        password = input("passwort: ").strip()  #leerzeichen werden entfernt
+        password = input("passwort: ").strip()  # leerzeichen werden entfernt
         if password == '' or password == ' ':
             print("abgebrochen")
             continue
 
         BothIsKnown = any(user.lower() == existing_user[1].lower() and password == existing_user[5] for
-                        existing_user in all_users)
+                          existing_user in all_users)
 
         if BothIsKnown:
             print("erfolgreich eingeloggt")
@@ -75,7 +77,7 @@ while True:
                 print("passwort muss zwischen 6 und 16 zeichen sein")
                 break
             add_user(user, password)
-            print("benutzer erfogreich hinzugefügt")
+            print("benutzer erfolgreich hinzugefügt")
             break
 
     elif action == '3':
@@ -84,7 +86,7 @@ while True:
 
     elif action == '4':
         user_to_delete = input("Der zu löschende Name: ")
-        if  any(user_to_delete.lower() == existing_user[1].lower() for existing_user in all_users):
+        if any(user_to_delete.lower() == existing_user[1].lower() for existing_user in all_users):
             delete_user(user_to_delete)
             print("Nutzer erfolgreich entfernt")
         else:
