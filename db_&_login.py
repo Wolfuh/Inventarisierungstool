@@ -6,7 +6,7 @@ from tkinter import *
 
 
 
-#from gui_prototyp import 
+from gui.gui_prototyp import GuiTest, MainPage, MainPageS2, Ubersicht, Gerateansicht, Profil, Admin, Stats, Einstellungen
 
 
 
