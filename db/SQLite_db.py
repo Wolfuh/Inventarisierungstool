@@ -10,7 +10,7 @@ my_dbc = my_db.cursor()
 #   z.B. """UPDATE rollen2 SET add_user = 0 WHERE name = 'nutzer'"""
 #ausführen: my_dbc.execute(sql)
 #           my_db.commit()
-
+print("hello World")
 
 def add_user(name, passw):
     sql = "INSERT INTO users (user_first_name, password) VALUES (?, ?)"
