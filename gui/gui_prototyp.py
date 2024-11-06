@@ -19,7 +19,7 @@ class GuiTest(tk.Tk):
         super().__init__(*args, **kwargs)
 
         self.title("Prototyp")
-        self.resizable(True, True)
+        self.resizable(False, False)
         self.geometry("1920x1080")
 
         # Hauptcontainer für alle Frames
