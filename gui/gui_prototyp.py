@@ -19,7 +19,7 @@ class GuiTest(tk.Tk):
         super().__init__(*args, **kwargs)
 
         self.title("Prototyp")
-        self.resizable(False, False)
+        self.resizable(True, True)
         self.geometry("1920x1080")
 
         # Hauptcontainer für alle Frames
@@ -116,8 +116,8 @@ class MainPage(tk.Frame):
         self.rowconfigure(0, weight=1)
 
         # laden der Bilder für die Buttons und der Gruppen
-        self.imglogin = load_image("assets/X.png")
-        self.imgprofil = load_image("assets/Y.png")
+        self.imglogin = load_image("assets/Closeicon.png")
+        self.imgprofil = load_image("assets/profileicon.png")
         self.imgbildgr1 = tk.PhotoImage(file="assets/Gruppe1.png")
         self.imgbildgr2 = tk.PhotoImage(file="assets/Gruppe2.png")
         self.imgbildgr3 = tk.PhotoImage(file="assets/Gruppe3.png")
@@ -126,7 +126,7 @@ class MainPage(tk.Frame):
         self.imgbildgr6 = tk.PhotoImage(file="assets/Gruppe6.png")
         self.imgbildgr7 = tk.PhotoImage(file="assets/Gruppe7.png")
         self.imgbildgr8 = tk.PhotoImage(file="assets/Gruppe8.png")
-        self.imgseitevor = tk.PhotoImage(file="assets/Seitevor.png")
+        self.imgseitevor = tk.PhotoImage(file="assets/pageforward_icon.png")
 
         # Platzierung der Buttons
         login = tk.Button(header, image=self.imglogin, bd=0, bg=SRH_Orange,
@@ -149,7 +149,7 @@ class MainPage(tk.Frame):
                                command=lambda: controller.show_frame(Ubersicht))
         bildgr8 = tk.Button(self, image=self.imgbildgr8, bd=0, bg='white',
                                command=lambda: controller.show_frame(Ubersicht))
-        all = tk.Button(self, text="Alle anzeigen", bd=0, bg='white', fg='#1D4478', font=("Inter", 20),
+        all = tk.Button(self, text="Alle anzeigen", bd=0, bg='white', fg=SRH_Blau, font=("Inter", 20),
                            command=lambda: controller.show_frame(Ubersicht))
         seitevor = tk.Button(self, image=self.imgseitevor, bd=0, bg='white', fg='#1E1E1E', font=("Inter", 16),
                         command=lambda: controller.show_frame(MainPageS2))
@@ -198,8 +198,8 @@ class MainPageS2(tk.Frame):
         self.rowconfigure(0, weight=1)
 
         # laden der Bilder für Buttons und Gruppen, Buttons für die Navigation (Login, Profil und Bildgruppen)
-        self.imglogin = load_image("assets/X.png")
-        self.imgprofil = load_image("assets/Y.png")
+        self.imglogin = load_image("assets/Closeicon.png")
+        self.imgprofil = load_image("assets/profileicon.png")
         self.imgbildgr1 = tk.PhotoImage(file="assets/Gruppe1.png")
         self.imgbildgr2 = tk.PhotoImage(file="assets/Gruppe2.png")
         self.imgbildgr3 = tk.PhotoImage(file="assets/Gruppe3.png")
@@ -208,8 +208,8 @@ class MainPageS2(tk.Frame):
         self.imgbildgr6 = tk.PhotoImage(file="assets/Gruppe6.png")
         self.imgbildgr7 = tk.PhotoImage(file="assets/Gruppe7.png")
         #self.imgbildgr8 = tk.PhotoImage(file="assets/Gruppe8.png")
-        self.imgseitevor = tk.PhotoImage(file="assets/Seitevor.png")
-        self.imgseiteback = tk.PhotoImage(file="assets/Seiteback.png")
+        self.imgseitevor = tk.PhotoImage(file="assets/pageforward_icon.png")
+        self.imgseiteback = tk.PhotoImage(file="assets/pageback_icon.png")
         login = tk.Button(header, image=self.imglogin, bd=0, bg=SRH_Orange,
                             command=lambda: controller.show_frame(LogInWindow))
         profil = tk.Button(header, image=self.imgprofil, bd=0, bg=SRH_Orange,
@@ -287,8 +287,8 @@ class Ubersicht(tk.Frame):
         self.rowconfigure(0, weight=1)
 
         # Laden der Bilder für die Navigation und Header Buttons
-        self.imglogin = load_image("assets/X.png")
-        self.imgprofil = load_image("assets/Y.png")
+        self.imglogin = load_image("assets/Closeicon.png")
+        self.imgprofil = load_image("assets/profileicon.png")
 
         # Login und Profil Buttons im Header-Bereich, Platzierung der Buttons, Header und Sidebar
         login = tk.Button(header, image=self.imglogin, bd=0, bg=SRH_Orange,
@@ -296,7 +296,7 @@ class Ubersicht(tk.Frame):
         profil = tk.Button(header, image=self.imgprofil, bd=0, bg=SRH_Orange,
                             command=lambda: controller.show_frame(Profil))
         self.imgmainpage = tk.PhotoImage(
-            file="assets/Z.png")
+            file="assets/backtosite_icon.png")
 
         login.place(relx=0.95, rely=0.5, anchor="center")
         profil.place(relx=0.90, rely=0.5, anchor="center")
@@ -431,7 +431,7 @@ class Ubersicht(tk.Frame):
         #Bilder
         self.imgFilter = load_image("assets/Filter_Button.png")
         self.imgSuche = load_image("assets/Search.png")
-        self.imgHinzufugen = load_image("assets/Hinzufügen_Button.png")
+        self.imgHinzufugen = load_image("assets/Adding_Icon.png")
         self.imgAktionen = load_image("assets/Aktionen_Button.png")
 
         #Filterfunktion
@@ -509,9 +509,9 @@ class Gerateansicht(tk.Frame):
         self.gerateansicht_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
 
         # Bilder laden
-        self.imglogin = tk.PhotoImage(file="assets/X.png")
-        self.imgmainpage = tk.PhotoImage(file="assets/greyback.png")
-        self.imgprofil = load_image("assets/Y.png")
+        self.imglogin = tk.PhotoImage(file="assets/Closeicon.png")
+        self.imgmainpage = tk.PhotoImage(file="assets/backtosite_grey_icon.png")
+        self.imgprofil = load_image("assets/profileicon.png")
 
         # Stil für Header und Footer anpassen
         style = ttk.Style()
@@ -572,9 +572,9 @@ class Profil(tk.Frame):
         self.profil_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
 
         self.imglogin = tk.PhotoImage(
-            file="assets/X.png")
+            file="assets/Closeicon.png")
         self.imgmainpage = tk.PhotoImage(
-            file="assets/Z.png")
+            file="assets/backtosite_icon.png")
         self.imgProfileTest = tk.PhotoImage(file="assets/profile.png")
 
         # Positionierung der Buttons
@@ -625,9 +625,9 @@ class Admin(tk.Frame):
         self.admin_frame = tk.Frame(self, bg='white')
 
         self.imglogin = tk.PhotoImage(
-            file="assets/X.png")
+            file="assets/Closeicon.png")
         self.imgmainpage = tk.PhotoImage(
-            file="assets/Z.png")
+            file="assets/backtosite_icon.png")
 
         # Positionierung und Seitennavigations-Buttons für Benutzer, Admin, Statistiken und Einstellungen, Login,
         # Hauptseite und Profilbild
@@ -678,9 +678,9 @@ class Stats(tk.Frame):
 
         # Bilder für die Login- und Hauptseite-Buttons laden
         self.imglogin = tk.PhotoImage(
-            file="assets/X.png")
+            file="assets/Closeicon.png")
         self.imgmainpage = tk.PhotoImage(
-            file="assets/Z.png")
+            file="assets/backtosite_icon.png")
 
         # Header-Navigationsbuttons (Login und Hauptseite), Platzierung der Header-Buttons
         login = tk.Button(header, image=self.imglogin, bd=0, bg=SRH_Orange,
@@ -742,9 +742,9 @@ class Einstellungen(tk.Frame):
 
         # Navigationsbuttons im Header (Login und Mainpage)
         self.imglogin = tk.PhotoImage(
-            file="assets/X.png")
+            file="assets/Closeicon.png")
         self.imgmainpage = tk.PhotoImage(
-            file="assets/Z.png")
+            file="assets/backtosite_icon.png")
 
         login = tk.Button(self.header, image=self.imglogin, bd=0,bg=SRH_Orange,
                             command=lambda: controller.show_frame(LogInWindow))
