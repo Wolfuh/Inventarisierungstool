@@ -58,7 +58,7 @@ class LogInWindow(tk.Frame):
             
             res = my_dbc.fetchone()
 
-            if res[5]:
+            if res[5] is None:
                 if res[5] == password:
                     controller.show_frame(MainPage)
                     username_entry.delete(0, 'end')
