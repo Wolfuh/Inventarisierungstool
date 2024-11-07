@@ -1,4 +1,7 @@
 import sqlite3
+from argon2 import PasswordHasher
+
+ph = PasswordHasher()
 
 my_db = sqlite3.connect('./db/users.db')
 my_dbc = my_db.cursor()
@@ -13,7 +16,7 @@ my_dbc = my_db.cursor()
 
 
 def add_user(name, passw):
-    sql = "INSERT INTO users (user_first_name, password) VALUES (?, ?)"
+    sql = "INSERT INTO users (user_first_name, password_hash) VALUES (?, ?)"
     my_dbc.execute(sql, (name, passw))
     my_db.commit()
 
@@ -34,7 +37,7 @@ all_users = get_all_data()
 
 while True:
     action = input("Was möchten sie tun?\n"
-                   "1: Anmelden\n"
+                   "1: Anmelden - Im Moment nicht funktionsfähig!\n"
                    "2: Benutzer anlegen\n"
                    "3: datenbank ansehen\n"
                    "4: Nutzer per Name entfernen (Debug)\n"
@@ -42,7 +45,7 @@ while True:
 
     if action == '1':
 
-        user = input("name: ").strip()  # leerzeichen werden entfernt
+        '''user = input("name: ").strip()  # leerzeichen werden entfernt
         if user == '':
             print("da muss schon was stehen")
             continue
@@ -58,7 +61,7 @@ while True:
             print("erfolgreich eingeloggt")
             # logged_in = True
         else:
-            print("benutzername oder passwort ist falsch")
+            print("benutzername oder passwort ist falsch")'''
 
     elif action == '2':
         while True:
@@ -76,7 +79,7 @@ while True:
             if password == '' or len(password) < 6 or len(password) > 16:
                 print("passwort muss zwischen 6 und 16 zeichen sein")
                 break
-            add_user(user, password)
+            add_user(user, ph.hash(password))
             print("benutzer erfolgreich hinzugefügt")
             break
 
