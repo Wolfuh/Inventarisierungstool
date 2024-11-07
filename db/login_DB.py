@@ -81,7 +81,8 @@ class LogInWindow(tk.Frame):
             
             res = my_dbc.fetchone()
 
-            if res[5]:
+
+            if res:     # überprüfung, ob passwort und benutzername übereinstimmen
                 controller.show_frame(MainPage)
                 username_entry.delete(0, 'end')
                 password_entry.delete(0, 'end')
