@@ -13,7 +13,6 @@ spec = importlib.util.spec_from_file_location("login_DB", login_DB_path)
 login_DB = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(login_DB)
 
-
 # Farben der SRH (Corporate Design)
 SRH_Orange = "#df4807"
 SRH_Grey = "#d9d9d9"
@@ -22,6 +21,7 @@ SRH_Blau = "#10749c"
 # Darkmode_Farben
 Darkmode_Black = "#121212"
 Darkmode_Grey = "#2d2d2d"
+
 
 class GuiTest(tk.Tk):
 
@@ -53,6 +53,7 @@ class GuiTest(tk.Tk):
         frame = self.frames[cont]
         frame.tkraise()
 
+
 def load_image(image_path):
     """Lädt ein Bild aus dem Pfad, gibt ein PhotoImage-Objekt zurück oder None bei fehlendem Bild."""
     if os.path.exists(image_path):
@@ -61,9 +62,11 @@ def load_image(image_path):
         print(f"Warnung: Bild '{image_path}' nicht gefunden.")
         return None
 
+
 class LogInWindow(tk.Frame):
     """Errstellung des Login-Fensters mit Benutername- und Passwort-Eingabefeldern.
         Zeigt die Hauptseite bei erfolgreichem Login an und gibt eine Fehlermeldung bei falschem"""
+
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.configure(bg='white')
@@ -78,14 +81,14 @@ class LogInWindow(tk.Frame):
 
         def login():
             # Überprüfung der Anmeldedaten und zeigt die Hauptseite bei Erfolg an
-            if login_DB.login_lookup(username_entry.get(),password_entry.get()):
+            if login_DB.login_lookup(username_entry.get(), password_entry.get()):
                 controller.show_frame(MainPage)
                 username_entry.delete(0, 'end')
                 password_entry.delete(0, 'end')
             else:
                 messagebox.showinfo(title="Fehler", message="Passwort oder Benutzername falsch")
                 password_entry.delete(0, 'end')
-       
+
         # Erstellung der Login-Elemente
         login_frame = tk.Frame(self, bg='white')
         username_label = tk.Label(login_frame, text="Benutzername", bg='white', font=("Inter", 19))
@@ -105,9 +108,11 @@ class LogInWindow(tk.Frame):
         bottom.place(relx=0, rely=0.85, relwidth=1, relheight=0.13)
         login_frame.place(relx=0.5, rely=0.5, anchor="center")
 
+
 class MainPage(tk.Frame):
     """Erstellt die Startseite mit Navigations- und Funktionsbuttons sowie Bildgurppen
        Ermöglicht den Zugriff auf Login, Profil und Übersichtsseiten"""
+
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.configure(bg='white')
@@ -139,29 +144,29 @@ class MainPage(tk.Frame):
 
         # Platzierung der Buttons
         login = tk.Button(header, image=self.imglogin, bd=0, bg=SRH_Orange,
-                            command=lambda: controller.show_frame(LogInWindow))
+                          command=lambda: controller.show_frame(LogInWindow))
         profil = tk.Button(header, image=self.imgprofil, bd=0, bg=SRH_Orange,
-                            command=lambda: controller.show_frame(Profil))
+                           command=lambda: controller.show_frame(Profil))
         bildgr1 = tk.Button(self, image=self.imgbildgr1, bd=0, bg='white',
-                               command=lambda: controller.show_frame(Ubersicht))
+                            command=lambda: controller.show_frame(Ubersicht))
         bildgr2 = tk.Button(self, image=self.imgbildgr2, bd=0, bg='white',
-                               command=lambda: controller.show_frame(Ubersicht))
+                            command=lambda: controller.show_frame(Ubersicht))
         bildgr3 = tk.Button(self, image=self.imgbildgr3, bd=0, bg='white',
-                               command=lambda: controller.show_frame(Ubersicht))
+                            command=lambda: controller.show_frame(Ubersicht))
         bildgr4 = tk.Button(self, image=self.imgbildgr4, bd=0, bg='white',
-                               command=lambda: controller.show_frame(Ubersicht))
+                            command=lambda: controller.show_frame(Ubersicht))
         bildgr5 = tk.Button(self, image=self.imgbildgr5, bd=0, bg='white',
-                               command=lambda: controller.show_frame(Ubersicht))
+                            command=lambda: controller.show_frame(Ubersicht))
         bildgr6 = tk.Button(self, image=self.imgbildgr6, bd=0, bg='white',
-                               command=lambda: controller.show_frame(Ubersicht))
+                            command=lambda: controller.show_frame(Ubersicht))
         bildgr7 = tk.Button(self, image=self.imgbildgr7, bd=0, bg='white',
-                               command=lambda: controller.show_frame(Ubersicht))
+                            command=lambda: controller.show_frame(Ubersicht))
         bildgr8 = tk.Button(self, image=self.imgbildgr8, bd=0, bg='white',
-                               command=lambda: controller.show_frame(Ubersicht))
+                            command=lambda: controller.show_frame(Ubersicht))
         all = tk.Button(self, text="Alle anzeigen", bd=0, bg='white', fg=SRH_Blau, font=("Inter", 20),
-                           command=lambda: controller.show_frame(Ubersicht))
+                        command=lambda: controller.show_frame(Ubersicht))
         seitevor = tk.Button(self, image=self.imgseitevor, bd=0, bg='white', fg='#1E1E1E', font=("Inter", 16),
-                        command=lambda: controller.show_frame(MainPageS2))
+                             command=lambda: controller.show_frame(MainPageS2))
 
         # Festlegung des Styles für Header- und Footer Labels, Positionierung der Navigationsbuttons im Header, die
         # Anordnung der Bildgruppen-Buttons in einem Rasterlayout, sowie Platzierungen.
@@ -187,9 +192,11 @@ class MainPage(tk.Frame):
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
         bottom.place(relx=0, rely=0.85, relwidth=1, relheight=0.13)
 
+
 class MainPageS2(tk.Frame):
     """Repräsentiert die zweite Seite der Startseite mit weiteren Gruppen und Navigation.
        Ermöglicht die Navigation zurück zur Hauptseite oder zu zusätzlichen Detailansichten."""
+
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.configure(bg='white')
@@ -216,37 +223,37 @@ class MainPageS2(tk.Frame):
         self.imgbildgr5 = tk.PhotoImage(file="gui/assets/Gruppe5.png")
         self.imgbildgr6 = tk.PhotoImage(file="gui/assets/Gruppe6.png")
         self.imgbildgr7 = tk.PhotoImage(file="gui/assets/Gruppe7.png")
-        #self.imgbildgr8 = tk.PhotoImage(file="gui/assets/Gruppe8.png")
+        # self.imgbildgr8 = tk.PhotoImage(file="gui/assets/Gruppe8.png")
         self.imgseitevor = tk.PhotoImage(file="gui/assets/pageforward_icon.png")
         self.imgseiteback = tk.PhotoImage(file="gui/assets/pageback_icon.png")
         login = tk.Button(header, image=self.imglogin, bd=0, bg=SRH_Orange,
-                            command=lambda: controller.show_frame(LogInWindow))
+                          command=lambda: controller.show_frame(LogInWindow))
         profil = tk.Button(header, image=self.imgprofil, bd=0, bg=SRH_Orange,
-                            command=lambda: controller.show_frame(Profil))
+                           command=lambda: controller.show_frame(Profil))
         bildgr1 = tk.Button(self, image=self.imgbildgr1, bd=0, bg='white',
-                               command=lambda: controller.show_frame(Ubersicht))
+                            command=lambda: controller.show_frame(Ubersicht))
         bildgr2 = tk.Button(self, image=self.imgbildgr2, bd=0, bg='white',
-                               command=lambda: controller.show_frame(Ubersicht))
+                            command=lambda: controller.show_frame(Ubersicht))
         bildgr3 = tk.Button(self, image=self.imgbildgr3, bd=0, bg='white',
-                               command=lambda: controller.show_frame(Ubersicht))
+                            command=lambda: controller.show_frame(Ubersicht))
         bildgr4 = tk.Button(self, image=self.imgbildgr4, bd=0, bg='white',
-                               command=lambda: controller.show_frame(Ubersicht))
+                            command=lambda: controller.show_frame(Ubersicht))
         bildgr5 = tk.Button(self, image=self.imgbildgr5, bd=0, bg='white',
-                               command=lambda: controller.show_frame(Ubersicht))
+                            command=lambda: controller.show_frame(Ubersicht))
         bildgr6 = tk.Button(self, image=self.imgbildgr6, bd=0, bg='white',
-                               command=lambda: controller.show_frame(Ubersicht))
+                            command=lambda: controller.show_frame(Ubersicht))
         bildgr7 = tk.Button(self, image=self.imgbildgr7, bd=0, bg='white',
-                               command=lambda: controller.show_frame(Ubersicht))
-        #bildgr8 = tk.Button(self, image=self.imgbildgr8, bd=0, bg='white',
-                              # command=lambda: controller.show_frame(Ubersicht))
+                            command=lambda: controller.show_frame(Ubersicht))
+        # bildgr8 = tk.Button(self, image=self.imgbildgr8, bd=0, bg='white',
+        # command=lambda: controller.show_frame(Ubersicht))
 
         # Buttons zum Wechseln zwischen den Hauptseiten und "Alle anzeigen" Button für die Übersichtsseite
         all = tk.Button(self, text="Alle anzeigen", bd=0, bg='white', fg=SRH_Blau, font=("Inter", 20),
-                           command=lambda: controller.show_frame(Ubersicht))
+                        command=lambda: controller.show_frame(Ubersicht))
         seitevor = tk.Button(self, image=self.imgseitevor, bd=0, bg='white', fg='#1E1E1E', font=("Inter", 16),
-                        command=lambda: controller.show_frame(MainPageS2))
+                             command=lambda: controller.show_frame(MainPageS2))
         seiteback = tk.Button(self, image=self.imgseiteback, bd=0, bg='white', fg='#1E1E1E', font=("Inter", 16),
-                        command=lambda: controller.show_frame(MainPage))
+                              command=lambda: controller.show_frame(MainPage))
 
         # Style Konfiguration für Header und Footer, Platzierung der Buttons, Header und Footer
         style = ttk.Style()
@@ -264,7 +271,7 @@ class MainPageS2(tk.Frame):
         bildgr5.place(relx=0.20, rely=0.55, anchor='n')
         bildgr6.place(relx=0.40, rely=0.55, anchor='n')
         bildgr7.place(relx=0.60, rely=0.55, anchor='n')
-        #bildgr8.place(relx=0.80, rely=0.55, anchor='n')
+        # bildgr8.place(relx=0.80, rely=0.55, anchor='n')
 
         all.place(relx=0.01, rely=0.18, anchor='w')
         seitevor.place(relx=0.51, rely=0.80, anchor='n')
@@ -272,9 +279,11 @@ class MainPageS2(tk.Frame):
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
         bottom.place(relx=0, rely=0.85, relwidth=1, relheight=0.13)
 
+
 class Ubersicht(tk.Frame):
     """Repraesentiert die Geraeteuebersichtsseite der Anwendung. Zeigt eine Liste oder Tabelle der verfügbaren
        Geräte und bietet Optionen für die Navigation zurück zur Hauptseite, zum Login und zu Benutzerprofilen """
+
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.configure(bg='white')
@@ -301,26 +310,26 @@ class Ubersicht(tk.Frame):
 
         # Login und Profil Buttons im Header-Bereich, Platzierung der Buttons, Header und Sidebar
         login = tk.Button(header, image=self.imglogin, bd=0, bg=SRH_Orange,
-                            command=lambda: controller.show_frame(LogInWindow))
+                          command=lambda: controller.show_frame(LogInWindow))
         profil = tk.Button(header, image=self.imgprofil, bd=0, bg=SRH_Orange,
-                            command=lambda: controller.show_frame(Profil))
+                           command=lambda: controller.show_frame(Profil))
         self.imgmainpage = tk.PhotoImage(
             file="gui/assets/backtosite_icon.png")
 
         login.place(relx=0.95, rely=0.5, anchor="center")
         profil.place(relx=0.90, rely=0.5, anchor="center")
 
-        mainpage = tk.Button(header, image=self.imgmainpage, bd=0, bg=SRH_Orange,
-                            command=lambda: controller.show_frame(MainPage))
+        tk.Button(header, image=self.imgmainpage, bd=0, bg=SRH_Orange,
+                  command=lambda: controller.show_frame(MainPage))
 
         # "Alle Anzeigen" Button in der Seitenleiste
-        all_button = tk.Button(verzeichniss, text="Alle anzeigen", bd=0, bg=SRH_Grey, fg='black', font=("Inter", 20, 'bold'),
-                                command=lambda: controller.show_frame(Ubersicht))
+        all_button = tk.Button(verzeichniss, text="Alle anzeigen", bd=0, bg=SRH_Grey, fg='black',
+                               font=("Inter", 20, 'bold'),
+                               command=lambda: controller.show_frame(Ubersicht))
 
         all_button.pack(pady=10, anchor='w')
 
-
-#Gruppe 1
+        # Gruppe 1
         def show_dropdown_grp1():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=SRH_Grey, fg='black')
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Admin))
@@ -334,7 +343,7 @@ class Ubersicht(tk.Frame):
                                 command=show_dropdown_grp1)
         grp1_button.pack(pady=10, anchor='w')
 
-#Gruppe 2
+        # Gruppe 2
         def show_dropdown_grp2():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=SRH_Grey, fg='black')
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Admin))
@@ -348,7 +357,7 @@ class Ubersicht(tk.Frame):
                                 command=show_dropdown_grp2)
         grp2_button.pack(pady=10, anchor='w')
 
-# Gruppe 3
+        # Gruppe 3
         def show_dropdown_grp3():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=SRH_Grey, fg='black')
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Admin))
@@ -362,7 +371,7 @@ class Ubersicht(tk.Frame):
                                 command=show_dropdown_grp3)
         grp3_button.pack(pady=10, anchor='w')
 
-#Gruppe 4
+        # Gruppe 4
         def show_dropdown_grp4():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=SRH_Grey, fg='black')
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Admin))
@@ -376,7 +385,7 @@ class Ubersicht(tk.Frame):
                                 command=show_dropdown_grp4)
         grp4_button.pack(pady=10, anchor='w')
 
-# Gruppe 5
+        # Gruppe 5
         def show_dropdown_grp5():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=SRH_Grey, fg='black')
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Admin))
@@ -390,7 +399,7 @@ class Ubersicht(tk.Frame):
                                 command=show_dropdown_grp5)
         grp5_button.pack(pady=10, anchor='w')
 
-# Gruppe 6
+        # Gruppe 6
         def show_dropdown_grp6():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=SRH_Grey, fg='black')
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Admin))
@@ -404,7 +413,7 @@ class Ubersicht(tk.Frame):
                                 command=show_dropdown_grp6)
         grp6_button.pack(pady=10, anchor='w')
 
-# Gruppe 7
+        # Gruppe 7
         def show_dropdown_grp7():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=SRH_Grey, fg='black')
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Admin))
@@ -418,7 +427,7 @@ class Ubersicht(tk.Frame):
                                 command=show_dropdown_grp7)
         grp7_button.pack(pady=10, anchor='w')
 
-# Gruppe 8
+        # Gruppe 8
         def show_dropdown_grp8():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=SRH_Grey, fg='black')
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Admin))
@@ -432,18 +441,18 @@ class Ubersicht(tk.Frame):
                                 command=show_dropdown_grp8)
         grp8_button.pack(pady=10, anchor='w')
 
-#Seiteninhalt
-        #switch_button = tk.Button(self, text="switch", bg='#081424', fg='white',
-                                  #font=("Inter", 20, 'bold'),
-                                  #command=lambda: controller.show_frame(Gerateansicht))
-        #switch_button.grid(row=4, column=0, pady=20)
-        #Bilder
+        # Seiteninhalt
+        # switch_button = tk.Button(self, text="switch", bg='#081424', fg='white',
+        # font=("Inter", 20, 'bold'),
+        # command=lambda: controller.show_frame(Gerateansicht))
+        # switch_button.grid(row=4, column=0, pady=20)
+        # Bilder
         self.imgFilter = load_image("gui/assets/Filter_Button.png")
         self.imgSuche = load_image("gui/assets/Search.png")
         self.imgHinzufugen = load_image("gui/assets/Adding_Icon.png")
         self.imgAktionen = load_image("gui/assets/Aktionen_Button.png")
 
-        #Filterfunktion
+        # Filterfunktion
         def show_dropdown_Filter():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg='white', fg='black')
             dropdown_menu.add_command(label="→ Status", command=lambda: print("nach Status sortieren"))
@@ -453,25 +462,28 @@ class Ubersicht(tk.Frame):
             dropdown_menu.post(Filter_button.winfo_rootx(), Filter_button.winfo_rooty() + Filter_button.winfo_height())
 
         Filter_button = tk.Button(self.ubersicht_frame, image=self.imgFilter, bd=0, bg='white', fg='black',
-                                font=("Inter", 20, 'bold'),
-                                command=show_dropdown_Filter)
+                                  font=("Inter", 20, 'bold'),
+                                  command=show_dropdown_Filter)
         Filter_button.place(relx=0, rely=0.1)
-        #Suche
-        suche_button = tk.Button(self.ubersicht_frame, image=self.imgSuche, bd=0, bg=SRH_Grey, command=lambda: print(f"nach {suche_entry} gesucht"))
+        # Suche
+        suche_button = tk.Button(self.ubersicht_frame, image=self.imgSuche, bd=0, bg=SRH_Grey,
+                                 command=lambda: print(f"nach {suche_entry} gesucht"))
         suche_entry = tk.Entry(self.ubersicht_frame, bg='#D9D9D9', bd=0, font=("Inter", 12))
 
         suche_button.place(relx=0.1, rely=0.1, relheight=0.04, relwidth=0.02)
         suche_entry.place(relx=0.12, rely=0.1, relwidth=0.33, relheight=0.04)
 
-        #Hinzufügen
-        Hinzufugen_button = tk.Button(self.ubersicht_frame, image=self.imgHinzufugen, bd=0, bg='white', command=lambda: controller.show_frame(Gerateansicht))
+        # Hinzufügen
+        Hinzufugen_button = tk.Button(self.ubersicht_frame, image=self.imgHinzufugen, bd=0, bg='white',
+                                      command=lambda: controller.show_frame(Gerateansicht))
         Hinzufugen_button.place(relx=0.5, rely=0.1)
 
-        #Aktionen
-        Aktionen_button = tk.Button(self.ubersicht_frame, image=self.imgAktionen, bd=0, bg='white', command=lambda: print("Aktionen werden ausgeführt"))
+        # Aktionen
+        Aktionen_button = tk.Button(self.ubersicht_frame, image=self.imgAktionen, bd=0, bg='white',
+                                    command=lambda: print("Aktionen werden ausgeführt"))
         Aktionen_button.place(relx=0.6, rely=0.1)
 
-        #Tabelle
+        # Tabelle
         lst = [(1, 'IT-18', 'hfsfdfs', 'PC', 'Aktiv', 'frei'),
                (2, 'IT-98', 'gdsg', 'PC', 'Aktiv', 'frei'),
                (3, 'IT-08', 'hfsfggwerdfs', 'PC', 'in Reperatur', '/'),
@@ -497,6 +509,7 @@ class Ubersicht(tk.Frame):
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
         self.tabelle_frame.place(relx=0.15, rely=0.3, relwidth=0.85, relheight=0.5)  # Frame für Tabelle definieren
+
 
 class Gerateansicht(tk.Frame):
     def __init__(self, parent, controller):
@@ -536,8 +549,9 @@ class Gerateansicht(tk.Frame):
         # Mainpage-Button innerhalb von gerateansicht_frame, an der gleichen Position wie das profilbild in Profil
         mainpage = tk.Button(self, image=self.imgmainpage, bd=0, bg='white',
                              command=lambda: controller.show_frame(Ubersicht))
-        #Seiteninhalt
-        tree = ttk.Treeview(self.gerateansicht_frame, columns=("c1", "c2", "c3", "c4", "c5", "c6"), show="headings", height=5)
+        # Seiteninhalt
+        tree = ttk.Treeview(self.gerateansicht_frame, columns=("c1", "c2", "c3", "c4", "c5", "c6"), show="headings",
+                            height=5)
         scroll = ttk.Scrollbar(self.gerateansicht_frame, orient='vertical', command=tree.yview)
         scroll.grid(row=0, column=1)
         tree.configure(yscrollcommand=scroll.set)
@@ -569,7 +583,6 @@ class Profil(tk.Frame):
 
         self.configure(bg='white')
 
-
         # Header für die Hauptseite
         header = ttk.Label(self, text="Profil", anchor="center", style="Header.TLabel")
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
@@ -588,9 +601,9 @@ class Profil(tk.Frame):
 
         # Positionierung der Buttons
         login = tk.Button(header, image=self.imglogin, bd=0, bg=SRH_Orange,
-                            command=lambda: controller.show_frame(LogInWindow))
+                          command=lambda: controller.show_frame(LogInWindow))
         mainpage = tk.Button(header, image=self.imgmainpage, bd=0, bg=SRH_Orange,
-                            command=lambda: controller.show_frame(MainPage))
+                             command=lambda: controller.show_frame(MainPage))
         profilbild = tk.Button(self, image=self.imgProfileTest, bd=0, bg='white',
                                command=lambda: controller.show_frame(MainPage))
 
@@ -613,11 +626,12 @@ class Profil(tk.Frame):
         stats_button.pack(pady=10, anchor='w')
 
         einstellungen_button = tk.Button(verzeichniss, text="Einstellungen", bd=0, bg=SRH_Grey, fg='black',
-                                 font=("Inter", 20, 'bold'),
-                                 command=lambda: controller.show_frame(Einstellungen))
+                                         font=("Inter", 20, 'bold'),
+                                         command=lambda: controller.show_frame(Einstellungen))
         einstellungen_button.pack(pady=10, anchor='w')
 
         profilbild.place(relx=0.16, rely=0.16, anchor='nw')
+
 
 class Admin(tk.Frame):
 
@@ -641,9 +655,9 @@ class Admin(tk.Frame):
         # Positionierung und Seitennavigations-Buttons für Benutzer, Admin, Statistiken und Einstellungen, Login,
         # Hauptseite und Profilbild
         login = tk.Button(header, image=self.imglogin, bd=0, bg=SRH_Orange,
-                            command=lambda: controller.show_frame(LogInWindow))
+                          command=lambda: controller.show_frame(LogInWindow))
         mainpage = tk.Button(header, image=self.imgmainpage, bd=0, bg=SRH_Orange,
-                            command=lambda: controller.show_frame(MainPage))
+                             command=lambda: controller.show_frame(MainPage))
 
         login.place(relx=0.95, rely=0.5, anchor="center")
         mainpage.place(relx=0.90, rely=0.5, anchor="center")
@@ -663,12 +677,13 @@ class Admin(tk.Frame):
         stats_button.pack(pady=10, anchor='w')
 
         einstellungen_button = tk.Button(verzeichniss, text="Einstellungen", bd=0, bg=SRH_Grey, fg='black',
-                                 font=("Inter", 20, 'bold'),
-                                 command=lambda: controller.show_frame(Einstellungen))
+                                         font=("Inter", 20, 'bold'),
+                                         command=lambda: controller.show_frame(Einstellungen))
         einstellungen_button.pack(pady=10, anchor='w')
 
         self.admin_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
+
 
 class Stats(tk.Frame):
 
@@ -693,9 +708,9 @@ class Stats(tk.Frame):
 
         # Header-Navigationsbuttons (Login und Hauptseite), Platzierung der Header-Buttons
         login = tk.Button(header, image=self.imglogin, bd=0, bg=SRH_Orange,
-                            command=lambda: controller.show_frame(LogInWindow))
+                          command=lambda: controller.show_frame(LogInWindow))
         mainpage = tk.Button(header, image=self.imgmainpage, bd=0, bg=SRH_Orange,
-                            command=lambda: controller.show_frame(MainPage))
+                             command=lambda: controller.show_frame(MainPage))
 
         login.place(relx=0.95, rely=0.5, anchor="center")
         mainpage.place(relx=0.90, rely=0.5, anchor="center")
@@ -716,13 +731,14 @@ class Stats(tk.Frame):
         stats_button.pack(pady=10, anchor='w')
 
         einstellungen_button = tk.Button(verzeichniss, text="Einstellungen", bd=0, bg=SRH_Grey, fg='black',
-                                 font=("Inter", 20, 'bold'),
-                                 command=lambda: controller.show_frame(Einstellungen))
+                                         font=("Inter", 20, 'bold'),
+                                         command=lambda: controller.show_frame(Einstellungen))
         einstellungen_button.pack(pady=10, anchor='w')
 
         # Platzierung des Hauptinhaltsbereichs und der Navigationsleiste
         self.stats_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
+
 
 class Einstellungen(tk.Frame):
 
@@ -747,7 +763,7 @@ class Einstellungen(tk.Frame):
         verzeichniss = tk.Frame(self, bg=SRH_Grey)
         self.einstellung_frame = tk.Frame(self, bg='white')
 
-        einstellungen_frame = ttk.Label(self, text="Einstellungen", anchor="center", style="Einstellungen.TLabel")
+        ttk.Label(self, text="Einstellungen", anchor="center", style="Einstellungen.TLabel")
 
         # Navigationsbuttons im Header (Login und Mainpage)
         self.imglogin = tk.PhotoImage(
@@ -755,13 +771,15 @@ class Einstellungen(tk.Frame):
         self.imgmainpage = tk.PhotoImage(
             file="gui/assets/backtosite_icon.png")
 
-        login = tk.Button(self.header, image=self.imglogin, bd=0,bg=SRH_Orange,
-                            command=lambda: controller.show_frame(LogInWindow))
-        mainpage = tk.Button(self.header, image=self.imgmainpage, bd=0,bg=SRH_Orange,
-                            command=lambda: controller.show_frame(MainPage))
-        #login_label = tk.Button(self.header, text="🚪",bd=0, fg='#858383', font=("Inter", 19), command=lambda: controller.show_frame(LogInWindow))
-        #login_label.place(relx=0.70, rely=0.5, anchor="center")
-        # Platzierung der Header-Navigationsbuttons, Linksseitige Navigationsbuttons für andere Ansichten (Profil, Admin, Stats, EinstellungenO
+        login = tk.Button(self.header, image=self.imglogin, bd=0, bg=SRH_Orange,
+                          command=lambda: controller.show_frame(LogInWindow))
+        mainpage = tk.Button(self.header, image=self.imgmainpage, bd=0, bg=SRH_Orange,
+                             command=lambda: controller.show_frame(MainPage))
+        # login_label = tk.Button(self.header, text="🚪",bd=0, fg='#858383', font=("Inter", 19)
+        # , command=lambda: controller.show_frame(LogInWindow))
+        # login_label.place(relx=0.70, rely=0.5, anchor="center")
+        # Platzierung der Header-Navigationsbuttons, Linksseitige
+        # Navigationsbuttons für andere Ansichten (Profil, Admin, Stats, EinstellungenO
         login.place(relx=0.95, rely=0.5, anchor="center")
         mainpage.place(relx=0.90, rely=0.5, anchor="center")
 
@@ -780,14 +798,14 @@ class Einstellungen(tk.Frame):
         stats_button.pack(pady=10, anchor='w')
 
         einstellungen_button = tk.Button(verzeichniss, text="Einstellungen", bd=0, bg=SRH_Grey, fg='black',
-                                 font=("Inter", 20, 'bold'),
-                                 command=lambda: controller.show_frame(Einstellungen))
+                                         font=("Inter", 20, 'bold'),
+                                         command=lambda: controller.show_frame(Einstellungen))
         einstellungen_button.pack(pady=10, anchor='w')
 
         # Platziung des Verzeichnisses (Navigationsleiste)
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
 
-# Seiteninhalt
+        # Seiteninhalt
 
         # Label für die Details-Sektion
         details_label = tk.Label(self.einstellung_frame, text="Details", bg='white', fg='#858383', font=("Inter", 19))
@@ -817,9 +835,9 @@ class Einstellungen(tk.Frame):
             dropdown_menu.post(format_drop.winfo_rootx(), format_drop.winfo_rooty() + format_drop.winfo_height())
 
         # Darstellung Label
-        darstellung_label = tk.Label(self.einstellung_frame, text="Darstellung", bg='white', fg='#858383', font=("Inter", 19))
+        darstellung_label = tk.Label(self.einstellung_frame, text="Darstellung", bg='white', fg='#858383',
+                                     font=("Inter", 19))
         darstellung_label.place(relx=0.0, rely=0.32)
-
 
         # Bildvariablen zur Theme-Umschaltung
         try:
@@ -827,7 +845,7 @@ class Einstellungen(tk.Frame):
             self.dark = PhotoImage(file="gui/assets/switchon.png")
         except EXCEPTION as e:
             print(f"Fehler beim laden der Bilder: {e}")
-            return # Beende falls die Bilder nicht geladen werden können
+            return  # Beende falls die Bilder nicht geladen werden können
 
         def toggle():
             if self.switch_value:
@@ -839,7 +857,7 @@ class Einstellungen(tk.Frame):
                 self.switch.config(image=self.light, bg="white", activebackground="white")
                 self.switch_value = True
 
-        #Funktion zum Anwenden des Darkmode
+        # Funktion zum Anwenden des Darkmode
         def apply_darkmode():
             self.config(bg=Darkmode_Black)
             self.einstellung_frame.config(bg=Darkmode_Black)
@@ -857,7 +875,8 @@ class Einstellungen(tk.Frame):
             details_label.config(bg=Darkmode_Black, fg="white")
             darstellung_label.config(bg=Darkmode_Black, fg="white")
             datenbank_label.config(bg=Darkmode_Black, fg="white")
-        #Funktion zum Anwenden des Lightmodes
+
+        # Funktion zum Anwenden des Lightmodes
         def apply_lightmode():
             self.config(bg="white")
             self.einstellung_frame.config(bg="white")
@@ -904,28 +923,34 @@ class Einstellungen(tk.Frame):
         color_dropdown.bind("<<ComboboxSelected>>", change_header_color)
 
         # Datenbank-Sektion und Buttons zur Verwaltung der Datenbankelemente
-        datenbank_label = tk.Label(self.einstellung_frame, text="Datenbank", bg='white', fg='#858383', font=("Inter", 19))
+        datenbank_label = tk.Label(self.einstellung_frame, text="Datenbank", bg='white', fg='#858383',
+                                   font=("Inter", 19))
         datenbank_label.place(relx=0.0, rely=0.59)
 
-        addSpalten_button = tk.Button(self.einstellung_frame, text="Spalte\t+",  bd=0, bg='white', fg='black', font=("Inter", 16),
-                                command=lambda: print("Spalte hinzugefügt"))
+        addSpalten_button = tk.Button(self.einstellung_frame, text="Spalte\t+", bd=0, bg='white', fg='black',
+                                      font=("Inter", 16),
+                                      command=lambda: print("Spalte hinzugefügt"))
         addSpalten_button.place(relx=0.01, rely=0.64, relheight=0.032)
 
-        addStatus_button = tk.Button(self.einstellung_frame, text="Status\t+",  bd=0, bg='white', fg='black', font=("Inter", 16),
-                                command=lambda: print("Status hinzugefügt"))
+        addStatus_button = tk.Button(self.einstellung_frame, text="Status\t+", bd=0, bg='white', fg='black',
+                                     font=("Inter", 16),
+                                     command=lambda: print("Status hinzugefügt"))
         addStatus_button.place(relx=0.01, rely=0.69, relheight=0.032)
 
-        addTyp_button = tk.Button(self.einstellung_frame, text="Typ\t+",  bd=0, bg='white', fg='black', font=("Inter", 16),
-                                command=lambda: print("Typ hinzugefügt"))
+        addTyp_button = tk.Button(self.einstellung_frame, text="Typ\t+", bd=0, bg='white', fg='black',
+                                  font=("Inter", 16),
+                                  command=lambda: print("Typ hinzugefügt"))
         addTyp_button.place(relx=0.01, rely=0.74, relheight=0.032)
 
-        addGerat_button = tk.Button(self.einstellung_frame, text="Gerät\t+",  bd=0, bg='white', fg='black', font=("Inter", 16),
-                                command=lambda: controller.show_frame(Gerateansicht))
+        addGerat_button = tk.Button(self.einstellung_frame, text="Gerät\t+", bd=0, bg='white', fg='black',
+                                    font=("Inter", 16),
+                                    command=lambda: controller.show_frame(Gerateansicht))
         addGerat_button.place(relx=0.01, rely=0.79, relheight=0.032)
 
         # Platzierung der Hauptframe-Bereiche
         self.einstellung_frame.place(relx=0.15, rely=0.15, relwidth=1, relheight=0.85)
         self.header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
+
 
 app = GuiTest()
 app.mainloop()
