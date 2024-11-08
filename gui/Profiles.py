@@ -1,10 +1,10 @@
 import tkinter as tk
 from tkinter import ttk
 
+import Einstellungen
 import ThemeManager
 import gui_prototyp
 import Mainpages
-import Einstellungen
 
 
 class Profil(tk.Frame):

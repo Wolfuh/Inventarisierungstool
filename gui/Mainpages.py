@@ -1,10 +1,10 @@
 import tkinter as tk
 from tkinter import ttk
 
+import gui_prototyp
 import ThemeManager
 import Overview_pages
 import Profiles
-import gui_prototyp
 
 
 class MainPage(tk.Frame):

@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import PhotoImage
-import gui_prototyp
-import Profiles
+
 import Einstellungen
 # SRH Farben (Corporate Design)
 SRH_Orange = "#df4807"

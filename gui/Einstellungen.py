@@ -2,11 +2,12 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import *
 
+import gui_prototyp
 import ThemeManager
 import Mainpages
 import Overview_pages
 import Profiles
-import gui_prototyp
+
 
 
 class Einstellungen(tk.Frame):

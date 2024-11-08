@@ -2,11 +2,11 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import *
 
+import gui_prototyp
 import ThemeManager
 import Mainpages
 import Einstellungen
 import Profiles
-import gui_prototyp
 
 
 class Ubersicht(tk.Frame):
