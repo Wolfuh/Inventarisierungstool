@@ -10,7 +10,7 @@ import Profiles
 import importlib.util
 
 # login_DB
-login_DB_path = '../db/login_DB.py'
+login_DB_path = 'db/login_DB.py'
 
 # Load and import module dynamically
 spec = importlib.util.spec_from_file_location("login_DB", login_DB_path)
