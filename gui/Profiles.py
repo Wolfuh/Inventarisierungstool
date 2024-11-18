@@ -25,10 +25,10 @@ class Profil(tk.Frame):
         self.profil_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
 
         self.imglogin = tk.PhotoImage(
-            file="gui/assets/Closeicon.png")
+            file="assets/Closeicon.png")
         self.imgmainpage = tk.PhotoImage(
-            file="gui/assets/backtosite_icon.png")
-        self.imgProfileTest = tk.PhotoImage(file="gui/assets/profile.png")
+            file="assets/backtosite_icon.png")
+        self.imgProfileTest = tk.PhotoImage(file="assets/profile.png")
 
         # Positionierung der Buttons
         login = tk.Button(header, image=self.imglogin, bd=0, bg=ThemeManager.SRH_Orange,
@@ -79,9 +79,9 @@ class Admin(tk.Frame):
         self.admin_frame = tk.Frame(self, bg='white')
 
         self.imglogin = tk.PhotoImage(
-            file="gui/assets/Closeicon.png")
+            file="assets/Closeicon.png")
         self.imgmainpage = tk.PhotoImage(
-            file="gui/assets/backtosite_icon.png")
+            file="assets/backtosite_icon.png")
 
         # Positionierung und Seitennavigations-Buttons für Benutzer, Admin, Statistiken und Einstellungen, Login,
         # Hauptseite und Profilbild
@@ -133,9 +133,9 @@ class Stats(tk.Frame):
 
         # Bilder für die Login- und Hauptseite-Buttons laden
         self.imglogin = tk.PhotoImage(
-            file="gui/assets/Closeicon.png")
+            file="assets/Closeicon.png")
         self.imgmainpage = tk.PhotoImage(
-            file="gui/assets/backtosite_icon.png")
+            file="assets/backtosite_icon.png")
 
         # Header-Navigationsbuttons (Login und Hauptseite), Platzierung der Header-Buttons
         login = tk.Button(header, image=self.imglogin, bd=0, bg=ThemeManager.SRH_Orange,
