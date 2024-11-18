@@ -19,7 +19,8 @@ class Ubersicht(tk.Frame):
 
         # Stilkonfiguration für Header und Footer, Erstellung vom Header und des Überschriftbereiches.
         style = ttk.Style()
-        style.configure("Header.TLabel", foreground='white', background=ThemeManager.SRH_Orange, font=("Inter", 55, 'bold'))
+        style.configure("Header.TLabel", foreground='white',
+                        background=ThemeManager.SRH_Orange, font=("Inter", 55, 'bold'))
         style.configure("Footer.TLabel", background=ThemeManager.SRH_Grey)
         header = ttk.Label(self, text="Geräteübersicht", anchor="center", style="Header.TLabel")
         verzeichniss = tk.Frame(self, bg=ThemeManager.SRH_Grey)
@@ -176,10 +177,10 @@ class Ubersicht(tk.Frame):
         # command=lambda: controller.show_frame(Gerateansicht))
         # switch_button.grid(row=4, column=0, pady=20)
         # Bilder
-        self.imgFilter = load_image("gui/assets/Filter_Button.png")
-        self.imgSuche = load_image("gui/assets/Search.png")
-        self.imgHinzufugen = load_image("gui/assets/Adding_Icon.png")
-        self.imgAktionen = load_image("gui/assets/Aktionen_Button.png")
+        self.imgFilter = gui_prototyp.load_image("gui/assets/Filter_Button.png")
+        self.imgSuche = gui_prototyp.load_image("gui/assets/Search.png")
+        self.imgHinzufugen = gui_prototyp.load_image("gui/assets/Adding_Icon.png")
+        self.imgAktionen = gui_prototyp.load_image("gui/assets/Aktionen_Button.png")
 
         # Filterfunktion
         def show_dropdown_Filter():
@@ -262,11 +263,12 @@ class Gerateansicht(tk.Frame):
         # Bilder laden
         self.imglogin = tk.PhotoImage(file="gui/assets/Closeicon.png")
         self.imgmainpage = tk.PhotoImage(file="gui/assets/backtosite_grey_icon.png")
-        self.imgprofil = load_image("gui/assets/profileicon.png")
+        self.imgprofil = gui_prototyp.load_image("gui/assets/profileicon.png")
 
         # Stil für Header und Footer anpassen
         style = ttk.Style()
-        style.configure("Header.TLabel", foreground='white', background=ThemeManager.SRH_Orange, font=("Inter", 50, 'bold'))
+        style.configure("Header.TLabel", foreground='white',
+                        background=ThemeManager.SRH_Orange, font=("Inter", 50, 'bold'))
         style.configure("Footer.TLabel", background=ThemeManager.SRH_Grey)
 
         # Buttons hinzufügen

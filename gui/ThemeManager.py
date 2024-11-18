@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import PhotoImage
 
-import Einstellungen
 # SRH Farben (Corporate Design)
 SRH_Orange = "#df4807"
 SRH_Grey = "#d9d9d9"
