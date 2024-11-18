@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="com.obiscr.chatgpt.settings.EasyCodeState">
+    <option name="projectFiles" value="$PROJECT_DIR$/db/items_config.py;C:/Inventar/db/login_DB.py;C:/Inventar/db/SQLite_db.py;C:/Inventar/db/SQLite_db_runner.py;C:/Inventar/db/test.py;C:/Inventar/db/user_config.py;C:/Inventar/gui/bilder testen.py;C:/Inventar/gui/cgausfa.py;C:/Inventar/gui/Einstellungen.py;C:/Inventar/gui/gui_prototyp.py;C:/Inventar/gui/Mainpages.py;C:/Inventar/gui/Overview_pages.py;C:/Inventar/gui/Profiles.py;C:/Inventar/gui/test stuff.py;C:/Inventar/gui/ThemeManager.py" />
+  </component>
+</project>
