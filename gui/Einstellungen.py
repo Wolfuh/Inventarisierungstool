@@ -6,12 +6,13 @@ import Mainpages
 import Overview_pages
 import ThemeManager
 import Profiles
-
+import os
 
 class Einstellungen(tk.Frame):
 
     def __init__(self, parent, controller):
         super().__init__()
+        root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         tk.Frame.__init__(self, parent)
 
         self.configure(bg='white')
@@ -35,9 +36,9 @@ class Einstellungen(tk.Frame):
 
         # Navigationsbuttons im Header (Login und Mainpage)
         self.imglogin = tk.PhotoImage(
-            file="gui/assets/Closeicon.png")
+            file=root_path+"/gui/assets/Closeicon.png")
         self.imgmainpage = tk.PhotoImage(
-            file="gui/assets/backtosite_icon.png")
+            file=root_path+"/gui/assets/backtosite_icon.png")
 
         login = tk.Button(self.header, image=self.imglogin, bd=0, bg=ThemeManager.SRH_Orange,
                           command=lambda: controller.show_frame(gui_prototyp.LogInWindow))
@@ -111,8 +112,8 @@ class Einstellungen(tk.Frame):
 
         # Bildvariablen zur Theme-Umschaltung
         try:
-            self.light = tk.PhotoImage(file="gui/assets/switchoff.png")
-            self.dark = tk.PhotoImage(file="gui/assets/switchon.png")
+            self.light = tk.PhotoImage(file=root_path+"/gui/assets/switchoff.png")
+            self.dark = tk.PhotoImage(file=root_path+"/gui/assets/switchon.png")
         except tk.EXCEPTION as e:
             print(f"Fehler beim laden der Bilder: {e}")
             return  # Beende falls die Bilder nicht geladen werden können

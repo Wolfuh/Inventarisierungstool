@@ -5,13 +5,13 @@ import Einstellungen
 import ThemeManager
 import gui_prototyp
 import Mainpages
-
+import os
 
 class Profil(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-
+        root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         self.configure(bg='white')
 
         # Header für die Hauptseite
@@ -25,10 +25,10 @@ class Profil(tk.Frame):
         self.profil_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
 
         self.imglogin = tk.PhotoImage(
-            file="gui/assets/Closeicon.png")
+            file=root_path+"/gui/assets/Closeicon.png")
         self.imgmainpage = tk.PhotoImage(
-            file="gui/assets/backtosite_icon.png")
-        self.imgProfileTest = tk.PhotoImage(file="gui/assets/profile.png")
+            file=root_path+"/gui/assets/backtosite_icon.png")
+        self.imgProfileTest = tk.PhotoImage(file=root_path+"/gui/assets/profile.png")
 
         # Positionierung der Buttons
         login = tk.Button(header, image=self.imglogin, bd=0, bg=ThemeManager.SRH_Orange,
@@ -67,6 +67,7 @@ class Profil(tk.Frame):
 class Admin(tk.Frame):
 
     def __init__(self, parent, controller):
+        root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         tk.Frame.__init__(self, parent)
         self.configure(bg='white')
 
@@ -79,9 +80,9 @@ class Admin(tk.Frame):
         self.admin_frame = tk.Frame(self, bg='white')
 
         self.imglogin = tk.PhotoImage(
-            file="gui/assets/Closeicon.png")
+            file=root_path+"/gui/assets/Closeicon.png")
         self.imgmainpage = tk.PhotoImage(
-            file="gui/assets/backtosite_icon.png")
+            file=root_path+"/gui/assets/backtosite_icon.png")
 
         # Positionierung und Seitennavigations-Buttons für Benutzer, Admin, Statistiken und Einstellungen, Login,
         # Hauptseite und Profilbild
@@ -120,7 +121,7 @@ class Stats(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-
+        root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         self.configure(bg='white')
 
         # Header-Label für die Statistikseite
@@ -133,9 +134,9 @@ class Stats(tk.Frame):
 
         # Bilder für die Login- und Hauptseite-Buttons laden
         self.imglogin = tk.PhotoImage(
-            file="gui/assets/Closeicon.png")
+            file=root_path+"/gui/assets/Closeicon.png")
         self.imgmainpage = tk.PhotoImage(
-            file="gui/assets/backtosite_icon.png")
+            file=root_path+"/gui/assets/backtosite_icon.png")
 
         # Header-Navigationsbuttons (Login und Hauptseite), Platzierung der Header-Buttons
         login = tk.Button(header, image=self.imglogin, bd=0, bg=ThemeManager.SRH_Orange,
