@@ -283,25 +283,53 @@ class Gerateansicht(tk.Frame):
         mainpage = tk.Button(self, image=self.imgmainpage, bd=0, bg='white',
                              command=lambda: controller.show_frame(Ubersicht))
         # Seiteninhalt
-        tree = ttk.Treeview(self.gerateansicht_frame, columns=("c1", "c2", "c3", "c4", "c5", "c6"), show="headings",
+        tree = ttk.Treeview(self.gerateansicht_frame, columns=("c1", "c2", "c3"), show="headings",
                             height=5)
         scroll = ttk.Scrollbar(self.gerateansicht_frame, orient='vertical', command=tree.yview)
-        scroll.grid(row=0, column=1)
+        #scroll.place(x=700, y=0.9, height=tree.winfo_height())
         tree.configure(yscrollcommand=scroll.set)
 
         tree.column("#1", anchor=CENTER, width=50)
-        tree.heading("#1", text="das")
+        tree.heading("#1", text="Benutzer")
         tree.column("#2", anchor=CENTER, width=100)
-        tree.heading("#2", text="ist")
+        tree.heading("#2", text="Datum")
         tree.column("#3", anchor=CENTER, width=200)
-        tree.heading("#3", text="ein")
-        tree.column("#4", anchor=CENTER, width=230)
-        tree.heading("#4", text="Test")
-        tree.column("#5", anchor=CENTER, width=235)
-        tree.heading("#5", text="hilfe")
-        tree.grid(row=0, column=0)
+        tree.heading("#3", text="Änderung")
+        tree.place(x=0, y=20, relwidth=0.40, relheight=0.5)
+        scroll.place(x=770, y=20, relheight=0.5)
+
+        name_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=1, relief="solid")
+        name_frame.place(x=900, y=20, width=480, height=88)
+        name_label = tk.Label(name_frame, text="Gerätename", bg='white',
+                              font=("Inter", 19))
+
+        tag_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=1, relief="solid")
+        tag_frame.place(x=900, y=120, width=480, height=88)
+        tag_label = tk.Label(tag_frame, text="Seriennummer/Servicetag", bg='white',
+                              font=("Inter", 19))
+
+        typ_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=1, relief="solid")
+        typ_frame.place(x=900, y=220, width=480, height=88)
+        typ_label = tk.Label(typ_frame, text="Gerätetyp", bg='white',
+                             font=("Inter", 19))
+
+        status_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=1, relief="solid")
+        status_frame.place(x=900, y=320, width=480, height=88)
+        status_label = tk.Label(status_frame, text="Status", bg='white',
+                             font=("Inter", 19))
+
+        standort_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=1, relief="solid")
+        standort_frame.place(x=900, y=420, width=480, height=88)
+        standort_label = tk.Label(standort_frame, text="Standort", bg='white',
+                             font=("Inter", 19))
 
         # Positionierung
+        name_label.grid(row=5, column=5, pady=10)
+        tag_label.grid(row=5, column=5, pady=10)
+        typ_label.grid(row=5, column=5, pady=10)
+        status_label.grid(row=5, column=5, pady=10)
+        standort_label.grid(row=5, column=5, pady=10)
+
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
         login.place(relx=0.95, rely=0.5, anchor="center")
