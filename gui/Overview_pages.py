@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import *
-
+import os
 import gui_prototyp
 import ThemeManager
 import Mainpages
@@ -14,6 +14,7 @@ class Ubersicht(tk.Frame):
        Geräte und bietet Optionen für die Navigation zurück zur Hauptseite, zum Login und zu Benutzerprofilen """
 
     def __init__(self, parent, controller):
+        root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         tk.Frame.__init__(self, parent)
         self.configure(bg='white')
 
@@ -35,8 +36,8 @@ class Ubersicht(tk.Frame):
         self.rowconfigure(0, weight=1)
 
         # Laden der Bilder für die Navigation und Header Buttons
-        self.imglogin = gui_prototyp.load_image("gui/assets/Closeicon.png")
-        self.imgprofil = gui_prototyp.load_image("gui/assets/profileicon.png")
+        self.imglogin = gui_prototyp.load_image(root_path+"/gui/assets/Closeicon.png")
+        self.imgprofil = gui_prototyp.load_image(root_path+"/gui/assets/profileicon.png")
 
         # Login und Profil Buttons im Header-Bereich, Platzierung der Buttons, Header und Sidebar
         login = tk.Button(header, image=self.imglogin, bd=0, bg=ThemeManager.SRH_Orange,
@@ -44,7 +45,7 @@ class Ubersicht(tk.Frame):
         profil = tk.Button(header, image=self.imgprofil, bd=0, bg=ThemeManager.SRH_Orange,
                            command=lambda: controller.show_frame(Profiles.Profil))
         self.imgmainpage = tk.PhotoImage(
-            file="gui/assets/backtosite_icon.png")
+            file=root_path+"/gui/assets/backtosite_icon.png")
 
         login.place(relx=0.95, rely=0.5, anchor="center")
         profil.place(relx=0.90, rely=0.5, anchor="center")
@@ -177,10 +178,10 @@ class Ubersicht(tk.Frame):
         # command=lambda: controller.show_frame(Gerateansicht))
         # switch_button.grid(row=4, column=0, pady=20)
         # Bilder
-        self.imgFilter = gui_prototyp.load_image("gui/assets/Filter_Button.png")
-        self.imgSuche = gui_prototyp.load_image("gui/assets/Search.png")
-        self.imgHinzufugen = gui_prototyp.load_image("gui/assets/Adding_Icon.png")
-        self.imgAktionen = gui_prototyp.load_image("gui/assets/Aktionen_Button.png")
+        self.imgFilter = gui_prototyp.load_image(root_path+"/gui/assets/Filter_Button.png")
+        self.imgSuche = gui_prototyp.load_image(root_path+"/gui/assets/Search.png")
+        self.imgHinzufugen = gui_prototyp.load_image(root_path+"/gui/assets/Adding_Icon.png")
+        self.imgAktionen = gui_prototyp.load_image(root_path+"/gui/assets/Aktionen_Button.png")
 
         # Filterfunktion
         def show_dropdown_Filter():
@@ -243,6 +244,7 @@ class Ubersicht(tk.Frame):
 
 class Gerateansicht(tk.Frame):
     def __init__(self, parent, controller):
+        root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         tk.Frame.__init__(self, parent)
         self.configure(bg='white')
 
@@ -261,9 +263,9 @@ class Gerateansicht(tk.Frame):
         self.gerateansicht_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
 
         # Bilder laden
-        self.imglogin = tk.PhotoImage(file="gui/assets/Closeicon.png")
-        self.imgmainpage = tk.PhotoImage(file="gui/assets/backtosite_grey_icon.png")
-        self.imgprofil = gui_prototyp.load_image("gui/assets/profileicon.png")
+        self.imglogin = tk.PhotoImage(file=root_path+"/gui/assets/Closeicon.png")
+        self.imgmainpage = tk.PhotoImage(file=root_path+"/gui/assets/backtosite_grey_icon.png")
+        self.imgprofil = gui_prototyp.load_image(root_path+"/gui/assets/profileicon.png")
 
         # Stil für Header und Footer anpassen
         style = ttk.Style()

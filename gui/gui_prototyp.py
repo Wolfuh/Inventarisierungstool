@@ -9,13 +9,14 @@ import ThemeManager
 import Profiles
 import importlib.util
 
+root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
 # login_DB
-login_DB_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))+'/db/login_DB.py'
+login_DB_path = root_path+"/gui/assets/+'db/login_DB.py'"
 
 # Load and import module dynamically
 spec = importlib.util.spec_from_file_location("login_DB", login_DB_path)
-login_DB = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(login_DB)
+# login_DB = importlib.util.module_from_spec(spec)
+# spec.loader.exec_module(login_DB)
 
 
 class GuiTest(tk.Tk):

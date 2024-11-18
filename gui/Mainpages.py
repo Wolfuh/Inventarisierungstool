@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+import os
 
 import gui_prototyp
 import ThemeManager
@@ -12,6 +13,7 @@ class MainPage(tk.Frame):
        Ermöglicht den Zugriff auf Login, Profil und Übersichtsseiten"""
 
     def __init__(self, parent, controller):
+        root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         tk.Frame.__init__(self, parent)
         self.configure(bg='white')
 
@@ -28,17 +30,17 @@ class MainPage(tk.Frame):
         self.rowconfigure(0, weight=1)
 
         # laden der Bilder für die Buttons und der Gruppen
-        self.imglogin = gui_prototyp.load_image("gui/assets/Closeicon.png")
-        self.imgprofil = gui_prototyp.load_image("gui/assets/profileicon.png")
-        self.imgbildgr1 = tk.PhotoImage(file="gui/assets/Gruppe1.png")
-        self.imgbildgr2 = tk.PhotoImage(file="gui/assets/Gruppe2.png")
-        self.imgbildgr3 = tk.PhotoImage(file="gui/assets/Gruppe3.png")
-        self.imgbildgr4 = tk.PhotoImage(file="gui/assets/Gruppe4.png")
-        self.imgbildgr5 = tk.PhotoImage(file="gui/assets/Gruppe5.png")
-        self.imgbildgr6 = tk.PhotoImage(file="gui/assets/Gruppe6.png")
-        self.imgbildgr7 = tk.PhotoImage(file="gui/assets/Gruppe7.png")
-        self.imgbildgr8 = tk.PhotoImage(file="gui/assets/Gruppe8.png")
-        self.imgseitevor = tk.PhotoImage(file="gui/assets/pageforward_icon.png")
+        self.imglogin = gui_prototyp.load_image(root_path+"/gui/assets/Closeicon.png")
+        self.imgprofil = gui_prototyp.load_image(root_path+"/gui/assets/profileicon.png")
+        self.imgbildgr1 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe1.png")
+        self.imgbildgr2 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe2.png")
+        self.imgbildgr3 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe3.png")
+        self.imgbildgr4 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe4.png")
+        self.imgbildgr5 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe5.png")
+        self.imgbildgr6 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe6.png")
+        self.imgbildgr7 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe7.png")
+        self.imgbildgr8 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe8.png")
+        self.imgseitevor = tk.PhotoImage(file=root_path+"/gui/assets/pageforward_icon.png")
 
         # Platzierung der Buttons
         login = tk.Button(header, image=self.imglogin, bd=0, bg=ThemeManager.SRH_Orange,
@@ -96,6 +98,7 @@ class MainPageS2(tk.Frame):
        Ermöglicht die Navigation zurück zur Hauptseite oder zu zusätzlichen Detailansichten."""
 
     def __init__(self, parent, controller):
+        root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         tk.Frame.__init__(self, parent)
         self.configure(bg='white')
 
@@ -112,18 +115,18 @@ class MainPageS2(tk.Frame):
         self.rowconfigure(0, weight=1)
 
         # laden der Bilder für Buttons und Gruppen, Buttons für die Navigation (Login, Profil und Bildgruppen)
-        self.imglogin = gui_prototyp.load_image("gui/assets/Closeicon.png")
-        self.imgprofil = gui_prototyp.load_image("gui/assets/profileicon.png")
-        self.imgbildgr1 = tk.PhotoImage(file="gui/assets/Gruppe1.png")
-        self.imgbildgr2 = tk.PhotoImage(file="gui/assets/Gruppe2.png")
-        self.imgbildgr3 = tk.PhotoImage(file="gui/assets/Gruppe3.png")
-        self.imgbildgr4 = tk.PhotoImage(file="gui/assets/Gruppe4.png")
-        self.imgbildgr5 = tk.PhotoImage(file="gui/assets/Gruppe5.png")
-        self.imgbildgr6 = tk.PhotoImage(file="gui/assets/Gruppe6.png")
-        self.imgbildgr7 = tk.PhotoImage(file="gui/assets/Gruppe7.png")
-        # self.imgbildgr8 = tk.PhotoImage(file="gui/assets/Gruppe8.png")
-        self.imgseitevor = tk.PhotoImage(file="gui/assets/pageforward_icon.png")
-        self.imgseiteback = tk.PhotoImage(file="gui/assets/pageback_icon.png")
+        self.imglogin = gui_prototyp.load_image(root_path+"/gui/assets/Closeicon.png")
+        self.imgprofil = gui_prototyp.load_image(root_path+"/gui/assets/profileicon.png")
+        self.imgbildgr1 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe1.png")
+        self.imgbildgr2 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe2.png")
+        self.imgbildgr3 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe3.png")
+        self.imgbildgr4 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe4.png")
+        self.imgbildgr5 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe5.png")
+        self.imgbildgr6 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe6.png")
+        self.imgbildgr7 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe7.png")
+        # self.imgbildgr8 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe8.png")
+        self.imgseitevor = tk.PhotoImage(file=root_path+"/gui/assets/pageforward_icon.png")
+        self.imgseiteback = tk.PhotoImage(file=root_path+"/gui/assets/pageback_icon.png")
         login = tk.Button(header, image=self.imglogin, bd=0, bg=ThemeManager.SRH_Orange,
                           command=lambda: controller.show_frame(gui_prototyp.LogInWindow))
         profil = tk.Button(header, image=self.imgprofil, bd=0, bg=ThemeManager.SRH_Orange,
