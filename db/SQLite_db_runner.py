@@ -2,13 +2,13 @@ import sqlite3
 
 #einmal ausführen
 
-my_db = sqlite3.connect('users.db')
+my_db = sqlite3.connect()
 my_dbc = my_db.cursor()
 
 #my_dbc.execute("""DROP TABLE roles""")
 #my_db.commit()
 
-my_dbc.execute("""CREATE TABLE roles (roles TEXT, can_see BOOLEAN, can_book BOOLEAN, can_add_item BOOLEAN, can_eddit_item BOOLEAN, can_delete_item BOOLEAN, can_eddit_categories BOOLEAN, can_eddit_roles BOOLEAN, can_eddit_user BOOLEAN)""")
+my_dbc.execute("""CREATE TABLE roles (roles TEXT, can_see BOOLEAN, can_book BOOLEAN, can_add_item BOOLEAN, can_edit_item BOOLEAN, can_delete_item BOOLEAN, can_add_item BOOLEAN, can_edit_categories BOOLEAN, can_delete_categories BOOLEAN, can_add_roles BOOLEAN, can_edit_roles BOOLEAN, can_eddit_user BOOLEAN)""")
 my_db.commit()
 
 my_dbc.execute("""INSERT INTO roles 
