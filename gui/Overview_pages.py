@@ -304,19 +304,69 @@ class Gerateansicht(tk.Frame):
                               font=("Inter", 19))
 
         tag_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=1, relief="solid")
-        tag_frame.place(x=900, y=120, width=480, height=88)
+
         tag_label = tk.Label(tag_frame, text="Seriennummer/Servicetag", bg='white',
                               font=("Inter", 19))
 
         typ_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=1, relief="solid")
-        typ_frame.place(x=900, y=220, width=480, height=88)
         typ_label = tk.Label(typ_frame, text="Gerätetyp", bg='white',
                              font=("Inter", 19))
+       #Dropdown Menü Typen
+        typ_drop = tk.Button(typ_frame, text="↓", bd=0, bg='white',
+                                fg=ThemeManager.SRH_Grey,
+                                font=("Inter", 20, 'bold'),
+                                command=lambda: controller.show_frame())
+        typ_drop = tk.Button(typ_frame, text="Typ", bd=0, bg='white', fg='black',
+                                font=("Inter", 20, 'bold'),
+                                command=lambda: controller.show_frame())
+        typ_drop = tk.Button(typ_frame, text="↓", bd=0, bg='white', fg='black',
+                                font=("Inter", 20, 'bold'),
+                                command=lambda: typ_dropdown())  # Button öffnet Dropdown-Menü
+        typ_drop.place(x=420, y=30)
+        def typ_dropdown():
+            dropdown_menu = tk.Menu(typ_frame, tearoff=0, bd=1, bg='white', fg='black')
+            dropdown_menu.add_command(label="→ PC", command=lambda: print("PC ausgewählt"))
+            dropdown_menu.add_command(label="→ Laptop", command=lambda: print("Laptop ausgewählt"))
+            dropdown_menu.add_command(label="→ Bildschirm", command=lambda: print("Bildschirm ausgewählt"))
+            dropdown_menu.add_command(label="→ Raspberrypie", command=lambda: print("Raspberrypie ausgewählt"))
+            dropdown_menu.add_command(label="→ Dockingstation", command=lambda: print("Dockingstation ausgewählt"))
+            dropdown_menu.add_command(label="→ Drucker", command=lambda: print("Drucker ausgewählt"))
+            dropdown_menu.add_command(label="→ Kabel", command=lambda: print("Kabel ausgewählt"))
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: print("Peripherie ausgewählt"))
+            dropdown_menu.add_command(label="→ Sonstiges", command=lambda: print("Sonstiges ausgewählt"))
+
+            dropdown_menu.post(
+                typ_drop.winfo_rootx() - 77,
+                typ_drop.winfo_rooty() + typ_drop.winfo_height()
+            )
 
         status_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=1, relief="solid")
-        status_frame.place(x=900, y=320, width=480, height=88)
         status_label = tk.Label(status_frame, text="Status", bg='white',
                              font=("Inter", 19))
+
+        status_drop = tk.Button(status_frame, text="↓", bd=0, bg='white',
+                             fg=ThemeManager.SRH_Grey,
+                             font=("Inter", 20, 'bold'),
+                             command=lambda: controller.show_frame())
+        status_drop = tk.Button(status_frame, text="Status", bd=0, bg='white', fg='black',
+                             font=("Inter", 20, 'bold'),
+                             command=lambda: controller.show_frame())
+        status_drop = tk.Button(status_frame, text="↓", bd=0, bg='white', fg='black',
+                             font=("Inter", 20, 'bold'),
+                             command=lambda: status_dropdown())  # Button öffnet Dropdown-Menü
+        status_drop.place(x=420, y=30)
+        def status_dropdown():
+            dropdown_menu = tk.Menu(status_frame, tearoff=0, bd=1, bg='white', fg='black')
+            dropdown_menu.add_command(label=f"{'✔'.ljust(3)} in Betrieb", command=lambda: print("Produkt in Betrieb"))
+            dropdown_menu.add_command(label=f"{'⛔'.ljust(1)} in Wartung", command=lambda: print("Produkt in Wartung"))
+            dropdown_menu.add_command(label=f"{'⚠'.ljust(1)} Beschädigt", command=lambda: print("Produkt beschädigt"))
+            dropdown_menu.add_command(label=f"{'✔'.ljust(2)} verfügbar", command=lambda: print("Produkt zum Mieten bereit"))
+            dropdown_menu.add_command(label=f"{'❌'.ljust(3)} gemietet", command=lambda: print("Produkt gemietet"))
+
+            dropdown_menu.post(
+                status_drop.winfo_rootx() - 77,  # Verschiebt das Menü 50 Pixel nach links
+                status_drop.winfo_rooty() + status_drop.winfo_height()
+            )
 
         standort_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=1, relief="solid")
         standort_frame.place(x=900, y=420, width=480, height=88)
@@ -330,6 +380,9 @@ class Gerateansicht(tk.Frame):
         status_label.grid(row=5, column=5, pady=10)
         standort_label.grid(row=5, column=5, pady=10)
 
+        tag_frame.place(x=900, y=120, width=480, height=88)
+        typ_frame.place(x=900, y=220, width=480, height=88)
+        status_frame.place(x=900, y=320, width=480, height=88)
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
         login.place(relx=0.95, rely=0.5, anchor="center")
