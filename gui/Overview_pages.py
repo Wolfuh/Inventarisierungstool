@@ -5,7 +5,7 @@ import os
 import gui_prototyp
 import ThemeManager
 import Mainpages
-import Einstellungen
+import configuration
 import Profiles
 
 
@@ -66,7 +66,7 @@ class Ubersicht(tk.Frame):
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Profiles.Admin))
             dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Profiles.Stats))
             dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profiles.Profil))
-            dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(Einstellungen))
+            dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(configuration))
             dropdown_menu.post(grp1_button.winfo_rootx(), grp1_button.winfo_rooty() + grp1_button.winfo_height())
 
         grp1_button = tk.Button(verzeichniss, text="Gruppe 1   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -80,7 +80,7 @@ class Ubersicht(tk.Frame):
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Profiles.Admin))
             dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Profiles.Stats))
             dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profiles.Profil))
-            dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(Einstellungen))
+            dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(configuration))
             dropdown_menu.post(grp2_button.winfo_rootx(), grp2_button.winfo_rooty() + grp2_button.winfo_height())
 
         grp2_button = tk.Button(verzeichniss, text="Gruppe 2   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -94,7 +94,7 @@ class Ubersicht(tk.Frame):
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Profiles.Admin))
             dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Profiles.Stats))
             dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profiles.Profil))
-            dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(Einstellungen))
+            dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(configuration))
             dropdown_menu.post(grp3_button.winfo_rootx(), grp3_button.winfo_rooty() + grp3_button.winfo_height())
 
         grp3_button = tk.Button(verzeichniss, text="Gruppe 3   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -108,7 +108,7 @@ class Ubersicht(tk.Frame):
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Profiles.Admin))
             dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Profiles.Stats))
             dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profiles.Profil))
-            dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(Einstellungen))
+            dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(configuration))
             dropdown_menu.post(grp4_button.winfo_rootx(), grp4_button.winfo_rooty() + grp4_button.winfo_height())
 
         grp4_button = tk.Button(verzeichniss, text="Gruppe 4   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -122,7 +122,7 @@ class Ubersicht(tk.Frame):
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Profiles.Admin))
             dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Profiles.Stats))
             dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profiles.Profil))
-            dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(Einstellungen))
+            dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(configuration))
             dropdown_menu.post(grp5_button.winfo_rootx(), grp5_button.winfo_rooty() + grp5_button.winfo_height())
 
         grp5_button = tk.Button(verzeichniss, text="Gruppe 5   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -136,7 +136,7 @@ class Ubersicht(tk.Frame):
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Profiles.Admin))
             dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Profiles.Stats))
             dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profiles.Profil))
-            dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(Einstellungen))
+            dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(configuration))
             dropdown_menu.post(grp6_button.winfo_rootx(), grp6_button.winfo_rooty() + grp6_button.winfo_height())
 
         grp6_button = tk.Button(verzeichniss, text="Gruppe 6   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -150,7 +150,7 @@ class Ubersicht(tk.Frame):
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Profiles.Admin))
             dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Profiles.Stats))
             dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profiles.Profil))
-            dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(Einstellungen))
+            dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(configuration))
             dropdown_menu.post(grp7_button.winfo_rootx(), grp7_button.winfo_rooty() + grp7_button.winfo_height())
 
         grp7_button = tk.Button(verzeichniss, text="Gruppe 7   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -164,7 +164,7 @@ class Ubersicht(tk.Frame):
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Profiles.Admin))
             dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Profiles.Stats))
             dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profiles.Profil))
-            dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(Einstellungen))
+            dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(configuration))
             dropdown_menu.post(grp8_button.winfo_rootx(), grp8_button.winfo_rooty() + grp8_button.winfo_height())
 
         grp8_button = tk.Button(verzeichniss, text="Gruppe 8   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',

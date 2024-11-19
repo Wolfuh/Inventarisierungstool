@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 import os
 
-import Einstellungen  # Should be a class instead of a module if instantiated
+import configuration  # Should be a class instead of a module if instantiated
 import Mainpages
 import Overview_pages
 import ThemeManager
@@ -40,8 +40,8 @@ class GuiTest(tk.Tk):
                  Overview_pages.Ubersicht, Overview_pages.Gerateansicht,
                  Profiles.Profil, Profiles.Admin, Profiles.Stats]
 
-        if hasattr(Einstellungen, "Einstellungen"):
-            pages.append(Einstellungen.Einstellungen)
+        if hasattr(configuration, "Einstellungen"):
+            pages.append(configuration.Einstellungen)
 
         for Page in pages:
             frame = Page(container, self)

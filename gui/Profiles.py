@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 
-import Einstellungen
+import configuration
 import ThemeManager
 import gui_prototyp
 import Mainpages
@@ -58,7 +58,7 @@ class Profil(tk.Frame):
 
         einstellungen_button = tk.Button(verzeichniss, text="Einstellungen", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                          font=("Inter", 20, 'bold'),
-                                         command=lambda: controller.show_frame(Einstellungen.Einstellungen))
+                                         command=lambda: controller.show_frame(configuration.Einstellungen))
         einstellungen_button.pack(pady=10, anchor='w')
 
         profilbild.place(relx=0.16, rely=0.16, anchor='nw')
@@ -110,7 +110,7 @@ class Admin(tk.Frame):
 
         einstellungen_button = tk.Button(verzeichniss, text="Einstellungen", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                          font=("Inter", 20, 'bold'),
-                                         command=lambda: controller.show_frame(Einstellungen.Einstellungen))
+                                         command=lambda: controller.show_frame(configuration.Einstellungen))
         einstellungen_button.pack(pady=10, anchor='w')
 
         self.admin_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
@@ -164,7 +164,7 @@ class Stats(tk.Frame):
 
         einstellungen_button = tk.Button(verzeichniss, text="Einstellungen", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                          font=("Inter", 20, 'bold'),
-                                         command=lambda: controller.show_frame(Einstellungen.Einstellungen))
+                                         command=lambda: controller.show_frame(configuration.Einstellungen))
         einstellungen_button.pack(pady=10, anchor='w')
 
         # Platzierung des Hauptinhaltsbereichs und der Navigationsleiste
