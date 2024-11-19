@@ -355,6 +355,8 @@ class Gerateansicht(tk.Frame):
                              font=("Inter", 20, 'bold'),
                              command=lambda: status_dropdown())  # Button öffnet Dropdown-Menü
         status_drop.place(x=420, y=30)
+
+        # Dropdown Menü Status
         def status_dropdown():
             dropdown_menu = tk.Menu(status_frame, tearoff=0, bd=1, bg='white', fg='black')
             dropdown_menu.add_command(label=f"{'✔'.ljust(3)} in Betrieb", command=lambda: print("Produkt in Betrieb"))
@@ -364,7 +366,7 @@ class Gerateansicht(tk.Frame):
             dropdown_menu.add_command(label=f"{'❌'.ljust(3)} gemietet", command=lambda: print("Produkt gemietet"))
 
             dropdown_menu.post(
-                status_drop.winfo_rootx() - 77,  # Verschiebt das Menü 50 Pixel nach links
+                status_drop.winfo_rootx() - 62,  # Verschiebt das Menü 50 Pixel nach links
                 status_drop.winfo_rooty() + status_drop.winfo_height()
             )
 
@@ -372,6 +374,12 @@ class Gerateansicht(tk.Frame):
         standort_frame.place(x=900, y=420, width=480, height=88)
         standort_label = tk.Label(standort_frame, text="Standort", bg='white',
                              font=("Inter", 19))
+
+        #Buttons
+        schaeden_button = gui_prototyp.load_image(root_path+"/gui/assets/Button_Schaeden.png")
+        buttons_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=1, relief="solid")
+        schaeden_button = tk.Button(buttons_frame, image=schaeden_button, bd=0, command=print("test"))
+        schaeden_button.pack(pady=10, anchor='w')
 
         # Positionierung
         name_label.grid(row=5, column=5, pady=10)
@@ -383,6 +391,9 @@ class Gerateansicht(tk.Frame):
         tag_frame.place(x=900, y=120, width=480, height=88)
         typ_frame.place(x=900, y=220, width=480, height=88)
         status_frame.place(x=900, y=320, width=480, height=88)
+        standort_frame.place(x=900, y=420, width=480, height=88)
+        buttons_frame.place(x=900, y=520, width=480, height=300)
+
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
         login.place(relx=0.95, rely=0.5, anchor="center")
