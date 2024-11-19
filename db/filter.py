@@ -28,7 +28,7 @@ while not eingabe == "yes":
             ausgabe = eingabe
         else:
             ausgabe += eingabe
-        my_dbc.execute("SELECT name FROM items WHERE name LIKE ?", (ausgabe + '%',))
+        my_dbc.execute("SELECT name FROM items WHERE name LIKE ?", ('%' + ausgabe + '%',))
     elif auswahl == '3':
         my_dbc.execute("SELECT name FROM items WHERE [group] IS ?", (eingabe,))
 
