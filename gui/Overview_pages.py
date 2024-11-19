@@ -7,6 +7,7 @@ import ThemeManager
 import Mainpages
 import configuration
 import Profiles
+from datetime import datetime
 
 
 class Ubersicht(tk.Frame):
@@ -371,15 +372,98 @@ class Gerateansicht(tk.Frame):
             )
 
         standort_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=1, relief="solid")
-        standort_frame.place(x=900, y=420, width=480, height=88)
         standort_label = tk.Label(standort_frame, text="Standort", bg='white',
                              font=("Inter", 19))
 
-        #Buttons
-        schaeden_button = gui_prototyp.load_image(root_path+"/gui/assets/Button_Schaeden.png")
-        buttons_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=1, relief="solid")
-        schaeden_button = tk.Button(buttons_frame, image=schaeden_button, bd=0, command=print("test"))
-        schaeden_button.pack(pady=10, anchor='w')
+        #Button
+        buttons_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=0, relief="solid")
+        #Img definitionen
+        self.schaeden_img = gui_prototyp.load_image(root_path+"/gui/assets/Button_Schaeden.png")
+        self.buchung_img = gui_prototyp.load_image(root_path+"/gui/assets/Button_Buchung.png")
+        self.speichern_img = gui_prototyp.load_image(root_path+"/gui/assets/Button_Speichern.png")
+
+        #Button Schäden
+
+
+        #Buchungsseite
+        def open_schaeden_page():
+            schaeden_page = tk.Toplevel()#root
+            schaeden_page.title("Schäden eintragen")
+            schaeden_page.geometry("819x594+500+300")
+            schaeden_page.configure(bg='white')
+
+            #Bilder
+            self.aktualisieren_img = gui_prototyp.load_image(root_path+"/gui/assets/Button_Aktualisieren.png")
+            self.upload_img = gui_prototyp.load_image(root_path+"/gui/assets/Button_Drop.png")
+
+            #Informationen
+            info_frame = tk.Frame(schaeden_page, bg='white', bd=1)
+            verlauf_frame = tk.Frame(schaeden_page, bg='white', bd=1)
+
+            name_label = tk.Label(info_frame, text="Gerätename", bg='white',
+                                      font=("Inter", 19))
+            name_entry = tk.Entry(info_frame, bg= '#D9D9D9',
+                                      font=("Inter", 19, 'italic'))
+
+            tag_label = tk.Label(info_frame, text="Servicetag", bg='white',
+                                      font=("Inter", 19))
+            tag_entry = tk.Entry(info_frame, bg= '#D9D9D9',
+                                      font=("Inter", 19, 'italic'))
+
+            date_label = tk.Label(info_frame, text="Datum", bg='white',
+                                 font=("Inter", 19))
+            date_entry = datetime.now().strftime("%d.%m.%Y")
+            current_date = tk.Label(info_frame, text=date_entry, font=("Arial", 14), bg='#D9D9D9', fg='black')
+
+
+            beschreibung_label = tk.Label(info_frame, text="Beschreibung", bg='white',
+                                 font=("Inter", 19))
+            beschreibung_entry = tk.Entry(info_frame, bg='#D9D9D9',
+                                 font=("Inter", 19, 'italic'))
+            #Verlauf
+            verlauf_label = tk.Label(verlauf_frame, text="Verlauf", bg='white',
+                                 font=("Inter", 19))
+            verlauf_inh_label = tk.Entry(verlauf_frame, bg='#D9D9D9',
+                                 font=("Inter", 19, 'italic'))
+            #Buttons
+            schaeden_button_frame = tk.Frame(schaeden_page, bg='white', bd=1)
+            close_button = tk.Button(schaeden_button_frame, image=self.aktualisieren_img, bd=0, bg='white', command=schaeden_page.destroy)
+            upload_button = tk.Button(schaeden_button_frame, image=self.upload_img, bd=0, bg='white', command=lambda: print("Bild hochgeladen"))
+
+            #Placement
+            name_label.place(x=0, y=2)
+            name_entry.place(x=150, y=2, width=150)
+
+            tag_label.place(x=0, y=52)
+            tag_entry.place(x=150, y=52, width=150)
+
+            date_label.place(x=0, y=102)
+            current_date.place(x=150, y=102)
+
+            beschreibung_label.place(x=0, y=152)
+            beschreibung_entry.place(x=0, y=202, width=380, height=382)
+
+            verlauf_label.place(x=15, y=0)
+            verlauf_inh_label.place(x=15, y=50, width=380, height=382)
+
+            upload_button.place(x=10, y=10)
+            close_button.place(x=200, y=40)
+            info_frame.place(x=0, y=0, width=409, height=594)
+            verlauf_frame.place(x=409, y=0, width=409, height=444)
+            schaeden_button_frame.place(x=409, y=444, width=409, height=150)
+
+        #Funktion zuende
+
+        schaeden_button = tk.Button(buttons_frame, image=self.schaeden_img, bd=0, bg='white', command=open_schaeden_page)
+        schaeden_button.place(x=10, y=10)
+
+        #Button Buchung
+        buchung_button = tk.Button(buttons_frame, image=self.buchung_img, bd=0, bg='white', command=lambda: print("andere Seite aufrufen"))
+        buchung_button.place(x=10, y=80)
+
+        #Button Speichern
+        speichern_button = tk.Button(buttons_frame, image=self.speichern_img, bd=0, bg='white', command=lambda: print("Änderungen wurden gespeichert"))
+        speichern_button.place(x=10, y=150)
 
         # Positionierung
         name_label.grid(row=5, column=5, pady=10)
