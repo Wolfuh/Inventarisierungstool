@@ -1,99 +1,34 @@
 import sqlite3
-from argon2 import PasswordHasher
+import os
 
-ph = PasswordHasher()
+path:str = os.getcwd()+'./db/items.db'
 
-my_db = sqlite3.connect('./db/users.db')
-my_dbc = my_db.cursor()
+print("Mathis du Hurensohn, arbeite mal lieber")
 
+def init_connection():
+    """
+    Hilfsfunktion zur Herstellung einer Verbindung mit der SQLite-Datenbank.
+    - Die Datenbankdatei muss unter dem angegebenen Pfad existieren.
+    - row_factory wird auf sqlite3.Row gesetzt, um die Ergebnisse als Dictionaries zurückzugeben.
+    """
+    my_db = sqlite3.connect(path)
+    # Wichtig ist das hier der Root-Pfad angegeben wirddaadvjrnjrmgkmvkmvlddmvlmvk,vfg fifmvlf ,gr,or,vorr,ogl
 
-# Tabelle erstellen: CREATE TABLE tabellenname (N_überschrift1 TEXT, N_überschrift2 BOOLEAN)
-# Daten einfügen:    INSERT INTO tabellenname (überschrift1, überschrift2) VALUES (N_wert2 TEXT, N-wert2 BOOLEAN)
-# Daten ändern:      UPDATE tabellenname SET überschrift1 = N_wert1 WHERE bedingung
-#   z.B. """UPDATE rollen2 SET add_user = 0 WHERE name = 'nutzer'"""
-# ausführen: my_dbc.execute(sql)
-#           my_db.commit()
+    my_db.row_factory = sqlite3.Row  # Rückgabe von Zeilen als Dictionary
+    return my_db
 
-
-def add_user(name, passw):
-    sql = "INSERT INTO users (user_first_name, password_hash) VALUES (?, ?)"
-    my_dbc.execute(sql, (name, passw))
-    my_db.commit()
-
-
-def delete_user(zu_loeschender_user):
-    sql = """DELETE FROM users WHERE user_first_name = ?"""
-    my_dbc.execute(sql, (zu_loeschender_user,))
-    my_db.commit()
-
-
-def get_all_data() -> list[tuple]:  # type: ignore
-    my_dbc.execute("SELECT * FROM users")
-    nutzer = my_dbc.fetchall()
-    return nutzer
-
-
-all_users = get_all_data()
-
-while True:
-    action = input("Was möchten sie tun?\n"
-                   "1: Anmelden - Im Moment nicht funktionsfähig!\n"
-                   "2: Benutzer anlegen\n"
-                   "3: datenbank ansehen\n"
-                   "4: Nutzer per Name entfernen (Debug)\n"
-                   "Ihre Auswahl: ")
-
-    if action == '1':
-
-        '''user = input("name: ").strip()  # leerzeichen werden entfernt
-        if user == '':
-            print("da muss schon was stehen")
-            continue
-        password = input("passwort: ").strip()  # leerzeichen werden entfernt
-        if password == '' or password == ' ':
-            print("abgebrochen")
-            continue
-
-        BothIsKnown = any(user.lower() == existing_user[1].lower() and password == existing_user[5] for
-                          existing_user in all_users)
-
-        if BothIsKnown:
-            print("erfolgreich eingeloggt")
-            # logged_in = True
-        else:
-            print("benutzername oder passwort ist falsch")'''
-
-    elif action == '2':
-        while True:
-            user = input("name: ").strip()
-
-            if user == '' or len(user) < 6 or len(user) > 16:
-                print("Benutzername muss zwischen 6 und 16 zeichen sein")
-                break
-
-            OneIsKnown = any(user.lower() == existing_user[1].lower() for existing_user in all_users)
-            if OneIsKnown:
-                print("Benutzer bereits vergeben")
-                continue
-            password = input("passwort: ")
-            if password == '' or len(password) < 6 or len(password) > 16:
-                print("passwort muss zwischen 6 und 16 zeichen sein")
-                break
-            add_user(user, ph.hash(password))
-            print("benutzer erfolgreich hinzugefügt")
-            break
-
-    elif action == '3':
-        all_users = get_all_data()
-        print(all_users)
-
-    elif action == '4':
-        user_to_delete = input("Der zu löschende Name: ")
-        if any(user_to_delete.lower() == existing_user[1].lower() for existing_user in all_users):
-            delete_user(user_to_delete)
-            print("Nutzer erfolgreich entfernt")
-        else:
-            print("Nutzer nicht gefunden")
-    else:
+def fetch_hardware():
+    """
+    Ruft alle Hardware-Einträge aus der Tabelle `Hardware` ab.
+    - Gibt eine Liste von Dictionaries zurück.
+    """
+    try:
+        my_db = init_connection()
+        cur = my_db.cursor()
+        cur.execute("SELECT * FROM items")
+        rows = cur.fetchall()
+        return [dict(row) for row in rows]
+    except sqlite3.Error as e:
+        return [], "Fehler beim Abrufen der Hardware-Einträge:", str(e)
+    finally:
         my_db.close()
-        break
