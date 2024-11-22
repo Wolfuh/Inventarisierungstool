@@ -1,9 +1,9 @@
 import sqlite3
 import os
 
-path:str = os.getcwd()+'./db/items.db'
+path:str = os.getcwd()+'./db/Inventarisierungstool_DB.sqlite3'
 
-print("Mathis du Hurensohn, arbeite mal lieber")
+
 
 def init_connection():
     """
