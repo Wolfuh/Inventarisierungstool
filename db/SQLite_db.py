@@ -1,7 +1,7 @@
 import sqlite3
 import os
 
-path:str = os.getcwd()+'./db/Inventarisierungstool_DB.sqlite3'
+path:str = os.getcwd()+'./db/Inventarisierungs_DB.sqlite3'
 
 
 
@@ -19,8 +19,8 @@ def init_connection():
 
 def fetch_hardware():
     """
-    Ruft alle Hardware-Einträge aus der Tabelle `Hardware` ab.
-    - Gibt eine Liste von Dictionaries zurück.
+    - Gibt eine Liste von items zurück
+    - Gibt Spaltenname zu allem mit
     """
     try:
         my_db = init_connection()
