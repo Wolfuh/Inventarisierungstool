@@ -257,11 +257,10 @@ class Ubersicht(tk.Frame):
         tree.place(x=120, y=0, width=1280, height=650)
         scroll.place(x=1400, y=0, height=650)
         # Setze explizite Mindesthöhe für Zeile 5
-        self.tabelle_frame.grid_rowconfigure(5, minsize=10)  # Falls die Höhe manuell angepasst werden soll
-
+        #self.tabelle_frame.grid_rowconfigure(5, minsize=10)
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
-        self.tabelle_frame.place(relx=0.15, rely=0.3, relwidth=0.85, height=800)  # Frame für Tabelle definieren
+        self.tabelle_frame.place(relx=0.15, rely=0.3, relwidth=0.85, height=800)
 
 class Gerateansicht(tk.Frame):
     def __init__(self, parent, controller):
