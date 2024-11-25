@@ -151,6 +151,47 @@ class Admin(tk.Frame):
                                          command=lambda: controller.show_frame(configuration.Einstellungen))
         einstellungen_button.pack(pady=10, anchor='w')
 
+        #Seiteninhalt
+        self.tabelle_frame = tk.Frame(self, bg='white')
+        # # Tabelle
+        # # Styling
+        # style = ttk.Style()
+        # # style.theme_use("clam")
+        # style.configure("Treeview.Heading", font=("Inter", 12), background="#D9D9D9", foreground="#6E6893")
+        # style.configure("Treeview", font=("Arial", 11), rowheight=35, background="white", foreground="black")
+        # style.map("Treeview", background=[("selected", "#D9D9D9")], foreground=[("selected", "black")])
+        # style.configure("evenrow.Treeview", background="#f2f2f2")
+        # style.configure("oddrow.Treeview", background="white")
+        #
+        # tree = ttk.Treeview(self.tabelle_frame, columns=("c1", "c2", "c3", "c4", "c5"), show="headings",
+        #                     height=5)
+        # scroll = ttk.Scrollbar(self.tabelle_frame, orient='vertical', command=tree.yview)
+        # # scroll.place(x=700, y=0.9, height=tree.winfo_height())
+        # tree.configure(yscrollcommand=scroll.set)
+        #
+        # tree.column("#1", anchor=CENTER, width=100)
+        # tree.heading("#1", text="Name")
+        # tree.column("#2", anchor=CENTER, width=200)
+        # tree.heading("#2", text="Tag")
+        # tree.column("#3", anchor=CENTER, width=100)
+        # tree.heading("#3", text="Typ")
+        # tree.column("#4", anchor=CENTER, width=100)
+        # tree.heading("#4", text="Status")
+        # tree.column("#5", anchor=CENTER, width=100)
+        # tree.heading("#5", text="Buchung")
+        #
+        # for i in range(20):
+        #     color = "#f3f3f3" if i % 2 == 0 else "white"
+        #     tree.insert("", "end", values=(f"Name {i}", f"Tag {i}", f"Typ {i}", f"Status {i}", f"Buchung {i}"),
+        #                 tags=("even" if i % 2 == 0 else "odd"))
+        #
+        # # Farben für Tags definieren
+        # tree.tag_configure("even", background="#f7f7f7")
+        # tree.tag_configure("odd", background="white")
+        #
+        # tree.place(x=120, y=0, width=1280, height=650)
+        # scroll.place(x=1400, y=0, height=650)
+
         self.admin_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
 
