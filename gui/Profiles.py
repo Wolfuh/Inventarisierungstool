@@ -180,7 +180,6 @@ class Admin(tk.Frame):
         tree = ttk.Treeview(self.tabelle_frame, columns=("c1", "c2", "c3", "c4"), show="headings",
                             height=5)
         scroll = ttk.Scrollbar(self.tabelle_frame, orient='vertical', command=tree.yview)
-        # scroll.place(x=700, y=0.9, height=tree.winfo_height())
         tree.configure(yscrollcommand=scroll.set)
 
         tree.column("#1", anchor='center', width=100)
