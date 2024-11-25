@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 from tkinter import *
 import os
+import sqlite3
 import gui_prototyp
 import ThemeManager
 import Mainpages
@@ -9,6 +10,39 @@ import configuration
 import Profiles
 from datetime import datetime
 from tkinter import simpledialog
+
+path:str = os.getcwd()+'./db/Inventarisierungs_DB.sqlite3'
+
+
+
+def init_connection():
+    """
+    Hilfsfunktion zur Herstellung einer Verbindung mit der SQLite-Datenbank.
+    - Die Datenbankdatei muss unter dem angegebenen Pfad existieren.
+    - row_factory wird auf sqlite3.Row gesetzt, um die Ergebnisse als Dictionaries zurückzugeben.
+    """
+    my_db = sqlite3.connect(path)
+    # Wichtig ist das hier der Root-Pfad angegeben wirddaadvjrnjrmgkmvkmvlddmvlmvk,vfg fifmvlf ,gr,or,vorr,ogl
+
+    my_db.row_factory = sqlite3.Row  # Rückgabe von Zeilen als Dictionary
+    return my_db
+
+def fetch_hardware():
+    """
+    Ruft alle Hardware-Einträge aus der Tabelle `Hardware` ab.
+    - Gibt eine Liste von Dictionaries zurück.
+    """
+    try:
+        my_db = init_connection()
+        cur = my_db.cursor()
+        cur.execute("SELECT * FROM items")
+        rows = cur.fetchall()
+        
+        return rows #[dict(row) for row in rows]
+    except sqlite3.Error as e:
+        return [], "Fehler beim Abrufen der Hardware-Einträge:", str(e)
+    finally:
+        my_db.close()
 
 
 
@@ -218,23 +252,21 @@ class Ubersicht(tk.Frame):
         Aktionen_button.place(relx=0.6, rely=0.1)
 
         # Tabelle
-        lst = [(1, 'IT-18', 'hfsfdfs', 'PC', 'Aktiv', 'frei'),
-               (2, 'IT-98', 'gdsg', 'PC', 'Aktiv', 'frei'),
-               (3, 'IT-08', 'hfsfggwerdfs', 'PC', 'in Reperatur', '/'),
-               (4, 'IT-58', 'fdghrth', 'PC', 'Aktiv', 'frei'),
-               (5, 'IT-38', '324fd', 'PC', 'kaputt', '/'),
-               (6, 'IT-28', 'gfg56', 'PC', 'Aktiv', 'gebucht')
-               ]
-
-        for i in range(len(lst)):
-            for j in range(len(lst[0])):
-                e = tk.Entry(self.tabelle_frame, width=10, fg='black', bd=0, font=('Inter', 14))
+        lst = fetch_hardware()
+       
+        rows = lst
+        for i, row in enumerate(rows, start=1):  # Startet in der 2. Zeile (1 ist für Überschriften)
+            for j, value in enumerate(row):
+                e = tk.Entry(self.tabelle_frame, width=15, fg='black', bd=0, font=('Inter', 14))
                 e.grid(row=i, column=j, padx=3, pady=3, ipady=3, sticky="nsew")
-                e.insert(tk.END, lst[i][j])
+                e.insert(tk.END, value)
+               
 
         # Konfiguriere die Spalten für gleiche Breite
+
         for j in range(len(lst[0])):
             self.tabelle_frame.grid_columnconfigure(j, weight=1)
+
 
         # Setze explizite Mindesthöhe für Zeile 5
         self.tabelle_frame.grid_rowconfigure(5, minsize=10)  # Falls die Höhe manuell angepasst werden soll
@@ -681,15 +713,12 @@ class Gerateansicht(tk.Frame):
         typ_label.grid(row=5, column=5, pady=10)
         status_label.grid(row=5, column=5, pady=10)
         standort_label.grid(row=5, column=5, pady=10)
-        upload_button.place(x=100, y=0)
 
-        upload_frame.place(x=0, y=520, relwidth=0.40, height=300)
         tag_frame.place(x=900, y=120, width=480, height=88)
         typ_frame.place(x=900, y=220, width=480, height=88)
         status_frame.place(x=900, y=320, width=480, height=88)
         standort_frame.place(x=900, y=420, width=480, height=88)
         buttons_frame.place(x=900, y=520, width=480, height=300)
-
 
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
