@@ -12,7 +12,6 @@ from tkinter import simpledialog
 
 
 
-
 class Ubersicht(tk.Frame):
     """Repraesentiert die Geraeteuebersichtsseite der Anwendung. Zeigt eine Liste oder Tabelle der verfügbaren
        Geräte und bietet Optionen für die Navigation zurück zur Hauptseite, zum Login und zu Benutzerprofilen """
@@ -218,49 +217,31 @@ class Ubersicht(tk.Frame):
                                     command=lambda: print("Aktionen werden ausgeführt"))
         Aktionen_button.place(relx=0.6, rely=0.1)
 
-        #Tabelle
-        #Styling
-        style = ttk.Style()
-        #style.theme_use("clam")
-        style.configure("Treeview.Heading", font=("Inter", 12), background="#D9D9D9", foreground="#6E6893")
-        style.configure("Treeview", font=("Arial", 11), rowheight=35, background="white", foreground="black")
-        style.map("Treeview", background=[("selected", "#D9D9D9")], foreground=[("selected", "black")])
-        style.configure("evenrow.Treeview", background="#f2f2f2")
-        style.configure("oddrow.Treeview", background="white")
+        # Tabelle
+        lst = [(1, 'IT-18', 'hfsfdfs', 'PC', 'Aktiv', 'frei'),
+               (2, 'IT-98', 'gdsg', 'PC', 'Aktiv', 'frei'),
+               (3, 'IT-08', 'hfsfggwerdfs', 'PC', 'in Reperatur', '/'),
+               (4, 'IT-58', 'fdghrth', 'PC', 'Aktiv', 'frei'),
+               (5, 'IT-38', '324fd', 'PC', 'kaputt', '/'),
+               (6, 'IT-28', 'gfg56', 'PC', 'Aktiv', 'gebucht')
+               ]
 
+        for i in range(len(lst)):
+            for j in range(len(lst[0])):
+                e = tk.Entry(self.tabelle_frame, width=10, fg='black', bd=0, font=('Inter', 14))
+                e.grid(row=i, column=j, padx=3, pady=3, ipady=3, sticky="nsew")
+                e.insert(tk.END, lst[i][j])
 
+        # Konfiguriere die Spalten für gleiche Breite
+        for j in range(len(lst[0])):
+            self.tabelle_frame.grid_columnconfigure(j, weight=1)
 
-        tree = ttk.Treeview(self.tabelle_frame, columns=("c1", "c2", "c3", "c4", "c5"), show="headings",
-                            height=5)
-        scroll = ttk.Scrollbar(self.tabelle_frame, orient='vertical', command=tree.yview)
-        # scroll.place(x=700, y=0.9, height=tree.winfo_height())
-        tree.configure(yscrollcommand=scroll.set)
+        # Setze explizite Mindesthöhe für Zeile 5
+        self.tabelle_frame.grid_rowconfigure(5, minsize=10)  # Falls die Höhe manuell angepasst werden soll
 
-        tree.column("#1", anchor=CENTER, width=100)
-        tree.heading("#1", text="Name")
-        tree.column("#2", anchor=CENTER, width=200)
-        tree.heading("#2", text="Tag")
-        tree.column("#3", anchor=CENTER, width=100)
-        tree.heading("#3", text="Typ")
-        tree.column("#4", anchor=CENTER, width=100)
-        tree.heading("#4", text="Status")
-        tree.column("#5", anchor=CENTER, width=100)
-        tree.heading("#5", text="Buchung")
-
-        for i in range(20):
-            color = "#f3f3f3" if i % 2 == 0 else "white"
-            tree.insert("", "end", values=(f"Name {i}", f"Tag {i}", f"Typ {i}", f"Status {i}", f"Buchung {i}"),
-                        tags=("even" if i % 2 == 0 else "odd"))
-
-        # Farben für Tags definieren
-        tree.tag_configure("even", background="#f7f7f7")
-        tree.tag_configure("odd", background="white")
-
-        tree.place(x=120, y=0, width=1280, height=650)
-        scroll.place(x=1400, y=0, height=650)
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
-        self.tabelle_frame.place(relx=0.15, rely=0.3, relwidth=0.85, height=800)  # Frame für Tabelle definieren
+        self.tabelle_frame.place(relx=0.15, rely=0.3, relwidth=0.85, relheight=0.5)  # Frame für Tabelle definieren
 
 class Gerateansicht(tk.Frame):
     def __init__(self, parent, controller):
