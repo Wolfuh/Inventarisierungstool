@@ -338,6 +338,7 @@ class Gerateansicht(tk.Frame):
         typ_drop = tk.Button(typ_frame, text="Typ", bd=0, bg='white', fg='black',
                                 font=("Inter", 20, 'bold'),
                                 command=lambda: controller.show_frame())
+
         typ_drop = tk.Button(typ_frame, text="↓", bd=0, bg='white', fg='black',
                                 font=("Inter", 20, 'bold'),
                                 command=lambda: typ_dropdown())  # Button öffnet Dropdown-Menü
@@ -428,7 +429,7 @@ class Gerateansicht(tk.Frame):
 
             tag_label = tk.Label(info_frame, text="Servicetag", bg='white',
                                       font=("Inter", 19))
-            tag_entry = tk.Entry(info_frame, bg= '#D9D9D9', bd=0,
+            tag_entry = tk.Entry(info_frame, bg='#D9D9D9', bd=0,
                                       font=("Inter", 19, 'italic'))
 
             date_label = tk.Label(info_frame, text="Datum", bg='white',
