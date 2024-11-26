@@ -9,16 +9,6 @@ import configuration
 import Profiles
 from datetime import datetime
 from tkinter import simpledialog
-import sys
-
-sys.path.append(os.path.join(os.path.dirname(__file__),'..'))
-
-from db.SQLite_db import *
-
-
-
-
-
 
 
 
@@ -243,24 +233,21 @@ class Ubersicht(tk.Frame):
         # scroll.place(x=700, y=0.9, height=tree.winfo_height())
         tree.configure(yscrollcommand=scroll.set)
 
-        # Spaltennamen aus der Datenbank holen
-        items_uberschrift = fetch_items_headers()
+        tree.column("#1", anchor=CENTER, width=100)
+        tree.heading("#1", text="Name")
+        tree.column("#2", anchor=CENTER, width=200)
+        tree.heading("#2", text="Tag")
+        tree.column("#3", anchor=CENTER, width=100)
+        tree.heading("#3", text="Typ")
+        tree.column("#4", anchor=CENTER, width=100)
+        tree.heading("#4", text="Status")
+        tree.column("#5", anchor=CENTER, width=100)
+        tree.heading("#5", text="Buchung")
 
-        # Überschriften konfigurieren
-        tree["columns"] = items_uberschrift
-        for up in items_uberschrift:
-            tree.column(up, anchor=CENTER, width=100)
-            tree.heading(up, text=up)
-
-        items_data = fetch_items()
-
-        # Daten aus DB einfügen
-
-        for i,row in enumerate(items_data):
-            formatted_row = [value if value is not None else "-" for value in row] # Leere Felder durch "-" ersetzen
+        for i in range(20):
             color = "#f3f3f3" if i % 2 == 0 else "white"
-            tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
-
+            tree.insert("", "end", values=(f"Name {i}", f"Tag {i}", f"Typ {i}", f"Status {i}", f"Buchung {i}"),
+                        tags=("even" if i % 2 == 0 else "odd"))
 
         # Farben für Tags definieren
         tree.tag_configure("even", background="#f7f7f7")
