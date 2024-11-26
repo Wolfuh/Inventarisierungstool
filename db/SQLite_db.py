@@ -4,7 +4,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import *
 
-path:str = os.getcwd()+'./db/Inventarisierungs_DB.sqlite3'
+
 
 
 
@@ -14,6 +14,7 @@ def init_connection():
     - Die Datenbankdatei muss unter dem angegebenen Pfad existieren.
     - row_factory wird auf sqlite3.Row gesetzt, um die Ergebnisse als Dictionaries zurückzugeben.
     """
+    path:str = os.getcwd()+'./db/Inventarisierungs_DB.sqlite3'
     my_db = sqlite3.connect(path)
     # Wichtig ist das hier der Root-Pfad angegeben wirddaadvjrnjrmgkmvkmvlddmvlmvk,vfg fifmvlf ,gr,or,vorr,ogl
 
