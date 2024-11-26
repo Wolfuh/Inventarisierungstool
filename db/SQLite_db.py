@@ -29,8 +29,8 @@ def fetch_items():
         my_db = init_connection()
         cur = my_db.cursor()
         cur.execute("SELECT * FROM items")
-        rows = cur.fetchall()      
-        return rows
+        items_rows = cur.fetchall()      
+        return items_rows
     except sqlite3.Error as e:
         return [], "Fehler beim Abrufen der Hardware-Einträge:", str(e)
     finally:
@@ -41,40 +41,152 @@ def fetch_items_headers():
         my_db = init_connection()
         cur = my_db.cursor()
         cur.execute("PRAGMA table_info(items)")
-        alles = cur.fetchall()
-        uberschrift = [i[1] for i in alles]       
-        return uberschrift
+        it_alles = cur.fetchall()
+        items_uberschrift = [i[1] for i in it_alles]       
+        return items_uberschrift
     except sqlite3.Error as e:
         return [], "Fehler beim Abrufen der Hardware-Einträge:", str(e)
     finally:
         my_db.close()
 
+def fetch_users():
+    try:
+        my_db = init_connection()
+        cur = my_db.cursor()
+        cur.execute("SELECT * FROM benutzer")
+        users_row = cur.fetchall()
+        return users_row
+    except sqlite3.Error as e:
+        return [], "Fehler beim Abrufen der User-Einträge:", str(e)
+    finally:
+        my_db.close()
+
+def fetch_users_headers():
+    try:
+        my_db = init_connection()
+        cur = my_db.cursor()
+        cur.execute("PRAGMA table_info(benutzer)")
+        us_all = cur.fetchall()
+        users_uberschrift = [i[1] for i in us_all]       
+        return users_uberschrift
+    except sqlite3.Error as e:
+        return [], "Fehler beim Abrufen der User-Einträge:", str(e)
+    finally:
+        my_db.close()
+
+
+#############################
+### BIS HIER HIN BEHALTEN ###
+#############################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 root = tk.Tk()
-root.title("Datenbank-Überschriften anzeigen")
+root.title("miau")
 root.geometry("600x400")
 tree = ttk.Treeview(root, show="headings", height=15)
 tree.pack(expand=True, fill="both")
 
-#####################
+##################### Einfügen: Profiles -> 185 - 198 (Diese Datei importieren)
 # AB HIER EINBINDEN #
 
 
 
 # Spaltennamen aus der Datenbank holen
-uberschrift = fetch_items_headers()
+users_uberschrift = fetch_users_headers()
 
 # Überschriften konfigurieren
-tree["columns"] = uberschrift
-for up in uberschrift:
-    tree.column(up, anchor=CENTER, width=100)
+tree["columns"] = users_uberschrift
+for up in users_uberschrift:
+    tree.column(up, anchor='center', width=100)
     tree.heading(up, text=up)
 
-data = fetch_items()
+users_data = fetch_users()
 
 # Daten aus DB einfügen
 
-for i,row in enumerate(data):
+for i,row in enumerate(users_data):
+    us_formatted_row = [value if value is not None else "-" for value in row] # Leere Felder durch "-" ersetzen
+    color = "#f3f3f3" if i % 2 == 0 else "white"
+    tree.insert("", "end", values=us_formatted_row, tags=("even" if i % 2 == 0 else "odd"))
+
+
+
+# BIS HIER #
+############
+
+root.mainloop()
+
+
+
+
+
+
+
+
+
+
+
+
+root = tk.Tk()
+root.title("FOLKSWAGEN")
+root.geometry("600x400")
+tree = ttk.Treeview(root, show="headings", height=15)
+tree.pack(expand=True, fill="both")
+
+##################### Einfügen: Overview -> 236 - 250 (Diese Datei importieren)
+# AB HIER EINBINDEN #
+
+
+
+# Spaltennamen aus der Datenbank holen
+items_uberschrift = fetch_items_headers()
+
+# Überschriften konfigurieren
+tree["columns"] = items_uberschrift
+for up in items_uberschrift:
+    tree.column(up, anchor=CENTER, width=100)
+    tree.heading(up, text=up)
+
+items_data = fetch_items()
+
+# Daten aus DB einfügen
+
+for i,row in enumerate(items_data):
     formatted_row = [value if value is not None else "-" for value in row] # Leere Felder durch "-" ersetzen
     color = "#f3f3f3" if i % 2 == 0 else "white"
     tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
