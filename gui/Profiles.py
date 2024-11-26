@@ -115,7 +115,7 @@ class Admin(tk.Frame):
 
         # Seitennavigation und laden der Bilder
         verzeichniss = tk.Frame(self, bg=ThemeManager.SRH_Grey)
-        self.admin_frame = tk.Frame(self, bg='white')
+        #self.admin_frame = tk.Frame(self, bg='white')
 
         self.imglogin = tk.PhotoImage(
             file=root_path+"/gui/assets/Closeicon.png")
@@ -156,17 +156,17 @@ class Admin(tk.Frame):
         #Seiteninhalt
         self.tabelle_frame = tk.Frame(self, bg='white')
         # Suche
-        suche_button = tk.Button(self.admin_frame, image=self.imgSuche, bd=0, bg=ThemeManager.SRH_Grey,
+        suche_button = tk.Button(self.tabelle_frame, image=self.imgSuche, bd=0, bg=ThemeManager.SRH_Grey,
                                  command=lambda: print(f"nach {suche_entry} gesucht"))
-        suche_entry = tk.Entry(self.admin_frame, bg='#D9D9D9', bd=0, font=("Inter", 12))
+        suche_entry = tk.Entry(self.tabelle_frame, bg='#D9D9D9', bd=0, font=("Inter", 12))
 
-        suche_button.place(relx=0.19, rely=0.1, relheight=0.04, relwidth=0.02)
-        suche_entry.place(relx=0.21, rely=0.1, width=500, height=37)
+        suche_button.place(x=120, y=100, height=44)
+        suche_entry.place(x=142, y=100, height=44, width=1000)
 
         # Hinzufügen
-        Hinzufugen_button = tk.Button(self.admin_frame, image=self.imgHinzufugen, bd=0, bg='white',
+        Hinzufugen_button = tk.Button(self.tabelle_frame, image=self.imgHinzufugen, bd=0, bg='white',
                                       command=lambda: controller.show_frame(Profil))
-        Hinzufugen_button.place(relx=0.5, rely=0.1)
+        Hinzufugen_button.place(x=1280, y=100)
         # Tabelle
         # Styling
         style = ttk.Style()
@@ -201,10 +201,10 @@ class Admin(tk.Frame):
         tree.tag_configure("even", background="#f7f7f7")
         tree.tag_configure("odd", background="white")
 
-        tree.place(x=120, y=0, width=1280, height=650)
-        scroll.place(x=1400, y=0, height=650)
-        self.tabelle_frame.place(relx=0.15, rely=0.3, relwidth=0.85, height=800)
-        self.admin_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
+        tree.place(x=120, y=160, width=1280, height=600)
+        scroll.place(x=1400, y=160, height=600)
+        self.tabelle_frame.place(relx=0.15, rely=0.15, relwidth=0.85, height=1000)
+        #self.admin_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
 
 
