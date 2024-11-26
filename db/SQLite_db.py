@@ -5,8 +5,8 @@ from tkinter import ttk
 from tkinter import *
 
 
-
-
+print(os.path.isfile(os.path.join(os.path.dirname(__file__), 'db', 'Inventarisierungs_DB.sqlite3')))
+print(os.path.isfile(os.getcwd()+'./db/Inventarisierungs_DB.sqlite3'))
 
 def init_connection():
     """
@@ -35,7 +35,8 @@ def fetch_items():
     except sqlite3.Error as e:
         return [], "Fehler beim Abrufen der Hardware-Einträge:", str(e)
     finally:
-        my_db.close()
+        if my_db:
+            my_db.close()
 
 def fetch_items_headers():
     try:
@@ -48,7 +49,8 @@ def fetch_items_headers():
     except sqlite3.Error as e:
         return [], "Fehler beim Abrufen der Hardware-Einträge:", str(e)
     finally:
-        my_db.close()
+        if my_db:
+            my_db.close()
 
 def fetch_users():
     try:
@@ -60,7 +62,8 @@ def fetch_users():
     except sqlite3.Error as e:
         return [], "Fehler beim Abrufen der User-Einträge:", str(e)
     finally:
-        my_db.close()
+        if my_db:
+            my_db.close()
 
 def fetch_users_headers():
     try:
@@ -73,7 +76,8 @@ def fetch_users_headers():
     except sqlite3.Error as e:
         return [], "Fehler beim Abrufen der User-Einträge:", str(e)
     finally:
-        my_db.close()
+        if my_db:
+            my_db.close()
 
 
 #############################
@@ -120,43 +124,41 @@ def fetch_users_headers():
 
 
 
-# root = tk.Tk()
-# root.title("miau")
-# root.geometry("600x400")
-# tree = ttk.Treeview(root, show="headings", height=15)
-# tree.pack(expand=True, fill="both")
+root = tk.Tk()
+root.title("miau")
+root.geometry("600x400")
+tree = ttk.Treeview(root, show="headings", height=15)
+tree.pack(expand=True, fill="both")
 
-# ##################### Einfügen: Profiles -> 185 - 198 (Diese Datei importieren)
-# # AB HIER EINBINDEN #
-
-
-
-# # Spaltennamen aus der Datenbank holen
-# users_uberschrift = fetch_users_headers()
-
-# # Überschriften konfigurieren
-# tree["columns"] = users_uberschrift
-# for up in users_uberschrift:
-#     tree.column(up, anchor='center', width=100)
-#     tree.heading(up, text=up)
-
-# users_data = fetch_users()
-
-# # Daten aus DB einfügen
-
-# for i,row in enumerate(users_data):
-#     us_formatted_row = [value if value is not None else "-" for value in row] # Leere Felder durch "-" ersetzen
-#     color = "#f3f3f3" if i % 2 == 0 else "white"
-#     tree.insert("", "end", values=us_formatted_row, tags=("even" if i % 2 == 0 else "odd"))
+##################### Einfügen: Profiles -> 185 - 198 (Diese Datei importieren)
+# AB HIER EINBINDEN #
 
 
 
-# # BIS HIER #
-# ############
+# Spaltennamen aus der Datenbank holen
+users_uberschrift = fetch_users_headers()
 
-# root.mainloop()
+# Überschriften konfigurieren
+tree["columns"] = users_uberschrift
+for up in users_uberschrift:
+    tree.column(up, anchor='center', width=100)
+    tree.heading(up, text=up)
+
+users_data = fetch_users()
+
+# Daten aus DB einfügen
+
+for i,row in enumerate(users_data):
+    us_formatted_row = [value if value is not None else "-" for value in row] # Leere Felder durch "-" ersetzen
+    color = "#f3f3f3" if i % 2 == 0 else "white"
+    tree.insert("", "end", values=us_formatted_row, tags=("even" if i % 2 == 0 else "odd"))
 
 
+
+# BIS HIER #
+############
+
+root.mainloop()
 
 
 
@@ -167,40 +169,42 @@ def fetch_users_headers():
 
 
 
-# root = tk.Tk()
-# root.title("FOLKSWAGEN")
-# root.geometry("600x400")
-# tree = ttk.Treeview(root, show="headings", height=15)
-# tree.pack(expand=True, fill="both")
-
-# ##################### Einfügen: Overview -> 236 - 250 (Diese Datei importieren)
-# # AB HIER EINBINDEN #
 
 
+root = tk.Tk()
+root.title("FOLKSWAGEN")
+root.geometry("600x400")
+tree = ttk.Treeview(root, show="headings", height=15)
+tree.pack(expand=True, fill="both")
 
-# # Spaltennamen aus der Datenbank holen
-# items_uberschrift = fetch_items_headers()
-
-# # Überschriften konfigurieren
-# tree["columns"] = items_uberschrift
-# for up in items_uberschrift:
-#     tree.column(up, anchor=CENTER, width=100)
-#     tree.heading(up, text=up)
-
-# items_data = fetch_items()
-
-# # Daten aus DB einfügen
-
-# for i,row in enumerate(items_data):
-#     formatted_row = [value if value is not None else "-" for value in row] # Leere Felder durch "-" ersetzen
-#     color = "#f3f3f3" if i % 2 == 0 else "white"
-#     tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
+##################### Einfügen: Overview -> 236 - 250 (Diese Datei importieren)
+# AB HIER EINBINDEN #
 
 
 
-# # BIS HIER #
-# ############
+# Spaltennamen aus der Datenbank holen
+items_uberschrift = fetch_items_headers()
 
-# root.mainloop()
+# Überschriften konfigurieren
+tree["columns"] = items_uberschrift
+for up in items_uberschrift:
+    tree.column(up, anchor=CENTER, width=100)
+    tree.heading(up, text=up)
+
+items_data = fetch_items()
+
+# Daten aus DB einfügen
+
+for i,row in enumerate(items_data):
+    formatted_row = [value if value is not None else "-" for value in row] # Leere Felder durch "-" ersetzen
+    color = "#f3f3f3" if i % 2 == 0 else "white"
+    tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
+
+
+
+# BIS HIER #
+############
+
+root.mainloop()
 
 
