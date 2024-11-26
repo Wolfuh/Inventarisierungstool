@@ -108,6 +108,52 @@ def fetch_users_headers():
 
 
 
+# import sys
+
+# sys.path.append(os.path.join(os.path.dirname(__file__),'..'))
+
+# from db.SQLite_db import *
+
+
+
+
+
+
+# root = tk.Tk()
+# root.title("miau")
+# root.geometry("600x400")
+# tree = ttk.Treeview(root, show="headings", height=15)
+# tree.pack(expand=True, fill="both")
+
+# ##################### Einfügen: Profiles -> 185 - 198 (Diese Datei importieren)
+# # AB HIER EINBINDEN #
+
+
+
+# # Spaltennamen aus der Datenbank holen
+# users_uberschrift = fetch_users_headers()
+
+# # Überschriften konfigurieren
+# tree["columns"] = users_uberschrift
+# for up in users_uberschrift:
+#     tree.column(up, anchor='center', width=100)
+#     tree.heading(up, text=up)
+
+# users_data = fetch_users()
+
+# # Daten aus DB einfügen
+
+# for i,row in enumerate(users_data):
+#     us_formatted_row = [value if value is not None else "-" for value in row] # Leere Felder durch "-" ersetzen
+#     color = "#f3f3f3" if i % 2 == 0 else "white"
+#     tree.insert("", "end", values=us_formatted_row, tags=("even" if i % 2 == 0 else "odd"))
+
+
+
+# # BIS HIER #
+# ############
+
+# root.mainloop()
 
 
 
@@ -115,87 +161,45 @@ def fetch_users_headers():
 
 
 
-root = tk.Tk()
-root.title("miau")
-root.geometry("600x400")
-tree = ttk.Treeview(root, show="headings", height=15)
-tree.pack(expand=True, fill="both")
-
-##################### Einfügen: Profiles -> 185 - 198 (Diese Datei importieren)
-# AB HIER EINBINDEN #
-
-
-
-# Spaltennamen aus der Datenbank holen
-users_uberschrift = fetch_users_headers()
-
-# Überschriften konfigurieren
-tree["columns"] = users_uberschrift
-for up in users_uberschrift:
-    tree.column(up, anchor='center', width=100)
-    tree.heading(up, text=up)
-
-users_data = fetch_users()
-
-# Daten aus DB einfügen
-
-for i,row in enumerate(users_data):
-    us_formatted_row = [value if value is not None else "-" for value in row] # Leere Felder durch "-" ersetzen
-    color = "#f3f3f3" if i % 2 == 0 else "white"
-    tree.insert("", "end", values=us_formatted_row, tags=("even" if i % 2 == 0 else "odd"))
-
-
-
-# BIS HIER #
-############
-
-root.mainloop()
 
 
 
 
 
+# root = tk.Tk()
+# root.title("FOLKSWAGEN")
+# root.geometry("600x400")
+# tree = ttk.Treeview(root, show="headings", height=15)
+# tree.pack(expand=True, fill="both")
+
+# ##################### Einfügen: Overview -> 236 - 250 (Diese Datei importieren)
+# # AB HIER EINBINDEN #
 
 
 
+# # Spaltennamen aus der Datenbank holen
+# items_uberschrift = fetch_items_headers()
+
+# # Überschriften konfigurieren
+# tree["columns"] = items_uberschrift
+# for up in items_uberschrift:
+#     tree.column(up, anchor=CENTER, width=100)
+#     tree.heading(up, text=up)
+
+# items_data = fetch_items()
+
+# # Daten aus DB einfügen
+
+# for i,row in enumerate(items_data):
+#     formatted_row = [value if value is not None else "-" for value in row] # Leere Felder durch "-" ersetzen
+#     color = "#f3f3f3" if i % 2 == 0 else "white"
+#     tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
 
 
 
+# # BIS HIER #
+# ############
 
-root = tk.Tk()
-root.title("FOLKSWAGEN")
-root.geometry("600x400")
-tree = ttk.Treeview(root, show="headings", height=15)
-tree.pack(expand=True, fill="both")
-
-##################### Einfügen: Overview -> 236 - 250 (Diese Datei importieren)
-# AB HIER EINBINDEN #
-
-
-
-# Spaltennamen aus der Datenbank holen
-items_uberschrift = fetch_items_headers()
-
-# Überschriften konfigurieren
-tree["columns"] = items_uberschrift
-for up in items_uberschrift:
-    tree.column(up, anchor=CENTER, width=100)
-    tree.heading(up, text=up)
-
-items_data = fetch_items()
-
-# Daten aus DB einfügen
-
-for i,row in enumerate(items_data):
-    formatted_row = [value if value is not None else "-" for value in row] # Leere Felder durch "-" ersetzen
-    color = "#f3f3f3" if i % 2 == 0 else "white"
-    tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
-
-
-
-# BIS HIER #
-############
-
-root.mainloop()
+# root.mainloop()
 
 
