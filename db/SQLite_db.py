@@ -18,7 +18,7 @@ def init_connection():
     - Die Datenbankdatei muss unter dem angegebenen Pfad existieren.
     - row_factory wird auf sqlite3.Row gesetzt, um die Ergebnisse als Dictionaries zurückzugeben.
     """
-    path:str = os.path.join(os.path.dirname(__file__),'db','Inventarisierungs_DB.sqlite3')       #+'./db/Inventarisierungs_DB.sqlite3'
+    path:str = os.path.join(os.path.dirname(__file__), 'Inventarisierungs_DB.sqlite3')      #+'./db/Inventarisierungs_DB.sqlite3'
     my_db = sqlite3.connect(path)
     # Wichtig ist das hier der Root-Pfad angegeben wirddaadvjrnjrmgkmvkmvlddmvlmvk,vfg fifmvlf ,gr,or,vorr,ogl
 
