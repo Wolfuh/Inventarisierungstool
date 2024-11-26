@@ -6,6 +6,12 @@ import ThemeManager
 import gui_prototyp
 import Mainpages
 import os
+import sys
+
+sys.path.append(os.path.join(os.path.dirname(__file__),'..'))
+
+from db.SQLite_db import *
+
 
 class Profil(tk.Frame):
 
@@ -182,21 +188,23 @@ class Admin(tk.Frame):
         scroll = ttk.Scrollbar(self.tabelle_frame, orient='vertical', command=tree.yview)
         tree.configure(yscrollcommand=scroll.set)
 
-        tree.column("#1", anchor='center', width=100)
-        tree.heading("#1", text="Name")
-        tree.column("#2", anchor='center', width=200)
-        tree.heading("#2", text="Email")
-        tree.column("#3", anchor='center', width=100)
-        tree.heading("#3", text="Rolle")
-        tree.column("#4", anchor='center', width=100)
-        tree.heading("#4", text="Aktivität")
+        # Spaltennamen aus der Datenbank holen
+        users_uberschrift = fetch_users_headers()
 
+        # Überschriften konfigurieren
+        tree["columns"] = users_uberschrift
+        for up in users_uberschrift:
+            tree.column(up, anchor='center', width=100)
+            tree.heading(up, text=up)
 
-        for i in range(20):
+        users_data = fetch_users()
+
+        # Daten aus DB einfügen
+
+        for i,row in enumerate(users_data):
+            us_formatted_row = [value if value is not None else "-" for value in row] # Leere Felder durch "-" ersetzen
             color = "#f3f3f3" if i % 2 == 0 else "white"
-            tree.insert("", "end", values=(f"Name {i}", f"Email {i}", f"Rolle {i}", f"Aktivität {i}"),
-                        tags=("even" if i % 2 == 0 else "odd"))
-
+            tree.insert("", "end", values=us_formatted_row, tags=("even" if i % 2 == 0 else "odd"))
         # Farben für Tags definieren
         tree.tag_configure("even", background="#f7f7f7")
         tree.tag_configure("odd", background="white")
