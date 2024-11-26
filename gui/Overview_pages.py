@@ -218,10 +218,9 @@ class Ubersicht(tk.Frame):
         Aktionen_button.place(relx=0.6, rely=0.1)
 
         # Tabelle
-        # Tabelle
         # Styling
         style = ttk.Style()
-        # style.theme_use("clam")
+        #style.theme_use("")
         style.configure("Treeview.Heading", font=("Inter", 12), background="#D9D9D9", foreground="#6E6893")
         style.configure("Treeview", font=("Arial", 11), rowheight=35, background="white", foreground="black")
         style.map("Treeview", background=[("selected", "#D9D9D9")], foreground=[("selected", "black")])
@@ -402,6 +401,10 @@ class Gerateansicht(tk.Frame):
         self.speichern_img = gui_prototyp.load_image(root_path+"/gui/assets/Button_Speichern.png")
         self.upload_img = gui_prototyp.load_image(root_path + "/gui/assets/Button_PicDrop.png")
 
+        # Button Bilder hochladen
+        upload_frame = tk.Frame(self.gerateansicht_frame, bg='white')
+        upload_button = tk.Button(upload_frame, image=self.upload_img, bd=0, bg='white',
+                                  command=lambda: print("Bild hochgeladen"))
         #Button Schäden
         def open_schaeden_page():
             schaeden_page = tk.Toplevel()#root
@@ -409,6 +412,7 @@ class Gerateansicht(tk.Frame):
             schaeden_page.geometry("819x594+500+300")
             schaeden_page.configure(bg='white')
 
+            schaeden_page.grab_set()
             #Bilder
             self.aktualisieren_img = gui_prototyp.load_image(root_path+"/gui/assets/Button_Aktualisieren.png")
             self.upload_img = gui_prototyp.load_image(root_path+"/gui/assets/Button_Drop.png")
@@ -480,6 +484,7 @@ class Gerateansicht(tk.Frame):
             buchen_page.geometry("819x594+500+300")
             buchen_page.configure(bg='white')
 
+            buchen_page.grab_set()
             # Bilder
             self.aktualisieren_img = gui_prototyp.load_image(root_path + "/gui/assets/Button_Aktualisieren.png")
 
@@ -536,11 +541,9 @@ class Gerateansicht(tk.Frame):
             end_result_label.place(x=150, y=100)
 
             # Buttons
-            schaeden_button_frame = tk.Frame(buchen_page, bg='white', bd=1)
-            close_button = tk.Button(schaeden_button_frame, image=self.aktualisieren_img, bd=0, bg='white',
+            buchen_button_frame = tk.Frame(buchen_page, bg='white', bd=1)
+            close_button = tk.Button(buchen_button_frame, image=self.aktualisieren_img, bd=0, bg='white',
                                      command=buchen_page.destroy)
-            schaeden_button = tk.Button(schaeden_button_frame, image=self.schaeden_img, bd=0, bg='white',
-                                        command=open_schaeden_page)
 
 
             # Placement
@@ -554,10 +557,9 @@ class Gerateansicht(tk.Frame):
             verlauf_entry.place(x=10, y=202, width=380, height=382)
 
             close_button.place(x=200, y=40)
-            schaeden_button.place(x=50, y=40)
             info_frame.place(x=0, y=0, width=409, height=594)
             date_frame.place(x=409, y=0, width=409, height=444)
-            schaeden_button_frame.place(x=409, y=444, width=409, height=150)
+            buchen_button_frame.place(x=409, y=444, width=409, height=150)
 
         # Funktion zuende
         # Button Buchung
@@ -572,10 +574,7 @@ class Gerateansicht(tk.Frame):
         speichern_button = tk.Button(buttons_frame, image=self.speichern_img, bd=0, bg='white', command=button_click)
         speichern_button.place(x=10, y=150)
 
-        #Button Bilder hochladen
-        upload_frame = tk.Frame(self.gerateansicht_frame, bg='white')
-        upload_button = tk.Button(upload_frame, image=self.upload_img, bd=0, bg='white',
-                                  command=lambda: print("Bild hochgeladen"))
+
         #Verzeichniss
         # "Alle Anzeigen" Button in der Seitenleiste
         all_button = tk.Button(verzeichniss, text="Alle anzeigen", bd=0, bg=ThemeManager.SRH_Grey, fg='black',

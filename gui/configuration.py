@@ -204,6 +204,7 @@ class Einstellungen(tk.Frame):
             spalten_page.geometry("400x200+500+300")
             spalten_page.configure(bg='white')
 
+            spalten_page.grab_set()
             #Bilder
             self.aktualisieren_img = gui_prototyp.load_image(root_path+"/gui/assets/Button_Aktualisieren.png")
             self.upload_img = gui_prototyp.load_image(root_path+"/gui/assets/Button_Drop.png")
@@ -249,6 +250,9 @@ class Einstellungen(tk.Frame):
             typ_page.geometry("400x200+500+300")
             typ_page.configure(bg='white')
 
+            # Modal-Fenster aktivieren
+            typ_page.grab_set()
+
             #Bilder
             self.aktualisieren_img = gui_prototyp.load_image(root_path+"/gui/assets/Button_Aktualisieren.png")
             self.upload_img = gui_prototyp.load_image(root_path+"/gui/assets/Button_Drop.png")
@@ -280,17 +284,18 @@ class Einstellungen(tk.Frame):
         addTyp_button.place(relx=0.01, rely=0.69, relheight=0.032)
 
         def open_status_page():
-            typ_page = tk.Toplevel()#root
-            typ_page.title("Status hinzufügen")
-            typ_page.geometry("400x200+500+300")
-            typ_page.configure(bg='white')
+            spalten_page = tk.Toplevel()#root
+            spalten_page.title("Status hinzufügen")
+            spalten_page.geometry("400x200+500+300")
+            spalten_page.configure(bg='white')
 
+            spalten_page.grab_set()
             #Bilder
             self.aktualisieren_img = gui_prototyp.load_image(root_path+"/gui/assets/Button_Aktualisieren.png")
             self.upload_img = gui_prototyp.load_image(root_path+"/gui/assets/Button_Drop.png")
 
             #Informationen
-            info_frame = tk.Frame(typ_page, bg='white', bd=1)
+            info_frame = tk.Frame(spalten_page, bg='white', bd=1)
 
             name_label = tk.Label(info_frame, text="Name", bg='white',
                                       font=("Inter", 19))
@@ -303,8 +308,8 @@ class Einstellungen(tk.Frame):
                                   font=("Inter", 19, 'italic'))
 
             #Buttons
-            button_frame = tk.Frame(typ_page, bg='white', bd=1)
-            close_button = tk.Button(button_frame, image=self.aktualisieren_img, bd=0, bg='white', command=typ_page.destroy)
+            button_frame = tk.Frame(spalten_page, bg='white', bd=1)
+            close_button = tk.Button(button_frame, image=self.aktualisieren_img, bd=0, bg='white', command=spalten_page.destroy)
 
             #Placement
             name_label.place(x=0, y=2)
