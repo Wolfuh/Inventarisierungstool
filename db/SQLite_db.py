@@ -1,16 +1,10 @@
 import sqlite3
 import os
-import tkinter as tk
-from tkinter import ttk
-from tkinter import *
+import hashlib
 
 
-print(os.path.isfile(os.path.join(os.path.dirname(__file__), 'db', 'Inventarisierungs_DB.sqlite3')))
-print(os.path.isfile(os.getcwd()+'./db/Inventarisierungs_DB.sqlite3'))
-print(os.path.isfile(os.path.join(os.path.dirname(__file__),'db','Inventarisierungs_DB.sqlite3')))
-print(os.path.isfile(os.path.join(os.path.dirname(__file__),'..')))
-print(os.path.isfile(os.path.join(os.path.dirname(__file__), 'Inventarisierungs_DB.sqlite3')))
-print(os.path.isfile('./db/Inventarisierungs_DB.sqlite3'))
+
+
 
 def init_connection():
     """
@@ -83,6 +77,25 @@ def fetch_users_headers():
         if my_db:
             my_db.close()
 
+def login_lookup(username: str, password: str):
+    
+    users_db = sqlite3.connect(os.path.join(os.path.dirname(__file__), 'Inventarisierungs_DB.sqlite3')) # Verbindung DB
+    users_dbc = users_db.cursor()               # Cursor erstellen
+    users_dbc.execute(f"SELECT passwort FROM benutzer WHERE Benutzername = '{username}'") # Hash des Passwortes des eingebenen Nutzers abfragen
+    back_password = users_dbc.fetchone()
+    # print(password)
+    hash_password = hashlib.sha512(password.encode()).hexdigest()
+    
+    users_db.close()
+    try:
+        return hash_password == back_password[0]
+        # print(hash_password)
+        # print(back_password[0])
+    except:
+        return False
+
+
+# login_lookup("Hans","123456")
 
 #############################
 ### BIS HIER HIN BEHALTEN ###
