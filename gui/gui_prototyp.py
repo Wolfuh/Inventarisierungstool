@@ -8,7 +8,14 @@ import Overview_pages
 import ThemeManager
 import Profiles
 import importlib.util
+import sys
 
+sys.path.append(os.path.join(os.path.dirname(__file__),'..'))
+
+from db.SQLite_db import *
+
+
+'''
 root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
 # login_DB
 login_DB_path = root_path+"/gui/assets/+'db/login_DB.py'"
@@ -17,6 +24,7 @@ login_DB_path = root_path+"/gui/assets/+'db/login_DB.py'"
 spec = importlib.util.spec_from_file_location("login_DB", login_DB_path)
 # login_DB = importlib.util.module_from_spec(spec)
 # spec.loader.exec_module(login_DB)
+'''
 
 
 class GuiTest(tk.Tk):
@@ -69,7 +77,7 @@ class LogInWindow(tk.Frame):
         style.configure("Footer.TLabel", background=ThemeManager.SRH_Grey)
 
         def login():
-            if login_DB.login_lookup(username_entry.get(), password_entry.get()):
+            if login_lookup(username_entry.get(), password_entry.get()):
                 controller.show_frame(Mainpages.MainPage)
                 username_entry.delete(0, 'end')
                 password_entry.delete(0, 'end')
