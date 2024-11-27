@@ -266,7 +266,7 @@ class Ubersicht(tk.Frame):
                 print(f"Fehler bei der Auswahl {e}")
 
 
-        tree.bind("<<TreeviewSelect>>", on_item_select)
+        tree.bind("<Double-1>", on_item_select)
 
         #Farben für Tags definieren
         tree.tag_configure("even", background="#f7f7f7")
