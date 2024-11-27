@@ -46,13 +46,13 @@ class Profil(tk.Frame):
         profilbild = tk.Button(self.profil_frame, image=self.imgProfileTest, bd=0, bg='white',
                                command=lambda: controller.show_frame(Mainpages.MainPage))
         name = tk.Label(self.profil_frame, text="Name", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 14))
-        username = tk.Label(self.profil_frame, text="xxx xxx", bd=0, bg='white', fg='black', font=("Poppins", 18))
+        self.username = tk.Label(self.profil_frame, text="xxx xxx", bd=0, bg='white', fg='black', font=("Poppins", 18))
 
         gruppen = tk.Label(self.profil_frame, text="Gruppen", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 14))
-        usergruppen = tk.Label(self.profil_frame, text="xx, xx", bd=0, bg='white', fg='black', font=("Poppins", 18))
+        self.usergruppen = tk.Label(self.profil_frame, text="xx, xx", bd=0, bg='white', fg='black', font=("Poppins", 18))
 
         email = tk.Label(self.profil_frame, text="Email", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 14))
-        useremail = tk.Label(self.profil_frame, text="xxx@srhk.de", bd=0, bg='white', fg='black', font=("Poppins", 18))
+        self.useremail = tk.Label(self.profil_frame, text="xxx@srhk.de", bd=0, bg='white', fg='black', font=("Poppins", 18))
 
         rechte = tk.Label(self.profil_frame, text="Rechte", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 14))
         rechte_frame = tk.Frame(self.profil_frame, bg='#D9D9D9')
@@ -91,13 +91,13 @@ class Profil(tk.Frame):
         profilbild.place(x=0, y=0)
 
         name.place(x=499, y=10)
-        username.place(x=502, y=30)
+        self.username.place(x=502, y=30)
 
         gruppen.place(x=499, y=80)
-        usergruppen.place(x=502, y=105)
+        self.usergruppen.place(x=502, y=105)
 
         email.place(x=0, y=500)
-        useremail.place(x=3, y=520)
+        self.useremail.place(x=3, y=520)
 
         rechte.place(x=0, y=570)
         rechte_frame.place(x=3, y=605, width=1, height=80)
@@ -106,6 +106,11 @@ class Profil(tk.Frame):
         userrechte.place(x=13, y=670)
 
         self.profil_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
+
+    def update_userdata(self, data):
+        self.username.config(text=data[1])
+        self.usergruppen.config(text=data[2])
+        self.useremail.config(text=data[0])
 
 
 class Admin(tk.Frame):
@@ -214,6 +219,26 @@ class Admin(tk.Frame):
         self.tabelle_frame.place(relx=0.15, rely=0.15, relwidth=0.85, height=1000)
         #self.admin_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
+
+        # Gerät aus Tabelle öffnen
+        def on_user_select(event):
+            try:
+                selected_User = tree.focus()
+                print(f"Ausgewähltes Item: {selected_User}")
+                if selected_User:
+                    showDetails(selected_User, tree, controller)
+            except Exception as e:
+                print(f"Fehler bei der Auswahl {e}")
+
+        tree.bind("<Double-1>", on_user_select)
+
+def showDetails(selected_User, tree, controller):
+    data = tree.item(selected_User, "values")
+    print(f"Daten des ausgewählten Items: {data}")
+
+    details = controller.frames[Profil]
+    details.update_userdata(data)
+    controller.show_frame(Profil)
 
 
 class Stats(tk.Frame):
