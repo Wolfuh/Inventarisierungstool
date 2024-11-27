@@ -42,7 +42,8 @@ def fetch_items_headers():
         cur = my_db.cursor()
         cur.execute("PRAGMA table_info(items)")
         it_alles = cur.fetchall()
-        items_uberschrift = [i[1] for i in it_alles]       
+        entfernungs_liste = ["product_id", "added_by_user"]     # blendet die übeschriften aus
+        items_uberschrift = [i[1] for i in it_alles if i[1].lower() not in entfernungs_liste]
         return items_uberschrift
     except sqlite3.Error as e:
         return [], "Fehler beim Abrufen der Hardware-Einträge:", str(e)
