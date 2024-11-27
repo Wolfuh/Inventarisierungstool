@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk, messagebox
+from tkinter import ttk, messagebox, PhotoImage
 import os
 
 import configuration  # Should be a class instead of a module if instantiated
@@ -30,10 +30,12 @@ spec = importlib.util.spec_from_file_location("login_DB", login_DB_path)
 class GuiTest(tk.Tk):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
         self.title("Prototyp")
         self.resizable(False, False)
         self.geometry("1920x1080")
+        self.iconbitmap(root_path+"/gui/assets/prototyp_download.ico")
 
         # Main container for frames
         container = tk.Frame(self)

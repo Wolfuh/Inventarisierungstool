@@ -254,7 +254,20 @@ class Ubersicht(tk.Frame):
             formatted_row = [value if value is not None else "-" for value in row] # Leere Felder durch "-" ersetzen
             color = "#f3f3f3" if i % 2 == 0 else "white"
             tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
-            
+
+        # Gerät aus Tabelle öffnen
+        def on_item_select(event):
+            try:
+                selected_Item = tree.focus()
+                print(f"Ausgewähltes Item: {selected_Item}")
+                if selected_Item:
+                    showDetails(selected_Item, tree, controller)
+            except Exception as e:
+                print(f"Fehler bei der Auswahl {e}")
+
+
+        tree.bind("<<TreeviewSelect>>", on_item_select)
+
         #Farben für Tags definieren
         tree.tag_configure("even", background="#f7f7f7")
         tree.tag_configure("odd", background="white")
@@ -266,6 +279,14 @@ class Ubersicht(tk.Frame):
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
         self.tabelle_frame.place(relx=0.15, rely=0.3, relwidth=0.85, height=800)
+
+def showDetails(selected_Item, tree, controller):
+    data = tree.item(selected_Item, "values")
+    print(f"Daten des ausgewählten Items: {data}")
+
+    details = controller.frames[Gerateansicht]
+    details.update_data(data)
+    controller.show_frame(Gerateansicht)
 
 class Gerateansicht(tk.Frame):
     def __init__(self, parent, controller):
@@ -327,18 +348,18 @@ class Gerateansicht(tk.Frame):
         name_frame.place(x=900, y=20, width=480, height=88)
         name_label = tk.Label(name_frame, text="Gerätename", bg='white', fg='#858383',
                               font=("Inter", 19))
-        name_entry = tk.Entry(name_frame, bg='white', fg='black', font=("Inter", 16), bd=0)
+        self.name_entry = tk.Entry(name_frame, bg='white', fg='black', font=("Inter", 16), bd=0)
 
         tag_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=0, relief="solid", highlightthickness=1, highlightbackground='#B8B7B7')
 
         tag_label = tk.Label(tag_frame, text="Seriennummer/Servicetag", bg='white', fg='#858383',
                               font=("Inter", 19))
-        tag_entry = tk.Entry(tag_frame, bg='white', fg='black', font=("Inter", 16), bd=0)
+        self.tag_entry = tk.Entry(tag_frame, bg='white', fg='black', font=("Inter", 16), bd=0)
 
         typ_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=0, relief="solid", highlightthickness=1, highlightbackground='#B8B7B7')
         typ_label = tk.Label(typ_frame, text="Gerätetyp", bg='white', fg='#858383',
                              font=("Inter", 19))
-        typ_aktuell_label = tk.Label(typ_frame, text="PC", bg='white', fg='#858383',
+        self.typ_aktuell_label = tk.Label(typ_frame, text="PC", bg='white', fg='#858383',
                              font=("Inter", 19))
        #Dropdown Menü Typen
         typ_drop = tk.Button(typ_frame, text="↓", bd=0, bg='white',
@@ -372,7 +393,7 @@ class Gerateansicht(tk.Frame):
         status_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=0, relief="solid", highlightthickness=1, highlightbackground='#B8B7B7')
         status_label = tk.Label(status_frame, text="Status", bg='white', fg='#858383',
                              font=("Inter", 19))
-        status_aktuell_label = tk.Label(status_frame, text="✔ In Betrieb", bg='white', fg='#858383',
+        self.status_aktuell_label = tk.Label(status_frame, text="✔ In Betrieb", bg='white', fg='#858383',
                              font=("Inter", 19))
 
         status_drop = tk.Button(status_frame, text="↓", bd=0, bg='white',
@@ -404,7 +425,7 @@ class Gerateansicht(tk.Frame):
         standort_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=0, relief="solid", highlightthickness=1, highlightbackground='#B8B7B7')
         standort_label = tk.Label(standort_frame, text="Standort", bg='white', fg='#858383',
                              font=("Inter", 19))
-        standort_entry = tk.Entry(standort_frame, bg='white', fg='black', font=("Inter", 16), bd=0)
+        self.standort_entry = tk.Entry(standort_frame, bg='white', fg='black', font=("Inter", 16), bd=0)
 
         #Button
         buttons_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=0, relief="solid")
@@ -708,15 +729,15 @@ class Gerateansicht(tk.Frame):
 
         # Positionierung
         name_label.grid(row=5, column=5, pady=10)
-        name_entry.place(x=5, y=50, width=200)
+        self.name_entry.place(x=5, y=50, width=200)
         tag_label.grid(row=5, column=5, pady=10)
-        tag_entry.place(x=5, y=50, width=200)
+        self.tag_entry.place(x=5, y=50, width=200)
         typ_label.grid(row=5, column=5, pady=10)
-        typ_aktuell_label.place(x=5, y=50, width=200)
+        self.typ_aktuell_label.place(x=5, y=50, width=200)
         status_label.grid(row=5, column=5, pady=10)
-        status_aktuell_label.place(x=5, y=50, width=200)
+        self.status_aktuell_label.place(x=5, y=50, width=200)
         standort_label.grid(row=5, column=5, pady=10)
-        standort_entry.place(x=5, y=50, width=200)
+        self.standort_entry.place(x=5, y=50, width=200)
         upload_button.place(x=100, y=0)
 
         upload_frame.place(x=0, y=520, relwidth=0.40, height=300)
@@ -732,3 +753,19 @@ class Gerateansicht(tk.Frame):
         login.place(relx=0.95, rely=0.5, anchor="center")
         profil.place(relx=0.90, rely=0.5, anchor="center")
         mainpage.place(relx=0.16, rely=0.16, anchor='nw')  # Anpassen der Position des mainpage-Buttons
+
+
+    def update_data(self, data):
+        self.name_entry.delete(0, tk.END)
+        self.name_entry.insert(0, data[1])
+
+        self.tag_entry.delete(0, tk.END)
+        self.tag_entry.insert(0, data[2])
+
+        self.standort_entry.delete(0, tk.END)
+        self.standort_entry.insert(0, data[3])
+
+        self.typ_aktuell_label.config(text=data[4])
+
+        self.status_aktuell_label.config(text=data[5])
+
