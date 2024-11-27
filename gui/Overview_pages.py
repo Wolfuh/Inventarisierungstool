@@ -323,22 +323,25 @@ class Gerateansicht(tk.Frame):
         tree.place(x=0, y=20, relwidth=0.40, relheight=0.5)
         scroll.place(x=770, y=20, relheight=0.5)
 
-        name_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=1, relief="solid")
+        name_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=0, relief="solid", highlightthickness=1, highlightbackground='#B8B7B7')
         name_frame.place(x=900, y=20, width=480, height=88)
-        name_label = tk.Label(name_frame, text="Gerätename", bg='white',
+        name_label = tk.Label(name_frame, text="Gerätename", bg='white', fg='#858383',
                               font=("Inter", 19))
+        name_entry = tk.Entry(name_frame, bg='white', fg='black', font=("Inter", 16), bd=0)
 
-        tag_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=1, relief="solid")
+        tag_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=0, relief="solid", highlightthickness=1, highlightbackground='#B8B7B7')
 
-        tag_label = tk.Label(tag_frame, text="Seriennummer/Servicetag", bg='white',
+        tag_label = tk.Label(tag_frame, text="Seriennummer/Servicetag", bg='white', fg='#858383',
                               font=("Inter", 19))
+        tag_entry = tk.Entry(tag_frame, bg='white', fg='black', font=("Inter", 16), bd=0)
 
-        typ_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=1, relief="solid")
-        typ_label = tk.Label(typ_frame, text="Gerätetyp", bg='white',
+        typ_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=0, relief="solid", highlightthickness=1, highlightbackground='#B8B7B7')
+        typ_label = tk.Label(typ_frame, text="Gerätetyp", bg='white', fg='#858383',
+                             font=("Inter", 19))
+        typ_aktuell_label = tk.Label(typ_frame, text="PC", bg='white', fg='#858383',
                              font=("Inter", 19))
        #Dropdown Menü Typen
         typ_drop = tk.Button(typ_frame, text="↓", bd=0, bg='white',
-                                fg=ThemeManager.SRH_Grey,
                                 font=("Inter", 20, 'bold'),
                                 command=lambda: controller.show_frame())
         typ_drop = tk.Button(typ_frame, text="Typ", bd=0, bg='white', fg='black',
@@ -366,8 +369,10 @@ class Gerateansicht(tk.Frame):
                 typ_drop.winfo_rooty() + typ_drop.winfo_height()
             )
 
-        status_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=1, relief="solid")
-        status_label = tk.Label(status_frame, text="Status", bg='white',
+        status_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=0, relief="solid", highlightthickness=1, highlightbackground='#B8B7B7')
+        status_label = tk.Label(status_frame, text="Status", bg='white', fg='#858383',
+                             font=("Inter", 19))
+        status_aktuell_label = tk.Label(status_frame, text="✔ In Betrieb", bg='white', fg='#858383',
                              font=("Inter", 19))
 
         status_drop = tk.Button(status_frame, text="↓", bd=0, bg='white',
@@ -396,9 +401,10 @@ class Gerateansicht(tk.Frame):
                 status_drop.winfo_rooty() + status_drop.winfo_height()
             )
 
-        standort_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=1, relief="solid")
-        standort_label = tk.Label(standort_frame, text="Standort", bg='white',
+        standort_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=0, relief="solid", highlightthickness=1, highlightbackground='#B8B7B7')
+        standort_label = tk.Label(standort_frame, text="Standort", bg='white', fg='#858383',
                              font=("Inter", 19))
+        standort_entry = tk.Entry(standort_frame, bg='white', fg='black', font=("Inter", 16), bd=0)
 
         #Button
         buttons_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=0, relief="solid")
@@ -702,10 +708,15 @@ class Gerateansicht(tk.Frame):
 
         # Positionierung
         name_label.grid(row=5, column=5, pady=10)
+        name_entry.place(x=5, y=50, width=200)
         tag_label.grid(row=5, column=5, pady=10)
+        tag_entry.place(x=5, y=50, width=200)
         typ_label.grid(row=5, column=5, pady=10)
+        typ_aktuell_label.place(x=5, y=50, width=200)
         status_label.grid(row=5, column=5, pady=10)
+        status_aktuell_label.place(x=5, y=50, width=200)
         standort_label.grid(row=5, column=5, pady=10)
+        standort_entry.place(x=5, y=50, width=200)
         upload_button.place(x=100, y=0)
 
         upload_frame.place(x=0, y=520, relwidth=0.40, height=300)
