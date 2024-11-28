@@ -88,10 +88,8 @@ def login_lookup(username: str, password: str):
     
     my_db.close()
 
-    user_role = lookup_role(username)
-
     try:
-        return hash_password == back_password[0], user_role
+        return hash_password == back_password[0]
         
     except:
         return False
