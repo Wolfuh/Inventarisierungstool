@@ -482,49 +482,61 @@ class Gerateansicht(tk.Frame):
 
             name_label = tk.Label(info_frame, text="Gerätename", bg='white',
                                       font=("Inter", 19))
-            name_entry = tk.Entry(info_frame, bg= '#D9D9D9', bd=0,
-                                      font=("Inter", 19, 'italic'))
+            name_entry_frame = ctk.CTkFrame(info_frame, width=150, height=40, bg_color='transparent',
+                                      fg_color='transparent', border_width=1, border_color='#B8B7B7', corner_radius=8)
+            name_entry = ctk.CTkEntry(name_entry_frame, text_color='black', font=("Inter", 15), border_width=0,
+                                       fg_color='transparent', width=100)
 
-            tag_label = tk.Label(info_frame, text="Servicetag", bg='white',
-                                      font=("Inter", 19))
-            tag_entry = tk.Entry(info_frame, bg='#D9D9D9', bd=0,
-                                      font=("Inter", 19, 'italic'))
+            tag_label = tk.Label(info_frame, text="Tag", bg='white',
+                                  font=("Inter", 19))
+            tag_entry_frame = ctk.CTkFrame(info_frame, width=150, height=40, bg_color='transparent',
+                                            fg_color='transparent', border_width=1, border_color='#B8B7B7',
+                                            corner_radius=8)
+            tag_entry = ctk.CTkEntry(tag_entry_frame, text_color='black', font=("Inter", 15), border_width=0,
+                                      fg_color='transparent', width=100)
 
             date_label = tk.Label(info_frame, text="Datum", bg='white',
                                  font=("Inter", 19))
+            date_entry_frame = ctk.CTkFrame(info_frame, width=150, height=40, bg_color='transparent',
+                                            fg_color='transparent', border_width=1, border_color='#B8B7B7',
+                                            corner_radius=8)
             date_entry = datetime.now().strftime("%d.%m.%Y")
-            current_date = tk.Label(info_frame, text=date_entry, font=("Arial", 14), bg='#D9D9D9', fg='black', bd=0)
+            current_date = tk.Label(date_entry_frame, text=date_entry, font=("Inter", 13), bg='white', fg='black', bd=0)
 
 
             beschreibung_label = tk.Label(info_frame, text="Beschreibung", bg='white',
                                  font=("Inter", 19))
-            beschreibung_entry = tk.Entry(info_frame, bg='#D9D9D9', bd=0,
-                                 font=("Inter", 19, 'italic'))
+            beschreibung_entry_frame = ctk.CTkFrame(info_frame, width=380, height=382, bg_color='transparent',fg_color='transparent', border_width=1, border_color='#B8B7B7', corner_radius=8)
+            beschreibung_entry = ctk.CTkEntry(beschreibung_entry_frame, fg_color='transparent', text_color='black', font=("Inter", 13), width=380, height=382, border_width=1, border_color='#B8B7B7', corner_radius=8)
+
             #Verlauf
             verlauf_label = tk.Label(verlauf_frame, text="Verlauf", bg='white',
                                  font=("Inter", 19))
-            verlauf_inh_label = tk.Entry(verlauf_frame, bg='#D9D9D9', bd=0,
-                                 font=("Inter", 19, 'italic'))
-            #Buttons
+            verlauf_inh_entry =  ctk.CTkEntry(verlauf_frame, fg_color='transparent', text_color='black', font=("Inter", 13), width=380, height=382, border_width=1, border_color='#B8B7B7', corner_radius=8)
+
             schaeden_button_frame = tk.Frame(schaeden_page, bg='white', bd=1)
             close_button = tk.Button(schaeden_button_frame, image=self.aktualisieren_img, bd=0, bg='white', command=schaeden_page.destroy)
             upload_button = tk.Button(schaeden_button_frame, image=self.upload_img, bd=0, bg='white', command=lambda: print("Bild hochgeladen"))
 
             #Placement
             name_label.place(x=0, y=2)
-            name_entry.place(x=150, y=2, width=150)
+            name_entry.place(x=5, y=5)
+            name_entry_frame.place(x=150, y=2)
 
             tag_label.place(x=0, y=52)
-            tag_entry.place(x=150, y=52, width=150)
+            tag_entry.place(x=5, y=5)
+            tag_entry_frame.place(x=150, y=52)
 
             date_label.place(x=0, y=102)
-            current_date.place(x=150, y=102)
+            current_date.place(x=8, y=8)
+            date_entry_frame.place(x=150, y=102)
 
             beschreibung_label.place(x=0, y=152)
-            beschreibung_entry.place(x=10, y=202, width=380, height=382)
+            beschreibung_entry.place(x=0, y=0)
+            beschreibung_entry_frame.place(x=10, y=202)
 
             verlauf_label.place(x=15, y=0)
-            verlauf_inh_label.place(x=15, y=50, width=380, height=382)
+            verlauf_inh_entry.place(x=15, y=50)
 
             upload_button.place(x=10, y=10)
             close_button.place(x=200, y=40)
@@ -588,6 +600,7 @@ class Gerateansicht(tk.Frame):
                 try:
                     # Datum validieren
                     datetime.strptime(entered_date, "%d.%m.%Y")
+
                     end_result_label.config(text=f"bis: {entered_date}")
                 except ValueError:
                     end_result_label.config(text="Ungültiges Datum! Bitte erneut eingeben.")
@@ -629,7 +642,7 @@ class Gerateansicht(tk.Frame):
         #Button Speichern
         def button_click():
             controller.show_frame(Ubersicht)
-            messagebox.showinfo("yippie","Änderungen erfolgreich gespeichert")
+            messagebox.showinfo("Erfolgreich","Änderungen erfolgreich gespeichert")
         speichern_button = tk.Button(buttons_frame, image=self.speichern_img, bd=0, bg='white', command=button_click)
         speichern_button.place(x=10, y=150)
 
@@ -753,28 +766,15 @@ class Gerateansicht(tk.Frame):
         grp8_button.pack(pady=10, anchor='w')
 
         # Positionierung
-
-        #typ_label.grid(row=5, column=5, pady=10)
-        #self.typ_aktuell_label.place(x=0, y=50, width=200)
-        #status_label.grid(row=5, column=5, pady=10)
-        #self.status_aktuell_label.place(x=0, y=50, width=200)
-        #standort_label.grid(row=5, column=5, pady=10)
-        #self.standort_entry.place(x=0, y=50, width=200)
         upload_button.place(x=100, y=0)
-
         upload_frame.place(x=0, y=520, relwidth=0.40, height=300)
-        #tag_frame.place(x=900, y=120, width=480, height=88)
-        #typ_frame.place(x=900, y=220, width=480, height=88)
-        #status_frame.place(x=900, y=320, width=480, height=88)
-        #standort_frame.place(x=900, y=420, width=480, height=88)
         buttons_frame.place(x=900, y=520, width=480, height=300)
-
 
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
         login.place(relx=0.95, rely=0.5, anchor="center")
         profil.place(relx=0.90, rely=0.5, anchor="center")
-        mainpage.place(relx=0.16, rely=0.16, anchor='nw')  # Anpassen der Position des mainpage-Buttons
+        mainpage.place(relx=0.16, rely=0.16, anchor='nw')
 
 
     def update_data(self, data):
