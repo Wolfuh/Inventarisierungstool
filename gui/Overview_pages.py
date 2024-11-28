@@ -428,7 +428,7 @@ class Gerateansicht(tk.Frame):
             )
 
         standort_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=0, relief="solid", highlightthickness=1, highlightbackground='#B8B7B7')
-        standort_label = tk.Label(standort_frame, text="Standort", bg='white', fg='#858383',
+        standort_label = tk.Label(standort_frame, text="Standort (Haus& Raum)", bg='white', fg='#858383',
                              font=("Inter", 19))
         self.standort_entry = tk.Entry(standort_frame, bg='white', fg='black', font=("Inter", 16), bd=0)
 
@@ -762,15 +762,15 @@ class Gerateansicht(tk.Frame):
 
     def update_data(self, data):
         self.name_entry.delete(0, tk.END)
-        self.name_entry.insert(0, data[4])
+        self.name_entry.insert(0, data[5])
 
         self.tag_entry.delete(0, tk.END)
         self.tag_entry.insert(0, data[0])
 
         self.standort_entry.delete(0, tk.END)
-        self.standort_entry.insert(0, data[2])
+        self.standort_entry.insert(0, data[3])
 
         self.typ_aktuell_label.config(text=data[1])
 
-        self.status_aktuell_label.config(text=data[5])
+        self.status_aktuell_label.config(text=data[4])
 

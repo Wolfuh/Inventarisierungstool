@@ -47,16 +47,22 @@ class Profil(tk.Frame):
         #Seiteninhalt
         profilbild = tk.Button(self.profil_frame, image=self.imgProfileTest, bd=0, bg='white',
                                command=lambda: controller.show_frame(Mainpages.MainPage))
-        name = tk.Label(self.profil_frame, text="Name", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 14))
-        self.username = tk.Label(self.profil_frame, text="xxx xxx", bd=0, bg='white', fg='black', font=("Poppins", 18))
+        username = tk.Label(self.profil_frame, text="Username", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 15))
+        self.username = tk.Label(self.profil_frame, text=" ", bd=0, bg='white', fg='black', font=("Poppins", 18))
 
-        gruppen = tk.Label(self.profil_frame, text="Gruppen", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 14))
+        vorname = tk.Label(self.profil_frame, text="Vorname", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 15))
+        self.vorname = tk.Label(self.profil_frame, text=" ", bd=0, bg='white', fg='black', font=("Poppins", 18))
+
+        nachname = tk.Label(self.profil_frame, text="Nachname", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 15))
+        self.nachname = tk.Label(self.profil_frame, text=" ", bd=0, bg='white', fg='black', font=("Poppins", 18))
+
+        gruppen = tk.Label(self.profil_frame, text="Gruppen", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 15))
         self.usergruppen = tk.Label(self.profil_frame, text="xx, xx", bd=0, bg='white', fg='black', font=("Poppins", 18))
 
-        email = tk.Label(self.profil_frame, text="Email", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 14))
+        email = tk.Label(self.profil_frame, text="Email", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 15))
         self.useremail = tk.Label(self.profil_frame, text="xxx@srhk.de", bd=0, bg='white', fg='black', font=("Poppins", 18))
 
-        rechte = tk.Label(self.profil_frame, text="Rechte", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 14))
+        rechte = tk.Label(self.profil_frame, text="Rechte", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 15))
         rechte_frame = tk.Frame(self.profil_frame, bg='#D9D9D9')
         adminrechte = tk.Label(self.profil_frame, text="Admin", bd=0, bg='white', fg='black', font=("Poppins", 18))
         ausbilderrechte = tk.Label(self.profil_frame, text="Ausbilder", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 18))
@@ -92,14 +98,20 @@ class Profil(tk.Frame):
 
         profilbild.place(x=0, y=0)
 
-        name.place(x=499, y=10)
-        self.username.place(x=502, y=30)
+        username.place(x=499, y=10)
+        self.username.place(x=502, y=40)
 
-        gruppen.place(x=499, y=80)
-        self.usergruppen.place(x=502, y=105)
+        vorname.place(x=499, y=90)
+        self.vorname.place(x=502, y=120)
+
+        nachname.place(x=499, y=170)
+        self.nachname.place(x=502, y=200)
+
+        gruppen.place(x=499, y=250)
+        self.usergruppen.place(x=502, y=280)
 
         email.place(x=0, y=500)
-        self.useremail.place(x=3, y=520)
+        self.useremail.place(x=3, y=525)
 
         rechte.place(x=0, y=570)
         rechte_frame.place(x=3, y=605, width=1, height=80)
@@ -111,7 +123,9 @@ class Profil(tk.Frame):
 
     def update_userdata(self, data):
         self.username.config(text=data[1])
-        self.usergruppen.config(text=data[2])
+        self.vorname.config(text=data[2])
+        self.nachname.config(text=data[3])
+        self.usergruppen.config(text=data[4])
         self.useremail.config(text=data[0])
 
 
