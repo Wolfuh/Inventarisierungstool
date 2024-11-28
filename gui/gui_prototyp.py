@@ -91,7 +91,6 @@ class LogInWindow(tk.Frame):
         # Login Frame Elements
         login_frame = tk.Frame(self, bg='white')
         username_label = tk.Label(login_frame, text="Benutzername", bg='white', font=("Inter", 19))
-        #username_entry = tk.Entry(login_frame, bg='white', font=("Inter", 15))
         username_entry = ctk.CTkEntry(login_frame, text_color='black', font=("Inter", 20), border_width=1, corner_radius=8,
                      fg_color='white', width=200)
         password_label = tk.Label(login_frame, text="Passwort", bg='white', font=("Inter", 19))
