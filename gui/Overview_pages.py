@@ -359,8 +359,8 @@ class Gerateansicht(tk.Frame):
         typ_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=0, relief="solid", highlightthickness=1, highlightbackground='#B8B7B7')
         typ_label = tk.Label(typ_frame, text="Gerätetyp", bg='white', fg='#858383',
                              font=("Inter", 19))
-        self.typ_aktuell_label = tk.Label(typ_frame, text="PC", bg='white', fg='#858383',
-                             font=("Inter", 19))
+        self.typ_aktuell_label = tk.Label(typ_frame, text="", bg='white', fg='black',
+                             font=("Inter", 19), anchor="w", justify="left")
        #Dropdown Menü Typen
         typ_drop = tk.Button(typ_frame, text="↓", bd=0, bg='white',
                                 font=("Inter", 20, 'bold'),
@@ -393,8 +393,8 @@ class Gerateansicht(tk.Frame):
         status_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=0, relief="solid", highlightthickness=1, highlightbackground='#B8B7B7')
         status_label = tk.Label(status_frame, text="Status", bg='white', fg='#858383',
                              font=("Inter", 19))
-        self.status_aktuell_label = tk.Label(status_frame, text="✔ In Betrieb", bg='white', fg='#858383',
-                             font=("Inter", 19))
+        self.status_aktuell_label = tk.Label(status_frame, text="", bg='white', fg='black',
+                             font=("Inter", 19), anchor="w", justify="left")
 
         status_drop = tk.Button(status_frame, text="↓", bd=0, bg='white',
                              fg=ThemeManager.SRH_Grey,
@@ -729,15 +729,15 @@ class Gerateansicht(tk.Frame):
 
         # Positionierung
         name_label.grid(row=5, column=5, pady=10)
-        self.name_entry.place(x=5, y=50, width=200)
+        self.name_entry.place(x=0, y=50, width=200)
         tag_label.grid(row=5, column=5, pady=10)
-        self.tag_entry.place(x=5, y=50, width=200)
+        self.tag_entry.place(x=0, y=50, width=200)
         typ_label.grid(row=5, column=5, pady=10)
-        self.typ_aktuell_label.place(x=5, y=50, width=200)
+        self.typ_aktuell_label.place(x=0, y=50, width=200)
         status_label.grid(row=5, column=5, pady=10)
-        self.status_aktuell_label.place(x=5, y=50, width=200)
+        self.status_aktuell_label.place(x=0, y=50, width=200)
         standort_label.grid(row=5, column=5, pady=10)
-        self.standort_entry.place(x=5, y=50, width=200)
+        self.standort_entry.place(x=0, y=50, width=200)
         upload_button.place(x=100, y=0)
 
         upload_frame.place(x=0, y=520, relwidth=0.40, height=300)
@@ -757,15 +757,15 @@ class Gerateansicht(tk.Frame):
 
     def update_data(self, data):
         self.name_entry.delete(0, tk.END)
-        self.name_entry.insert(0, data[1])
+        self.name_entry.insert(0, data[4])
 
         self.tag_entry.delete(0, tk.END)
-        self.tag_entry.insert(0, data[2])
+        self.tag_entry.insert(0, data[0])
 
         self.standort_entry.delete(0, tk.END)
-        self.standort_entry.insert(0, data[3])
+        self.standort_entry.insert(0, data[2])
 
-        self.typ_aktuell_label.config(text=data[4])
+        self.typ_aktuell_label.config(text=data[1])
 
         self.status_aktuell_label.config(text=data[5])
 
