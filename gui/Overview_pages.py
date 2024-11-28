@@ -565,36 +565,37 @@ class Gerateansicht(tk.Frame):
 
             name_label = tk.Label(info_frame, text="Gerätename", bg='white',
                                   font=("Inter", 19))
-            name_entry = tk.Entry(info_frame, bg='#D9D9D9', bd=0,
-                                  font=("Inter", 19, 'italic'))
+            name_entry = ctk.CTkEntry(info_frame, fg_color='transparent', text_color='black', font=("Inter", 15), width=150, border_width=1, border_color='#B8B7B7', corner_radius=8)
 
             tag_label = tk.Label(info_frame, text="Servicetag", bg='white',
                                  font=("Inter", 19))
-            tag_entry = tk.Entry(info_frame, bg='#D9D9D9', bd=0,
-                                 font=("Inter", 19, 'italic'))
+            tag_entry = ctk.CTkEntry(info_frame, fg_color='transparent', text_color='black', font=("Inter", 15), width=150, border_width=1, border_color='#B8B7B7', corner_radius=8)
 
             verlauf_label = tk.Label(info_frame, text="Verlauf", bg='white',
                                           font=("Inter", 19))
-            verlauf_entry = tk.Entry(info_frame, bg='#D9D9D9', bd=0,
-                                          font=("Inter", 19, 'italic'))
+            verlauf_entry = ctk.CTkEntry(info_frame, fg_color='transparent', text_color='black', font=("Inter", 15), width=380, height=382, border_width=1, border_color='#B8B7B7', corner_radius=8)
+
             #Datum
             def ask_startdate():
+
                 # Benutzer nach Datum fragen
                 entered_date = simpledialog.askstring("Datum", "Startdatum (Format: DD.MM.YYYY:)")
                 try:
                     # Datum validieren
                     datetime.strptime(entered_date, "%d.%m.%Y")
                     start_result_label.config(text=f"von: {entered_date}")
-                except ValueError:
-                    start_result_label.config(text="Ungültiges Datum! Bitte erneut eingeben.")
-                # Button zur Datumseingabe
+                except (ValueError, TypeError):
+                    start_result_label.config(text="Ungültiges Datum!")
 
-            ask_date_button = tk.Button(date_frame, text="Startdatum eingeben", command=ask_startdate)
+            # Button zur Datumseingabe
+            ask_date_button = ctk.CTkButton(date_frame,text="Startdatum",command=ask_startdate, corner_radius=8, fg_color="#6F6C6C", text_color="white", hover_color="#081424")
             ask_date_button.place(x=0, y=0)
 
-            start_result_label = tk.Label(date_frame, text="Kein Datum ausgewählt", font=("Arial", 14))
+            start_result_label = tk.Label(date_frame, text="Kein Datum ausgewählt", font=("Arial", 14), bg='white')
             start_result_label.place(x=150, y=0)
+
             def ask_enddate():
+                date_frame.focus_set()
                 # Benutzer nach Datum fragen
                 entered_date = simpledialog.askstring("Datum", "Enddatum (Format: DD.MM.YYYY:)")
                 try:
@@ -603,13 +604,13 @@ class Gerateansicht(tk.Frame):
 
                     end_result_label.config(text=f"bis: {entered_date}")
                 except ValueError:
-                    end_result_label.config(text="Ungültiges Datum! Bitte erneut eingeben.")
+                    end_result_label.config(text="Ungültiges Datum!")
                 # Button zur Datumseingabe
 
-            ask_date_button = tk.Button(date_frame, text="Enddatum eingeben", command=ask_enddate)
+            ask_date_button = ctk.CTkButton(date_frame,text="Enddatum",command=ask_enddate, corner_radius=8, fg_color="#081424", text_color="white", hover_color="#6F6C6C")
             ask_date_button.place(x=0, y=100)
             # Ergebnis-Label
-            end_result_label = tk.Label(date_frame, text="Kein Datum ausgewählt", font=("Arial", 14))
+            end_result_label = tk.Label(date_frame, text="Kein Datum ausgewählt", font=("Arial", 14), bg='white')
             end_result_label.place(x=150, y=100)
 
             # Buttons
@@ -620,13 +621,13 @@ class Gerateansicht(tk.Frame):
 
             # Placement
             name_label.place(x=0, y=2)
-            name_entry.place(x=150, y=2, width=150)
+            name_entry.place(x=150, y=2)
 
             tag_label.place(x=0, y=52)
-            tag_entry.place(x=150, y=52, width=150)
+            tag_entry.place(x=150, y=52)
 
             verlauf_label.place(x=0, y=152)
-            verlauf_entry.place(x=10, y=202, width=380, height=382)
+            verlauf_entry.place(x=10, y=202)
 
             close_button.place(x=200, y=40)
             info_frame.place(x=0, y=0, width=409, height=594)
