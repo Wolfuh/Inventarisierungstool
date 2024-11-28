@@ -1,6 +1,6 @@
 import sqlite3
 import os
-from Security.UserSecurity import hashPassword
+from Security.UserSecurity import hashPassword  #type:ignore
 #???
 # Pfad zur Datenbankdatei
 path: str = os.path.join(os.path.dirname(__file__), 'DD-invBeispielDatenbank.sqlite3')

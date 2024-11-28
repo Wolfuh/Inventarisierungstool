@@ -87,15 +87,51 @@ def login_lookup(username: str, password: str):
     hash_password = hashlib.sha512(password.encode()).hexdigest()
     
     my_db.close()
+
+    user_role = lookup_role(username)
+
     try:
-        return hash_password == back_password[0]
-        # print(hash_password)
-        # print(back_password[0])
+        return hash_password == back_password[0], user_role
+        
     except:
         return False
 
 
-def search_bar_update(search): #peter hat sich in den code geschlichen finde ihn, befor er etwas zerstört
+def lookup_role(username: str):
+    
+    my_db = init_connection() # Verbindung DB
+    cur = my_db.cursor()               # Cursor erstellen
+    cur.execute(f"SELECT Rolle FROM benutzer WHERE Benutzername = '{username}'") 
+    role = cur.fetchone()
+    
+    my_db.close()
+    try:
+        return role
+    except sqlite3.Error as e:
+        return [], "Fehler beim Abrufen der Rolle:", str(e)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def search_bar_update(search): 
 
     my_db = init_connection()
     cur = my_db.cursor()
@@ -115,10 +151,6 @@ def search_bar_update(search): #peter hat sich in den code geschlichen finde ihn
     cur.execute(query, [f"%{search}%"] * len(columns))
     answer_search = cur.fetchall()
     return answer_search
-
-
-
-
 
 
 # items_uberschrift = fetch_items_headers()
