@@ -1,7 +1,8 @@
 import tkinter as tk
 from tkinter import ttk, messagebox, PhotoImage
 import os
-
+import customtkinter as ctk
+from customtkinter import *
 import configuration  # Should be a class instead of a module if instantiated
 import Mainpages
 import Overview_pages
@@ -90,11 +91,14 @@ class LogInWindow(tk.Frame):
         # Login Frame Elements
         login_frame = tk.Frame(self, bg='white')
         username_label = tk.Label(login_frame, text="Benutzername", bg='white', font=("Inter", 19))
-        username_entry = tk.Entry(login_frame, bg='white', font=("Inter", 15))
+        #username_entry = tk.Entry(login_frame, bg='white', font=("Inter", 15))
+        username_entry = ctk.CTkEntry(login_frame, text_color='black', font=("Inter", 20), border_width=1, corner_radius=8,
+                     fg_color='white', width=200)
         password_label = tk.Label(login_frame, text="Passwort", bg='white', font=("Inter", 19))
-        password_entry = tk.Entry(login_frame, show="*", bg='white', font=("Inter", 15))
-        login_button = tk.Button(login_frame, text="Login", bg='#081424', fg='white', font=("Inter", 20, 'bold'),
-                                 command=login)
+        password_entry = ctk.CTkEntry(login_frame, text_color='black', font=("Inter", 20), border_width=1, corner_radius=8,
+                     fg_color='white', width=200, show = "*")
+        login_button = ctk.CTkButton(login_frame, text="Login", fg_color='#081424', text_color='white', font=("Inter", 20, 'bold'), corner_radius=8,
+                                 command=login, width=200, height=30, hover_color=ThemeManager.SRH_Orange)
 
         username_label.grid(row=0, column=0, pady=10)
         username_entry.grid(row=1, column=0, pady=10)
