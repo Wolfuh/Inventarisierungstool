@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 from tkinter import *
+import customtkinter as ctk
+from customtkinter import *
 import os
 import gui_prototyp
 import ThemeManager
@@ -203,13 +205,16 @@ class Ubersicht(tk.Frame):
                                   font=("Inter", 20, 'bold'),
                                   command=show_dropdown_Filter)
         Filter_button.place(relx=0, rely=0.1)
-        # Suche
-        suche_button = tk.Button(self.ubersicht_frame, image=self.imgSuche, bd=0, bg=ThemeManager.SRH_Grey,
-                                 command=lambda: print(f"nach {suche_entry} gesucht"))
-        suche_entry = tk.Entry(self.ubersicht_frame, bg='#D9D9D9', bd=0, font=("Inter", 12))
 
-        suche_button.place(relx=0.1, rely=0.1, relheight=0.04, relwidth=0.02)
-        suche_entry.place(relx=0.12, rely=0.1, relwidth=0.33, relheight=0.04)
+        # Suche
+
+        suche_button = ctk.CTkButton(self.ubersicht_frame, image=self.imgSuche, corner_radius=8, border_width=0, fg_color="transparent", hover_color='#D9D9D9',
+                                 command=lambda: print(f"nach {suche_entry} gesucht"))
+        suche_entry = ctk.CTkEntry(self.ubersicht_frame, corner_radius=8, fg_color="#D9D9D9",  text_color="black", border_width=0, font=("Inter", 12))
+
+        suche_button.place(relx=0.1, rely=0.1, relheight=0.04, relwidth=0.022)
+        suche_entry.place(relx=0.125, rely=0.1, relwidth=0.33, relheight=0.04)
+
 
         # Hinzufügen
         Hinzufugen_button = tk.Button(self.ubersicht_frame, image=self.imgHinzufugen, bd=0, bg='white',

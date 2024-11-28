@@ -1,5 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
+import customtkinter as ctk
+from customtkinter import *
 
 import configuration
 import ThemeManager
@@ -167,12 +169,14 @@ class Admin(tk.Frame):
         #Seiteninhalt
         self.tabelle_frame = tk.Frame(self, bg='white')
         # Suche
-        suche_button = tk.Button(self.tabelle_frame, image=self.imgSuche, bd=0, bg=ThemeManager.SRH_Grey,
-                                 command=lambda: print(f"nach {suche_entry} gesucht"))
-        suche_entry = tk.Entry(self.tabelle_frame, bg='#D9D9D9', bd=0, font=("Inter", 12))
+        suche_button = ctk.CTkButton(self.tabelle_frame, image=self.imgSuche, corner_radius=8, border_width=0,
+                                     fg_color="transparent", hover_color='#D9D9D9',
+                                     command=lambda: print(f"nach {suche_entry} gesucht"))
+        suche_entry = ctk.CTkEntry(self.tabelle_frame, corner_radius=8, fg_color="#D9D9D9", text_color="black",
+                                   border_width=0, font=("Inter", 12))
 
-        suche_button.place(x=120, y=100, height=44)
-        suche_entry.place(x=142, y=100, height=44, width=1000)
+        suche_button.place(relx=0.075, rely=0.1, relheight=0.04, relwidth=0.028)
+        suche_entry.place(relx=0.108, rely=0.1, relwidth=0.33, relheight=0.04)
 
         # Hinzufügen
         Hinzufugen_button = tk.Button(self.tabelle_frame, image=self.imgHinzufugen, bd=0, bg='white',
