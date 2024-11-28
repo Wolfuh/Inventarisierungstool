@@ -349,23 +349,34 @@ class Gerateansicht(tk.Frame):
         tree.place(x=0, y=20, relwidth=0.40, relheight=0.5)
         scroll.place(x=770, y=20, relheight=0.5)
 
-        name_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=0, relief="solid", highlightthickness=1, highlightbackground='#B8B7B7')
-        name_frame.place(x=900, y=20, width=480, height=88)
-        name_label = tk.Label(name_frame, text="Gerätename", bg='white', fg='#858383',
-                              font=("Inter", 19))
-        self.name_entry = tk.Entry(name_frame, bg='white', fg='black', font=("Inter", 16), bd=0)
 
-        tag_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=0, relief="solid", highlightthickness=1, highlightbackground='#B8B7B7')
+        name_frame = ctk.CTkFrame(self.gerateansicht_frame, width=480, height=88, bg_color='transparent', fg_color='transparent', border_width=1, border_color='#B8B7B7', corner_radius=8)
+        name_label = ctk.CTkLabel(name_frame, text="Gerätename", text_color='#858383', font=("Inter", 25, 'bold'))
+        self.name_entry = ctk.CTkEntry(name_frame, text_color='black', font=("Inter", 20), border_width=0, fg_color='transparent')
+        name_label.place(x=5, y=5)
+        self.name_entry.place(x=5, y=50)
+        name_frame.place(x=900, y=20)
 
-        tag_label = tk.Label(tag_frame, text="Seriennummer/Servicetag", bg='white', fg='#858383',
-                              font=("Inter", 19))
-        self.tag_entry = tk.Entry(tag_frame, bg='white', fg='black', font=("Inter", 16), bd=0)
 
-        typ_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=0, relief="solid", highlightthickness=1, highlightbackground='#B8B7B7')
-        typ_label = tk.Label(typ_frame, text="Gerätetyp", bg='white', fg='#858383',
-                             font=("Inter", 19))
-        self.typ_aktuell_label = tk.Label(typ_frame, text="", bg='white', fg='black',
-                             font=("Inter", 19), anchor="w", justify="left")
+        tag_frame = ctk.CTkFrame(self.gerateansicht_frame, width=480, height=88, bg_color='transparent',
+                                  fg_color='transparent', border_width=1, border_color='#B8B7B7', corner_radius=8)
+        tag_label = ctk.CTkLabel(tag_frame, text="Servicetag/Seriennummer", text_color='#858383', font=("Inter", 25, 'bold'))
+        self.tag_entry = ctk.CTkEntry(tag_frame, text_color='black', font=("Inter", 20), border_width=0,
+                                       fg_color='transparent')
+        tag_label.place(x=5, y=5)
+        self.tag_entry.place(x=5, y=50)
+        tag_frame.place(x=900, y=120)
+
+        typ_frame = ctk.CTkFrame(self.gerateansicht_frame, width=480, height=88, bg_color='transparent',
+                                 fg_color='transparent', border_width=1, border_color='#B8B7B7', corner_radius=8)
+        typ_label = ctk.CTkLabel(typ_frame, text="Gerätetyp", text_color='#858383',
+                                 font=("Inter", 25, 'bold'))
+        self.typ_aktuell_label = ctk.CTkLabel(typ_frame, text="", text_color='black',
+                                 font=("Inter", 20))
+        typ_label.place(x=5, y=5)
+        self.typ_aktuell_label.place(x=5, y=50)
+        typ_frame.place(x=900, y=220)
+
        #Dropdown Menü Typen
         typ_drop = tk.Button(typ_frame, text="↓", bd=0, bg='white',
                                 font=("Inter", 20, 'bold'),
@@ -395,11 +406,15 @@ class Gerateansicht(tk.Frame):
                 typ_drop.winfo_rooty() + typ_drop.winfo_height()
             )
 
-        status_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=0, relief="solid", highlightthickness=1, highlightbackground='#B8B7B7')
-        status_label = tk.Label(status_frame, text="Status", bg='white', fg='#858383',
-                             font=("Inter", 19))
-        self.status_aktuell_label = tk.Label(status_frame, text="", bg='white', fg='black',
-                             font=("Inter", 19), anchor="w", justify="left")
+        status_frame = ctk.CTkFrame(self.gerateansicht_frame, width=480, height=88, bg_color='transparent',
+                                 fg_color='transparent', border_width=1, border_color='#B8B7B7', corner_radius=8)
+        status_label = ctk.CTkLabel(status_frame, text="Status", text_color='#858383',
+                                 font=("Inter", 25, 'bold'))
+        self.status_aktuell_label = ctk.CTkLabel(status_frame, text="", text_color='black',
+                                              font=("Inter", 20))
+        status_label.place(x=5, y=5)
+        self.status_aktuell_label.place(x=5, y=50)
+        status_frame.place(x=900, y=320)
 
         status_drop = tk.Button(status_frame, text="↓", bd=0, bg='white',
                              fg=ThemeManager.SRH_Grey,
@@ -427,10 +442,15 @@ class Gerateansicht(tk.Frame):
                 status_drop.winfo_rooty() + status_drop.winfo_height()
             )
 
-        standort_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=0, relief="solid", highlightthickness=1, highlightbackground='#B8B7B7')
-        standort_label = tk.Label(standort_frame, text="Standort (Haus& Raum)", bg='white', fg='#858383',
-                             font=("Inter", 19))
-        self.standort_entry = tk.Entry(standort_frame, bg='white', fg='black', font=("Inter", 16), bd=0)
+        standort_frame = ctk.CTkFrame(self.gerateansicht_frame, width=480, height=88, bg_color='transparent',
+                                 fg_color='transparent', border_width=1, border_color='#B8B7B7', corner_radius=8)
+        standort_label = ctk.CTkLabel(standort_frame, text="Standort (Haus, Raum)", text_color='#858383',
+                                 font=("Inter", 25, 'bold'))
+        self.standort_entry = ctk.CTkEntry(standort_frame, text_color='black', font=("Inter", 20), border_width=0,
+                                      fg_color='transparent')
+        standort_label.place(x=5, y=5)
+        self.standort_entry.place(x=5, y=50)
+        standort_frame.place(x=900, y=420)
 
         #Button
         buttons_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=0, relief="solid")
@@ -733,23 +753,20 @@ class Gerateansicht(tk.Frame):
         grp8_button.pack(pady=10, anchor='w')
 
         # Positionierung
-        name_label.grid(row=5, column=5, pady=10)
-        self.name_entry.place(x=0, y=50, width=200)
-        tag_label.grid(row=5, column=5, pady=10)
-        self.tag_entry.place(x=0, y=50, width=200)
-        typ_label.grid(row=5, column=5, pady=10)
-        self.typ_aktuell_label.place(x=0, y=50, width=200)
-        status_label.grid(row=5, column=5, pady=10)
-        self.status_aktuell_label.place(x=0, y=50, width=200)
-        standort_label.grid(row=5, column=5, pady=10)
-        self.standort_entry.place(x=0, y=50, width=200)
+
+        #typ_label.grid(row=5, column=5, pady=10)
+        #self.typ_aktuell_label.place(x=0, y=50, width=200)
+        #status_label.grid(row=5, column=5, pady=10)
+        #self.status_aktuell_label.place(x=0, y=50, width=200)
+        #standort_label.grid(row=5, column=5, pady=10)
+        #self.standort_entry.place(x=0, y=50, width=200)
         upload_button.place(x=100, y=0)
 
         upload_frame.place(x=0, y=520, relwidth=0.40, height=300)
-        tag_frame.place(x=900, y=120, width=480, height=88)
-        typ_frame.place(x=900, y=220, width=480, height=88)
-        status_frame.place(x=900, y=320, width=480, height=88)
-        standort_frame.place(x=900, y=420, width=480, height=88)
+        #tag_frame.place(x=900, y=120, width=480, height=88)
+        #typ_frame.place(x=900, y=220, width=480, height=88)
+        #status_frame.place(x=900, y=320, width=480, height=88)
+        #standort_frame.place(x=900, y=420, width=480, height=88)
         buttons_frame.place(x=900, y=520, width=480, height=300)
 
 
@@ -770,7 +787,7 @@ class Gerateansicht(tk.Frame):
         self.standort_entry.delete(0, tk.END)
         self.standort_entry.insert(0, data[3])
 
-        self.typ_aktuell_label.config(text=data[1])
+        self.typ_aktuell_label.configure(text=data[1])
 
-        self.status_aktuell_label.config(text=data[4])
+        self.status_aktuell_label.configure(text=data[4])
 
