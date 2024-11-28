@@ -16,7 +16,6 @@ def init_connection():
     my_db = sqlite3.connect(path)
     # Wichtig ist das hier der Root-Pfad angegeben wirddaadvjrnjrmgkmvkmvlddmvlmvk,vfg fifmvlf ,gr,or,vorr,ogl
 
-    my_db.row_factory = sqlite3.Row  # Rückgabe von Zeilen als Dictionary
     return my_db
 
 def fetch_items():
@@ -80,14 +79,14 @@ def fetch_users_headers():
 
 def login_lookup(username: str, password: str):
     
-    users_db = sqlite3.connect(os.path.join(os.path.dirname(__file__), 'Inventarisierungs_DB.sqlite3')) # Verbindung DB
-    users_dbc = users_db.cursor()               # Cursor erstellen
-    users_dbc.execute(f"SELECT passwort FROM benutzer WHERE Benutzername = '{username}'") # Hash des Passwortes des eingebenen Nutzers abfragen
-    back_password = users_dbc.fetchone()
+    my_db = init_connection() # Verbindung DB
+    cur = my_db.cursor()               # Cursor erstellen
+    cur.execute(f"SELECT passwort FROM benutzer WHERE Benutzername = '{username}'") # Hash des Passwortes des eingebenen Nutzers abfragen
+    back_password = cur.fetchone()
     # print(password)
     hash_password = hashlib.sha512(password.encode()).hexdigest()
     
-    users_db.close()
+    my_db.close()
     try:
         return hash_password == back_password[0]
         # print(hash_password)
@@ -96,7 +95,41 @@ def login_lookup(username: str, password: str):
         return False
 
 
-# login_lookup("Hans","123456")
+def search_bar_update(search): #peter hat sich in den code geschlichen finde ihn, befor er etwas zerstört
+
+    my_db = init_connection()
+    cur = my_db.cursor()
+
+    # Spaltennamen dynamisch abrufen
+    cur.execute(f"PRAGMA table_info(items)")
+    columns = [row[1] for row in cur.fetchall()]  # Spaltennamen extrahieren
+
+    if not columns:
+        return "Die Tabelle hat keine Spalten oder existiert nicht."
+
+    # Dynamische WHERE-Bedingung für alle Spalten erstellen
+    where_clause = " OR ".join([f"{col} LIKE ?" for col in columns])
+
+    # Dynamisches SQL-Query erstellen
+    query = f"SELECT * FROM items WHERE {where_clause}"
+    cur.execute(query, [f"%{search}%"] * len(columns))
+    answer_search = cur.fetchall()
+    return answer_search
+
+
+
+
+
+
+# items_uberschrift = fetch_items_headers()
+# sql_uberschrift = ("OR" + items_uberschrift)
+
+
+
+
+
+
+
 
 #############################
 ### BIS HIER HIN BEHALTEN ###
