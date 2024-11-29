@@ -114,7 +114,6 @@ def lookup_user_stuff():
     last_name = cur.fetchone()
     cur.execute(f"SELECT Klasse FROM benutzer WHERE Benutzername = '{username_global}'") 
     class_name = cur.fetchone()
-    print(username_global)
     my_db.close()
     try:
         return role, first_name, last_name, class_name

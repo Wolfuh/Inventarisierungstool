@@ -9,6 +9,8 @@ import gui_prototyp
 import Mainpages
 import os
 import sys
+import time
+import threading
 
 sys.path.append(os.path.join(os.path.dirname(__file__),'..'))
 
@@ -22,104 +24,129 @@ class Profil(tk.Frame):
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         self.configure(bg='white')
 
-        # Header für die Hauptseite
-        header = ttk.Label(self, text="Profil", anchor="center", style="Header.TLabel")
-        header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
+        
+        def update_label():
+            
+            global user_stuff
+            user_stuff = "","","",""
+            while True:
+                
+                user_stuff = lookup_user_stuff()
+                if user_stuff[0] == "" or user_stuff[0] == None:                                       
+                    time.sleep(0.3)
+                    continue
+                    
+                else:
+                    break
+            
+            
 
-        # Seitennavigation und laden der Bilder für Buttons
-        verzeichniss = tk.Frame(self, bg=ThemeManager.SRH_Grey)
-        verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
-        self.profil_frame = tk.Frame(self, bg='white')
+            
+            
+            # Header für die Hauptseite
+            header = ttk.Label(self, text="Profil", anchor="center", style="Header.TLabel")
+            header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
 
-
-        self.imglogin = tk.PhotoImage(
-            file=root_path+"/gui/assets/Closeicon.png")
-        self.imgmainpage = tk.PhotoImage(
-            file=root_path+"/gui/assets/backtosite_icon.png")
-        self.imgProfileTest = tk.PhotoImage(file=root_path+"/gui/assets/profile.png")
-
-        # Positionierung der Buttons
-        login = tk.Button(header, image=self.imglogin, bd=0, bg=ThemeManager.SRH_Orange,
-                          command=lambda: controller.show_frame(gui_prototyp.LogInWindow))
-        mainpage = tk.Button(header, image=self.imgmainpage, bd=0, bg=ThemeManager.SRH_Orange,
-                             command=lambda: controller.show_frame(Mainpages.MainPage))
-
-        #Seiteninhalt
-        profilbild = tk.Button(self.profil_frame, image=self.imgProfileTest, bd=0, bg='white',
-                               command=lambda: controller.show_frame(Mainpages.MainPage))
-        username = tk.Label(self.profil_frame, text="Username", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 15))
-        self.username = tk.Label(self.profil_frame, text=" ", bd=0, bg='white', fg='black', font=("Poppins", 18))
-
-        vorname = tk.Label(self.profil_frame, text="Vorname", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 15))
-        self.vorname = tk.Label(self.profil_frame, text=" ", bd=0, bg='white', fg='black', font=("Poppins", 18))
-
-        nachname = tk.Label(self.profil_frame, text="Nachname", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 15))
-        self.nachname = tk.Label(self.profil_frame, text=" ", bd=0, bg='white', fg='black', font=("Poppins", 18))
-
-        gruppen = tk.Label(self.profil_frame, text="Gruppen", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 15))
-        self.usergruppen = tk.Label(self.profil_frame, text="xx, xx", bd=0, bg='white', fg='black', font=("Poppins", 18))
-
-        email = tk.Label(self.profil_frame, text="Email", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 15))
-        self.useremail = tk.Label(self.profil_frame, text="xxx@srhk.de", bd=0, bg='white', fg='black', font=("Poppins", 18))
-
-        rechte = tk.Label(self.profil_frame, text="Rechte", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 15))
-        rechte_frame = tk.Frame(self.profil_frame, bg='#D9D9D9')
-        adminrechte = tk.Label(self.profil_frame, text="Admin", bd=0, bg='white', fg='black', font=("Poppins", 18))
-        ausbilderrechte = tk.Label(self.profil_frame, text="Ausbilder", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 18))
-        userrechte = tk.Label(self.profil_frame, text="Schüler", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 18))
+            # Seitennavigation und laden der Bilder für Buttons
+            verzeichniss = tk.Frame(self, bg=ThemeManager.SRH_Grey)
+            verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
+            self.profil_frame = tk.Frame(self, bg='white')
 
 
+            self.imglogin = tk.PhotoImage(
+                file=root_path+"/gui/assets/Closeicon.png")
+            self.imgmainpage = tk.PhotoImage(
+                file=root_path+"/gui/assets/backtosite_icon.png")
+            self.imgProfileTest = tk.PhotoImage(file=root_path+"/gui/assets/profile.png")
 
-        # Seitennavigations-Buttons für Benutzer, Admin, Statistiken und Einstellungen
-        user_button = tk.Button(verzeichniss, text="User", bd=0, bg=ThemeManager.SRH_Grey, fg='black', font=("Inter", 20, 'bold'),
-                                command=lambda: controller.show_frame(Profil))
+            # Positionierung der Buttons
+            login = tk.Button(header, image=self.imglogin, bd=0, bg=ThemeManager.SRH_Orange,
+                            command=lambda: controller.show_frame(gui_prototyp.LogInWindow))
+            mainpage = tk.Button(header, image=self.imgmainpage, bd=0, bg=ThemeManager.SRH_Orange,
+                                command=lambda: controller.show_frame(Mainpages.MainPage))
 
-        admin_button = tk.Button(verzeichniss, text="Administration", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                 font=("Inter", 20, 'bold'),
-                                 command=lambda: controller.show_frame(Admin))
+            
+                    
+            
 
-        stats_button = tk.Button(verzeichniss, text="Statistiken", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                 font=("Inter", 20, 'bold'),
-                                 command=lambda: controller.show_frame(Stats))
+            #Seiteninhalt
+            profilbild = tk.Button(self.profil_frame, image=self.imgProfileTest, bd=0, bg='white',
+                                command=lambda: controller.show_frame(Mainpages.MainPage))
+            username = tk.Label(self.profil_frame, text="Username", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 15))
+            self.username = tk.Label(self.profil_frame, text=" ", bd=0, bg='white', fg='black', font=("Poppins", 18))
+
+            vorname = tk.Label(self.profil_frame, text="Vorname", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 15))
+            self.vorname = tk.Label(self.profil_frame, text=user_stuff[1] if user_stuff[1] else "", bd=0, bg='white', fg='black', font=("Poppins", 18))
+
+            nachname = tk.Label(self.profil_frame, text="Nachname", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 15))
+            self.nachname = tk.Label(self.profil_frame, text=user_stuff[2] if user_stuff[2] else "", bd=0, bg='white', fg='black', font=("Poppins", 18))
+
+            gruppen = tk.Label(self.profil_frame, text="Gruppen", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 15))
+            self.usergruppen = tk.Label(self.profil_frame, text=user_stuff[3] if user_stuff[3] else "", bd=0, bg='white', fg='black', font=("Poppins", 18))
+
+            email = tk.Label(self.profil_frame, text="Email", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 15))
+            self.useremail = tk.Label(self.profil_frame, text="xxx@srhk.de", bd=0, bg='white', fg='black', font=("Poppins", 18))
+
+            rechte = tk.Label(self.profil_frame, text="Rechte", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 15))
+            rechte_frame = tk.Frame(self.profil_frame, bg='#D9D9D9')
+            adminrechte = tk.Label(self.profil_frame, text="Admin", bd=0, bg='white', fg='black', font=("Poppins", 18))
+            ausbilderrechte = tk.Label(self.profil_frame, text="Ausbilder", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 18))
+            userrechte = tk.Label(self.profil_frame, text="Schüler", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 18))
+
+            
+            # Seitennavigations-Buttons für Benutzer, Admin, Statistiken und Einstellungen
+            user_button = tk.Button(verzeichniss, text="User", bd=0, bg=ThemeManager.SRH_Grey, fg='black', font=("Inter", 20, 'bold'),
+                                    command=lambda: controller.show_frame(Profil))
+
+            admin_button = tk.Button(verzeichniss, text="Administration", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
+                                    font=("Inter", 20, 'bold'),
+                                    command=lambda: controller.show_frame(Admin))
+
+            stats_button = tk.Button(verzeichniss, text="Statistiken", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
+                                    font=("Inter", 20, 'bold'),
+                                    command=lambda: controller.show_frame(Stats))
 
 
-        einstellungen_button = tk.Button(verzeichniss, text="Einstellungen", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                         font=("Inter", 20, 'bold'),
-                                         command=lambda: controller.show_frame(configuration.Einstellungen))
+            einstellungen_button = tk.Button(verzeichniss, text="Einstellungen", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
+                                            font=("Inter", 20, 'bold'),
+                                            command=lambda: controller.show_frame(configuration.Einstellungen))
 
 
-        user_button.pack(pady=10, anchor='w')
-        admin_button.pack(pady=10, anchor='w')
-        stats_button.pack(pady=10, anchor='w')
-        einstellungen_button.pack(pady=10, anchor='w')
+            user_button.pack(pady=10, anchor='w')
+            admin_button.pack(pady=10, anchor='w')
+            stats_button.pack(pady=10, anchor='w')
+            einstellungen_button.pack(pady=10, anchor='w')
 
-        login.place(relx=0.95, rely=0.5, anchor="center")
-        mainpage.place(relx=0.90, rely=0.5, anchor="center")
+            login.place(relx=0.95, rely=0.5, anchor="center")
+            mainpage.place(relx=0.90, rely=0.5, anchor="center")
 
-        profilbild.place(x=0, y=0)
+            profilbild.place(x=0, y=0)
 
-        username.place(x=499, y=10)
-        self.username.place(x=502, y=40)
+            username.place(x=499, y=10)
+            self.username.place(x=502, y=40)
 
-        vorname.place(x=499, y=90)
-        self.vorname.place(x=502, y=120)
+            vorname.place(x=499, y=90)
+            self.vorname.place(x=502, y=120)
 
-        nachname.place(x=499, y=170)
-        self.nachname.place(x=502, y=200)
+            nachname.place(x=499, y=170)
+            self.nachname.place(x=502, y=200)
 
-        gruppen.place(x=499, y=250)
-        self.usergruppen.place(x=502, y=280)
+            gruppen.place(x=499, y=250)
+            self.usergruppen.place(x=502, y=280)
 
-        email.place(x=0, y=500)
-        self.useremail.place(x=3, y=525)
+            email.place(x=0, y=500)
+            self.useremail.place(x=3, y=525)
 
-        rechte.place(x=0, y=570)
-        rechte_frame.place(x=3, y=605, width=1, height=80)
-        adminrechte.place(x=13, y=590)
-        ausbilderrechte.place(x=13, y=630)
-        userrechte.place(x=13, y=670)
+            rechte.place(x=0, y=570)
+            rechte_frame.place(x=3, y=605, width=1, height=80)
+            adminrechte.place(x=13, y=590)
+            ausbilderrechte.place(x=13, y=630)
+            userrechte.place(x=13, y=670)
 
-        self.profil_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
+            self.profil_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
+
+        thread = threading.Thread(target=update_label, daemon=True)
+        thread.start()        
 
     def update_userdata(self, data):
         self.username.config(text=data[1])
@@ -127,6 +154,7 @@ class Profil(tk.Frame):
         self.nachname.config(text=data[3])
         self.usergruppen.config(text=data[4])
         self.useremail.config(text=data[0])
+    
 
 
 class Admin(tk.Frame):
