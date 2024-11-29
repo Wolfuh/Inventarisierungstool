@@ -89,10 +89,9 @@ class Profil(tk.Frame):
 
             rechte = tk.Label(self.profil_frame, text="Rechte", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 15))
             rechte_frame = tk.Frame(self.profil_frame, bg='#D9D9D9')
-            adminrechte = tk.Label(self.profil_frame, text="Admin", bd=0, bg='white', fg='black', font=("Poppins", 18))
-            ausbilderrechte = tk.Label(self.profil_frame, text="Ausbilder", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 18))
-            userrechte = tk.Label(self.profil_frame, text="Schüler", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 18))
-
+            adminrechte = tk.Label(self.profil_frame, text="Admin", bd=0, bg='white', fg='black'if user_stuff[0][0] == "admin" else '#6F6C6C', font=("Poppins", 18))
+            ausbilderrechte = tk.Label(self.profil_frame, text="Ausbilder", bd=0, bg='white', fg='black'if user_stuff[0][0] == "admin" else '#6F6C6C', font=("Poppins", 18))
+            userrechte = tk.Label(self.profil_frame, text="Schüler", bd=0, bg='white', fg='black'if user_stuff[0][0] == 'user' else '#6F6C6C', font=("Poppins", 18))
             
             # Seitennavigations-Buttons für Benutzer, Admin, Statistiken und Einstellungen
             user_button = tk.Button(verzeichniss, text="User", bd=0, bg=ThemeManager.SRH_Grey, fg='black', font=("Inter", 20, 'bold'),
