@@ -1,4 +1,7 @@
-import sqlite3
+import hashlib
 
-con = sqlite3.connect("test.db")
-cur = con.cursor()
+
+
+password = input("was willst du Hashen? - ")
+hash_password = hashlib.sha512(password.encode()).hexdigest()
+print(hash_password)
