@@ -3,8 +3,7 @@ import os
 import hashlib
 
 
-
-
+username_global = "Benutzername Ungültig"
 
 def init_connection():
     """
@@ -76,43 +75,57 @@ def fetch_users_headers():
     finally:
         if my_db:
             my_db.close()
-
 def login_lookup(username: str, password: str):
     
+    global username_global
     my_db = init_connection() # Verbindung DB
     cur = my_db.cursor()               # Cursor erstellen
     cur.execute(f"SELECT passwort FROM benutzer WHERE Benutzername = '{username}'") # Hash des Passwortes des eingebenen Nutzers abfragen
     back_password = cur.fetchone()
-    # print(password)
+    username_global = username
     hash_password = hashlib.sha512(password.encode()).hexdigest()
     
     my_db.close()
 
     try:
-        return hash_password == back_password[0]
+        if hash_password == back_password[0]:
+            return True
+        else:
+            username_global = ""
         
     except:
+        username_global = ""
         return False
 
+def delete_user():
+    global username_global
+    username_global = ""
 
-def lookup_role(username: str):
+
+def lookup_user_stuff():
     
     my_db = init_connection() # Verbindung DB
     cur = my_db.cursor()               # Cursor erstellen
-    cur.execute(f"SELECT Rolle FROM benutzer WHERE Benutzername = '{username}'") 
+    cur.execute(f"SELECT Rolle FROM benutzer WHERE Benutzername = '{username_global}'") 
     role = cur.fetchone()
-    
+    cur.execute(f"SELECT Vorname FROM benutzer WHERE Benutzername = '{username_global}'") 
+    first_name = cur.fetchone()
+    cur.execute(f"SELECT Nachname FROM benutzer WHERE Benutzername = '{username_global}'") 
+    last_name = cur.fetchone()
+    cur.execute(f"SELECT Klasse FROM benutzer WHERE Benutzername = '{username_global}'") 
+    class_name = cur.fetchone()
+    print(username_global)
     my_db.close()
     try:
-        return role
+        return role, first_name, last_name, class_name
     except sqlite3.Error as e:
         return [], "Fehler beim Abrufen der Rolle:", str(e)
 
 
 
-
-
-
+# login_lookup("Mathis","123456")
+# lookup_role()
+# print(username_global)
 
 
 
