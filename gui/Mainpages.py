@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
 import os
+import customtkinter as ctk
+from customtkinter import *
 
 import gui_prototyp
 import ThemeManager
@@ -43,10 +45,10 @@ class MainPage(tk.Frame):
         self.imgseitevor = tk.PhotoImage(file=root_path+"/gui/assets/pageforward_icon.png")
 
         # Platzierung der Buttons
-        login = tk.Button(header, image=self.imglogin, bd=0, bg=ThemeManager.SRH_Orange,
-                          command=lambda: controller.show_frame(gui_prototyp.LogInWindow))
-        profil = tk.Button(header, image=self.imgprofil, bd=0, bg=ThemeManager.SRH_Orange,
-                           command=lambda: controller.show_frame(Profiles.Profil))
+        login = ctk.CTkButton(header, image=self.imglogin, fg_color=ThemeManager.SRH_Orange, bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
+                              hover=True, hover_color='#e25a1f', text="", command=lambda :controller.show_frame(gui_prototyp.LogInWindow))
+        profil = ctk.CTkButton(header, image=self.imgprofil, fg_color=ThemeManager.SRH_Orange, bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
+                              hover=True, hover_color='#e25a1f', text="", command=lambda: controller.show_frame(Profiles.Profil))
         bildgr1 = tk.Button(self, image=self.imgbildgr1, bd=0, bg='white',
                             command=lambda: controller.show_frame(Overview_pages.Ubersicht))
         bildgr2 = tk.Button(self, image=self.imgbildgr2, bd=0, bg='white',
@@ -63,10 +65,14 @@ class MainPage(tk.Frame):
                             command=lambda: controller.show_frame(Overview_pages.Ubersicht))
         bildgr8 = tk.Button(self, image=self.imgbildgr8, bd=0, bg='white',
                             command=lambda: controller.show_frame(Overview_pages.Ubersicht))
-        all = tk.Button(self, text="Alle anzeigen", bd=0, bg='white', fg=ThemeManager.SRH_Blau, font=("Inter", 20),
-                        command=lambda: controller.show_frame(Overview_pages.Ubersicht))
-        seitevor = tk.Button(self, image=self.imgseitevor, bd=0, bg='white', fg='#1E1E1E', font=("Inter", 16),
-                             command=lambda: controller.show_frame(MainPageS2))
+
+        all = ctk.CTkButton(self, text="Alle Anzeigen", fg_color='white', text_color=ThemeManager.SRH_Blau,
+                                     font=("Inter", 20), corner_radius=8, hover=False,
+                                     command=lambda: controller.show_frame(Overview_pages.Ubersicht))
+
+        seitevor = ctk.CTkButton(self, image=self.imgseitevor, text="", fg_color='white', text_color='black', font=("Inter", 20, 'bold'),
+                      corner_radius=8, hover=False,
+                      command=lambda: controller.show_frame(MainPageS2), width=200, height=30, hover_color=ThemeManager.SRH_Orange)
 
         # Festlegung des Styles für Header- und Footer Labels, Positionierung der Navigationsbuttons im Header, die
         # Anordnung der Bildgruppen-Buttons in einem Rasterlayout, sowie Platzierungen.
@@ -127,10 +133,16 @@ class MainPageS2(tk.Frame):
         #self.imgbildgr8 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe8.png")
         self.imgseitevor = tk.PhotoImage(file=root_path+"/gui/assets/pageforward_icon.png")
         self.imgseiteback = tk.PhotoImage(file=root_path+"/gui/assets/pageback_icon.png")
-        login = tk.Button(header, image=self.imglogin, bd=0, bg=ThemeManager.SRH_Orange,
-                          command=lambda: controller.show_frame(gui_prototyp.LogInWindow))
-        profil = tk.Button(header, image=self.imgprofil, bd=0, bg=ThemeManager.SRH_Orange,
-                           command=lambda: controller.show_frame(Profiles.Profil))
+        login = ctk.CTkButton(header, image=self.imglogin, fg_color=ThemeManager.SRH_Orange,
+                              bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
+                              hover=True, hover_color='#e25a1f', text="",
+                              command=lambda: controller.show_frame(gui_prototyp.LogInWindow))
+
+        profil = ctk.CTkButton(header, image=self.imgprofil, fg_color=ThemeManager.SRH_Orange,
+                               bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
+                               hover=True, hover_color='#e25a1f', text="",
+                               command=lambda: controller.show_frame(Profiles.Profil))
+
         bildgr1 = tk.Button(self, image=self.imgbildgr1, bd=0, bg='white',
                             command=lambda: controller.show_frame(Overview_pages.Ubersicht))
         bildgr2 = tk.Button(self, image=self.imgbildgr2, bd=0, bg='white',
@@ -149,12 +161,20 @@ class MainPageS2(tk.Frame):
         # command=lambda: controller.show_frame(Ubersicht))
 
         # Buttons zum Wechseln zwischen den Hauptseiten und "Alle anzeigen" Button für die Übersichtsseite
-        all = tk.Button(self, text="Alle anzeigen", bd=0, bg='white', fg=ThemeManager.SRH_Blau, font=("Inter", 20),
-                        command=lambda: controller.show_frame(Overview_pages.Ubersicht))
-        seitevor = tk.Button(self, image=self.imgseitevor, bd=0, bg='white', fg='#1E1E1E', font=("Inter", 16),
-                             command=lambda: controller.show_frame(MainPageS2))
-        seiteback = tk.Button(self, image=self.imgseiteback, bd=0, bg='white', fg='#1E1E1E', font=("Inter", 16),
-                              command=lambda: controller.show_frame(MainPage))
+        all = ctk.CTkButton(self, text="Alle Anzeigen", fg_color='white', text_color=ThemeManager.SRH_Blau,
+                            font=("Inter", 20), corner_radius=8, hover=False,
+                            command=lambda: controller.show_frame(Overview_pages.Ubersicht))
+
+        seitevor = ctk.CTkButton(self, image=self.imgseitevor, text="", fg_color='white', text_color='black',
+                                 font=("Inter", 20, 'bold'),
+                                 corner_radius=8, hover=False,
+                                 command=lambda: controller.show_frame(MainPageS2), width=10, height=30,
+                                 hover_color=ThemeManager.SRH_Orange)
+        seiteback = ctk.CTkButton(self, image=self.imgseiteback, text="", fg_color='white', text_color='black',
+                                 font=("Inter", 20, 'bold'),
+                                 corner_radius=8, hover=False,
+                                 command=lambda: controller.show_frame(MainPage), width=10, height=30,
+                                 hover_color=ThemeManager.SRH_Orange)
 
         # Style Konfiguration für Header und Footer, Platzierung der Buttons, Header und Footer
         style = ttk.Style()

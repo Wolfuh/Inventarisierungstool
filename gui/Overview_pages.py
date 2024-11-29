@@ -3,6 +3,7 @@ from tkinter import ttk, messagebox
 from tkinter import *
 import customtkinter as ctk
 from customtkinter import *
+
 import os
 import gui_prototyp
 import ThemeManager
@@ -49,10 +50,15 @@ class Ubersicht(tk.Frame):
         self.imgprofil = gui_prototyp.load_image(root_path+"/gui/assets/profileicon.png")
 
         # Login und Profil Buttons im Header-Bereich, Platzierung der Buttons, Header und Sidebar
-        login = tk.Button(header, image=self.imglogin, bd=0, bg=ThemeManager.SRH_Orange,
-                          command=lambda: controller.show_frame(gui_prototyp.LogInWindow))
-        profil = tk.Button(header, image=self.imgprofil, bd=0, bg=ThemeManager.SRH_Orange,
-                           command=lambda: controller.show_frame(Profiles.Profil))
+        login = ctk.CTkButton(header, image=self.imglogin, fg_color=ThemeManager.SRH_Orange,
+                              bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
+                              hover=True, hover_color='#e25a1f', text="",
+                              command=lambda: controller.show_frame(gui_prototyp.LogInWindow))
+
+        profil = ctk.CTkButton(header, image=self.imgprofil, fg_color=ThemeManager.SRH_Orange,
+                               bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
+                               hover=True, hover_color='#e25a1f', text="",
+                               command=lambda: controller.show_frame(Profiles.Profil))
         self.imgmainpage = tk.PhotoImage(
             file=root_path+"/gui/assets/backtosite_icon.png")
 
@@ -63,9 +69,9 @@ class Ubersicht(tk.Frame):
                   command=lambda: controller.show_frame(Mainpages.MainPage))
 
         # "Alle Anzeigen" Button in der Seitenleiste
-        all_button = tk.Button(verzeichniss, text="Alle anzeigen", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                               font=("Inter", 20, 'bold'),
-                               command=lambda: controller.show_frame(Ubersicht))
+        all_button = ctk.CTkButton(verzeichniss, text="Alle Anzeigen", fg_color=ThemeManager.SRH_Grey, text_color='black',
+                            font=("Inter", 20), corner_radius=8, hover=False,
+                            command=lambda: controller.show_frame(Overview_pages.Ubersicht))
 
         all_button.pack(pady=10, anchor='w')
 
@@ -238,7 +244,17 @@ class Ubersicht(tk.Frame):
 
         tree = ttk.Treeview(self.tabelle_frame, columns=("c1", "c2", "c3", "c4", "c5"), show="headings",
                             height=5)
-        scroll = ttk.Scrollbar(self.tabelle_frame, orient='vertical', command=tree.yview)
+        scroll = ctk.CTkScrollbar(
+            self.tabelle_frame,
+            button_color=ThemeManager.SRH_Grey,
+            orientation="vertical",
+            command=tree.yview,
+            height=650
+        )
+
+        # Treeview Scrollverbindung
+        tree.configure(yscrollcommand=scroll.set)
+
         # scroll.place(x=700, y=0.9, height=tree.winfo_height())
         tree.configure(yscrollcommand=scroll.set)
 
@@ -278,7 +294,7 @@ class Ubersicht(tk.Frame):
         tree.tag_configure("odd", background="white")
 
         tree.place(x=120, y=0, width=1280, height=650)
-        scroll.place(x=1400, y=0, height=650)
+        scroll.place(x=1400, y=0)
         # Setze explizite Mindesthöhe für Zeile 5
         #self.tabelle_frame.grid_rowconfigure(5, minsize=10)
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
@@ -292,6 +308,8 @@ def showDetails(selected_Item, tree, controller):
     details = controller.frames[Gerateansicht]
     details.update_data(data)
     controller.show_frame(Gerateansicht)
+
+#######################################################################################################################
 
 class Gerateansicht(tk.Frame):
     def __init__(self, parent, controller):
@@ -325,14 +343,19 @@ class Gerateansicht(tk.Frame):
         style.configure("Footer.TLabel", background=ThemeManager.SRH_Grey)
 
         # Buttons hinzufügen
-        login = tk.Button(header, image=self.imglogin, bd=0, bg=ThemeManager.SRH_Orange,
-                          command=lambda: controller.show_frame(gui_prototyp.LogInWindow))
-        profil = tk.Button(header, image=self.imgprofil, bd=0, bg=ThemeManager.SRH_Orange,
-                           command=lambda: controller.show_frame(Profiles.Profil))
+        login = ctk.CTkButton(header, image=self.imglogin, fg_color=ThemeManager.SRH_Orange,
+                              bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
+                              hover=True, hover_color='#e25a1f', text="",
+                              command=lambda: controller.show_frame(gui_prototyp.LogInWindow))
+
+        profil = ctk.CTkButton(header, image=self.imgprofil, fg_color=ThemeManager.SRH_Orange,
+                               bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
+                               hover=True, hover_color='#e25a1f', text="",
+                               command=lambda: controller.show_frame(Profiles.Profil))
 
         # Mainpage-Button innerhalb von gerateansicht_frame, an der gleichen Position wie das profilbild in Profil
-        mainpage = tk.Button(self, image=self.imgmainpage, bd=0, bg='white',
-                             command=lambda: controller.show_frame(Ubersicht))
+        mainpage = ctk.CTkButton(self, text="↩", fg_color='white', text_color=ThemeManager.SRH_Grey, width=5,
+                                     font=("Inter", 50, 'bold'), corner_radius=8, hover=False, command=lambda: controller.show_frame(Ubersicht))
         # Seiteninhalt
         tree = ttk.Treeview(self.gerateansicht_frame, columns=("c1", "c2", "c3"), show="headings",
                             height=5)
@@ -635,6 +658,7 @@ class Gerateansicht(tk.Frame):
             buchen_button_frame.place(x=409, y=444, width=409, height=150)
 
         # Funktion zuende
+
         # Button Buchung
         buchung_button = tk.Button(buttons_frame, image=self.buchung_img, bd=0, bg='white',
                                        command=open_buchen_page)
