@@ -26,16 +26,16 @@ class Profil(tk.Frame):
 
         
         def update_label():
-            
+
             global user_stuff
             user_stuff = "","","",""
             while True:
-                
+
                 user_stuff = lookup_user_stuff()
-                if user_stuff[0] == "" or user_stuff[0] == None:                                       
+                if user_stuff[0] == "" or user_stuff[0] == None:
                     time.sleep(0.3)
                     continue
-                    
+
                 else:
                     break
             
@@ -111,6 +111,7 @@ class Profil(tk.Frame):
                                             command=lambda: controller.show_frame(configuration.Einstellungen))
 
 
+            ###### Plazierung #######
             user_button.pack(pady=10, anchor='w')
             admin_button.pack(pady=10, anchor='w')
             stats_button.pack(pady=10, anchor='w')
@@ -148,6 +149,9 @@ class Profil(tk.Frame):
         thread.start()        
 
     def update_userdata(self, data):
+        """
+        übernimmt die Daten der Datenbank in die Label-Objekte
+        """
         self.username.config(text=data[1])
         self.vorname.config(text=data[2])
         self.nachname.config(text=data[3])
@@ -157,6 +161,35 @@ class Profil(tk.Frame):
 
 
 class Admin(tk.Frame):
+    """
+    Erstellt die Administrationsseite mit Navigation, Such- und Hinzufügefunktionen sowie einer Tabelle zur Anzeige von Benutzerdaten.
+
+    Diese Klasse konfiguriert die Administrationsansicht, in der Administratoren Benutzer verwalten, Daten anzeigen und navigieren können.
+
+    **Args:**
+
+    - parent (tk.Widget): Das übergeordnete Widget, in das diese Seite eingebettet wird.
+    - controller (object): Eine Instanz, die für den Wechsel zwischen Anwendungsansichten verantwortlich ist.
+
+    **Attributes:**
+
+    - imglogin, imgmainpage, imgSuche, imgHinzufugen (PhotoImage): Bildobjekte für Navigationsbuttons, Such- und Hinzufügen-Funktionen.
+    - header (ttk.Label): Label als Header der Seite mit dem Titel "Administration".
+    - verzeichniss (tk.Frame): Seitenleiste mit Navigationsbuttons für verschiedene Abschnitte (z. B. Benutzer, Statistiken).
+    - tabelle_frame (tk.Frame): Hauptbereich der Seite, der die Suche, die Hinzufügen-Schaltfläche und die Tabelle enthält.
+    - tree (ttk.Treeview): Ansicht zur Anzeige der Benutzerdaten in tabellarischer Form.
+    - scroll (ttk.Scrollbar): Vertikale Bildlaufleiste für die Tabelle.
+
+    **Verwendet:**
+
+    - login (tk.Button), mainpage (tk.Button): Schaltflächen für die Navigation zur Login-Seite und zur Hauptseite.
+    - user_button, admin_button, stats_button, einstellungen_button (tk.Button): Schaltflächen zur Navigation zwischen Benutzern, Admin-Daten, Statistiken und Einstellungen.
+    - suche_button (ctk.CTkButton), suche_entry (ctk.CTkEntry): Suchfelder und -schaltflächen zur Filterung der Daten in der Tabelle.
+    - Hinzufugen_button (tk.Button): Schaltfläche zum Hinzufügen eines Benutzers oder Geräts.
+    - Spaltenüberschriften und Daten der Tabelle werden dynamisch aus einer Datenbank geladen.
+    - showDetails (function): Funktion, die beim Doppelklick auf einen Tabelleneintrag Details des ausgewählten Benutzers anzeigt.
+
+    """
 
     def __init__(self, parent, controller):
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
@@ -287,6 +320,9 @@ def showDetails(selected_User, tree, controller):
 
 
 class Stats(tk.Frame):
+    """
+    Macht noch nix
+    """
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)

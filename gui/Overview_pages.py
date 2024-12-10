@@ -1,3 +1,6 @@
+#########################
+#       Imports         #
+#########################
 import tkinter as tk
 from tkinter import ttk, messagebox
 from tkinter import *
@@ -20,10 +23,41 @@ from db.SQLite_db import *
 
 
 class Ubersicht(tk.Frame):
-    """Repraesentiert die Geraeteuebersichtsseite der Anwendung. Zeigt eine Liste oder Tabelle der verfügbaren
-       Geräte und bietet Optionen für die Navigation zurück zur Hauptseite, zum Login und zu Benutzerprofilen """
+    """
+    Initialisiert eine Klasse zur Darstellung der Geräteübersichtsseite innerhalb einer Anwendung.
+
+    Diese Klasse konfiguriert Layout, Stil und Aktionen für die Benutzerinteraktion auf der Geräteübersichtsseite,
+    einschließlich Navigation, Geräteliste und Filterfunktionen.
+
+    **Args:**
+    parent (tk.Widget): Das übergeordnete Widget, in das dieser Frame eingebettet wird.
+    controller (object): Eine Instanz für die Verwaltung und den Wechsel zwischen verschiedenen Anwendungsansichten.
+
+    **Methods:**
+
+    show_dropdown_grp1() - show_dropdown_grp8(): Zeigt Dropdown-Menüs für verschiedene Gerätegruppen an.
+    show_dropdown_Filter(): Zeigt ein Dropdown-Menü für die Filteroptionen an.
+    on_item_select(event): Reagiert auf die Auswahl von Geräten innerhalb der Tabelle und zeigt Details an.
+
+    **Raises:**
+    tk.TclError: Falls es ein Problem beim Laden von Bildern gibt.
+
+    **Attributes:**
+
+    :ivar ubersicht_frame: A frame for displaying the main content area.
+    :type ubersicht_frame: tk.Frame
+    :ivar tabelle_frame: A frame for displaying tabular data or lists.
+    :type tabelle_frame: tk.Frame
+    - imglogin (PhotoImage): Bild für das Login-Symbol im Header.
+    - imgprofil (PhotoImage): Bild für das Profil-Symbol im Header.
+    - imgmainpage (PhotoImage): Bild für das Symbol, um zur Hauptseite zurückzukehren.
+    - imgFilter, imgSuche, imgHinzufugen, imgAktionen (PhotoImage): Bilder für Filter-, Such-, Hinzufügen- und Aktionsbuttons.
+    """
 
     def __init__(self, parent, controller):
+        """
+
+        """
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         tk.Frame.__init__(self, parent)
         self.configure(bg='white')
@@ -77,6 +111,18 @@ class Ubersicht(tk.Frame):
 
         # Gruppe 1
         def show_dropdown_grp1():
+            """
+            Die Methode `show_dropdown_grpx` erstellt und zeigt ein Dropdown-Menü für die erste Gerätegruppe an.
+            Dieses Menü enthält verschiedene Optionen wie Hardware, Software, Peripherie und Andere, die bei Auswahl den Benutzer zu entsprechenden Ansichten innerhalb der Anwendung navigieren lassen.
+            Das Menü wird an der Position des zugehörigen Buttons im Fenster angezeigt.
+
+            **Methods:**
+
+            - *tk.Menu* erstellt ein Dropdown im Frame "Verzeichniss"
+            - *add_command* fügt Auswahlmöglichkeiten hinzu
+            - *command=lambda: controller.show_frame(xxx)* öffnet beim Anklicken einer Möglichkeit ein Fenster
+
+            """
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Profiles.Admin))
             dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Profiles.Stats))
@@ -86,11 +132,23 @@ class Ubersicht(tk.Frame):
 
         grp1_button = tk.Button(verzeichniss, text="Gruppe 1   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                 font=("Inter", 20, 'bold'),
-                                command=show_dropdown_grp1)
-        grp1_button.pack(pady=10, anchor='w')
+                                command=show_dropdown_grp1) #Text, der im Verzeichniss liegt (benutzt Funktion show_dropdown_grpx
+        grp1_button.pack(pady=10, anchor='w') # Platzierung
 
         # Gruppe 2
         def show_dropdown_grp2():
+            """
+            Die Methode `show_dropdown_grpx` erstellt und zeigt ein Dropdown-Menü für die erste Gerätegruppe an.
+            Dieses Menü enthält verschiedene Optionen wie Hardware, Software, Peripherie und Andere, die bei Auswahl den Benutzer zu entsprechenden Ansichten innerhalb der Anwendung navigieren lassen.
+            Das Menü wird an der Position des zugehörigen Buttons im Fenster angezeigt.
+
+            **Methods:**
+
+            - *tk.Menu* erstellt ein Dropdown im Frame "Verzeichniss"
+            - *add_command* fügt Auswahlmöglichkeiten hinzu
+            - *command=lambda: controller.show_frame(xxx)* öffnet beim Anklicken einer Möglichkeit ein Fenster
+
+            """
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Profiles.Admin))
             dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Profiles.Stats))
@@ -100,11 +158,23 @@ class Ubersicht(tk.Frame):
 
         grp2_button = tk.Button(verzeichniss, text="Gruppe 2   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                 font=("Inter", 20, 'bold'),
-                                command=show_dropdown_grp2)
-        grp2_button.pack(pady=10, anchor='w')
+                                command=show_dropdown_grp2) #Text, der im Verzeichniss liegt (benutzt Funktion show_dropdown_grpx
+        grp2_button.pack(pady=10, anchor='w') # Platzierung
 
         # Gruppe 3
         def show_dropdown_grp3():
+            """
+            Die Methode `show_dropdown_grpx` erstellt und zeigt ein Dropdown-Menü für die erste Gerätegruppe an.
+            Dieses Menü enthält verschiedene Optionen wie Hardware, Software, Peripherie und Andere, die bei Auswahl den Benutzer zu entsprechenden Ansichten innerhalb der Anwendung navigieren lassen.
+            Das Menü wird an der Position des zugehörigen Buttons im Fenster angezeigt.
+
+            **Methods:**
+
+            - *tk.Menu* erstellt ein Dropdown im Frame "Verzeichniss"
+            - *add_command* fügt Auswahlmöglichkeiten hinzu
+            - *command=lambda: controller.show_frame(xxx)* öffnet beim Anklicken einer Möglichkeit ein Fenster
+
+            """
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Profiles.Admin))
             dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Profiles.Stats))
@@ -114,11 +184,23 @@ class Ubersicht(tk.Frame):
 
         grp3_button = tk.Button(verzeichniss, text="Gruppe 3   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                 font=("Inter", 20, 'bold'),
-                                command=show_dropdown_grp3)
-        grp3_button.pack(pady=10, anchor='w')
+                                command=show_dropdown_grp3) #Text, der im Verzeichniss liegt (benutzt Funktion show_dropdown_grpx
+        grp3_button.pack(pady=10, anchor='w') # Platzierung
 
         # Gruppe 4
         def show_dropdown_grp4():
+            """
+            Die Methode `show_dropdown_grpx` erstellt und zeigt ein Dropdown-Menü für die erste Gerätegruppe an.
+            Dieses Menü enthält verschiedene Optionen wie Hardware, Software, Peripherie und Andere, die bei Auswahl den Benutzer zu entsprechenden Ansichten innerhalb der Anwendung navigieren lassen.
+            Das Menü wird an der Position des zugehörigen Buttons im Fenster angezeigt.
+
+            **Methods:**
+
+            - *tk.Menu* erstellt ein Dropdown im Frame "Verzeichniss"
+            - *add_command* fügt Auswahlmöglichkeiten hinzu
+            - *command=lambda: controller.show_frame(xxx)* öffnet beim Anklicken einer Möglichkeit ein Fenster
+
+            """
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Profiles.Admin))
             dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Profiles.Stats))
@@ -128,11 +210,23 @@ class Ubersicht(tk.Frame):
 
         grp4_button = tk.Button(verzeichniss, text="Gruppe 4   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                 font=("Inter", 20, 'bold'),
-                                command=show_dropdown_grp4)
-        grp4_button.pack(pady=10, anchor='w')
+                                command=show_dropdown_grp4) #Text, der im Verzeichniss liegt (benutzt Funktion show_dropdown_grpx
+        grp4_button.pack(pady=10, anchor='w') # Platzierung
 
         # Gruppe 5
         def show_dropdown_grp5():
+            """
+            Die Methode `show_dropdown_grpx` erstellt und zeigt ein Dropdown-Menü für die erste Gerätegruppe an.
+            Dieses Menü enthält verschiedene Optionen wie Hardware, Software, Peripherie und Andere, die bei Auswahl den Benutzer zu entsprechenden Ansichten innerhalb der Anwendung navigieren lassen.
+            Das Menü wird an der Position des zugehörigen Buttons im Fenster angezeigt.
+
+            **Methods:**
+
+            - *tk.Menu* erstellt ein Dropdown im Frame "Verzeichniss"
+            - *add_command* fügt Auswahlmöglichkeiten hinzu
+            - *command=lambda: controller.show_frame(xxx)* öffnet beim Anklicken einer Möglichkeit ein Fenster
+
+            """
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Profiles.Admin))
             dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Profiles.Stats))
@@ -142,11 +236,23 @@ class Ubersicht(tk.Frame):
 
         grp5_button = tk.Button(verzeichniss, text="Gruppe 5   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                 font=("Inter", 20, 'bold'),
-                                command=show_dropdown_grp5)
-        grp5_button.pack(pady=10, anchor='w')
+                                command=show_dropdown_grp5) #Text, der im Verzeichniss liegt (benutzt Funktion show_dropdown_grpx
+        grp5_button.pack(pady=10, anchor='w') # Platzierung
 
         # Gruppe 6
         def show_dropdown_grp6():
+            """
+            Die Methode `show_dropdown_grpx` erstellt und zeigt ein Dropdown-Menü für die erste Gerätegruppe an.
+            Dieses Menü enthält verschiedene Optionen wie Hardware, Software, Peripherie und Andere, die bei Auswahl den Benutzer zu entsprechenden Ansichten innerhalb der Anwendung navigieren lassen.
+            Das Menü wird an der Position des zugehörigen Buttons im Fenster angezeigt.
+
+            **Methods:**
+
+            - *tk.Menu* erstellt ein Dropdown im Frame "Verzeichniss"
+            - *add_command* fügt Auswahlmöglichkeiten hinzu
+            - *command=lambda: controller.show_frame(xxx)* öffnet beim Anklicken einer Möglichkeit ein Fenster
+
+            """
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Profiles.Admin))
             dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Profiles.Stats))
@@ -156,11 +262,23 @@ class Ubersicht(tk.Frame):
 
         grp6_button = tk.Button(verzeichniss, text="Gruppe 6   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                 font=("Inter", 20, 'bold'),
-                                command=show_dropdown_grp6)
-        grp6_button.pack(pady=10, anchor='w')
+                                command=show_dropdown_grp6) #Text, der im Verzeichniss liegt (benutzt Funktion show_dropdown_grpx
+        grp6_button.pack(pady=10, anchor='w') # Platzierung
 
         # Gruppe 7
         def show_dropdown_grp7():
+            """
+            Die Methode `show_dropdown_grpx` erstellt und zeigt ein Dropdown-Menü für die erste Gerätegruppe an.
+            Dieses Menü enthält verschiedene Optionen wie Hardware, Software, Peripherie und Andere, die bei Auswahl den Benutzer zu entsprechenden Ansichten innerhalb der Anwendung navigieren lassen.
+            Das Menü wird an der Position des zugehörigen Buttons im Fenster angezeigt.
+
+            **Methods:**
+
+            - *tk.Menu* erstellt ein Dropdown im Frame "Verzeichniss"
+            - *add_command* fügt Auswahlmöglichkeiten hinzu
+            - *command=lambda: controller.show_frame(xxx)* öffnet beim Anklicken einer Möglichkeit ein Fenster
+
+            """
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Profiles.Admin))
             dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Profiles.Stats))
@@ -170,11 +288,23 @@ class Ubersicht(tk.Frame):
 
         grp7_button = tk.Button(verzeichniss, text="Gruppe 7   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                 font=("Inter", 20, 'bold'),
-                                command=show_dropdown_grp7)
-        grp7_button.pack(pady=10, anchor='w')
+                                command=show_dropdown_grp7) #Text, der im Verzeichniss liegt (benutzt Funktion show_dropdown_grpx
+        grp7_button.pack(pady=10, anchor='w') # Platzierung
 
         # Gruppe 8
         def show_dropdown_grp8():
+            """
+            Die Methode `show_dropdown_grpx` erstellt und zeigt ein Dropdown-Menü für die erste Gerätegruppe an.
+            Dieses Menü enthält verschiedene Optionen wie Hardware, Software, Peripherie und Andere, die bei Auswahl den Benutzer zu entsprechenden Ansichten innerhalb der Anwendung navigieren lassen.
+            Das Menü wird an der Position des zugehörigen Buttons im Fenster angezeigt.
+
+            **Methods:**
+
+            - *tk.Menu* erstellt ein Dropdown im Frame "Verzeichniss"
+            - *add_command* fügt Auswahlmöglichkeiten hinzu
+            - *command=lambda: controller.show_frame(xxx)* öffnet beim Anklicken einer Möglichkeit ein Fenster
+
+            """
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Profiles.Admin))
             dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Profiles.Stats))
@@ -184,14 +314,9 @@ class Ubersicht(tk.Frame):
 
         grp8_button = tk.Button(verzeichniss, text="Gruppe 8   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                 font=("Inter", 20, 'bold'),
-                                command=show_dropdown_grp8)
-        grp8_button.pack(pady=10, anchor='w')
+                                command=show_dropdown_grp8) #Text, der im Verzeichniss liegt (benutzt Funktion show_dropdown_grpx
+        grp8_button.pack(pady=10, anchor='w') # Platzierung
 
-        # Seiteninhalt
-        # switch_button = tk.Button(self, text="switch", bg='#081424', fg='white',
-        # font=("Inter", 20, 'bold'),
-        # command=lambda: controller.show_frame(Gerateansicht))
-        # switch_button.grid(row=4, column=0, pady=20)
         # Bilder
         self.imgFilter = gui_prototyp.load_image(root_path+"/gui/assets/Filter_Button.png")
         self.imgSuche = gui_prototyp.load_image(root_path+"/gui/assets/Search.png")
@@ -200,6 +325,22 @@ class Ubersicht(tk.Frame):
 
         # Filterfunktion
         def show_dropdown_Filter():
+            """
+            Erstellt und zeigt ein Dropdown-Menü für Filteroptionen zur Sortierung von Geräten an.
+            Diese Funktion generiert ein Kontextmenü mit verschiedenen Filteroptionen, das an der Position des Filter-Buttons angezeigt wird.
+
+            **Args:**
+
+            Keine direkt übergebenen Argumente.
+
+            **Attributes:**
+
+            Filter_button (tk.Button): Button, der das Dropdown-Menü für Filteroptionen anzeigt und positioniert.
+
+            **Verwendet:**
+
+            dropdown_menu (tk.Menu): Menü, das verschiedene Optionen zur Sortierung darstellt (Status, ID, Typ, Andere).
+            """
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg='white', fg='black')
             dropdown_menu.add_command(label="→ Status", command=lambda: print("nach Status sortieren"))
             dropdown_menu.add_command(label="→ ID", command=lambda: print("nach ID sortieren"))
@@ -210,40 +351,36 @@ class Ubersicht(tk.Frame):
         Filter_button = tk.Button(self.ubersicht_frame, image=self.imgFilter, bd=0, bg='white', fg='black',
                                   font=("Inter", 20, 'bold'),
                                   command=show_dropdown_Filter)
-        Filter_button.place(relx=0, rely=0.1)
+
 
         # Suche
-
         suche_button = ctk.CTkButton(self.ubersicht_frame, image=self.imgSuche, corner_radius=8, border_width=0, fg_color="transparent", hover_color='#D9D9D9',
                                  command=lambda: print(f"nach {suche_entry} gesucht"))
         suche_entry = ctk.CTkEntry(self.ubersicht_frame, corner_radius=8, fg_color="#D9D9D9",  text_color="black", border_width=0, font=("Inter", 12))
 
-        suche_button.place(relx=0.1, rely=0.1, relheight=0.04, relwidth=0.022)
-        suche_entry.place(relx=0.125, rely=0.1, relwidth=0.33, relheight=0.04)
-
-
         # Hinzufügen
         Hinzufugen_button = tk.Button(self.ubersicht_frame, image=self.imgHinzufugen, bd=0, bg='white',
                                       command=lambda: controller.show_frame(Gerateansicht))
-        Hinzufugen_button.place(relx=0.5, rely=0.1)
 
         # Aktionen
         Aktionen_button = tk.Button(self.ubersicht_frame, image=self.imgAktionen, bd=0, bg='white',
                                     command=lambda: print("Aktionen werden ausgeführt"))
-        Aktionen_button.place(relx=0.6, rely=0.1)
 
-        # Tabelle
+
+#### Tabelle ####
         # Styling
         style = ttk.Style()
-        #style.theme_use("")
         style.configure("Treeview.Heading", font=("Inter", 12), background="#D9D9D9", foreground="#6E6893")
         style.configure("Treeview", font=("Arial", 11), rowheight=35, background="white", foreground="black")
         style.map("Treeview", background=[("selected", "#D9D9D9")], foreground=[("selected", "black")])
         style.configure("evenrow.Treeview", background="#f2f2f2")
         style.configure("oddrow.Treeview", background="white")
 
+        #Definitoin Layout
         tree = ttk.Treeview(self.tabelle_frame, columns=("c1", "c2", "c3", "c4", "c5"), show="headings",
                             height=5)
+
+        #Scrollbar
         scroll = ctk.CTkScrollbar(
             self.tabelle_frame,
             button_color=ThemeManager.SRH_Grey,
@@ -255,7 +392,6 @@ class Ubersicht(tk.Frame):
         # Treeview Scrollverbindung
         tree.configure(yscrollcommand=scroll.set)
 
-        # scroll.place(x=700, y=0.9, height=tree.winfo_height())
         tree.configure(yscrollcommand=scroll.set)
 
                 # Spaltennamen aus der Datenbank holen
@@ -270,7 +406,6 @@ class Ubersicht(tk.Frame):
         items_data = fetch_items()
 
         # Daten aus DB einfügen
-
         for i,row in enumerate(items_data):
             formatted_row = [value if value is not None else "-" for value in row] # Leere Felder durch "-" ersetzen
             color = "#f3f3f3" if i % 2 == 0 else "white"
@@ -293,15 +428,34 @@ class Ubersicht(tk.Frame):
         tree.tag_configure("even", background="#f7f7f7")
         tree.tag_configure("odd", background="white")
 
+###### Plazierung #######
+        Filter_button.place(relx=0, rely=0.1)
+        suche_button.place(relx=0.1, rely=0.1, relheight=0.04, relwidth=0.022)
+        suche_entry.place(relx=0.125, rely=0.1, relwidth=0.33, relheight=0.04)
+        Hinzufugen_button.place(relx=0.5, rely=0.1)
+        Aktionen_button.place(relx=0.6, rely=0.1)
         tree.place(x=120, y=0, width=1280, height=650)
         scroll.place(x=1400, y=0)
-        # Setze explizite Mindesthöhe für Zeile 5
-        #self.tabelle_frame.grid_rowconfigure(5, minsize=10)
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
         self.tabelle_frame.place(relx=0.15, rely=0.3, relwidth=0.85, height=800)
 
+
+
 def showDetails(selected_Item, tree, controller):
+    """
+    Displays the details of the selected item by retrieving its data from the
+    given tree and updating the associated frame within a provided controller.
+
+    :param selected_Item: Item identifier to select in the tree. Used to
+                          access the item's data.
+    :param tree: A Treeview instance from which item's data values are
+                 retrieved.
+    :param controller: An instance of a controller that manages application
+                       frames. It's used for accessing and updating the
+                       specific frame with the item's details.
+    :return: None
+    """
     data = tree.item(selected_Item, "values")
     print(f"Daten des ausgewählten Items: {data}")
 
@@ -309,9 +463,31 @@ def showDetails(selected_Item, tree, controller):
     details.update_data(data)
     controller.show_frame(Gerateansicht)
 
-#######################################################################################################################
+#########################
+#     Gerateansicht     #
+#########################
 
 class Gerateansicht(tk.Frame):
+    """
+    Initialisiert einen Frame zur Anzeige von detaillierten Geräteinformationen innerhalb der Anwendung.
+    Diese Klasse konfiguriert das Layout und die Funktionen zur detaillierten Darstellung und Interaktion mit einem ausgewählten Gerät.
+
+    **Args:**
+
+    - *parent* (tk.Widget): Das übergeordnete Widget, in das dieser Frame eingebettet wird.
+    - *controller* (object): Eine Instanz, die für den Wechsel zwischen Anwendungsansichten verantwortlich ist.
+
+    Attributes:
+
+    - *parent* (tk.Widget): Das übergeordnete Widget, das von der Klasse referenziert wird.
+    - *controller* (object): Ein Objekt zur Steuerung der Anwendungsansichtsnavigation.
+
+    **Verwendet:**
+
+    - *self.gerateansicht_frame* - Frame für die Tabelle
+    - *name_frame, ...* - Frames für Labels und Entrys der Gerateansicht
+    - *button_frame* - Frame auf dem die Buttons positioniert werden
+    """
     def __init__(self, parent, controller):
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         tk.Frame.__init__(self, parent)
@@ -363,6 +539,7 @@ class Gerateansicht(tk.Frame):
         #scroll.place(x=700, y=0.9, height=tree.winfo_height())
         tree.configure(yscrollcommand=scroll.set)
 
+        # Definition der Tabelle
         tree.column("#1", anchor=CENTER, width=50)
         tree.heading("#1", text="Benutzer")
         tree.column("#2", anchor=CENTER, width=100)
@@ -372,7 +549,7 @@ class Gerateansicht(tk.Frame):
         tree.place(x=0, y=20, relwidth=0.40, relheight=0.5)
         scroll.place(x=770, y=20, relheight=0.5)
 
-
+        # Eintragsfelder -> Schema: frame, label, entry
         name_frame = ctk.CTkFrame(self.gerateansicht_frame, width=480, height=88, bg_color='transparent', fg_color='transparent', border_width=1, border_color='#B8B7B7', corner_radius=8)
         name_label = ctk.CTkLabel(name_frame, text="Gerätename", text_color='#858383', font=("Inter", 25, 'bold'))
         self.name_entry = ctk.CTkEntry(name_frame, text_color='black', font=("Inter", 20), border_width=0, fg_color='transparent')
@@ -413,6 +590,16 @@ class Gerateansicht(tk.Frame):
                                 command=lambda: typ_dropdown())  # Button öffnet Dropdown-Menü
         typ_drop.place(x=420, y=30)
         def typ_dropdown():
+            """
+            Dropdown für den Gerätetyp
+
+            **Methods:**
+
+            - *tk.Menu* erstellt ein Dropdown im Frame "Verzeichniss"
+            - *add_command* fügt Auswahlmöglichkeiten hinzu
+            - *command=lambda:*
+            :return:
+            """
             dropdown_menu = tk.Menu(typ_frame, tearoff=0, bd=1, bg='white', fg='black')
             dropdown_menu.add_command(label="→ PC", command=lambda: print("PC ausgewählt"))
             dropdown_menu.add_command(label="→ Laptop", command=lambda: print("Laptop ausgewählt"))
@@ -453,6 +640,17 @@ class Gerateansicht(tk.Frame):
 
         # Dropdown Menü Status
         def status_dropdown():
+            """
+            Dropdown für den Gerätestatus
+
+            **Methods:**
+
+            - *tk.Menu* erstellt ein Dropdown im Frame "Verzeichniss"
+            - *add_command* fügt Auswahlmöglichkeiten hinzu
+            - *command=lambda:*
+            :return:
+            """
+
             dropdown_menu = tk.Menu(status_frame, tearoff=0, bd=1, bg='white', fg='black')
             dropdown_menu.add_command(label=f"{'✔'.ljust(3)} in Betrieb", command=lambda: print("Produkt in Betrieb"))
             dropdown_menu.add_command(label=f"{'⛔'.ljust(1)} in Wartung", command=lambda: print("Produkt in Wartung"))
@@ -475,9 +673,10 @@ class Gerateansicht(tk.Frame):
         self.standort_entry.place(x=5, y=50)
         standort_frame.place(x=900, y=420)
 
-        #Button
+        #Button Frame
         buttons_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=0, relief="solid")
-        #Img definitionen
+
+        #Img definitionen für Buttons
         self.schaeden_img = gui_prototyp.load_image(root_path+"/gui/assets/Button_Schaeden.png")
         self.buchung_img = gui_prototyp.load_image(root_path+"/gui/assets/Button_Buchung.png")
         self.speichern_img = gui_prototyp.load_image(root_path+"/gui/assets/Button_Speichern.png")
@@ -489,15 +688,37 @@ class Gerateansicht(tk.Frame):
                                   command=lambda: print("Bild hochgeladen"))
         #Button Schäden
         def open_schaeden_page():
+            """
+            Erstellt ein neues Fenster zur Erfassung von Geräteschäden mit Eingabefeldern und Aktionsschaltflächen.
+
+            Diese Funktion initialisiert ein Unterfenster, in dem Benutzer Details zu einem Geräteschaden eingeben und speichern können.
+
+
+            Attributes:
+            aktualisieren_img (PhotoImage): Bild für die Schaltfläche zum Schließen des Fensters.
+            upload_img (PhotoImage): Bild für die Schaltfläche zum Hochladen eines Bildes.
+            info_frame (tk.Frame): Frame, der Eingabefelder für den Gerätename, Tag, Datum und eine Beschreibung enthält.
+            verlauf_frame (tk.Frame): Frame, der ein Eingabefeld für den Verlauf anzeigt.
+            schaeden_button_frame (tk.Frame): Frame, der Aktionsschaltflächen enthält.
+
+            **Verwendet:**
+
+            - *name_entry* (ctk.CTkEntry), *tag_entry* (ctk.CTkEntry), *current_date* (tk.Label), *beschreibung_entry* (ctk.CTkEntry):
+            - Eingaben und Labels zur Erfassung und Anzeige von Gerätename, Tag, aktuellem Datum und Beschreibung.
+            - verlauf_inh_entry (ctk.CTkEntry): Eingabefeld für den Verlauf.
+
+            """
+
             schaeden_page = tk.Toplevel()#root
             schaeden_page.title("Schäden eintragen")
             schaeden_page.geometry("819x594+500+300")
             schaeden_page.configure(bg='white')
 
             schaeden_page.grab_set()
+
             #Bilder
             self.aktualisieren_img = gui_prototyp.load_image(root_path+"/gui/assets/Button_Aktualisieren.png")
-            self.upload_img = gui_prototyp.load_image(root_path+"/gui/assets/Button_Drop.png")
+            self.upload_img1 = gui_prototyp.load_image(root_path+"/gui/assets/Button_Drop.png")
 
             #Informationen
             info_frame = tk.Frame(schaeden_page, bg='white', bd=1)
@@ -539,9 +760,9 @@ class Gerateansicht(tk.Frame):
 
             schaeden_button_frame = tk.Frame(schaeden_page, bg='white', bd=1)
             close_button = tk.Button(schaeden_button_frame, image=self.aktualisieren_img, bd=0, bg='white', command=schaeden_page.destroy)
-            upload_button = tk.Button(schaeden_button_frame, image=self.upload_img, bd=0, bg='white', command=lambda: print("Bild hochgeladen"))
+            upload_button = tk.Button(schaeden_button_frame, image=self.upload_img1, bd=0, bg='white', command=lambda: print("Bild hochgeladen"))
 
-            #Placement
+            ###### Plazierung #######
             name_label.place(x=0, y=2)
             name_entry.place(x=5, y=5)
             name_entry_frame.place(x=150, y=2)
@@ -567,12 +788,34 @@ class Gerateansicht(tk.Frame):
             verlauf_frame.place(x=409, y=0, width=409, height=444)
             schaeden_button_frame.place(x=409, y=444, width=409, height=150)
 
-        #Funktion zuende
+#######################################################################################################
 
         schaeden_button = tk.Button(buttons_frame, image=self.schaeden_img, bd=0, bg='white', command=open_schaeden_page)
         schaeden_button.place(x=10, y=10)
 
         def open_buchen_page():
+
+            """
+            Erstellt ein neues Fenster zur Buchung eines Geräts mit Eingabefeldern, Datumsauswahl und Aktionsschaltflächen.
+
+            Diese Funktion initialisiert ein Unterfenster, in dem Benutzer ein Gerät buchen und entsprechende Details sowie Start- und Enddaten eingeben können.
+
+            **Attributes:**
+
+            - aktualisieren_img (PhotoImage): Bild für die Schaltfläche zum Schließen des Fensters.
+            - info_frame (tk.Frame): Frame, der Eingabefelder für den Gerätename, Servicetag und Verlauf enthält.
+            - date_frame (tk.Frame): Frame für die Datumsauswahl und Anzeige.
+            - buchen_button_frame (tk.Frame): Frame, der die Aktionsschaltfläche zum Schließen des Fensters enthält.
+
+            **Verwendet:**
+
+            - name_entry (ctk.CTkEntry), tag_entry (ctk.CTkEntry), verlauf_entry (ctk.CTkEntry): Eingaben zur Erfassung von Gerätename, Servicetag und Verlauf.
+            - ask_date_button (ctk.CTkButton): Schaltflächen zur Auswahl von Start- und Enddatum.
+            - start_result_label, end_result_label (tk.Label): Labels zur Anzeige der ausgewählten Start- und Enddaten.
+
+
+            """
+
             buchen_page = tk.Toplevel()  # root
             buchen_page.title("Gerät buchen")
             buchen_page.geometry("819x594+500+300")
@@ -600,7 +843,12 @@ class Gerateansicht(tk.Frame):
 
             #Datum
             def ask_startdate():
+                """
+                Die Funktion gibt eine Eingabemöglichkeit für ein Startdatum an.
+                Form: 12.12.2012
 
+                Ist das Datum ungültig oder nicht angegeben, wird ein Fehlermeldung angezeigt.
+                """
                 # Benutzer nach Datum fragen
                 entered_date = simpledialog.askstring("Datum", "Startdatum (Format: DD.MM.YYYY:)")
                 try:
@@ -618,7 +866,14 @@ class Gerateansicht(tk.Frame):
             start_result_label.place(x=150, y=0)
 
             def ask_enddate():
+                """
+                Die Funktion gibt eine Eingabemöglichkeit für ein Enddatum an.
+                Form: 12.12.2012
+
+                Ist das Datum ungültig oder nicht angegeben, wird ein Fehlermeldung angezeigt.
+                """
                 date_frame.focus_set()
+
                 # Benutzer nach Datum fragen
                 entered_date = simpledialog.askstring("Datum", "Enddatum (Format: DD.MM.YYYY:)")
                 try:
@@ -642,7 +897,7 @@ class Gerateansicht(tk.Frame):
                                      command=buchen_page.destroy)
 
 
-            # Placement
+            ###### Plazierung #######
             name_label.place(x=0, y=2)
             name_entry.place(x=150, y=2)
 
@@ -657,7 +912,7 @@ class Gerateansicht(tk.Frame):
             date_frame.place(x=409, y=0, width=409, height=444)
             buchen_button_frame.place(x=409, y=444, width=409, height=150)
 
-        # Funktion zuende
+#######################################################################################################
 
         # Button Buchung
         buchung_button = tk.Button(buttons_frame, image=self.buchung_img, bd=0, bg='white',
@@ -666,8 +921,15 @@ class Gerateansicht(tk.Frame):
 
         #Button Speichern
         def button_click():
+            """
+            Beim Klicken des Buttons *speicher_button* wird man zurück auf Gerateubersicht geleitet und
+            eine Messagebox kommt
+
+            :return:
+            """
             controller.show_frame(Ubersicht)
             messagebox.showinfo("Erfolgreich","Änderungen erfolgreich gespeichert")
+
         speichern_button = tk.Button(buttons_frame, image=self.speichern_img, bd=0, bg='white', command=button_click)
         speichern_button.place(x=10, y=150)
 
@@ -679,6 +941,8 @@ class Gerateansicht(tk.Frame):
                                command=lambda: controller.show_frame(Ubersicht))
 
         all_button.pack(pady=10, anchor='w')
+
+        # Funktionen für das Verzeichniss, siehe Zeile 114
         def show_dropdown_grp1():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
             dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Profiles.Admin))
@@ -790,7 +1054,7 @@ class Gerateansicht(tk.Frame):
                                 command=show_dropdown_grp8)
         grp8_button.pack(pady=10, anchor='w')
 
-        # Positionierung
+        ###### Plazierung #######
         upload_button.place(x=100, y=0)
         upload_frame.place(x=0, y=520, relwidth=0.40, height=300)
         buttons_frame.place(x=900, y=520, width=480, height=300)
@@ -801,7 +1065,7 @@ class Gerateansicht(tk.Frame):
         profil.place(relx=0.90, rely=0.5, anchor="center")
         mainpage.place(relx=0.16, rely=0.16, anchor='nw')
 
-
+    #Funktion, die die Daten aus der Tabelle in die Labels und Entrys des Info Frames einträgt
     def update_data(self, data):
         self.name_entry.delete(0, tk.END)
         self.name_entry.insert(0, data[5])
