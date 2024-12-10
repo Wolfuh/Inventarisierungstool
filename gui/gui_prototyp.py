@@ -1,6 +1,3 @@
-#########################
-#       Imports         #
-#########################
 import tkinter as tk
 from tkinter import ttk, messagebox, PhotoImage
 import os
@@ -74,7 +71,7 @@ class GuiTest(tk.Tk):
         self.title("Prototyp")
         self.resizable(False, False)
         self.geometry("1920x1080")
-        self.iconbitmap(root_path+"/gui/assets/prototyp_download.ico")
+        self.iconbitmap(root_path + "/gui/assets/prototyp_download.ico")
 
         # Main container für Frames
         container = tk.Frame(self)
@@ -138,8 +135,7 @@ class LogInWindow(tk.Frame):
 
         style = ttk.Style()
         style.configure("Header.TLabel", foreground='white', background=ThemeManager.SRH_Orange,
-                        font=("Inter", 50, 'bold')
-                        )
+                        font=("Inter", 50, 'bold'))
         style.configure("Footer.TLabel", background=ThemeManager.SRH_Grey)
 
         def login():
@@ -177,18 +173,27 @@ class LogInWindow(tk.Frame):
                 messagebox.showinfo(title="Fehler", message="Passwort oder Benutzername falsch")
                 password_entry.delete(0, 'end')
 
+        def on_enter(event=None):
+            """Führt Login aus, wenn die Enter-Taste gedrückt wird."""
+            login()
+
         # Login Frame Elements
         login_frame = tk.Frame(self, bg='white')
         username_label = tk.Label(login_frame, text="Benutzername", bg='white', font=("Inter", 19))
         username_entry = ctk.CTkEntry(login_frame, text_color='black', font=("Inter", 20), border_width=1, corner_radius=8,
-                     fg_color='white', width=200)
+                                       fg_color='white', width=200)
         password_label = tk.Label(login_frame, text="Passwort", bg='white', font=("Inter", 19))
         password_entry = ctk.CTkEntry(login_frame, text_color='black', font=("Inter", 20), border_width=1, corner_radius=8,
                      fg_color='white', width=200, show = "*") #Zeig Passwort mit ******
         login_button = ctk.CTkButton(login_frame, text="Login", fg_color='#081424', text_color='white', font=("Inter", 20, 'bold'), corner_radius=8,
-                                 command=login, width=200, height=30, hover_color=ThemeManager.SRH_Orange)
+                                     command=login, width=200, height=30, hover_color=ThemeManager.SRH_Orange)
 
 ###### Plazierung #######
+        # Bindet die Enter-Taste an die Funktion "on_enter"
+        self.bind("<Return>", on_enter)
+        username_entry.bind("<Return>", on_enter)
+        password_entry.bind("<Return>", on_enter)
+
         username_label.grid(row=0, column=0, pady=10)
         username_entry.grid(row=1, column=0, pady=10)
         password_label.grid(row=2, column=0, pady=10)
