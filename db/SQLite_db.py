@@ -2,7 +2,6 @@ import sqlite3
 import os
 import hashlib
 
-
 username_global = "Benutzername Ungültig"
 
 def init_connection():      # verbindung mit DB erstellen und Variable der Verbindung geben
@@ -133,6 +132,25 @@ def lookup_user_stuff(): # Gibt die Nutzerinformationen
 ## UNBENUTZTE DEFINITIONEN: ##
 ##############################
 
+def group_search(search_number):
+    try:
+        my_db = init_connection()
+        cur = my_db.cursor()
+        cur.execute("SELECT * FROM items WHERE Gruppe IS ?", search_number)
+        gruppen_suchen_ergebnis = cur.fetchall()
+        return gruppen_suchen_ergebnis
+    except sqlite3.Error as e:
+        return [], "Fehler beim Abrufen der Gruppensuche:", str(e)
+    finally:
+        if my_db:
+            my_db.close()
+
+
+
+
+
+
+
 
 def search_bar_update(search): # Aktualisiert die Sucheingabe für die items Tabelle - muss noch eingefügt werden
     try:
@@ -151,8 +169,8 @@ def search_bar_update(search): # Aktualisiert die Sucheingabe für die items Tab
         cur.execute(query, [f"%{search}%"] * len(columns))
         answer_search = cur.fetchall()
         return answer_search
-    except:
-        return
+    except sqlite3.Error as e:
+        return [], "Fehler beim Abrufen der Informationen:", str(e)
 
 
 def add_user(new_username, new_first_name, new_last_name, new_class, new_role):
@@ -162,17 +180,21 @@ def add_user(new_username, new_first_name, new_last_name, new_class, new_role):
         new_first_name = new_first_name.replace(" ", "")
         new_last_name = new_last_name.replace(" ", "")
         new_class = new_class.replace(" ", "")
-        new_r = new_r.replace(" ", "")
+        new_role = new_role.replace(" ", "")
         my_db = init_connection()
         cur = my_db.cursor()
 
-        cur.execute("INSERT INTO benutzer (Benutzername, Vorname, Nachname, Klasse, Rolle) VALUES (?,?,?,?,?)", 
-                                new_username, new_first_name, new_last_name, new_class, new_role)
-        my_db.commit() # führt die funktion aus
-        my_db.close()   
-    except:
-        return False
+        hash_password = hashlib.sha512("Startnow!".encode()).hexdigest() # StartNow! als Standartpasswort festgelegt
 
+        cur.execute("INSERT INTO benutzer (Benutzername, Vorname, Nachname, Klasse, Passwort, Rolle) VALUES (?,?,?,?,?,?)", 
+                                (new_username, new_first_name, new_last_name, new_class, hash_password, new_role))
+        my_db.commit() # führt die funktion aus
+         
+    except sqlite3.Error as e:
+        return [], "Fehler beim Abrufen der Informationen:", str(e)
+    finally:
+        if my_db:
+            my_db.close()  
 
 
 #############################
@@ -191,7 +213,8 @@ def add_user(new_username, new_first_name, new_last_name, new_class, new_role):
 # print(username_global)
 # sibllllll = search_bar_update("et")
 # print(sibllllll)
-
+# ha=add_user("peter", "Peter", "Pan", "FI99", "viewer")
+# print(ha)
 ############### ENDE DEBUG ################
 
 

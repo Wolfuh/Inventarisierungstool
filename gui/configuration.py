@@ -9,35 +9,6 @@ import Profiles
 import os
 
 class Einstellungen(tk.Frame):
-    """
-    Erstellt die Einstellungsseite mit Navigation, Theme-Umschaltung, Datenbankverwaltung und Exportoptionen.
-
-    Diese Klasse dient zur Konfiguration der Einstellungsansicht, in der Benutzer verschiedene Anpassungen wie Theme-Wechsel, Datenverwaltung und Exportoptionen vornehmen können.
-
-    **Args:**
-    parent (tk.Widget): Das übergeordnete Widget, in das diese Seite eingebettet wird.
-    controller (object): Eine Instanz, die für den Wechsel zwischen Anwendungsansichten verantwortlich ist.
-
-    **Attributes:**
-
-    - header (ttk.Label): Label als Header der Seite mit dem Titel "Einstellungen".
-    - einstellung_frame (tk.Frame): Hauptinhalt der Seite, enthält Bereiche zur Verwaltung der Darstellung, Datenbank und weitere Optionen.
-    - verzeichniss (tk.Frame): Navigationsleiste auf der linken Seite der Ansicht.
-    - switch (tk.Button): Schaltfläche zur Umschaltung zwischen Light-/Darkmode.
-    - color_dropdown (ttk.Combobox): Dropdown-Menü zur Auswahl des Headerschemas (Farben).
-    - addSpalten_button, addTyp_button, addStatus_button, addGerat_button (tk.Button): Schaltflächen zur Verwaltung der Datenbankeinträge wie Spalten, Typen, Status und Geräte.
-
-    **Verwendet:**
-
-    - login, mainpage (tk.Button): Buttons im Header zur Navigation zur Login-Seite und Mainpage.
-    - user_button, admin_button, stats_button, einstellungen_button (tk.Button): Navigationsbuttons in der linken Seitenleiste.
-    - show_dropdown (function): Zeigt ein Dropdown-Menü mit Exportoptionen (z. B. Excel, SQL).
-    - toggle (function): Schaltet zwischen dem Light-/Darkmode um.
-    - apply_lightmode, apply_darkmode (function): Wendet das ausgewählte Theme an.
-    - open_spalten_page, open_typ_page, open_status_page (function): Öffnen Unterfenster, um neue Datenbankeinträge hinzuzufügen.
-
-
-    """
 
     def __init__(self, parent, controller):
         super().__init__()
@@ -126,9 +97,6 @@ class Einstellungen(tk.Frame):
 
         # Funktion zur Anzeige des Dropdown-Menüs für Exportoptionen
         def show_dropdown():
-            """
-            Dropdown für die Exportarten
-            """
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=1, bg='white', fg='black')
             dropdown_menu.add_command(label="→ Excel", command=lambda: print("Excel ausgewählt"))
             dropdown_menu.add_command(label="→ SQL", command=lambda: print("SQL ausgewählt"))
@@ -162,10 +130,6 @@ class Einstellungen(tk.Frame):
 
         # Funktion zum Anwenden des Darkmode
         def apply_darkmode():
-            """
-            Darkmode, funktioniert nur mit dieser Klasse
-
-            """
             self.config(bg=ThemeManager.Darkmode_Black)
             self.einstellung_frame.config(bg=ThemeManager.Darkmode_Black)
             verzeichniss.config(bg=ThemeManager.Darkmode_Grey)
@@ -207,9 +171,6 @@ class Einstellungen(tk.Frame):
         self.switch.place(relx=0.16, rely=0.46)
 
         def change_header_color(event):
-            """
-            Headercolor ändert sich ebenfalls nur in der einen KLasse
-            """
             # Dropdown zur Auswahl der Header-Farbe
             selected_color = color_dropdown.get()
             if selected_color == "Orange":
@@ -236,8 +197,6 @@ class Einstellungen(tk.Frame):
         datenbank_label = tk.Label(self.einstellung_frame, text="Datenbank", bg='white', fg='#858383',
                                    font=("Inter", 19))
         datenbank_label.place(relx=0.0, rely=0.59)
-
-        ########## Pop-ups für Hinzufügen von Datenbank Layout und Inhalten ########
 
         def open_spalten_page():
             spalten_page = tk.Toplevel()#root
@@ -267,7 +226,7 @@ class Einstellungen(tk.Frame):
             button_frame = tk.Frame(spalten_page, bg='white', bd=1)
             close_button = tk.Button(button_frame, image=self.aktualisieren_img, bd=0, bg='white', command=spalten_page.destroy)
 
-            ###### Plazierung #######
+            #Placement
             name_label.place(x=0, y=2)
             name_entry.place(x=100, y=2, width=150)
 
@@ -310,7 +269,7 @@ class Einstellungen(tk.Frame):
             button_frame = tk.Frame(typ_page, bg='white', bd=1)
             close_button = tk.Button(button_frame, image=self.aktualisieren_img, bd=0, bg='white', command=typ_page.destroy)
 
-            ###### Plazierung #######
+            #Placement
             name_label.place(x=0, y=2)
             name_entry.place(x=100, y=2, width=150)
 
@@ -352,7 +311,7 @@ class Einstellungen(tk.Frame):
             button_frame = tk.Frame(spalten_page, bg='white', bd=1)
             close_button = tk.Button(button_frame, image=self.aktualisieren_img, bd=0, bg='white', command=spalten_page.destroy)
 
-            ###### Plazierung #######
+            #Placement
             name_label.place(x=0, y=2)
             name_entry.place(x=100, y=2, width=150)
             icon_label.place(x=0, y=50)

@@ -129,6 +129,7 @@ class LogInWindow(tk.Frame):
     """
     def __init__(self, parent, controller):
         super().__init__(parent)
+        from ThemeManager import ThemeManager
         self.configure(bg='white')
 
         #Style Konfigurationen
@@ -137,7 +138,8 @@ class LogInWindow(tk.Frame):
 
         style = ttk.Style()
         style.configure("Header.TLabel", foreground='white', background=ThemeManager.SRH_Orange,
-                        font=("Inter", 50, 'bold'))
+                        font=("Inter", 50, 'bold')
+                        )
         style.configure("Footer.TLabel", background=ThemeManager.SRH_Grey)
 
         def login():

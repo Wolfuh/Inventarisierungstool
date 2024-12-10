@@ -11,32 +11,9 @@ import Profiles
 
 
 class MainPage(tk.Frame):
-    """
-    Erstellt die Startseite mit Navigations- und Funktionsbuttons sowie Bildgruppen.
+    """Erstellt die Startseite mit Navigations- und Funktionsbuttons sowie Bildgurppen
+       Ermöglicht den Zugriff auf Login, Profil und Übersichtsseiten"""
 
-    Diese Klasse konfiguriert die Hauptseite der Anwendung, mit Zugriffsmöglichkeiten auf Login, Profil und verschiedene Übersichtsseiten.
-
-    **Args:**
-
-    - parent (tk.Widget): Das übergeordnete Widget, in das diese Seite eingebettet wird.
-    - controller (object): Eine Instanz, die für den Wechsel zwischen Anwendungsansichten verantwortlich ist.
-
-    **Attributes:**
-
-    - main_frame (tk.Frame): Hauptbereich für Inhalt und Layout der Seite.
-    - imglogin, imgprofil, imgbildgr1...imgbildgr8, imgseitevor (PhotoImage): Bildobjekte für die Schaltflächen und Bildgruppen.
-    - header (ttk.Label): Label als Header der Seite.
-    - bottom (ttk.Label): Label als Footer der Seite.
-
-    **Verwendet:**
-    - login, profil (ctk.CTkButton): Schaltflächen für die Navigation zur Login- und Profilseite.
-    - bildgr1...bildgr8 (tk.Button): Schaltflächen zur Darstellung der Bildgruppen, die zu Übersichtsseiten navigieren.
-    - all (ctk.CTkButton): Schaltfläche, um alle Einträge anzuzeigen.
-    - seitevor (ctk.CTkButton): Schaltfläche, um zur nächsten Seite zu navigieren.
-
-    """
-
-    print("MainPage geladen")
     def __init__(self, parent, controller):
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         tk.Frame.__init__(self, parent)
@@ -69,7 +46,7 @@ class MainPage(tk.Frame):
 
         # Platzierung der Buttons
         login = ctk.CTkButton(header, image=self.imglogin, fg_color=ThemeManager.SRH_Orange, bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
-                              hover=True, hover_color='#e25a1f', text="", command=lambda: controller.show_frame(gui_prototyp.LogInWindow))
+                              hover=True, hover_color='#e25a1f', text="", command=lambda :controller.show_frame(gui_prototyp.LogInWindow))
         profil = ctk.CTkButton(header, image=self.imgprofil, fg_color=ThemeManager.SRH_Orange, bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
                               hover=True, hover_color='#e25a1f', text="", command=lambda: controller.show_frame(Profiles.Profil))
         bildgr1 = tk.Button(self, image=self.imgbildgr1, bd=0, bg='white',
@@ -103,7 +80,6 @@ class MainPage(tk.Frame):
         style.configure("Header.TLabel", foreground='white', background='#DF4807', font=("Inter", 55, 'bold'))
         style.configure("Footer.TLabel", background=ThemeManager.SRH_Grey)
 
-
         login.place(relx=0.95, rely=0.5, anchor="center")
         profil.place(relx=0.90, rely=0.5, anchor="center")
 
@@ -126,7 +102,7 @@ class MainPage(tk.Frame):
 class MainPageS2(tk.Frame):
     """Repräsentiert die zweite Seite der Startseite mit weiteren Gruppen und Navigation.
        Ermöglicht die Navigation zurück zur Hauptseite oder zu zusätzlichen Detailansichten."""
-    print("MainPageS2 geladen")
+
     def __init__(self, parent, controller):
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         tk.Frame.__init__(self, parent)
