@@ -73,7 +73,7 @@ def fetch_users_headers():  # Gibt die Überschriften der Benutzertabelle wieder
 
 def login_lookup(username: str, password: str): # überprüfung eingehendes Passwort und Benutzername    
     try:
-        global username_global    # Variable soll außerhalb der Definition nutzbar sein
+        global username_global    # Variable soll außerhalb der Definition nutzbar sein (Speicherung des Benutzernamen)
         my_db = init_connection() # Verbindung DB
         cur = my_db.cursor()      # Cursor erstellen
         cur.execute(f"SELECT passwort FROM benutzer WHERE Benutzername = '{username}'")         
@@ -136,7 +136,7 @@ def group_search(search_number):
     try:
         my_db = init_connection()
         cur = my_db.cursor()
-        cur.execute("SELECT * FROM items WHERE Gruppe IS ?", search_number)
+        cur.execute("SELECT * FROM items WHERE Gruppe = ?", search_number)
         gruppen_suchen_ergebnis = cur.fetchall()
         return gruppen_suchen_ergebnis
     except sqlite3.Error as e:
