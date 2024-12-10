@@ -4,7 +4,6 @@ from tkinter import ttk
 import gui_prototyp
 import Mainpages
 import Overview_pages
-import ThemeManager
 import Profiles
 import os
 
@@ -14,6 +13,7 @@ class Einstellungen(tk.Frame):
         super().__init__()
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         tk.Frame.__init__(self, parent)
+        from ThemeManager import ThemeManager
 
         self.configure(bg='white')
         self.switch_value = True

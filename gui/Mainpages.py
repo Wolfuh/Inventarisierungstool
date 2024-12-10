@@ -5,7 +5,6 @@ import customtkinter as ctk
 from customtkinter import *
 
 import gui_prototyp
-import ThemeManager
 import Overview_pages
 import Profiles
 
@@ -17,6 +16,7 @@ class MainPage(tk.Frame):
     def __init__(self, parent, controller):
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         tk.Frame.__init__(self, parent)
+        from ThemeManager import ThemeManager
         self.configure(bg='white')
 
         # Konfiguration des Kopf- und Fußbereich
@@ -106,6 +106,7 @@ class MainPageS2(tk.Frame):
     def __init__(self, parent, controller):
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         tk.Frame.__init__(self, parent)
+        from ThemeManager import ThemeManager
         self.configure(bg='white')
 
         # Erstellung vom header und Footer und Konfiguration des Hauptanzeigenbereiches

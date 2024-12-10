@@ -6,7 +6,6 @@ from customtkinter import *
 
 import os
 import gui_prototyp
-import ThemeManager
 import Mainpages
 import configuration
 import Profiles
@@ -26,6 +25,7 @@ class Ubersicht(tk.Frame):
     def __init__(self, parent, controller):
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         tk.Frame.__init__(self, parent)
+        from ThemeManager import ThemeManager
         self.configure(bg='white')
 
         # Stilkonfiguration für Header und Footer, Erstellung vom Header und des Überschriftbereiches.
@@ -71,7 +71,7 @@ class Ubersicht(tk.Frame):
         # "Alle Anzeigen" Button in der Seitenleiste
         all_button = ctk.CTkButton(verzeichniss, text="Alle Anzeigen", fg_color=ThemeManager.SRH_Grey, text_color='black',
                             font=("Inter", 20), corner_radius=8, hover=False,
-                            command=lambda: controller.show_frame(Overview_pages.Ubersicht))
+                            command=lambda: controller.show_frame(Ubersicht))
 
         all_button.pack(pady=10, anchor='w')
 
@@ -315,6 +315,7 @@ class Gerateansicht(tk.Frame):
     def __init__(self, parent, controller):
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         tk.Frame.__init__(self, parent)
+        from ThemeManager import ThemeManager
         self.configure(bg='white')
 
         # Konfiguration der Grid-Struktur für die gesamte Seite
