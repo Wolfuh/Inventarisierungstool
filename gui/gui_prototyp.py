@@ -82,7 +82,7 @@ class GuiTest(tk.Tk):
         self.frames = {}
 
         # Only attempt to instantiate Einstellungen if it's a class
-        pages = [LogInWindow, Mainpages.MainPage, Mainpages.MainPageS2,
+        pages = [LogInWindow, Mainpages.MainPage, Mainpages.MainPageS2, Mainpages.Mainpage_empty,
                  Overview_pages.Ubersicht, Overview_pages.Gerateansicht,
                  Profiles.Profil, Profiles.Admin, Profiles.Stats]
 
