@@ -19,8 +19,23 @@ from db.SQLite_db import *
 
 
 class Ubersicht(tk.Frame):
-    """Repraesentiert die Geraeteuebersichtsseite der Anwendung. Zeigt eine Liste oder Tabelle der verfügbaren
-       Geräte und bietet Optionen für die Navigation zurück zur Hauptseite, zum Login und zu Benutzerprofilen """
+    """
+    Zusammenfassung der Funktionalität und des Zwecks der Klasse.
+
+    Die Klasse `Ubersicht` stellt ein GUI für die Geräteübersicht bereit. Sie bietet mehrere
+    Frames und Komponenten, um verschiedene Funktionen anzuzeigen und darzustellen. Die Klasse
+    verwendet unterschiedliche Layout-Elemente, Widgets und Stilkonfigurationen, um eine
+    benutzerfreundliche Navigation und Darstellung von Geräten und Gruppeninformationen zu gewährleisten.
+
+    :ivar imglogin: Bildreferenz für das Login-Symbol.
+    :ivar imgprofil: Bildreferenz für das Profil-Symbol.
+    :ivar imghelp: Bildreferenz für das Hilfe-Symbol.
+    :ivar imgmainpage: Bildreferenz für das Icon zur Hauptseite.
+    :ivar ubersicht_frame: Frame für die Hauptanzeige der Übersichtsseite.
+    :ivar tabelle_frame: Frame, der die Tabelle für Datendarstellung enthält.
+    :ivar mainpage_frame: Frame für die Navigationsbutton, um zur Hauptseite zurückzukehren.
+    :ivar tree: Baumstruktur für die tabellarische Darstellung von Daten.
+    """
 
     def __init__(self, parent, controller):
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
@@ -363,6 +378,41 @@ def showDetails(selected_Item, tree, controller):
 #######################################################################################################################
 
 class Gerateansicht(tk.Frame):
+    """
+    Diese Klasse repräsentiert die Geräteansicht in einer grafischen Benutzeroberfläche
+    und bietet verschiedene Interaktionsmöglichkeiten und visuelle Darstellungen.
+
+    Die Geräteansicht ist in verschiedene Bereiche unterteilt, die Benutzereingaben,
+    Optionen zur Navigation und eine Liste von Geräten zur Verfügung stellen. Die
+    Unterstützung von Widgets und Layoutkonfigurationen ermöglicht eine flexible
+    Darstellung.
+
+    :ivar gerateansicht_frame: Haupt-Container, in dem der Inhalt der Geräteansicht
+        angezeigt wird.
+    :type gerateansicht_frame: tk.Frame
+
+    :ivar imglogin: Bildobjekt für den "Login"-Button.
+    :type imglogin: tk.PhotoImage
+
+    :ivar imgmainpage: Bildobjekt für den Button, um zur Hauptseite zurückzukehren.
+    :type imgmainpage: tk.PhotoImage
+
+    :ivar imgprofil: Bildobjekt für den Profil-Button.
+    :type imgprofil: tk.PhotoImage
+
+    :ivar imghelp: Bildobjekt für den Button, der die Hilfe-Funktion auslöst.
+    :type imghelp: tk.PhotoImage
+
+    :ivar name_entry: Eingabe-Widget zum Erfassen oder Anzeigen eines Gerätenamens.
+    :type name_entry: ctk.CTkEntry
+
+    :ivar tag_entry: Eingabe-Widget für die Eingabe oder Anzeige der Servicetag- oder
+        Seriennummer.
+    :type tag_entry: ctk.CTkEntry
+
+    :ivar typ_aktuell_label: Text-Label zur Anzeige des aktuellen Gerätetyps.
+    :type typ_aktuell_label: ctk.CTkLabel
+    """
     def __init__(self, parent, controller):
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         tk.Frame.__init__(self, parent)

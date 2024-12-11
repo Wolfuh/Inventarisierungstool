@@ -10,7 +10,36 @@ import Profiles
 import os
 
 class Einstellungen(tk.Frame):
+    """
+    Die Klasse Einstellungen stellt eine grafische Benutzerschnittstelle für die
+    Einstellungen der Anwendung bereit.
 
+    Sie enthält Widgets wie Header-Labels, Navigationsbuttons, Dropdown-Menüs und
+    verschiedene Schaltflächen, mit denen der Benutzer zwischen verschiedenen
+    Abschnitten navigieren und Einstellungen anpassen kann. Zusätzlich unterstützt
+    sie die Umschaltung zwischen Light- und Darkmode, inklusive dynamischer
+    Anpassung der Benutzeroberfläche.
+
+    :ivar header: Das Header-Label der Seite „Einstellungen“, das als Titel
+        dient.
+    :type header: ttk.Label
+    :ivar imglogin: Speichert das Bild für den Login-Navigationsbutton.
+    :type imglogin: tk.PhotoImage
+    :ivar imgmainpage: Speichert das Bild für den Mainpage-Navigationsbutton.
+    :type imgmainpage: tk.PhotoImage
+    :ivar imghelp: Speichert das Bild für den Hilfenavigationsbutton.
+    :type imghelp: tk.PhotoImage
+    :ivar einstellung_frame: Der Rahmen, der den Hauptinhalt der Einstellungen
+        darstellt.
+    :type einstellung_frame: tk.Frame
+    :ivar switch_value: Boolean-Wert, der den aktuellen Status der
+        Theme-Umschaltung (Light- oder Darkmode) speichert.
+    :type switch_value: bool
+    :ivar light: Bild für die Light-Theme-Schalterposition.
+    :type light: tk.PhotoImage
+    :ivar dark: Bild für die Dark-Theme-Schalterposition.
+    :type dark: tk.PhotoImage
+    """
     def __init__(self, parent, controller):
         super().__init__()
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
