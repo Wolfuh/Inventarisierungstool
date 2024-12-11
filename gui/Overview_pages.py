@@ -87,10 +87,11 @@ class Ubersicht(tk.Frame):
         # Gruppe 1
         def show_dropdown_grp1():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Profiles.Admin))
-            dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Profiles.Stats))
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profiles.Profil))
-            dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(configuration))
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: print("Alles wird angezeigt")) #Alle Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: print("Hardware wird angezeigt")) # nur Hardware Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Software", command=lambda: print("Software wird angezeigt")) # nur Software Produkte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: print("Peripherie wird angezeigt")) # nur Peripherie mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Andere", command=lambda: print("Andere wird angezeigt")) # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
             dropdown_menu.post(grp1_button.winfo_rootx(), grp1_button.winfo_rooty() + grp1_button.winfo_height())
 
         grp1_button = tk.Button(verzeichniss, text="Gruppe 1   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -101,10 +102,11 @@ class Ubersicht(tk.Frame):
         # Gruppe 2
         def show_dropdown_grp2():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Profiles.Admin))
-            dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Profiles.Stats))
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profiles.Profil))
-            dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(configuration))
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: print("Alles wird angezeigt")) #Alle Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: print("Hardware wird angezeigt")) # nur Hardware Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Software", command=lambda: print("Software wird angezeigt")) # nur Software Produkte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: print("Peripherie wird angezeigt")) # nur Peripherie mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Andere", command=lambda: print("Andere wird angezeigt")) # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
             dropdown_menu.post(grp2_button.winfo_rootx(), grp2_button.winfo_rooty() + grp2_button.winfo_height())
 
         grp2_button = tk.Button(verzeichniss, text="Gruppe 2   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -115,10 +117,11 @@ class Ubersicht(tk.Frame):
         # Gruppe 3
         def show_dropdown_grp3():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Profiles.Admin))
-            dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Profiles.Stats))
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profiles.Profil))
-            dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(configuration))
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: print("Alles wird angezeigt")) #Alle Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: print("Hardware wird angezeigt")) # nur Hardware Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Software", command=lambda: print("Software wird angezeigt")) # nur Software Produkte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: print("Peripherie wird angezeigt")) # nur Peripherie mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Andere", command=lambda: print("Andere wird angezeigt")) # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
             dropdown_menu.post(grp3_button.winfo_rootx(), grp3_button.winfo_rooty() + grp3_button.winfo_height())
 
         grp3_button = tk.Button(verzeichniss, text="Gruppe 3   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -129,10 +132,11 @@ class Ubersicht(tk.Frame):
         # Gruppe 4
         def show_dropdown_grp4():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Profiles.Admin))
-            dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Profiles.Stats))
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profiles.Profil))
-            dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(configuration))
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: print("Alles wird angezeigt")) #Alle Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: print("Hardware wird angezeigt")) # nur Hardware Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Software", command=lambda: print("Software wird angezeigt")) # nur Software Produkte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: print("Peripherie wird angezeigt")) # nur Peripherie mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Andere", command=lambda: print("Andere wird angezeigt")) # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
             dropdown_menu.post(grp4_button.winfo_rootx(), grp4_button.winfo_rooty() + grp4_button.winfo_height())
 
         grp4_button = tk.Button(verzeichniss, text="Gruppe 4   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -143,10 +147,11 @@ class Ubersicht(tk.Frame):
         # Gruppe 5
         def show_dropdown_grp5():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Profiles.Admin))
-            dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Profiles.Stats))
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profiles.Profil))
-            dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(configuration))
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: print("Alles wird angezeigt")) #Alle Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: print("Hardware wird angezeigt")) # nur Hardware Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Software", command=lambda: print("Software wird angezeigt")) # nur Software Produkte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: print("Peripherie wird angezeigt")) # nur Peripherie mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Andere", command=lambda: print("Andere wird angezeigt")) # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
             dropdown_menu.post(grp5_button.winfo_rootx(), grp5_button.winfo_rooty() + grp5_button.winfo_height())
 
         grp5_button = tk.Button(verzeichniss, text="Gruppe 5   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -157,10 +162,11 @@ class Ubersicht(tk.Frame):
         # Gruppe 6
         def show_dropdown_grp6():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Profiles.Admin))
-            dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Profiles.Stats))
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profiles.Profil))
-            dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(configuration))
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: print("Alles wird angezeigt")) #Alle Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: print("Hardware wird angezeigt")) # nur Hardware Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Software", command=lambda: print("Software wird angezeigt")) # nur Software Produkte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: print("Peripherie wird angezeigt")) # nur Peripherie mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Andere", command=lambda: print("Andere wird angezeigt")) # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
             dropdown_menu.post(grp6_button.winfo_rootx(), grp6_button.winfo_rooty() + grp6_button.winfo_height())
 
         grp6_button = tk.Button(verzeichniss, text="Gruppe 6   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -171,10 +177,11 @@ class Ubersicht(tk.Frame):
         # Gruppe 7
         def show_dropdown_grp7():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Profiles.Admin))
-            dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Profiles.Stats))
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profiles.Profil))
-            dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(configuration))
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: print("Alles wird angezeigt")) #Alle Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: print("Hardware wird angezeigt")) # nur Hardware Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Software", command=lambda: print("Software wird angezeigt")) # nur Software Produkte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: print("Peripherie wird angezeigt")) # nur Peripherie mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Andere", command=lambda: print("Andere wird angezeigt")) # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
             dropdown_menu.post(grp7_button.winfo_rootx(), grp7_button.winfo_rooty() + grp7_button.winfo_height())
 
         grp7_button = tk.Button(verzeichniss, text="Gruppe 7   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -185,10 +192,11 @@ class Ubersicht(tk.Frame):
         # Gruppe 8
         def show_dropdown_grp8():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Profiles.Admin))
-            dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Profiles.Stats))
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profiles.Profil))
-            dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(configuration))
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: print("Alles wird angezeigt")) #Alle Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: print("Hardware wird angezeigt")) # nur Hardware Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Software", command=lambda: print("Software wird angezeigt")) # nur Software Produkte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: print("Peripherie wird angezeigt")) # nur Peripherie mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Andere", command=lambda: print("Andere wird angezeigt")) # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
             dropdown_menu.post(grp8_button.winfo_rootx(), grp8_button.winfo_rooty() + grp8_button.winfo_height())
 
         grp8_button = tk.Button(verzeichniss, text="Gruppe 8   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -701,10 +709,11 @@ class Gerateansicht(tk.Frame):
         all_button.pack(pady=10, anchor='w')
         def show_dropdown_grp1():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Profiles.Admin))
-            dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Profiles.Stats))
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profiles.Profil))
-            dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(configuration))
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: print("Alles wird angezeigt")) #Alle Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: print("Hardware wird angezeigt")) # nur Hardware Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Software", command=lambda: print("Software wird angezeigt")) # nur Software Produkte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: print("Peripherie wird angezeigt")) # nur Peripherie mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Andere", command=lambda: print("Andere wird angezeigt")) # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
             dropdown_menu.post(grp1_button.winfo_rootx(), grp1_button.winfo_rooty() + grp1_button.winfo_height())
 
         grp1_button = tk.Button(verzeichniss, text="Gruppe 1   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -715,10 +724,11 @@ class Gerateansicht(tk.Frame):
         # Gruppe 2
         def show_dropdown_grp2():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Profiles.Admin))
-            dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Profiles.Stats))
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profiles.Profil))
-            dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(configuration))
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: print("Alles wird angezeigt")) #Alle Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: print("Hardware wird angezeigt")) # nur Hardware Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Software", command=lambda: print("Software wird angezeigt")) # nur Software Produkte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: print("Peripherie wird angezeigt")) # nur Peripherie mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Andere", command=lambda: print("Andere wird angezeigt")) # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
             dropdown_menu.post(grp2_button.winfo_rootx(), grp2_button.winfo_rooty() + grp2_button.winfo_height())
 
         grp2_button = tk.Button(verzeichniss, text="Gruppe 2   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -729,10 +739,11 @@ class Gerateansicht(tk.Frame):
         # Gruppe 3
         def show_dropdown_grp3():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Profiles.Admin))
-            dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Profiles.Stats))
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profiles.Profil))
-            dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(configuration))
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: print("Alles wird angezeigt")) #Alle Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: print("Hardware wird angezeigt")) # nur Hardware Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Software", command=lambda: print("Software wird angezeigt")) # nur Software Produkte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: print("Peripherie wird angezeigt")) # nur Peripherie mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Andere", command=lambda: print("Andere wird angezeigt")) # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
             dropdown_menu.post(grp3_button.winfo_rootx(), grp3_button.winfo_rooty() + grp3_button.winfo_height())
 
         grp3_button = tk.Button(verzeichniss, text="Gruppe 3   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -743,10 +754,11 @@ class Gerateansicht(tk.Frame):
         # Gruppe 4
         def show_dropdown_grp4():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Profiles.Admin))
-            dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Profiles.Stats))
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profiles.Profil))
-            dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(configuration))
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: print("Alles wird angezeigt")) #Alle Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: print("Hardware wird angezeigt")) # nur Hardware Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Software", command=lambda: print("Software wird angezeigt")) # nur Software Produkte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: print("Peripherie wird angezeigt")) # nur Peripherie mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Andere", command=lambda: print("Andere wird angezeigt")) # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
             dropdown_menu.post(grp4_button.winfo_rootx(), grp4_button.winfo_rooty() + grp4_button.winfo_height())
 
         grp4_button = tk.Button(verzeichniss, text="Gruppe 4   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -757,10 +769,11 @@ class Gerateansicht(tk.Frame):
         # Gruppe 5
         def show_dropdown_grp5():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Profiles.Admin))
-            dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Profiles.Stats))
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profiles.Profil))
-            dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(configuration))
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: print("Alles wird angezeigt")) #Alle Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: print("Hardware wird angezeigt")) # nur Hardware Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Software", command=lambda: print("Software wird angezeigt")) # nur Software Produkte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: print("Peripherie wird angezeigt")) # nur Peripherie mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Andere", command=lambda: print("Andere wird angezeigt")) # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
             dropdown_menu.post(grp5_button.winfo_rootx(), grp5_button.winfo_rooty() + grp5_button.winfo_height())
 
         grp5_button = tk.Button(verzeichniss, text="Gruppe 5   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -771,10 +784,11 @@ class Gerateansicht(tk.Frame):
         # Gruppe 6
         def show_dropdown_grp6():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Profiles.Admin))
-            dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Profiles.Stats))
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profiles.Profil))
-            dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(configuration))
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: print("Alles wird angezeigt")) #Alle Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: print("Hardware wird angezeigt")) # nur Hardware Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Software", command=lambda: print("Software wird angezeigt")) # nur Software Produkte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: print("Peripherie wird angezeigt")) # nur Peripherie mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Andere", command=lambda: print("Andere wird angezeigt")) # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
             dropdown_menu.post(grp6_button.winfo_rootx(), grp6_button.winfo_rooty() + grp6_button.winfo_height())
 
         grp6_button = tk.Button(verzeichniss, text="Gruppe 6   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -785,10 +799,11 @@ class Gerateansicht(tk.Frame):
         # Gruppe 7
         def show_dropdown_grp7():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Profiles.Admin))
-            dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Profiles.Stats))
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profiles.Profil))
-            dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(configuration))
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: print("Alles wird angezeigt")) #Alle Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: print("Hardware wird angezeigt")) # nur Hardware Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Software", command=lambda: print("Software wird angezeigt")) # nur Software Produkte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: print("Peripherie wird angezeigt")) # nur Peripherie mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Andere", command=lambda: print("Andere wird angezeigt")) # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
             dropdown_menu.post(grp7_button.winfo_rootx(), grp7_button.winfo_rooty() + grp7_button.winfo_height())
 
         grp7_button = tk.Button(verzeichniss, text="Gruppe 7   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -799,10 +814,11 @@ class Gerateansicht(tk.Frame):
         # Gruppe 8
         def show_dropdown_grp8():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: controller.show_frame(Profiles.Admin))
-            dropdown_menu.add_command(label="→ Software", command=lambda: controller.show_frame(Profiles.Stats))
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: controller.show_frame(Profiles.Profil))
-            dropdown_menu.add_command(label="→ Andere", command=lambda: controller.show_frame(configuration))
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: print("Alles wird angezeigt")) #Alle Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: print("Hardware wird angezeigt")) # nur Hardware Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Software", command=lambda: print("Software wird angezeigt")) # nur Software Produkte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: print("Peripherie wird angezeigt")) # nur Peripherie mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Andere", command=lambda: print("Andere wird angezeigt")) # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
             dropdown_menu.post(grp8_button.winfo_rootx(), grp8_button.winfo_rooty() + grp8_button.winfo_height())
 
         grp8_button = tk.Button(verzeichniss, text="Gruppe 8   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
