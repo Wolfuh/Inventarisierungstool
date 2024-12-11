@@ -72,9 +72,8 @@ class Ubersicht(tk.Frame):
         profil.place(relx=0.90, rely=0.5, anchor="center")
         help.place(relx=0.85, rely=0.5, anchor="center")
 
-        mainpage = ctk.CTkButton(self.mainpage_frame, image=self.imgmainpage, fg_color='white',
-                                 bg_color='white', corner_radius=40, height=10, width=10,
-                                 hover=True, hover_color='white', text="",
+        mainpage = ctk.CTkButton(self.mainpage_frame, text="↩", fg_color='white', text_color=ThemeManager.SRH_Grey, width=5,
+                                 font=("Inter", 50, 'bold'), corner_radius=8, hover=False,
                                  command=lambda: controller.show_frame(Mainpages.MainPage))
         mainpage.place(relx=0, rely=0)
 
@@ -265,10 +264,7 @@ class Ubersicht(tk.Frame):
         # Treeview Scrollverbindung
         tree.configure(yscrollcommand=scroll.set)
 
-        # scroll.place(x=700, y=0.9, height=tree.winfo_height())
-        tree.configure(yscrollcommand=scroll.set)
-
-                # Spaltennamen aus der Datenbank holen
+        # Spaltennamen aus der Datenbank holen
         items_uberschrift = fetch_items_headers()
 
         # Überschriften konfigurieren
@@ -376,8 +372,15 @@ class Gerateansicht(tk.Frame):
         # Seiteninhalt
         tree = ttk.Treeview(self.gerateansicht_frame, columns=("c1", "c2", "c3"), show="headings",
                             height=5)
-        scroll = ttk.Scrollbar(self.gerateansicht_frame, orient='vertical', command=tree.yview)
-        #scroll.place(x=700, y=0.9, height=tree.winfo_height())
+        scroll = ctk.CTkScrollbar(
+            self.gerateansicht_frame,
+            button_color=ThemeManager.SRH_Grey,
+            orientation="vertical",
+            command=tree.yview,
+            height=650
+        )
+
+        # Treeview Scrollverbindung
         tree.configure(yscrollcommand=scroll.set)
 
         tree.column("#1", anchor=CENTER, width=50)

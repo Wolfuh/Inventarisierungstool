@@ -293,7 +293,16 @@ class Admin(tk.Frame):
 
         tree = ttk.Treeview(self.tabelle_frame, columns=("c1", "c2", "c3", "c4"), show="headings",
                             height=5)
-        scroll = ttk.Scrollbar(self.tabelle_frame, orient='vertical', command=tree.yview)
+        scroll = ctk.CTkScrollbar(
+            self.tabelle_frame,
+            button_color=ThemeManager.SRH_Grey,
+            orientation="vertical",
+            command=tree.yview,
+            height=600
+        )
+
+        # Treeview Scrollverbindung
+        tree.configure(yscrollcommand=scroll.set)
         tree.configure(yscrollcommand=scroll.set)
 
         # Spaltennamen aus der Datenbank holen
@@ -318,7 +327,7 @@ class Admin(tk.Frame):
         tree.tag_configure("odd", background="white")
 
         tree.place(x=120, y=160, width=1280, height=600)
-        scroll.place(x=1400, y=160, height=600)
+        scroll.place(x=1400, y=160)
         self.tabelle_frame.place(relx=0.15, rely=0.15, relwidth=0.85, height=1000)
         # self.admin_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
