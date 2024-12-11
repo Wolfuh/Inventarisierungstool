@@ -111,6 +111,11 @@ class Einstellungen(tk.Frame):
                                          command=lambda: controller.show_frame(Einstellungen))
         einstellungen_button.pack(pady=10, anchor='w')
 
+        verzeichniss_help_button = tk.Button(verzeichniss, text="Help", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
+                                         font=("Inter", 20, 'bold'),
+                                         command=lambda: controller.show_frame(Profiles.Help))
+        verzeichniss_help_button.pack(pady=10, anchor='w')
+
         # Platziung des Verzeichnisses (Navigationsleiste)
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
 
@@ -375,3 +380,4 @@ class Einstellungen(tk.Frame):
         # Platzierung der Hauptframe-Bereiche
         self.einstellung_frame.place(relx=0.15, rely=0.15, relwidth=1, relheight=0.85)
         self.header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
+
