@@ -37,6 +37,8 @@ class Ubersicht(tk.Frame):
         verzeichniss = tk.Frame(self, bg=ThemeManager.SRH_Grey)
         self.ubersicht_frame = tk.Frame(self, bg='white')
         self.tabelle_frame = tk.Frame(self, bg='white')
+        self.mainpage_frame = tk.Frame(self, bg='white')
+        self.mainpage_frame.place(relx=0.15, rely=0.15, relwidth=0.06, relheight=0.15)
         self.ubersicht_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
 
         # Layout Festlegung der flexiblen Skalierung der Übersichtsseite
@@ -48,6 +50,8 @@ class Ubersicht(tk.Frame):
         # Laden der Bilder für die Navigation und Header Buttons
         self.imglogin = gui_prototyp.load_image(root_path+"/gui/assets/Closeicon.png")
         self.imgprofil = gui_prototyp.load_image(root_path+"/gui/assets/profileicon.png")
+        self.imghelp = tk.PhotoImage(file=root_path + "/gui/assets/helpicon.png")
+        self.imgmainpage = tk.PhotoImage(file=root_path + "/gui/assets/backtosite_icon_grey.png")
 
         # Login und Profil Buttons im Header-Bereich, Platzierung der Buttons, Header und Sidebar
         login = ctk.CTkButton(header, image=self.imglogin, fg_color=ThemeManager.SRH_Orange,
@@ -59,14 +63,20 @@ class Ubersicht(tk.Frame):
                                bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
                                hover=True, hover_color='#e25a1f', text="",
                                command=lambda: controller.show_frame(Profiles.Profil))
-        self.imgmainpage = tk.PhotoImage(
-            file=root_path+"/gui/assets/backtosite_icon.png")
+        help = ctk.CTkButton(header, image=self.imghelp, fg_color=ThemeManager.SRH_Orange,
+                             bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
+                             hover=True, hover_color='#e25a1f', text="",
+                             command=lambda: print("help"))
 
         login.place(relx=0.95, rely=0.5, anchor="center")
         profil.place(relx=0.90, rely=0.5, anchor="center")
+        help.place(relx=0.85, rely=0.5, anchor="center")
 
-        tk.Button(header, image=self.imgmainpage, bd=0, bg=ThemeManager.SRH_Orange,
-                  command=lambda: controller.show_frame(Mainpages.MainPage))
+        mainpage = ctk.CTkButton(self.mainpage_frame, image=self.imgmainpage, fg_color='white',
+                                 bg_color='white', corner_radius=40, height=10, width=10,
+                                 hover=True, hover_color='white', text="",
+                                 command=lambda: controller.show_frame(Mainpages.MainPage))
+        mainpage.place(relx=0, rely=0)
 
         # "Alle Anzeigen" Button in der Seitenleiste
         all_button = ctk.CTkButton(verzeichniss, text="Alle Anzeigen", fg_color=ThemeManager.SRH_Grey, text_color='black',
@@ -336,6 +346,7 @@ class Gerateansicht(tk.Frame):
         self.imglogin = tk.PhotoImage(file=root_path+"/gui/assets/Closeicon.png")
         self.imgmainpage = tk.PhotoImage(file=root_path+"/gui/assets/backtosite_grey_icon.png")
         self.imgprofil = gui_prototyp.load_image(root_path+"/gui/assets/profileicon.png")
+        self.imghelp = tk.PhotoImage(file=root_path + "/gui/assets/helpicon.png")
 
         # Stil für Header und Footer anpassen
         style = ttk.Style()
@@ -353,6 +364,11 @@ class Gerateansicht(tk.Frame):
                                bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
                                hover=True, hover_color='#e25a1f', text="",
                                command=lambda: controller.show_frame(Profiles.Profil))
+        help = ctk.CTkButton(header, image=self.imghelp, fg_color=ThemeManager.SRH_Orange,
+                             bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
+                             hover=True, hover_color='#e25a1f', text="",
+                             command=lambda: print("help"))
+
 
         # Mainpage-Button innerhalb von gerateansicht_frame, an der gleichen Position wie das profilbild in Profil
         mainpage = ctk.CTkButton(self, text="↩", fg_color='white', text_color=ThemeManager.SRH_Grey, width=5,
@@ -800,6 +816,7 @@ class Gerateansicht(tk.Frame):
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
         login.place(relx=0.95, rely=0.5, anchor="center")
         profil.place(relx=0.90, rely=0.5, anchor="center")
+        help.place(relx=0.85, rely=0.5, anchor="center")
         mainpage.place(relx=0.16, rely=0.16, anchor='nw')
 
 

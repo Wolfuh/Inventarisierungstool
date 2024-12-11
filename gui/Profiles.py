@@ -52,12 +52,23 @@ class Profil(tk.Frame):
             self.imgmainpage = tk.PhotoImage(
                 file=root_path + "/gui/assets/backtosite_icon.png")
             self.imgProfileTest = tk.PhotoImage(file=root_path + "/gui/assets/profile.png")
+            self.imghelp = tk.PhotoImage(file=root_path + "/gui/assets/helpicon.png")
 
             # Positionierung der Buttons
-            login = tk.Button(header, image=self.imglogin, bd=0, bg=ThemeManager.SRH_Orange,
-                              command=lambda: controller.show_frame(gui_prototyp.LogInWindow))
-            mainpage = tk.Button(header, image=self.imgmainpage, bd=0, bg=ThemeManager.SRH_Orange,
-                                 command=lambda: controller.show_frame(Mainpages.MainPage))
+            login = ctk.CTkButton(header, image=self.imglogin, fg_color=ThemeManager.SRH_Orange,
+                                  bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
+                                  hover=True, hover_color='#e25a1f', text="",
+                                  command=lambda: controller.show_frame(gui_prototyp.LogInWindow))
+
+            mainpage = ctk.CTkButton(header, image=self.imgmainpage, fg_color=ThemeManager.SRH_Orange,
+                                   bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
+                                   hover=True, hover_color='#e25a1f', text="",
+                                   command=lambda: controller.show_frame(Mainpages.MainPage))
+
+            help = ctk.CTkButton(header, image=self.imghelp, fg_color=ThemeManager.SRH_Orange,
+                                     bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
+                                     hover=True, hover_color='#e25a1f', text="",
+                                     command=lambda: print("help"))
 
             # Seiteninhalt
             profilbild = tk.Button(self.profil_frame, image=self.imgProfileTest, bd=0, bg='white',
@@ -118,6 +129,8 @@ class Profil(tk.Frame):
 
             login.place(relx=0.95, rely=0.5, anchor="center")
             mainpage.place(relx=0.90, rely=0.5, anchor="center")
+            help.place(relx=0.85, rely=0.5, anchor="center")
+
 
             profilbild.place(x=0, y=0)
 
@@ -209,16 +222,28 @@ class Admin(tk.Frame):
             file=root_path + "/gui/assets/backtosite_icon.png")
         self.imgSuche = gui_prototyp.load_image(root_path + "/gui/assets/Search.png")
         self.imgHinzufugen = gui_prototyp.load_image(root_path + "/gui/assets/Adding_Icon.png")
+        self.imghelp = tk.PhotoImage(file=root_path + "/gui/assets/helpicon.png")
 
         # Positionierung und Seitennavigations-Buttons für Benutzer, Admin, Statistiken und Einstellungen, Login,
         # Hauptseite und Profilbild
-        login = tk.Button(header, image=self.imglogin, bd=0, bg=ThemeManager.SRH_Orange,
-                          command=lambda: controller.show_frame(gui_prototyp.LogInWindow))
-        mainpage = tk.Button(header, image=self.imgmainpage, bd=0, bg=ThemeManager.SRH_Orange,
-                             command=lambda: controller.show_frame(Mainpages.MainPage))
+        login = ctk.CTkButton(header, image=self.imglogin, fg_color=ThemeManager.SRH_Orange,
+                              bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
+                              hover=True, hover_color='#e25a1f', text="",
+                              command=lambda: controller.show_frame(gui_prototyp.LogInWindow))
+
+        mainpage = ctk.CTkButton(header, image=self.imgmainpage, fg_color=ThemeManager.SRH_Orange,
+                                 bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
+                                 hover=True, hover_color='#e25a1f', text="",
+                                 command=lambda: controller.show_frame(Mainpages.MainPage))
+
+        help = ctk.CTkButton(header, image=self.imghelp, fg_color=ThemeManager.SRH_Orange,
+                             bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
+                             hover=True, hover_color='#e25a1f', text="",
+                             command=lambda: print("help"))
 
         login.place(relx=0.95, rely=0.5, anchor="center")
         mainpage.place(relx=0.90, rely=0.5, anchor="center")
+        help.place(relx=0.85, rely=0.5, anchor="center")
 
         user_button = tk.Button(verzeichniss, text="User", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                 font=("Inter", 20, 'bold'),
@@ -344,15 +369,27 @@ class Stats(tk.Frame):
             file=root_path + "/gui/assets/Closeicon.png")
         self.imgmainpage = tk.PhotoImage(
             file=root_path + "/gui/assets/backtosite_icon.png")
+        self.imghelp = tk.PhotoImage(file=root_path + "/gui/assets/helpicon.png")
 
         # Header-Navigationsbuttons (Login und Hauptseite), Platzierung der Header-Buttons
-        login = tk.Button(header, image=self.imglogin, bd=0, bg=ThemeManager.SRH_Orange,
-                          command=lambda: controller.show_frame(gui_prototyp.LogInWindow))
-        mainpage = tk.Button(header, image=self.imgmainpage, bd=0, bg=ThemeManager.SRH_Orange,
-                             command=lambda: controller.show_frame(Mainpages.MainPage))
+        login = ctk.CTkButton(header, image=self.imglogin, fg_color=ThemeManager.SRH_Orange,
+                              bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
+                              hover=True, hover_color='#e25a1f', text="",
+                              command=lambda: controller.show_frame(gui_prototyp.LogInWindow))
+
+        mainpage = ctk.CTkButton(header, image=self.imgmainpage, fg_color=ThemeManager.SRH_Orange,
+                                 bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
+                                 hover=True, hover_color='#e25a1f', text="",
+                                 command=lambda: controller.show_frame(Mainpages.MainPage))
+
+        help = ctk.CTkButton(header, image=self.imghelp, fg_color=ThemeManager.SRH_Orange,
+                             bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
+                             hover=True, hover_color='#e25a1f', text="",
+                             command=lambda: print("help"))
 
         login.place(relx=0.95, rely=0.5, anchor="center")
         mainpage.place(relx=0.90, rely=0.5, anchor="center")
+        help.place(relx=0.85, rely=0.5, anchor="center")
 
         # Linksseitige Navigationsbutton für verschiedene Ansichten
         user_button = tk.Button(verzeichniss, text="User", bd=0, bg=ThemeManager.SRH_Grey, fg='black',

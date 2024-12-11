@@ -94,7 +94,7 @@ class GuiTest(tk.Tk):
             self.frames[Page] = frame # Das erstellte Frame wird dem 'frames'-Dictionary des Hauptfensters hinzugefügt, wobei die Seitenklasse als Schlüssel dient.
             frame.grid(row=0, column=0, sticky="nsew") # Jedes Frame wird in einem übergeordneten Container platziert und mit 'grid' positioniert,
                                                         # wobei es den gesamten verfügbaren Platz ('nsew') einnimmt.
-        self.show_frame(Mainpages.MainPage)
+        self.show_frame(LogInWindow)
 
     def show_frame(self, cont):
         frame = self.frames[cont]
@@ -212,6 +212,8 @@ def load_image(image_path):
         print(f"Warnung: Bild '{image_path}' nicht gefunden.")
         return None
 
-
-app = GuiTest()
-app.mainloop()
+try:
+    app = GuiTest()
+    app.mainloop()
+except Exception as e:
+    print(f"Fehler beim Starten des Programms: {e}")

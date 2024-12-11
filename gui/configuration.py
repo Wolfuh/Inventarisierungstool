@@ -1,5 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
+import customtkinter as ctk
+from customtkinter import *
 
 import gui_prototyp
 import Mainpages
@@ -39,18 +41,26 @@ class Einstellungen(tk.Frame):
             file=root_path+"/gui/assets/Closeicon.png")
         self.imgmainpage = tk.PhotoImage(
             file=root_path+"/gui/assets/backtosite_icon.png")
+        self.imghelp = tk.PhotoImage(file=root_path + "/gui/assets/helpicon.png")
 
-        login = tk.Button(self.header, image=self.imglogin, bd=0, bg=ThemeManager.SRH_Orange,
-                          command=lambda: controller.show_frame(gui_prototyp.LogInWindow))
-        mainpage = tk.Button(self.header, image=self.imgmainpage, bd=0, bg=ThemeManager.SRH_Orange,
-                             command=lambda: controller.show_frame(Mainpages.MainPage))
-        # login_label = tk.Button(self.header, text="🚪",bd=0, fg='#858383', font=("Inter", 19)
-        # , command=lambda: controller.show_frame(LogInWindow))
-        # login_label.place(relx=0.70, rely=0.5, anchor="center")
-        # Platzierung der Header-Navigationsbuttons, Linksseitige
-        # Navigationsbuttons für andere Ansichten (Profil, Admin, Stats, EinstellungenO
+        login = ctk.CTkButton(self.header, image=self.imglogin, fg_color=ThemeManager.SRH_Orange,
+                              bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
+                              hover=True, hover_color='#e25a1f', text="",
+                              command=lambda: controller.show_frame(gui_prototyp.LogInWindow))
+
+        mainpage = ctk.CTkButton(self.header, image=self.imgmainpage, fg_color=ThemeManager.SRH_Orange,
+                                 bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
+                                 hover=True, hover_color='#e25a1f', text="",
+                                 command=lambda: controller.show_frame(Mainpages.MainPage))
+
+        help = ctk.CTkButton(self.header, image=self.imghelp, fg_color=ThemeManager.SRH_Orange,
+                             bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
+                             hover=True, hover_color='#e25a1f', text="",
+                             command=lambda: print("help"))
+
         login.place(relx=0.95, rely=0.5, anchor="center")
         mainpage.place(relx=0.90, rely=0.5, anchor="center")
+        help.place(relx=0.85, rely=0.5, anchor="center")
 
         user_button = tk.Button(verzeichniss, text="User", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                 font=("Inter", 20, 'bold'),

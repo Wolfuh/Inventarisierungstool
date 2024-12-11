@@ -34,6 +34,7 @@ class MainPage(tk.Frame):
         # laden der Bilder für die Buttons und der Gruppen
         self.imglogin = gui_prototyp.load_image(root_path+"/gui/assets/Closeicon.png")
         self.imgprofil = gui_prototyp.load_image(root_path+"/gui/assets/profileicon.png")
+        self.imghelp = tk.PhotoImage(file=root_path + "/gui/assets/helpicon.png")
         self.imgbildgr1 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe_1.png")
         self.imgbildgr2 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe2.png")
         self.imgbildgr3 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe3.png")
@@ -49,6 +50,11 @@ class MainPage(tk.Frame):
                               hover=True, hover_color='#e25a1f', text="", command=lambda :controller.show_frame(gui_prototyp.LogInWindow))
         profil = ctk.CTkButton(header, image=self.imgprofil, fg_color=ThemeManager.SRH_Orange, bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
                               hover=True, hover_color='#e25a1f', text="", command=lambda: controller.show_frame(Profiles.Profil))
+        help = ctk.CTkButton(header, image=self.imghelp, fg_color=ThemeManager.SRH_Orange,
+                             bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
+                             hover=True, hover_color='#e25a1f', text="",
+                             command=lambda: print("help"))
+
         bildgr1 = tk.Button(self, image=self.imgbildgr1, bd=0, bg='white',
                             command=lambda: controller.show_frame(Overview_pages.Ubersicht))
         bildgr2 = tk.Button(self, image=self.imgbildgr2, bd=0, bg='white',
@@ -80,8 +86,10 @@ class MainPage(tk.Frame):
         style.configure("Header.TLabel", foreground='white', background='#DF4807', font=("Inter", 55, 'bold'))
         style.configure("Footer.TLabel", background=ThemeManager.SRH_Grey)
 
+        ###### Plazierung #######
         login.place(relx=0.95, rely=0.5, anchor="center")
         profil.place(relx=0.90, rely=0.5, anchor="center")
+        help.place(relx=0.85, rely=0.5, anchor="center")
 
         bildgr1.place(relx=0.20, rely=0.25, anchor='n')
         bildgr2.place(relx=0.40, rely=0.25, anchor='n')
@@ -124,6 +132,7 @@ class MainPageS2(tk.Frame):
         # laden der Bilder für Buttons und Gruppen, Buttons für die Navigation (Login, Profil und Bildgruppen)
         self.imglogin = gui_prototyp.load_image(root_path+"/gui/assets/Closeicon.png")
         self.imgprofil = gui_prototyp.load_image(root_path+"/gui/assets/profileicon.png")
+        self.imghelp = tk.PhotoImage(file=root_path + "/gui/assets/helpicon.png")
         self.imgbildgr1 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe_1.png")
         self.imgbildgr2 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe2.png")
         self.imgbildgr3 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe3.png")
@@ -143,6 +152,10 @@ class MainPageS2(tk.Frame):
                                bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
                                hover=True, hover_color='#e25a1f', text="",
                                command=lambda: controller.show_frame(Profiles.Profil))
+        help = ctk.CTkButton(header, image=self.imghelp, fg_color=ThemeManager.SRH_Orange,
+                             bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
+                             hover=True, hover_color='#e25a1f', text="",
+                             command=lambda: print("help"))
 
         bildgr1 = tk.Button(self, image=self.imgbildgr1, bd=0, bg='white',
                             command=lambda: controller.show_frame(Overview_pages.Ubersicht))
@@ -183,8 +196,10 @@ class MainPageS2(tk.Frame):
                         font=("Inter", 55, 'bold'))
         style.configure("Footer.TLabel", background=ThemeManager.SRH_Grey)
 
+        ###### Plazierung #######
         login.place(relx=0.95, rely=0.5, anchor="center")
         profil.place(relx=0.90, rely=0.5, anchor="center")
+        help.place(relx=0.85, rely=0.5, anchor="center")
 
         bildgr1.place(relx=0.20, rely=0.25, anchor='n')
         bildgr2.place(relx=0.40, rely=0.25, anchor='n')
@@ -194,7 +209,6 @@ class MainPageS2(tk.Frame):
         bildgr5.place(relx=0.20, rely=0.55, anchor='n')
         bildgr6.place(relx=0.40, rely=0.55, anchor='n')
         bildgr7.place(relx=0.60, rely=0.55, anchor='n')
-        # bildgr8.place(relx=0.80, rely=0.55, anchor='n')
 
         all.place(relx=0.01, rely=0.18, anchor='w')
         seitevor.place(relx=0.51, rely=0.80, anchor='n')
