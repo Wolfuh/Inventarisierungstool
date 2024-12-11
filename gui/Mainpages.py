@@ -84,7 +84,7 @@ class MainPage(tk.Frame):
         help = ctk.CTkButton(header, image=self.imghelp, fg_color=ThemeManager.SRH_Orange,
                              bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
                              hover=True, hover_color='#e25a1f', text="",
-                             command=lambda: print("help"))
+                             command=lambda: controller.show_frame(Profiles.Help))
 
         bildgr1 = tk.Button(self, image=self.imgbildgr1, bd=0, bg='white',
                             command=lambda: controller.show_frame(Overview_pages.Ubersicht))
@@ -288,9 +288,9 @@ class Mainpage_empty(tk.Frame):
         self.configure(bg='white')
 
         # Erstellung vom header und Footer und Konfiguration des Hauptanzeigenbereiches
+        #self.main_empty_frame = tk.Frame(self, bg='black')
         header = ttk.Label(self, text="Startseite", anchor="center", style="Header.TLabel")
         bottom = ttk.Label(self, style="Footer.TLabel")
-        self.main_empty_frame = tk.Frame(self, bg='black')
 
 
         # Layout Festlegung der flexiblen Skalierung der Mainpage2
@@ -326,18 +326,18 @@ class Mainpage_empty(tk.Frame):
         help = ctk.CTkButton(header, image=self.imghelp, fg_color=ThemeManager.SRH_Orange,
                              bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
                              hover=True, hover_color='#e25a1f', text="",
-                             command=lambda: print("help"))
+                             command=lambda: controller.show_frame(Profiles.Help))
 
         #Frames für die Gruppen
-        frame_gr1 = tk.Frame(self, bg='black')
-        frame_gr2 = tk.Frame(self.main_empty_frame, bg='yellow')
-        frame_gr3 = tk.Frame(self.main_empty_frame, bg='orange')
-        frame_gr4 = tk.Frame(self.main_empty_frame, bg='purple')
+        frame_gr1 = tk.Frame(self, bg='#FBFBFB')
+        frame_gr2 = tk.Frame(self, bg='#FBFBFB')
+        frame_gr3 = tk.Frame(self, bg='#FBFBFB')
+        frame_gr4 = tk.Frame(self, bg='#FBFBFB')
 
-        frame_gr5 = tk.Frame(self.main_empty_frame, bg='blue')
-        frame_gr6 = tk.Frame(self.main_empty_frame, bg='pink')
-        frame_gr7 = tk.Frame(self.main_empty_frame, bg='red')
-        frame_gr8 = tk.Frame(self.main_empty_frame, bg='black')
+        frame_gr5 = tk.Frame(self, bg='#FBFBFB')
+        frame_gr6 = tk.Frame(self, bg='#FBFBFB')
+        frame_gr7 = tk.Frame(self, bg='#FBFBFB')
+        frame_gr8 = tk.Frame(self, bg='#FBFBFB')
 
         # Buttons zum Wechseln zwischen den Hauptseiten und "Alle anzeigen" Button für die Übersichtsseite
         all = ctk.CTkButton(self, text="Alle Anzeigen", fg_color='white', text_color=ThemeManager.SRH_Blau,
@@ -362,23 +362,23 @@ class Mainpage_empty(tk.Frame):
         style.configure("Footer.TLabel", background=ThemeManager.SRH_Grey)
 
         ###### Plazierung #######
+        #self.main_empty_frame.place(relx=0, rely=0.15, relwidth=1, relheight=0.7)
         login.place(relx=0.95, rely=0.5, anchor="center")
         profil.place(relx=0.90, rely=0.5, anchor="center")
         help.place(relx=0.85, rely=0.5, anchor="center")
 
-        frame_gr1.place(relx=0.20, rely=0.25, anchor='n')
-        frame_gr2.place(relx=0.40, rely=0.25, anchor='n')
-        frame_gr3.place(relx=0.60, rely=0.25, anchor='n')
-        frame_gr4.place(relx=0.80, rely=0.25, anchor='n')
+        frame_gr1.place(relx=0.20, rely=0.25, width=244, height=244,anchor='n')
+        frame_gr2.place(relx=0.40, rely=0.25, width=244, height=244, anchor='n')
+        frame_gr3.place(relx=0.60, rely=0.25, width=244, height=244, anchor='n')
+        frame_gr4.place(relx=0.80, rely=0.25, width=244, height=244, anchor='n')
 
-        frame_gr5.place(relx=0.20, rely=0.55, anchor='n')
-        frame_gr6.place(relx=0.40, rely=0.55, anchor='n')
-        frame_gr7.place(relx=0.60, rely=0.55, anchor='n')
-        frame_gr8.place(relx=0.80, rely=0.55, anchor='n')
+        frame_gr5.place(relx=0.20, rely=0.55, width=244, height=244, anchor='n')
+        frame_gr6.place(relx=0.40, rely=0.55, width=244, height=244, anchor='n')
+        frame_gr7.place(relx=0.60, rely=0.55, width=244, height=244, anchor='n')
+        frame_gr8.place(relx=0.80, rely=0.55, width=244, height=244, anchor='n')
 
         all.place(relx=0.01, rely=0.18, anchor='w')
         seitevor.place(relx=0.51, rely=0.80, anchor='n')
         seiteback.place(relx=0.49, rely=0.80, anchor='n')
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
         bottom.place(relx=0, rely=0.85, relwidth=1, relheight=0.13)
-        self.main_empty_frame.place(relx=0, rely=0.8, relwidth=1, relheight=0.65)

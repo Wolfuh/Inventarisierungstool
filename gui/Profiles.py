@@ -98,7 +98,7 @@ class Profil(tk.Frame):
             help = ctk.CTkButton(header, image=self.imghelp, fg_color=ThemeManager.SRH_Orange,
                                      bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
                                      hover=True, hover_color='#e25a1f', text="",
-                                     command=lambda: print("help"))
+                                     command=lambda: controller.show_frame(Help))
 
             # Seiteninhalt
             profilbild = tk.Button(self.profil_frame, image=self.imgProfileTest, bd=0, bg='white',
@@ -150,7 +150,7 @@ class Profil(tk.Frame):
                                              fg='black',
                                              font=("Inter", 20, 'bold'),
                                              command=lambda: controller.show_frame(configuration.Einstellungen))
-            verzeichniss_help_button = tk.Button(verzeichniss, text="Help", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
+            verzeichniss_help_button = tk.Button(verzeichniss, text="Hilfe", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                                  font=("Inter", 20, 'bold'),
                                                  command=lambda: controller.show_frame(Help))
 
@@ -273,7 +273,7 @@ class Admin(tk.Frame):
         help = ctk.CTkButton(header, image=self.imghelp, fg_color=ThemeManager.SRH_Orange,
                              bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
                              hover=True, hover_color='#e25a1f', text="",
-                             command=lambda: print("help"))
+                             command=lambda: controller.show_frame(Help))
 
         login.place(relx=0.95, rely=0.5, anchor="center")
         mainpage.place(relx=0.90, rely=0.5, anchor="center")
@@ -299,7 +299,7 @@ class Admin(tk.Frame):
                                          command=lambda: controller.show_frame(configuration.Einstellungen))
         einstellungen_button.pack(pady=10, anchor='w')
 
-        verzeichniss_help_button = tk.Button(verzeichniss, text="Help", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
+        verzeichniss_help_button = tk.Button(verzeichniss, text="Hilfe", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                              font=("Inter", 20, 'bold'),
                                              command=lambda: controller.show_frame(Help))
         verzeichniss_help_button.pack(pady=10, anchor='w')
@@ -442,7 +442,7 @@ class Stats(tk.Frame):
         help = ctk.CTkButton(header, image=self.imghelp, fg_color=ThemeManager.SRH_Orange,
                              bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
                              hover=True, hover_color='#e25a1f', text="",
-                             command=lambda: print("help"))
+                             command=lambda: controller.show_frame(Help))
 
         login.place(relx=0.95, rely=0.5, anchor="center")
         mainpage.place(relx=0.90, rely=0.5, anchor="center")
@@ -469,7 +469,7 @@ class Stats(tk.Frame):
                                          command=lambda: controller.show_frame(configuration.Einstellungen))
         einstellungen_button.pack(pady=10, anchor='w')
 
-        verzeichniss_help_button = tk.Button(verzeichniss, text="Help", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
+        verzeichniss_help_button = tk.Button(verzeichniss, text="Hilfe", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                 font=("Inter", 20, 'bold'),
                                 command=lambda: controller.show_frame(Help))
         verzeichniss_help_button.pack(pady=10, anchor='w')
@@ -528,7 +528,7 @@ class Help(tk.Frame):
         help = ctk.CTkButton(header, image=self.imghelp, fg_color=ThemeManager.SRH_Orange,
                              bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
                              hover=True, hover_color='#e25a1f', text="",
-                             command=lambda: print("help"))
+                             command=lambda: controller.show_frame(Help))
 
         login.place(relx=0.95, rely=0.5, anchor="center")
         mainpage.place(relx=0.90, rely=0.5, anchor="center")
@@ -555,7 +555,7 @@ class Help(tk.Frame):
                                          command=lambda: controller.show_frame(configuration.Einstellungen))
         einstellungen_button.pack(pady=10, anchor='w')
 
-        verzeichniss_help_button = tk.Button(verzeichniss, text="Help", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
+        verzeichniss_help_button = tk.Button(verzeichniss, text="Hilfe", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                              font=("Inter", 20, 'bold'),
                                              command=lambda: controller.show_frame(Help))
         verzeichniss_help_button.pack(pady=10, anchor='w')
