@@ -17,7 +17,37 @@ from db.SQLite_db import *
 
 
 class Profil(tk.Frame):
+    """
+    Stellt die Profilansicht eines Benutzers bereit, einschließlich Anzeige und
+    Verwaltung der Benutzerinformationen.
 
+    Diese Klasse repräsentiert die Profilseite einer Anwendung und bietet
+    Funktionen zur Anzeige von Benutzerinformationen, zur Seitennavigation und
+    zur Aktualisierung der angezeigten Inhalte. Sie verwaltet verschiedene
+    grafische Elemente wie Labels und Buttons, um eine benutzerfreundliche
+    Schnittstelle zu bieten.
+
+    :ivar profil_frame: Hauptcontainer für die Anzeige der Benutzerprofilelemente.
+    :type profil_frame: tk.Frame
+    :ivar imglogin: Bild für den Login-Button.
+    :type imglogin: tk.PhotoImage
+    :ivar imgmainpage: Bild für den Hauptseiten-Button.
+    :type imgmainpage: tk.PhotoImage
+    :ivar imgProfileTest: Bild für den Benutzerprofil-Button.
+    :type imgProfileTest: tk.PhotoImage
+    :ivar imghelp: Bild für den Hilfe-Button.
+    :type imghelp: tk.PhotoImage
+    :ivar username: Label zur Anzeige des Benutzernamens.
+    :type username: tk.Label
+    :ivar vorname: Label zur Anzeige des Vornamens.
+    :type vorname: tk.Label
+    :ivar nachname: Label zur Anzeige des Nachnamens.
+    :type nachname: tk.Label
+    :ivar usergruppen: Label zur Anzeige der Benutzergruppen.
+    :type usergruppen: tk.Label
+    :ivar useremail: Label zur Anzeige der E-Mail-Adresse.
+    :type useremail: tk.Label
+    """
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         from ThemeManager import ThemeManager
@@ -356,9 +386,18 @@ def showDetails(selected_User, tree, controller):
 
 class Stats(tk.Frame):
     """
-    Macht noch nix
-    """
+    Stellt eine GUI für Statistiken bereit.
 
+    Diese Klasse repräsentiert eine Seite innerhalb einer GUI-Anwendung, die dem Anzeigen von Statistiken
+    dient. Es wird eine Kopfzeile, eine vertikale Navigationsleiste sowie verschiedene interaktive
+    Buttons bereitgestellt. Die Navigationsleiste ermöglicht den Wechsel zwischen verschiedenen
+    Ansichten der Anwendung.
+
+    :ivar stats_frame: Hauptinhaltbereich für die Statistikseite.
+    :ivar imglogin: Bild für den Login-Button.
+    :ivar imgmainpage: Bild für den Zurück-zur-Hauptseite-Button.
+    :ivar imghelp: Bild für den Hilfe-Button.
+    """
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         from ThemeManager import ThemeManager
