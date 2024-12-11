@@ -218,7 +218,7 @@ class MainPageS2(tk.Frame):
         help = ctk.CTkButton(header, image=self.imghelp, fg_color=ThemeManager.SRH_Orange,
                              bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
                              hover=True, hover_color='#e25a1f', text="",
-                             command=lambda: print("help"))
+                             command=lambda: controller.show_frame(Profiles.Help))
 
         bildgr1 = tk.Button(self, image=self.imgbildgr1, bd=0, bg='white',
                             command=lambda: controller.show_frame(Overview_pages.Ubersicht))
