@@ -927,6 +927,7 @@ class Gerateansicht(tk.Frame):
 
 
     def update_data(self, data):
+
         self.name_entry.delete(0, tk.END)
         self.name_entry.insert(0, data[5])
 
