@@ -112,7 +112,7 @@ class Ubersicht(tk.Frame):
                 tree.column(up, anchor=CENTER, width=100)
                 tree.heading(up, text=up)
 
-            items_data = fetch_tables("items", ["ID","added_by_user"])
+            items_data = fetch_tables("items", [])
 
             tree.delete(* tree.get_children())
 
