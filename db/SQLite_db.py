@@ -199,7 +199,7 @@ def item_update_damage(name,tag,foreign_item_num, type, image, description, entr
         # Insert data into the table
         cursor.execute(
             """
-            INSERT INTO history (name, tag, foreign_item_num, type, image, description, entry_date, end_date)
+            INSERT INTO history(name, tag, foreign_item_num, type, image, description, entry_date, end_date)
             VALUES (? ,?, ?, ?, ?, ?, ?, ?)
             """,
             (name, tag, foreign_item_num, type, image, description, entry_date, end_date)
