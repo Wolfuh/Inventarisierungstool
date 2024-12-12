@@ -265,12 +265,35 @@ class Ubersicht(tk.Frame):
         self.imgHinzufugen = gui_prototyp.load_image(root_path+"/gui/assets/Adding_Icon.png")
         self.imgAktionen = gui_prototyp.load_image(root_path+"/gui/assets/Aktionen_Button.png")
 
+        def fill_in_sort(table,where): 
+            items_uberschrift = fetch_headers("items",[])
+
+            # Überschriften konfigurieren
+            tree["columns"] = items_uberschrift
+            for up in items_uberschrift:
+                tree.column(up, anchor=CENTER, width=100)
+                tree.heading(up, text=up)
+
+            items_data = table_sort(table,where)
+
+            tree.delete(* tree.get_children())
+
+            # Daten aus DB einfügen
+            i = 0
+            for item in items_data:
+                
+                color = "#f3f3f3" if i % 2 == 0 else "white"
+                tree.insert("", "end", values=item, tags=("even" if i % 2 == 0 else "odd"))
+                i += 1
+
+        
+
         # Filterfunktion
         def show_dropdown_Filter():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg='white', fg='black')
-            dropdown_menu.add_command(label="→ Status", command=lambda: print("nach Status sortieren"))
-            dropdown_menu.add_command(label="→ ID", command=lambda: print("nach ID sortieren"))
-            dropdown_menu.add_command(label="→ Typ", command=lambda: print("nach Typ sortieren"))
+            dropdown_menu.add_command(label="→ Status", command=lambda: fill_in_sort("items","Status"))
+            dropdown_menu.add_command(label="→ ID", command=lambda: fill_in_sort("items","ID"))
+            dropdown_menu.add_command(label="→ Typ", command=lambda: fill_in_sort("items","Typ"))
             dropdown_menu.add_command(label="→ Andere", command=lambda: print("nach anderen sortieren"))
             dropdown_menu.post(Filter_button.winfo_rootx(), Filter_button.winfo_rooty() + Filter_button.winfo_height())
 
