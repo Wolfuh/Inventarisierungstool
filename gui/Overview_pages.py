@@ -95,7 +95,7 @@ class Ubersicht(tk.Frame):
         # "Alle Anzeigen" Button in der Seitenleiste
         all_button = ctk.CTkButton(verzeichniss, text="Alle Anzeigen", fg_color=ThemeManager.SRH_Grey, text_color='black',
                             font=("Inter", 20), corner_radius=8, hover=False,
-                            command=lambda: controller.show_frame(Ubersicht))
+                            command=lambda: starting_table())                            #controller.show_frame(Ubersicht))
 
         all_button.pack(pady=10, anchor='w')
 
@@ -334,23 +334,26 @@ class Ubersicht(tk.Frame):
         # Treeview Scrollverbindung
         tree.configure(yscrollcommand=scroll.set)
 
-        # Spaltennamen aus der Datenbank holen
-        items_uberschrift = fetch_headers("items",["ID","added_by_user"])
+        def starting_table():
+            # Spaltennamen aus der Datenbank holen
+            tree.delete(* tree.get_children())
+            items_uberschrift = fetch_headers("items",["ID","added_by_user"])
 
-        # Überschriften konfigurieren
-        tree["columns"] = items_uberschrift
-        for up in items_uberschrift:
-            tree.column(up, anchor=CENTER, width=100)
-            tree.heading(up, text=up)
+            # Überschriften konfigurieren
+            tree["columns"] = items_uberschrift
+            for up in items_uberschrift:
+                tree.column(up, anchor=CENTER, width=100)
+                tree.heading(up, text=up)
 
-        items_data = fetch_tables("items", ["ID","added_by_user"])
+            items_data = fetch_tables("items", ["ID","added_by_user"])
 
-        # Daten aus DB einfügen
+            # Daten aus DB einfügen
 
-        for i,row in enumerate(items_data):
-            formatted_row = [value if value is not None else "-" for value in row] # Leere Felder durch "-" ersetzen
-            color = "#f3f3f3" if i % 2 == 0 else "white"
-            tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
+            for i,row in enumerate(items_data):
+                formatted_row = [value if value is not None else "-" for value in row] # Leere Felder durch "-" ersetzen
+                color = "#f3f3f3" if i % 2 == 0 else "white"
+                tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
+        starting_table()
 
         # Gerät aus Tabelle öffnen
         def on_item_select(event):
