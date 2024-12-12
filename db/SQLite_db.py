@@ -197,6 +197,44 @@ def add_user(new_username, new_first_name, new_last_name, new_class, new_role):
         if my_db:
             my_db.close()  
 
+def fetch_headers(table_name, excluded_columns):  # Gibt die Überschriften der items DB zurück, ohne die Anzahl zu kennen
+    try:
+        my_db = init_connection()
+        cur = my_db.cursor()
+        cur.execute(f"PRAGMA table_info({table_name})") # sucht die Überschriften
+        it_alles = cur.fetchall()
+        items_uberschrift = [i[1] for i in it_alles if i[1] not in excluded_columns]   
+        # überprüft, ob weitere Überschriften da sind und wenn ja, dann wird diese kleingeschrieben zurück gegeben
+
+        return items_uberschrift
+    except sqlite3.Error as e:
+        return [], "Fehler beim Abrufen der Hardware-Einträge:", str(e)
+    finally:
+        if my_db:
+            my_db.close()
+
+def fetch_tables(table_name, excluded_columns): 
+    # table_name soll den Tabellenname Erhalten und excluded_columns soll die Liste mit den auszublendenen Spalten geben
+    try:
+        my_db = init_connection()
+        cur = my_db.cursor()
+
+        columns = fetch_headers(table_name, excluded_columns)
+        # columns = [row[0] for row in cur.fetchall()]
+
+        if columns:
+            query = f"SELECT {', '.join(columns)} FROM {table_name};"
+            cur.execute(query)
+            results = cur.fetchall()
+
+            return results
+    except sqlite3.Error as e:
+        return [], "Fehler beim Abrufen der Informationen:", str(e)
+    finally:
+        if my_db:
+            my_db.close()  
+
+
 
 #############################
 ### BIS HIER HIN BEHALTEN ###
@@ -216,6 +254,8 @@ def add_user(new_username, new_first_name, new_last_name, new_class, new_role):
 # print(sibllllll)
 # ha=add_user("peter", "Peter", "Pan", "FI99", "viewer")
 # print(ha)
+# dulli = fetch_tables("items", ["ID", "Gruppe", "Raum", "amount", "added_by_user"])
+# print(dulli)
 ############### ENDE DEBUG ################
 
 
@@ -331,5 +371,3 @@ def add_user(new_username, new_first_name, new_last_name, new_class, new_role):
 # ############
 
 # root.mainloop()
-
-
