@@ -345,10 +345,14 @@ class Ubersicht(tk.Frame):
         # Gerät aus Tabelle öffnen
         def on_item_select(event):
             try:
+                import cache
+                
                 selected_Item = tree.focus()
                 print(f"Ausgewähltes Item: {selected_Item}")
                 if selected_Item:
-                    showDetails(selected_Item, tree, controller)
+                    #exports the data to a cache file for later usage 
+                    cache.selected_item = showDetails(selected_Item, tree, controller)
+                    
             except Exception as e:
                 print(f"Fehler bei der Auswahl {e}")
 
@@ -374,6 +378,7 @@ def showDetails(selected_Item, tree, controller):
     details = controller.frames[Gerateansicht]
     details.update_data(data)
     controller.show_frame(Gerateansicht)
+    return data
 
 #######################################################################################################################
 
@@ -604,59 +609,76 @@ class Gerateansicht(tk.Frame):
                                   command=lambda: print("Bild hochgeladen"))
         #Button Schäden
         def open_schaeden_page():
-            schaeden_page = tk.Toplevel()#root
+            schaeden_page = tk.Toplevel()  # root
             schaeden_page.title("Schäden eintragen")
             schaeden_page.geometry("819x594+500+300")
             schaeden_page.configure(bg='white')
 
             schaeden_page.grab_set()
-            #Bilder
-            self.aktualisieren_img = gui_prototyp.load_image(root_path+"/gui/assets/Button_Aktualisieren.png")
-            self.upload_img = gui_prototyp.load_image(root_path+"/gui/assets/Button_Drop.png")
 
-            #Informationen
+            # Bilder
+            self.aktualisieren_img = gui_prototyp.load_image(root_path + "/gui/assets/Button_Aktualisieren.png")
+            self.upload_img = gui_prototyp.load_image(root_path + "/gui/assets/Button_Drop.png")
+
+            # Informationen
             info_frame = tk.Frame(schaeden_page, bg='white', bd=1)
             verlauf_frame = tk.Frame(schaeden_page, bg='white', bd=1)
 
-            name_label = tk.Label(info_frame, text="Gerätename", bg='white',
-                                      font=("Inter", 19))
+            name_label = tk.Label(info_frame, text="Gerätename", bg='white', font=("Inter", 19))
             name_entry_frame = ctk.CTkFrame(info_frame, width=150, height=40, bg_color='transparent',
-                                      fg_color='transparent', border_width=1, border_color='#B8B7B7', corner_radius=8)
+                                            fg_color='transparent', border_width=1, border_color='#B8B7B7', corner_radius=8)
             name_entry = ctk.CTkEntry(name_entry_frame, text_color='black', font=("Inter", 15), border_width=0,
-                                       fg_color='transparent', width=100)
+                                    fg_color='transparent', width=100)
 
-            tag_label = tk.Label(info_frame, text="Tag", bg='white',
-                                  font=("Inter", 19))
+            tag_label = tk.Label(info_frame, text="Tag", bg='white', font=("Inter", 19))
             tag_entry_frame = ctk.CTkFrame(info_frame, width=150, height=40, bg_color='transparent',
-                                            fg_color='transparent', border_width=1, border_color='#B8B7B7',
-                                            corner_radius=8)
+                                        fg_color='transparent', border_width=1, border_color='#B8B7B7', corner_radius=8)
             tag_entry = ctk.CTkEntry(tag_entry_frame, text_color='black', font=("Inter", 15), border_width=0,
-                                      fg_color='transparent', width=100)
+                                    fg_color='transparent', width=100)
 
-            date_label = tk.Label(info_frame, text="Datum", bg='white',
-                                 font=("Inter", 19))
+            date_label = tk.Label(info_frame, text="Datum", bg='white', font=("Inter", 19))
             date_entry_frame = ctk.CTkFrame(info_frame, width=150, height=40, bg_color='transparent',
-                                            fg_color='transparent', border_width=1, border_color='#B8B7B7',
-                                            corner_radius=8)
+                                            fg_color='transparent', border_width=1, border_color='#B8B7B7', corner_radius=8)
             date_entry = datetime.now().strftime("%d.%m.%Y")
             current_date = tk.Label(date_entry_frame, text=date_entry, font=("Inter", 13), bg='white', fg='black', bd=0)
 
+            beschreibung_label = tk.Label(info_frame, text="Beschreibung", bg='white', font=("Inter", 19))
+            beschreibung_entry_frame = ctk.CTkFrame(info_frame, width=380, height=382, bg_color='transparent',
+                                                    fg_color='transparent', border_width=1, border_color='#B8B7B7',
+                                                    corner_radius=8)
+            beschreibung_entry = ctk.CTkEntry(beschreibung_entry_frame, fg_color='transparent', text_color='black',
+                                            font=("Inter", 13), width=380, height=382, border_width=1,
+                                            border_color='#B8B7B7', corner_radius=8)
 
-            beschreibung_label = tk.Label(info_frame, text="Beschreibung", bg='white',
-                                 font=("Inter", 19))
-            beschreibung_entry_frame = ctk.CTkFrame(info_frame, width=380, height=382, bg_color='transparent',fg_color='transparent', border_width=1, border_color='#B8B7B7', corner_radius=8)
-            beschreibung_entry = ctk.CTkEntry(beschreibung_entry_frame, fg_color='transparent', text_color='black', font=("Inter", 13), width=380, height=382, border_width=1, border_color='#B8B7B7', corner_radius=8)
+            # Verlauf
+            verlauf_label = tk.Label(verlauf_frame, text="Verlauf", bg='white', font=("Inter", 19))
+            verlauf_inh_entry = ctk.CTkEntry(verlauf_frame, fg_color='transparent', text_color='black', font=("Inter", 13),
+                                            width=380, height=382, border_width=1, border_color='#B8B7B7', corner_radius=8)
 
-            #Verlauf
-            verlauf_label = tk.Label(verlauf_frame, text="Verlauf", bg='white',
-                                 font=("Inter", 19))
-            verlauf_inh_entry =  ctk.CTkEntry(verlauf_frame, fg_color='transparent', text_color='black', font=("Inter", 13), width=380, height=382, border_width=1, border_color='#B8B7B7', corner_radius=8)
+            # Button-Funktion
+            def process_user_input():
+                import cache
+                # Werte aus den Eingabefeldern abrufen
+                name = name_entry.get()
+                tag = tag_entry.get()
+                beschreibung = beschreibung_entry.get()
+                img = "noch kein img vorhanden" # der upload img button hat noch keine funktion
+                
+                
+                
+                # Hier kannst du die Daten weiterverarbeiten
+               # ausgabe an die Funktion, die die Daten in die Datenbank weiterreicht
+                item_update_damage(cache.selected_item[1],"DMG",img,beschreibung)
 
+
+            # Buttons
             schaeden_button_frame = tk.Frame(schaeden_page, bg='white', bd=1)
-            close_button = tk.Button(schaeden_button_frame, image=self.aktualisieren_img, bd=0, bg='white', command=schaeden_page.destroy)
-            upload_button = tk.Button(schaeden_button_frame, image=self.upload_img, bd=0, bg='white', command=lambda: print("Bild hochgeladen"))
+            close_button = tk.Button(schaeden_button_frame, image=self.aktualisieren_img, bd=0, bg='white',
+                                    command=process_user_input)
+            upload_button = tk.Button(schaeden_button_frame, image=self.upload_img, bd=0, bg='white',
+                                    command=lambda: print("Bild hochgeladen"))
 
-            #Placement
+            # Placement
             name_label.place(x=0, y=2)
             name_entry.place(x=5, y=5)
             name_entry_frame.place(x=150, y=2)
@@ -681,6 +703,7 @@ class Gerateansicht(tk.Frame):
             info_frame.place(x=0, y=0, width=409, height=594)
             verlauf_frame.place(x=409, y=0, width=409, height=444)
             schaeden_button_frame.place(x=409, y=444, width=409, height=150)
+
 
         #Funktion zuende
 

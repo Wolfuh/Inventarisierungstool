@@ -166,12 +166,14 @@ def group_search(search_number):
 
 
 
-def item_update_damage(foreign_item_num, type, image, description, entry_date=None, end_date=None):
+def item_update_damage(name,tag,foreign_item_num, type, image, description, entry_date=None, end_date=None):
     """
     Inserts data into the database table with columns:
     foreign_item_num, indexnum (auto-increment), type, image, description, entry_date, end_date.
 
     Parameters:
+        name (str): Itemname
+        Tag (str): an welchem Tag wurde es hochgeladen
         foreign_item_num (int): Foreign key referring to an item.
         type (str): Type of the data.
         image (str): Path or URL to the image.
@@ -197,10 +199,10 @@ def item_update_damage(foreign_item_num, type, image, description, entry_date=No
         # Insert data into the table
         cursor.execute(
             """
-            INSERT INTO history (foreign_item_num, type, image, description, entry_date, end_date)
-            VALUES (?, ?, ?, ?, ?, ?)
+            INSERT INTO history (name, tag, foreign_item_num, type, image, description, entry_date, end_date)
+            VALUES (? ,?, ?, ?, ?, ?, ?, ?)
             """,
-            (foreign_item_num, type, image, description, entry_date, end_date)
+            (name, tag, foreign_item_num, type, image, description, entry_date, end_date)
         )
 
         # Commit the transaction and close the connection
