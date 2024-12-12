@@ -678,7 +678,7 @@ class Gerateansicht(tk.Frame):
                 
                 # Hier kannst du die Daten weiterverarbeiten
                # ausgabe an die Funktion, die die Daten in die Datenbank weiterreicht
-                item_update_damage(cache.selected_item[1],"DMG",img,beschreibung)
+                item_update_damage(name,tag,cache.selected_item[1],"DMG",img,beschreibung)
 
 
             # Buttons
