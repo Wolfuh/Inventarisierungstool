@@ -10,68 +10,6 @@ def init_connection():      # verbindung mit DB erstellen und Variable der Verbi
     return my_db
 
 
-def fetch_items():  # Gibt die items aus der items DB zurück
-    global my_db
-    try:
-        my_db = init_connection()
-        cur = my_db.cursor()       # cur für cursor, welcher SQLite funktionen ausführen kann
-        cur.execute("SELECT * FROM items")
-        items_rows = cur.fetchall()      
-        return items_rows
-    except sqlite3.Error as e:
-        return [], "Fehler beim Abrufen der Hardware-Einträge:", str(e)
-    finally:
-        if my_db:
-            my_db.close()   # egal was passiert, die DB wird Geschlossen
-
-
-def fetch_items_headers():  # Gibt die Überschriften der items DB zurück, ohne die Anzahl zu kennen
-    try:
-        my_db = init_connection()
-        cur = my_db.cursor()
-        cur.execute("PRAGMA table_info(items)") # sucht die Überschriften
-        it_alles = cur.fetchall()
-        entfernungs_liste = ["product_id", "added_by_user"]     # blendet die Übeschriften aus (nur hier veränderbar)
-        items_uberschrift = [i[1] for i in it_alles if i[1].lower() not in entfernungs_liste]   
-        # überprüft, ob weitere Überschriften da sind und wenn ja, dann wird diese kleingeschrieben zurück gegeben
-
-        return items_uberschrift
-    except sqlite3.Error as e:
-        return [], "Fehler beim Abrufen der Hardware-Einträge:", str(e)
-    finally:
-        if my_db:
-            my_db.close()
-
-
-def fetch_users():  # Gibt die Benutzertabelle wieder
-    try:
-        my_db = init_connection()
-        cur = my_db.cursor()
-        cur.execute("SELECT * FROM benutzer")
-        users_row = cur.fetchall()
-        return users_row
-    except sqlite3.Error as e:
-        return [], "Fehler beim Abrufen der User-Einträge:", str(e)
-    finally:
-        if my_db:
-            my_db.close()
-
-
-def fetch_users_headers():  # Gibt die Überschriften der Benutzertabelle wieder
-    try:
-        my_db = init_connection()
-        cur = my_db.cursor()
-        cur.execute("PRAGMA table_info(benutzer)")
-        us_all = cur.fetchall()
-        users_uberschrift = [i[1] for i in us_all]       
-        return users_uberschrift
-    except sqlite3.Error as e:
-        return [], "Fehler beim Abrufen der User-Einträge:", str(e)
-    finally:
-        if my_db:
-            my_db.close()
-
-
 def login_lookup(username: str, password: str): # überprüfung eingehendes Passwort und Benutzername    
     try:
         global username_global    # Variable soll außerhalb der Definition nutzbar sein (Speicherung des Benutzernamen)
@@ -96,8 +34,6 @@ def login_lookup(username: str, password: str): # überprüfung eingehendes Pass
 
 
 
-
-
 def lookup_user_stuff(): # Gibt die Nutzerinformationen
     try:    # Nutzt den Globalen Benutzername um an Informationen zu gelangen
         my_db = init_connection() # Verbindung DB
@@ -114,43 +50,6 @@ def lookup_user_stuff(): # Gibt die Nutzerinformationen
         return role, first_name, last_name, class_name
     except sqlite3.Error as e:
         return [], "Fehler beim Abrufen der Informationen:", str(e)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-##############################
-## UNBENUTZTE DEFINITIONEN: ##
-##############################
-
-def group_search(search_number):
-    try:
-        my_db = init_connection()
-        cur = my_db.cursor()
-        cur.execute("SELECT * FROM items WHERE Gruppe = ?", search_number)
-        gruppen_suchen_ergebnis = cur.fetchall()
-        return gruppen_suchen_ergebnis
-    except sqlite3.Error as e:
-        return [], "Fehler beim Abrufen der Gruppensuche:", str(e)
-    finally:
-        if my_db:
-            my_db.close()
-
-
-
-
-
-
 
 
 def search_bar_update(search): # Aktualisiert die Sucheingabe für die items Tabelle - muss noch eingefügt werden
@@ -232,7 +131,38 @@ def fetch_tables(table_name, excluded_columns):
         return [], "Fehler beim Abrufen der Informationen:", str(e)
     finally:
         if my_db:
-            my_db.close()  
+            my_db.close()
+
+
+
+
+
+
+
+
+
+
+
+
+##############################
+## UNBENUTZTE DEFINITIONEN: ##
+##############################
+
+def group_search(search_number):
+    try:
+        my_db = init_connection()
+        cur = my_db.cursor()
+        cur.execute("SELECT * FROM items WHERE Gruppe = ?", search_number)
+        gruppen_suchen_ergebnis = cur.fetchall()
+        return gruppen_suchen_ergebnis
+    except sqlite3.Error as e:
+        return [], "Fehler beim Abrufen der Gruppensuche:", str(e)
+    finally:
+        if my_db:
+            my_db.close()
+
+
+  
 
 
 
