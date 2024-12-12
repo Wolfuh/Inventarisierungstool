@@ -188,7 +188,7 @@ class LogInWindow(tk.Frame):
         login_button = ctk.CTkButton(login_frame, text="Login", fg_color='#081424', text_color='white', font=("Inter", 20, 'bold'), corner_radius=8,
                                      command=login, width=200, height=30, hover_color=ThemeManager.SRH_Orange)
 
-###### Plazierung #######
+        ###### Plazierung #######
         # Bindet die Enter-Taste an die Funktion "on_enter"
         self.bind("<Return>", on_enter)
         username_entry.bind("<Return>", on_enter)
