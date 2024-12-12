@@ -312,7 +312,7 @@ class Ubersicht(tk.Frame):
         style.configure("evenrow.Treeview", background="#f2f2f2")
         style.configure("oddrow.Treeview", background="white")
 
-        
+
         scroll = ctk.CTkScrollbar(
             self.tabelle_frame,
             button_color=ThemeManager.SRH_Grey,
