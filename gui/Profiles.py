@@ -525,10 +525,68 @@ class Help(tk.Frame):
                                  hover=True, hover_color='#e25a1f', text="",
                                  command=lambda: controller.show_frame(Mainpages.MainPage))
 
+        def meme_help():
+            meme_page = tk.Toplevel()  # root
+            meme_page.title("Meme")
+            meme_page.geometry("240x300+500+300")
+            meme_page.iconbitmap(root_path + "/gui/assets/sad.ico")
+            meme_page.configure(bg='white')
+
+            meme_page.grab_set()
+            # Bilder
+            self.meme1 = gui_prototyp.load_image(root_path + "/gui/assets/meme1.png")
+
+            def meme2_button_command():
+                meme_page.destroy()  # Fenster schließen
+
+                meme2_page = tk.Toplevel()  # root
+                meme2_page.title("Meme")
+                meme2_page.geometry("240x300+500+300")
+                meme2_page.iconbitmap(root_path + "/gui/assets/sad.ico")
+                meme2_page.configure(bg='white')
+
+                meme2_page.grab_set()
+                # Bilder
+                self.meme2 = gui_prototyp.load_image(root_path + "/gui/assets/meme2.png")
+
+                def meme3_button_command():
+                    meme2_page.destroy()  # Fenster schließen
+
+                    meme3_page = tk.Toplevel()  # root
+                    meme3_page.title("Meme")
+                    meme3_page.geometry("240x300+500+300")
+                    meme3_page.iconbitmap(root_path + "/gui/assets/sad.ico")
+                    meme3_page.configure(bg='white')
+
+                    meme3_page.grab_set()
+                    # Bilder
+                    self.meme3 = gui_prototyp.load_image(root_path + "/gui/assets/meme3.png")
+
+                    meme3 = tk.Label(meme3_page, image=self.meme3, bg='white')
+                    meme3_button = tk.Button(meme3_page, text="Okay!", bd=0, bg='white', fg='black',
+                                             command=meme3_page.destroy)  # Schließen des aktuellen Fensters
+                    meme3.place(relx=0.5, rely=0.5, anchor="center")
+                    meme3_button.place(relx=0.5, rely=0.96, anchor="center")
+
+                meme2 = tk.Label(meme2_page, image=self.meme2, bg='white')
+                meme2_button = tk.Button(meme2_page, text="Ja", bd=0, bg='white', fg='black',
+                                         command=meme3_button_command)
+                meme25_button = tk.Button(meme2_page, text="Nein", bd=0, bg='white', fg='black',
+                                          command=meme3_button_command)
+                meme2.place(relx=0.5, rely=0.5, anchor="center")
+                meme25_button.place(relx=0.7, rely=0.96, anchor="center")
+                meme2_button.place(relx=0.3, rely=0.96, anchor="center")
+
+            meme1 = tk.Label(meme_page, image=self.meme1, bg='white')
+            meme1_button = tk.Button(meme_page, text="Ich brauch aber hilfe!", bd=0, bg='white', fg='black',
+                                     command=meme2_button_command)
+            meme1.place(relx=0.5, rely=0.5, anchor="center")
+            meme1_button.place(relx=0.5, rely=0.96, anchor="center")
+
         help = ctk.CTkButton(header, image=self.imghelp, fg_color=ThemeManager.SRH_Orange,
                              bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
                              hover=True, hover_color='#e25a1f', text="",
-                             command=lambda: controller.show_frame(Help))
+                             command=meme_help)
 
         login.place(relx=0.95, rely=0.5, anchor="center")
         mainpage.place(relx=0.90, rely=0.5, anchor="center")
