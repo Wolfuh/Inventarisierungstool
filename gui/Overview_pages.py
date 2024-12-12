@@ -104,7 +104,7 @@ class Ubersicht(tk.Frame):
 
         def show_right_table(suchgruppe):
             # Spaltennamen aus der Datenbank holen
-            items_uberschrift = fetch_items_headers()
+            items_uberschrift = fetch_headers("items",["ID","added_by_user"])
 
             # Überschriften konfigurieren
             tree["columns"] = items_uberschrift
@@ -112,7 +112,7 @@ class Ubersicht(tk.Frame):
                 tree.column(up, anchor=CENTER, width=100)
                 tree.heading(up, text=up)
 
-            items_data = fetch_items()
+            items_data = fetch_tables("items", [])
 
             tree.delete(* tree.get_children())
 
@@ -325,7 +325,7 @@ class Ubersicht(tk.Frame):
         tree.configure(yscrollcommand=scroll.set)
 
         # Spaltennamen aus der Datenbank holen
-        items_uberschrift = fetch_items_headers()
+        items_uberschrift = fetch_headers("items",["ID","added_by_user"])
 
         # Überschriften konfigurieren
         tree["columns"] = items_uberschrift
@@ -333,7 +333,7 @@ class Ubersicht(tk.Frame):
             tree.column(up, anchor=CENTER, width=100)
             tree.heading(up, text=up)
 
-        items_data = fetch_items()
+        items_data = fetch_tables("items", ["ID","added_by_user"])
 
         # Daten aus DB einfügen
 

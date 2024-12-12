@@ -549,7 +549,7 @@ class Admin(tk.Frame):
         tree.configure(yscrollcommand=scroll.set)
 
         # Spaltennamen aus der Datenbank holen
-        users_uberschrift = fetch_users_headers()
+        users_uberschrift = fetch_headers("benutzer",["Passwort"])
 
         # Überschriften konfigurieren
         tree["columns"] = users_uberschrift
@@ -557,7 +557,7 @@ class Admin(tk.Frame):
             tree.column(up, anchor='center', width=100)
             tree.heading(up, text=up)
 
-        users_data = fetch_users()
+        users_data = fetch_tables("benutzer",["Passwort"])
 
         # Daten aus DB einfügen
 
