@@ -974,9 +974,8 @@ class Gerateansicht(tk.Frame):
         self.tag_entry.insert(0, data[5])
 
         self.standort_entry.delete(0, tk.END)
-        self.standort_entry.insert(0, data[3])
+        self.standort_entry.insert(0, data[2])
 
-        self.typ_aktuell_label.configure(text=data[1])
+        self.typ_aktuell_label.configure(text=data[6])
 
-        self.status_aktuell_label.configure(text=data[4])
-
+        self.status_aktuell_label.configure(text=data[7])
