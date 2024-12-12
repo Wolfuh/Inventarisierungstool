@@ -11,6 +11,7 @@ def init_connection():      # verbindung mit DB erstellen und Variable der Verbi
 
 
 def fetch_items():  # Gibt die items aus der items DB zurück
+    global my_db
     try:
         my_db = init_connection()
         cur = my_db.cursor()       # cur für cursor, welcher SQLite funktionen ausführen kann

@@ -85,7 +85,7 @@ class Einstellungen(tk.Frame):
         help = ctk.CTkButton(self.header, image=self.imghelp, fg_color=ThemeManager.SRH_Orange,
                              bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
                              hover=True, hover_color='#e25a1f', text="",
-                             command=lambda: print("help"))
+                             command=lambda: controller.show_frame(Profiles.Help))
 
         login.place(relx=0.95, rely=0.5, anchor="center")
         mainpage.place(relx=0.90, rely=0.5, anchor="center")
@@ -110,6 +110,11 @@ class Einstellungen(tk.Frame):
                                          font=("Inter", 20, 'bold'),
                                          command=lambda: controller.show_frame(Einstellungen))
         einstellungen_button.pack(pady=10, anchor='w')
+
+        verzeichniss_help_button = tk.Button(verzeichniss, text="Hilfe", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
+                                         font=("Inter", 20, 'bold'),
+                                         command=lambda: controller.show_frame(Profiles.Help))
+        verzeichniss_help_button.pack(pady=10, anchor='w')
 
         # Platziung des Verzeichnisses (Navigationsleiste)
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
@@ -375,3 +380,4 @@ class Einstellungen(tk.Frame):
         # Platzierung der Hauptframe-Bereiche
         self.einstellung_frame.place(relx=0.15, rely=0.15, relwidth=1, relheight=0.85)
         self.header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
+
