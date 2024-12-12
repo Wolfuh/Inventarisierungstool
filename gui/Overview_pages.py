@@ -622,6 +622,7 @@ class Gerateansicht(tk.Frame):
                                   command=lambda: print("Bild hochgeladen"))
         #Button Schäden
         def open_schaeden_page():
+            import cache
             schaeden_page = tk.Toplevel()  # root
             schaeden_page.title("Schäden eintragen")
             schaeden_page.geometry("819x594+500+300")
@@ -642,6 +643,8 @@ class Gerateansicht(tk.Frame):
                                             fg_color='transparent', border_width=1, border_color='#B8B7B7', corner_radius=8)
             name_entry = ctk.CTkEntry(name_entry_frame, text_color='black', font=("Inter", 15), border_width=0,
                                     fg_color='transparent', width=100)
+            pre_filled_name = cache.selected_item[0] # enters the name of the selected item into the field
+            name_entry.insert(0, pre_filled_name)  # Insert text at position 0 (start of the field)
 
             tag_label = tk.Label(info_frame, text="Tag", bg='white', font=("Inter", 19))
             tag_entry_frame = ctk.CTkFrame(info_frame, width=150, height=40, bg_color='transparent',
