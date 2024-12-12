@@ -84,7 +84,7 @@ class GuiTest(tk.Tk):
         # Only attempt to instantiate Einstellungen if it's a class
         pages = [LogInWindow, Mainpages.MainPage, Mainpages.MainPageS2, Mainpages.Mainpage_empty,
                  Overview_pages.Ubersicht, Overview_pages.Gerateansicht, configuration.Einstellungen,
-                 Profiles.Profil, Profiles.Admin, Profiles.Stats, Profiles.Help]
+                 Profiles.Profil, Profiles.Admin, Profiles.Stats, Profiles.Help, Profiles.Admin_User]
 
         if hasattr(configuration, "Einstellungen"):
             pages.append(configuration.Einstellungen)
