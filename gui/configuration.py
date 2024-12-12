@@ -10,7 +10,36 @@ import Profiles
 import os
 
 class Einstellungen(tk.Frame):
+    """
+    Die Klasse Einstellungen stellt eine grafische Benutzerschnittstelle für die
+    Einstellungen der Anwendung bereit.
 
+    Sie enthält Widgets wie Header-Labels, Navigationsbuttons, Dropdown-Menüs und
+    verschiedene Schaltflächen, mit denen der Benutzer zwischen verschiedenen
+    Abschnitten navigieren und Einstellungen anpassen kann. Zusätzlich unterstützt
+    sie die Umschaltung zwischen Light- und Darkmode, inklusive dynamischer
+    Anpassung der Benutzeroberfläche.
+
+    :ivar header: Das Header-Label der Seite „Einstellungen“, das als Titel
+        dient.
+    :type header: ttk.Label
+    :ivar imglogin: Speichert das Bild für den Login-Navigationsbutton.
+    :type imglogin: tk.PhotoImage
+    :ivar imgmainpage: Speichert das Bild für den Mainpage-Navigationsbutton.
+    :type imgmainpage: tk.PhotoImage
+    :ivar imghelp: Speichert das Bild für den Hilfenavigationsbutton.
+    :type imghelp: tk.PhotoImage
+    :ivar einstellung_frame: Der Rahmen, der den Hauptinhalt der Einstellungen
+        darstellt.
+    :type einstellung_frame: tk.Frame
+    :ivar switch_value: Boolean-Wert, der den aktuellen Status der
+        Theme-Umschaltung (Light- oder Darkmode) speichert.
+    :type switch_value: bool
+    :ivar light: Bild für die Light-Theme-Schalterposition.
+    :type light: tk.PhotoImage
+    :ivar dark: Bild für die Dark-Theme-Schalterposition.
+    :type dark: tk.PhotoImage
+    """
     def __init__(self, parent, controller):
         super().__init__()
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
@@ -56,7 +85,7 @@ class Einstellungen(tk.Frame):
         help = ctk.CTkButton(self.header, image=self.imghelp, fg_color=ThemeManager.SRH_Orange,
                              bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
                              hover=True, hover_color='#e25a1f', text="",
-                             command=lambda: print("help"))
+                             command=lambda: controller.show_frame(Profiles.Help))
 
         login.place(relx=0.95, rely=0.5, anchor="center")
         mainpage.place(relx=0.90, rely=0.5, anchor="center")
@@ -81,6 +110,11 @@ class Einstellungen(tk.Frame):
                                          font=("Inter", 20, 'bold'),
                                          command=lambda: controller.show_frame(Einstellungen))
         einstellungen_button.pack(pady=10, anchor='w')
+
+        verzeichniss_help_button = tk.Button(verzeichniss, text="Hilfe", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
+                                         font=("Inter", 20, 'bold'),
+                                         command=lambda: controller.show_frame(Profiles.Help))
+        verzeichniss_help_button.pack(pady=10, anchor='w')
 
         # Platziung des Verzeichnisses (Navigationsleiste)
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
@@ -346,3 +380,4 @@ class Einstellungen(tk.Frame):
         # Platzierung der Hauptframe-Bereiche
         self.einstellung_frame.place(relx=0.15, rely=0.15, relwidth=1, relheight=0.85)
         self.header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
+
