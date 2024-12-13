@@ -1,5 +1,4 @@
 import tkinter as tk
-from operator import truediv
 from tkinter import ttk, messagebox
 import customtkinter as ctk
 from customtkinter import *
@@ -302,26 +301,10 @@ class Admin_User(tk.Frame):
                 controller.show_frame(Admin)
                 messagebox.showinfo("Erfolgreich", "User erfolgreich gespeichert")
 
-            admin_speichern_button = ctk.CTkButton(self, text="Speichern", fg_color=ThemeManager.SRH_Orange,
-                                                text_color="white", font=('Inter', 20, 'bold'),
-                                                corner_radius=8, hover=True, hover_color=ThemeManager.SRH_DarkBlau,
-                                                command=admin_button_click, width=137, height=44)
-            admin_speichern_button.place(x=1670, y=950)
 
-            #Löschbutton
-            def admin_delete_click():
-                confirm = messagebox.askokcancel("Löschen", "User löschen?")
-
-                if confirm:  # Wenn der Benutzer "OK" klickt
-                    controller.show_frame(Admin)
-                    messagebox.showinfo("Erfolgreich", "User erfolgreich gelöscht")
-                else:  # Wenn der Benutzer "Abbrechen" klickt
-                    messagebox.showinfo("Abgebrochen", "Löschen abgebrochen, User wurde nicht gelöscht.")
-
-            admin_delete_button = ctk.CTkButton(self, text="Löschen", fg_color=ThemeManager.SRH_DarkBlau, text_color="white",font=('Inter', 20, 'bold'),
-                                                corner_radius=8, hover=True, hover_color=ThemeManager.SRH_Orange, command=admin_delete_click, width=137, height=44)
-            admin_delete_button.place(x=1500, y=950)
-
+            admin_speichern_button = tk.Button(self.admin_profil_frame, image=self.aktualisieren_img, bd=0, bg='white',
+                                         command=admin_button_click)
+            admin_speichern_button.place(x=1270, y=800)
 
             adminpage = ctk.CTkButton(self, text="↩", fg_color='white', text_color=ThemeManager.SRH_Grey, width=5,
                                      font=("Inter", 50, 'bold'), corner_radius=8, hover=False,
