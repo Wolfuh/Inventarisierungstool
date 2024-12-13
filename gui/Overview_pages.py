@@ -265,12 +265,35 @@ class Ubersicht(tk.Frame):
         self.imgHinzufugen = gui_prototyp.load_image(root_path+"/gui/assets/Adding_Icon.png")
         self.imgAktionen = gui_prototyp.load_image(root_path+"/gui/assets/Aktionen_Button.png")
 
+        def fill_in_sort(table,where): 
+            items_uberschrift = fetch_headers("items",[])
+
+            # Überschriften konfigurieren
+            tree["columns"] = items_uberschrift
+            for up in items_uberschrift:
+                tree.column(up, anchor=CENTER, width=100)
+                tree.heading(up, text=up)
+
+            items_data = table_sort(table,where)
+
+            tree.delete(* tree.get_children())
+
+            # Daten aus DB einfügen
+            i = 0
+            for item in items_data:
+                
+                color = "#f3f3f3" if i % 2 == 0 else "white"
+                tree.insert("", "end", values=item, tags=("even" if i % 2 == 0 else "odd"))
+                i += 1
+
+        
+
         # Filterfunktion
         def show_dropdown_Filter():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg='white', fg='black')
-            dropdown_menu.add_command(label="→ Status", command=lambda: print("nach Status sortieren"))
-            dropdown_menu.add_command(label="→ ID", command=lambda: print("nach ID sortieren"))
-            dropdown_menu.add_command(label="→ Typ", command=lambda: print("nach Typ sortieren"))
+            dropdown_menu.add_command(label="→ Status", command=lambda: fill_in_sort("items","Status"))
+            dropdown_menu.add_command(label="→ ID", command=lambda: fill_in_sort("items","ID"))
+            dropdown_menu.add_command(label="→ Typ", command=lambda: fill_in_sort("items","Typ"))
             dropdown_menu.add_command(label="→ Andere", command=lambda: print("nach anderen sortieren"))
             dropdown_menu.post(Filter_button.winfo_rootx(), Filter_button.winfo_rooty() + Filter_button.winfo_height())
 
@@ -351,7 +374,7 @@ class Ubersicht(tk.Frame):
 
             for i,row in enumerate(items_data):
                 formatted_row = [value if value is not None else "-" for value in row] # Leere Felder durch "-" ersetzen
-                color = "#f3f3f3" if i % 2 == 0 else "white"
+                # color = "#f3f3f3" if i % 2 == 0 else "white"
                 tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
         starting_table()
 
@@ -496,12 +519,33 @@ class Gerateansicht(tk.Frame):
         # Treeview Scrollverbindung
         tree.configure(yscrollcommand=scroll.set)
 
-        tree.column("#1", anchor=CENTER, width=50)
-        tree.heading("#1", text="Benutzer")
-        tree.column("#2", anchor=CENTER, width=100)
-        tree.heading("#2", text="Datum")
-        tree.column("#3", anchor=CENTER, width=200)
-        tree.heading("#3", text="Änderung")
+        # Spaltennamen aus der Datenbank holen
+        tree.delete(* tree.get_children())
+        items_uberschrift = fetch_headers("history", ["indexnum", "foreign_item_num"])
+
+        # Überschriften konfigurieren
+        tree["columns"] = items_uberschrift
+        for up in items_uberschrift:
+            tree.column(up, anchor=CENTER, width=100)
+            tree.heading(up, text=up)
+
+        items_data = fetch_tables("history", ["indexnum", "foreign_item_num"])
+
+        # Daten aus DB einfügen
+
+        for i,row in enumerate(items_data):
+            formatted_row = [value if value is not None else "-" for value in row] # Leere Felder durch "-" ersetzen
+            color = "#f3f3f3" if i % 2 == 0 else "white"
+            tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
+
+
+
+        # tree.column("#1", anchor=CENTER, width=50)
+        # tree.heading("#1", text="Benutzer")
+        # tree.column("#2", anchor=CENTER, width=100)
+        # tree.heading("#2", text="Datum")
+        # tree.column("#3", anchor=CENTER, width=200)
+        # tree.heading("#3", text="Änderung")
         tree.place(x=0, y=20, relwidth=0.40, relheight=0.5)
         scroll.place(x=770, y=20, relheight=0.5)
 
