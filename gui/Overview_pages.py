@@ -104,7 +104,7 @@ class Ubersicht(tk.Frame):
 
         def show_right_table(item_position: int, suchgruppe, search_word): # item_position benötigt Zahl, für den gesuchten Ort
             # Spaltennamen aus der Datenbank holen
-            items_uberschrift = fetch_headers("items",[])
+            items_uberschrift = fetch_headers("items",[""])
 
             # Überschriften konfigurieren
             tree["columns"] = items_uberschrift
@@ -112,7 +112,7 @@ class Ubersicht(tk.Frame):
                 tree.column(up, anchor=CENTER, width=100)
                 tree.heading(up, text=up)
 
-            items_data = fetch_tables("items", [])
+            items_data = fetch_tables("items", [""])
 
             tree.delete(* tree.get_children())
 
@@ -121,15 +121,13 @@ class Ubersicht(tk.Frame):
             # Daten aus DB einfügen
             i = 0
             for item in items_data:
-                if item[2] and str(item[2]) == suchgruppe:
+                if (item[2] and str(item[2]) == suchgruppe) and search_word == "ANDERE" and not str(item[item_position]) in type_sort:
                     color = "#f3f3f3" if i % 2 == 0 else "white"
                     tree.insert("", "end", values=item, tags=("even" if i % 2 == 0 else "odd"))
                     i += 1
 
-
-
                 elif (item[2] and str(item[2]) == suchgruppe) and (not search_word or str(item[item_position]) == search_word):
-
+                    
                     color = "#f3f3f3" if i % 2 == 0 else "white"
                     tree.insert("", "end", values=item, tags=("even" if i % 2 == 0 else "odd"))
                     i += 1
@@ -268,7 +266,7 @@ class Ubersicht(tk.Frame):
         self.imgAktionen = gui_prototyp.load_image(root_path+"/gui/assets/Aktionen_Button.png")
 
         def fill_in_sort(table,where):
-            items_uberschrift = fetch_headers("items",[])
+            items_uberschrift = fetch_headers("items",[""])
 
             # Überschriften konfigurieren
             tree["columns"] = items_uberschrift
@@ -276,7 +274,7 @@ class Ubersicht(tk.Frame):
                 tree.column(up, anchor=CENTER, width=100)
                 tree.heading(up, text=up)
 
-            items_data = table_sort(table,where)
+            items_data = table_sort(table,where,[""])
 
             tree.delete(* tree.get_children())
 

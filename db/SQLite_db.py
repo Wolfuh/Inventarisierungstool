@@ -139,7 +139,7 @@ def table_sort(table_name, sorted_by, excluded_columns):  #sortiert die gegebene
         cur = my_db.cursor()
 
         columns = fetch_headers(table_name, excluded_columns)
-        cur.execute(f"SELECT * FROM {table_name} ORDER BY {sorted_by} ASC;") 
+        cur.execute(f"SELECT * FROM {table_name} ORDER BY {sorted_by} DESK;") 
         # ASC macht es Alphabetisch DESC würde es unkehren
         sort_answer = cur.fetchall()
 
