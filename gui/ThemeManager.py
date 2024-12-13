@@ -37,6 +37,7 @@ class ThemeManager(tk.Frame):
     SRH_Orange = "#df4807"
     SRH_Grey = "#d9d9d9"
     SRH_Blau = "#10749c"
+    SRH_DarkBlau = "#081424"
     # Darkmode Farben
     Darkmode_Black = "#121212"
     Darkmode_Grey = "#2d2d2d"
