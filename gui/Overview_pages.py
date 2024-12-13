@@ -637,7 +637,6 @@ class Gerateansicht(tk.Frame):
             dropdown_menu.add_command(label=f"{'✔'.ljust(2)} verfügbar", command=lambda: print("Produkt zum Mieten bereit"))
             dropdown_menu.add_command(label=f"{'❌'.ljust(3)} gemietet", command=lambda: print("Produkt gemietet"))
 
-
             dropdown_menu.post(
                 status_drop.winfo_rootx() - 62,  # Verschiebt das Menü 50 Pixel nach links
                 status_drop.winfo_rooty() + status_drop.winfo_height()
