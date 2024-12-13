@@ -621,26 +621,6 @@ class Gerateansicht(tk.Frame):
                 status_drop.winfo_rooty() + status_drop.winfo_height()
             )
 
-        details_frame = ctk.CTkFrame(self.gerateansicht_frame, width=480, height=88, bg_color='transparent',
-                                 fg_color='transparent', border_width=1, border_color='#B8B7B7', corner_radius=8)
-        details_label = ctk.CTkLabel(details_frame, text="Details", text_color='#858383',
-                                 font=("Inter", 25, 'bold'))
-        self.details_entry = ctk.CTkEntry(details_frame, text_color='black', font=("Inter", 20), border_width=0,
-                                      fg_color='transparent')
-        details_label.place(x=5, y=5)
-        self.details_entry.place(x=5, y=50)
-        details_frame.place(x=900, y=420)
-
-        anzahl_frame = ctk.CTkFrame(self.gerateansicht_frame, width=480, height=88, bg_color='transparent',
-                                 fg_color='transparent', border_width=1, border_color='#B8B7B7', corner_radius=8)
-        anzahl_label = ctk.CTkLabel(anzahl_frame, text="Anzahl", text_color='#858383',
-                                 font=("Inter", 25, 'bold'))
-        self.anzahl_entry = ctk.CTkEntry(anzahl_frame, text_color='black', font=("Inter", 20), border_width=0,
-                                      fg_color='transparent')
-        anzahl_label.place(x=5, y=5)
-        self.anzahl_entry.place(x=5, y=50)
-        anzahl_frame.place(x=900, y=520)
-
         standort_frame = ctk.CTkFrame(self.gerateansicht_frame, width=480, height=88, bg_color='transparent',
                                  fg_color='transparent', border_width=1, border_color='#B8B7B7', corner_radius=8)
         standort_label = ctk.CTkLabel(standort_frame, text="Standort (Haus, Raum)", text_color='#858383',
@@ -649,13 +629,7 @@ class Gerateansicht(tk.Frame):
                                       fg_color='transparent')
         standort_label.place(x=5, y=5)
         self.standort_entry.place(x=5, y=50)
-        standort_frame.place(x=900, y=620)
-
-
-
-
-
-
+        standort_frame.place(x=900, y=420)
 
         #Button
         buttons_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=0, relief="solid")
@@ -663,11 +637,11 @@ class Gerateansicht(tk.Frame):
         self.schaeden_img = gui_prototyp.load_image(root_path+"/gui/assets/Button_Schaeden.png")
         self.buchung_img = gui_prototyp.load_image(root_path+"/gui/assets/Button_Buchung.png")
         self.speichern_img = gui_prototyp.load_image(root_path+"/gui/assets/Button_Speichern.png")
-        self.upload1_img = gui_prototyp.load_image(root_path + "/gui/assets/Button_PicDrop.png")
+        self.upload_img = gui_prototyp.load_image(root_path + "/gui/assets/Button_PicDrop.png")
 
         # Button Bilder hochladen
         upload_frame = tk.Frame(self.gerateansicht_frame, bg='white')
-        upload_button = tk.Button(upload_frame, image=self.upload1_img, bd=0, bg='white',
+        upload_button = tk.Button(upload_frame, image=self.upload_img, bd=0, bg='white',
                                   command=lambda: print("Bild hochgeladen"))
         #Button Schäden
         def open_schaeden_page():
@@ -865,14 +839,14 @@ class Gerateansicht(tk.Frame):
         # Button Buchung
         buchung_button = tk.Button(buttons_frame, image=self.buchung_img, bd=0, bg='white',
                                        command=open_buchen_page)
-        buchung_button.place(x=170, y=10)
+        buchung_button.place(x=10, y=80)
 
         #Button Speichern
         def button_click():
             controller.show_frame(Ubersicht)
             messagebox.showinfo("Erfolgreich","Änderungen erfolgreich gespeichert")
         speichern_button = tk.Button(buttons_frame, image=self.speichern_img, bd=0, bg='white', command=button_click)
-        speichern_button.place(x=330, y=10)
+        speichern_button.place(x=10, y=150)
 
 
         #Verzeichniss
@@ -1034,3 +1008,9 @@ class Gerateansicht(tk.Frame):
 
         self.standort_entry.delete(0, tk.END)
         self.standort_entry.insert(0, data[2])
+        self.standort_entry.insert(0, data[3])
+
+        self.typ_aktuell_label.configure(text=data[1])
+
+        self.status_aktuell_label.configure(text=data[4])
+
