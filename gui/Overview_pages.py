@@ -360,7 +360,7 @@ class Ubersicht(tk.Frame):
         def starting_table():
             # Spaltennamen aus der Datenbank holen
             tree.delete(* tree.get_children())
-            items_uberschrift = fetch_headers("items",["ID","added_by_user"])
+            items_uberschrift = fetch_headers("items",[""])
 
             # Überschriften konfigurieren
             tree["columns"] = items_uberschrift
@@ -368,7 +368,7 @@ class Ubersicht(tk.Frame):
                 tree.column(up, anchor=CENTER, width=100)
                 tree.heading(up, text=up)
 
-            items_data = fetch_tables("items", ["ID","added_by_user"])
+            items_data = fetch_tables("items", ["ID",""])
 
             # Daten aus DB einfügen
 
