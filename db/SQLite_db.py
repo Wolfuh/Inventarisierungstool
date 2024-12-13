@@ -122,8 +122,7 @@ def fetch_tables(table_name, excluded_columns):
         # columns = [row[0] for row in cur.fetchall()]
 
         if columns:
-            query = f"SELECT {', '.join(columns)} FROM {table_name};"
-            cur.execute(query)
+            cur.execute(f"SELECT {', '.join(columns)} FROM {table_name};")
             results = cur.fetchall()
 
             return results
@@ -134,8 +133,22 @@ def fetch_tables(table_name, excluded_columns):
             my_db.close()
 
 
+def table_sort(table_name, sorted_by, excluded_columns):  #sortiert die gegebene Tabelle nach der Überschrift alphabetisch
+    try:
+        my_db = init_connection()
+        cur = my_db.cursor()
 
+        columns = fetch_headers(table_name, excluded_columns)
+        cur.execute(f"SELECT * FROM {table_name} ORDER BY {sorted_by} ASC;") 
+        # ASC macht es Alphabetisch DESC würde es unkehren
+        sort_answer = cur.fetchall()
 
+        return sort_answer        
+    except sqlite3.Error as e:
+        return [], "Fehler beim Abrufen der Informationen:", str(e)
+    finally:
+        if my_db:
+            my_db.close()
 
 
 
@@ -166,12 +179,14 @@ def group_search(search_number):
 
 
 
-def item_update_damage(foreign_item_num, type, image, description, entry_date=None, end_date=None):
+def item_update_damage(name,tag,foreign_item_num, type, image, description, entry_date=None, end_date=None):
     """
     Inserts data into the database table with columns:
     foreign_item_num, indexnum (auto-increment), type, image, description, entry_date, end_date.
 
     Parameters:
+        name (str): Itemname
+        Tag (str): an welchem Tag wurde es hochgeladen
         foreign_item_num (int): Foreign key referring to an item.
         type (str): Type of the data.
         image (str): Path or URL to the image.
@@ -197,10 +212,10 @@ def item_update_damage(foreign_item_num, type, image, description, entry_date=No
         # Insert data into the table
         cursor.execute(
             """
-            INSERT INTO history (foreign_item_num, type, image, description, entry_date, end_date)
-            VALUES (?, ?, ?, ?, ?, ?)
+            INSERT INTO history(name, tag, foreign_item_num, type, image, description, entry_date, end_date)
+            VALUES (? ,?, ?, ?, ?, ?, ?, ?)
             """,
-            (foreign_item_num, type, image, description, entry_date, end_date)
+            (name, tag, foreign_item_num, type, image, description, entry_date, end_date)
         )
 
         # Commit the transaction and close the connection
@@ -224,8 +239,6 @@ def item_update_damage(foreign_item_num, type, image, description, entry_date=No
 
 
 ############### DEBUG STUFF ###############
-# login_lookup("Mathis","123456")
-# lookup_role()
 # print(username_global)
 # sibllllll = search_bar_update("et")
 # print(sibllllll)
@@ -233,6 +246,8 @@ def item_update_damage(foreign_item_num, type, image, description, entry_date=No
 # print(ha)
 # dulli = fetch_tables("items", ["ID", "Gruppe", "Raum", "amount", "added_by_user"])
 # print(dulli)
+# sORtIÄRUNG = table_sort("items", "Gruppe")
+# print(sORtIÄRUNG)
 ############### ENDE DEBUG ################
 
 

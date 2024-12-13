@@ -121,18 +121,20 @@ class Ubersicht(tk.Frame):
             # Daten aus DB einfügen
             i = 0
             for item in items_data:
-                if (item[2] and str(item[2]) == suchgruppe) and search_word == "ANDERE" and not str(item[item_position]) in type_sort:
+                if item[2] and str(item[2]) == suchgruppe:
                     color = "#f3f3f3" if i % 2 == 0 else "white"
                     tree.insert("", "end", values=item, tags=("even" if i % 2 == 0 else "odd"))
                     i += 1
 
+
+
                 elif (item[2] and str(item[2]) == suchgruppe) and (not search_word or str(item[item_position]) == search_word):
-                    
+
                     color = "#f3f3f3" if i % 2 == 0 else "white"
                     tree.insert("", "end", values=item, tags=("even" if i % 2 == 0 else "odd"))
                     i += 1
-        
-        
+
+
 
         # Gruppe 1
         def show_dropdown_grp1():
@@ -265,7 +267,7 @@ class Ubersicht(tk.Frame):
         self.imgHinzufugen = gui_prototyp.load_image(root_path+"/gui/assets/Adding_Icon.png")
         self.imgAktionen = gui_prototyp.load_image(root_path+"/gui/assets/Aktionen_Button.png")
 
-        def fill_in_sort(table,where): 
+        def fill_in_sort(table,where):
             items_uberschrift = fetch_headers("items",[])
 
             # Überschriften konfigurieren
@@ -281,12 +283,12 @@ class Ubersicht(tk.Frame):
             # Daten aus DB einfügen
             i = 0
             for item in items_data:
-                
+
                 color = "#f3f3f3" if i % 2 == 0 else "white"
                 tree.insert("", "end", values=item, tags=("even" if i % 2 == 0 else "odd"))
                 i += 1
 
-        
+
 
         # Filterfunktion
         def show_dropdown_Filter():
@@ -382,13 +384,13 @@ class Ubersicht(tk.Frame):
         def on_item_select(event):
             try:
                 import cache
-                
+
                 selected_Item = tree.focus()
                 print(f"Ausgewähltes Item: {selected_Item}")
                 if selected_Item:
-                    #exports the data to a cache file for later usage 
+                    #exports the data to a cache file for later usage
                     cache.selected_item = showDetails(selected_Item, tree, controller)
-                    
+
             except Exception as e:
                 print(f"Fehler bei der Auswahl {e}")
 
@@ -519,12 +521,33 @@ class Gerateansicht(tk.Frame):
         # Treeview Scrollverbindung
         tree.configure(yscrollcommand=scroll.set)
 
-        tree.column("#1", anchor=CENTER, width=50)
-        tree.heading("#1", text="Benutzer")
-        tree.column("#2", anchor=CENTER, width=100)
-        tree.heading("#2", text="Datum")
-        tree.column("#3", anchor=CENTER, width=200)
-        tree.heading("#3", text="Änderung")
+        # Spaltennamen aus der Datenbank holen
+        tree.delete(* tree.get_children())
+        items_uberschrift = fetch_headers("history", ["indexnum", "foreign_item_num"])
+
+        # Überschriften konfigurieren
+        tree["columns"] = items_uberschrift
+        for up in items_uberschrift:
+            tree.column(up, anchor=CENTER, width=100)
+            tree.heading(up, text=up)
+
+        items_data = fetch_tables("history", ["indexnum", "foreign_item_num"])
+
+        # Daten aus DB einfügen
+
+        for i,row in enumerate(items_data):
+            formatted_row = [value if value is not None else "-" for value in row] # Leere Felder durch "-" ersetzen
+            color = "#f3f3f3" if i % 2 == 0 else "white"
+            tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
+
+
+
+        # tree.column("#1", anchor=CENTER, width=50)
+        # tree.heading("#1", text="Benutzer")
+        # tree.column("#2", anchor=CENTER, width=100)
+        # tree.heading("#2", text="Datum")
+        # tree.column("#3", anchor=CENTER, width=200)
+        # tree.heading("#3", text="Änderung")
         tree.place(x=0, y=20, relwidth=0.40, relheight=0.5)
         scroll.place(x=770, y=20, relheight=0.5)
 
@@ -702,9 +725,9 @@ class Gerateansicht(tk.Frame):
                 tag = tag_entry.get()
                 beschreibung = beschreibung_entry.get()
                 img = "noch kein img vorhanden" # der upload img button hat noch keine funktion
-                
-                schaeden_page.destroy()
-                
+
+
+
                 # Hier kannst du die Daten weiterverarbeiten
                # ausgabe an die Funktion, die die Daten in die Datenbank weiterreicht
                 item_update_damage(name,tag,cache.selected_item[1],"DMG",img,beschreibung)
@@ -1012,5 +1035,6 @@ class Gerateansicht(tk.Frame):
 
         self.typ_aktuell_label.configure(text=data[1])
 
-        self.status_aktuell_label.configure(text=data[4])
+        self.typ_aktuell_label.configure(text=data[6])
 
+        self.status_aktuell_label.configure(text=data[7])
