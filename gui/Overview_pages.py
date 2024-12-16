@@ -265,7 +265,7 @@ class Ubersicht(tk.Frame):
         self.imgHinzufugen = gui_prototyp.load_image(root_path+"/gui/assets/Adding_Icon.png")
         self.imgAktionen = gui_prototyp.load_image(root_path+"/gui/assets/Aktionen_Button.png")
 
-        def fill_in_sort(table,where):
+        def fill_in_sort(table,where, DESC_OR_ASC):
             items_uberschrift = fetch_headers("items",[""])
 
             # Überschriften konfigurieren
@@ -274,7 +274,7 @@ class Ubersicht(tk.Frame):
                 tree.column(up, anchor=CENTER, width=100)
                 tree.heading(up, text=up)
 
-            items_data = table_sort(table,where,[""])
+            items_data = table_sort(table,where,[""], DESC_OR_ASC)
 
             tree.delete(* tree.get_children())
 
@@ -291,9 +291,9 @@ class Ubersicht(tk.Frame):
         # Filterfunktion
         def show_dropdown_Filter():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg='white', fg='black')
-            dropdown_menu.add_command(label="→ Status", command=lambda: fill_in_sort("items","Status"))
-            dropdown_menu.add_command(label="→ ID", command=lambda: fill_in_sort("items","ID"))
-            dropdown_menu.add_command(label="→ Typ", command=lambda: fill_in_sort("items","Typ"))
+            dropdown_menu.add_command(label="→ Status", command=lambda: fill_in_sort("items","Status","DESC"))
+            dropdown_menu.add_command(label="→ ID", command=lambda: fill_in_sort("items","ID","ASC"))
+            dropdown_menu.add_command(label="→ Typ", command=lambda: fill_in_sort("items","Typ","DESC"))
             dropdown_menu.add_command(label="→ Andere", command=lambda: print("nach anderen sortieren"))
             dropdown_menu.post(Filter_button.winfo_rootx(), Filter_button.winfo_rooty() + Filter_button.winfo_height())
 
@@ -368,7 +368,7 @@ class Ubersicht(tk.Frame):
                 tree.column(up, anchor=CENTER, width=100)
                 tree.heading(up, text=up)
 
-            items_data = fetch_tables("items", ["ID",""])
+            items_data = fetch_tables("items", [""])
 
             # Daten aus DB einfügen
 

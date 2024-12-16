@@ -133,13 +133,13 @@ def fetch_tables(table_name, excluded_columns):
             my_db.close()
 
 
-def table_sort(table_name, sorted_by, excluded_columns):  #sortiert die gegebene Tabelle nach der Überschrift alphabetisch
+def table_sort(table_name, sorted_by, excluded_columns, DESC_OR_ASC):  #sortiert die gegebene Tabelle nach der Überschrift 
     try:
         my_db = init_connection()
         cur = my_db.cursor()
 
         columns = fetch_headers(table_name, excluded_columns)
-        cur.execute(f"SELECT * FROM {table_name} ORDER BY {sorted_by} DESC;") 
+        cur.execute(f"SELECT * FROM {table_name} ORDER BY {sorted_by} {DESC_OR_ASC};") 
         # ASC macht es Alphabetisch DESC würde es unkehren
         sort_answer = cur.fetchall()
 
