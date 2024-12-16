@@ -122,14 +122,15 @@ class Ubersicht(tk.Frame):
             i = 0
             for item in items_data:
                 if (item[2] and str(item[2]) == suchgruppe) and search_word == "ANDERE" and not str(item[item_position]) in type_sort:
+                    formatted_row = [value if value is not None else "-" for value in item] # Leere Felder durch "-" ersetzen
                     color = "#f3f3f3" if i % 2 == 0 else "white"
-                    tree.insert("", "end", values=item, tags=("even" if i % 2 == 0 else "odd"))
+                    tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
                     i += 1
 
                 elif (item[2] and str(item[2]) == suchgruppe) and (not search_word or str(item[item_position]) == search_word):
-                    
+                    formatted_row = [value if value is not None else "-" for value in item] # Leere Felder durch "-" ersetzen
                     color = "#f3f3f3" if i % 2 == 0 else "white"
-                    tree.insert("", "end", values=item, tags=("even" if i % 2 == 0 else "odd"))
+                    tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
                     i += 1
 
 
@@ -281,9 +282,9 @@ class Ubersicht(tk.Frame):
             # Daten aus DB einfügen
             i = 0
             for item in items_data:
-
+                formatted_row = [value if value is not None else "-" for value in item] # Leere Felder durch "-" ersetzen
                 color = "#f3f3f3" if i % 2 == 0 else "white"
-                tree.insert("", "end", values=item, tags=("even" if i % 2 == 0 else "odd"))
+                tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
                 i += 1
 
 
