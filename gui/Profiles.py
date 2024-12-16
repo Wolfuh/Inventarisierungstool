@@ -709,7 +709,7 @@ class Help(tk.Frame):
 
         # Navigationsleiste auf der linken Seite
         verzeichniss = tk.Frame(self, bg=ThemeManager.SRH_Grey)
-        self.stats_frame = tk.Frame(self, bg='white')
+        self.hilfe_frame = tk.Frame(self, bg='white')
 
         # Bilder für die Login- und Hauptseite-Buttons laden
         self.imglogin = tk.PhotoImage(
@@ -822,6 +822,35 @@ class Help(tk.Frame):
                                              command=lambda: controller.show_frame(Help))
         verzeichniss_help_button.pack(pady=10, anchor='w')
         einstellungen_button.pack(pady=10, anchor='w')
-        # Platzierung des Hauptinhaltsbereichs und der Navigationsleiste
-        self.stats_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
+
+        #Seiteninhalt
+        #help_frame ist ein scrollable Frame, Labels müssen auf dem Frame platziert werden, und passend angepasst werden, damit das funktioniert (siehe Beispiel)
+        help_frame = ctk.CTkScrollableFrame(self.hilfe_frame, fg_color='white', scrollbar_fg_color='white',
+                                            scrollbar_button_hover_color=ThemeManager.SRH_Orange,
+                                            scrollbar_button_color=ThemeManager.SRH_Grey, height=1000, width=1000)
+
+        # Platzieren des help_frame so, dass es self.hilfe_frame vollständig abdeckt
+        help_frame.place(relx=0, rely=0, relwidth=0.9, relheight=0.99)
+
+        # Labels hinzufügen, um die Scroll-Funktion zu testen
+        for i in range(50):  # 50 Labels, um eine Scrollbarkeit sicherzustellen
+            label = ctk.CTkLabel(help_frame, text=f"Label {i + 1}", text_color="black")
+            label.pack(pady=5, padx=5, anchor="w")
+
+
+        #Beispiel
+        #label = ctk.CTkLabel(help_frame, text='Test', text_color="black")
+        #label.pack(pady=5, padx=5, anchor="w")
+        # Erstelle die inneren Frames
+        # help_main_frame = tk.Frame(help_frame, bg='green')
+        # help_profile_frame = tk.Frame(help_frame, bg='yellow')
+        # help_einstellung_frame = tk.Frame(help_frame, bg='blue')
+        # help_gerateansicht_frame = tk.Frame(help_frame, bg='red')
+        # help_gerateubersicht_frame = tk.Frame(help_frame, bg='orange')
+        # help_admin_frame = tk.Frame(help_frame, bg='black')
+
+        # Passe ggf. auch die Platzierung von self.hilfe_frame an
+        self.hilfe_frame.place(relx=0.21, rely=0.15, relwidth=0.79, relheight=0.85)
+
+        # Passe verzeichniss entsprechend an
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
