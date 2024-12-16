@@ -155,6 +155,7 @@ class LogInWindow(tk.Frame):
             - password_entry (ctk.CTkEntry): Maskiertes Eingabefeld für das Passwort.
             - controller (object): Steuert den Wechsel zwischen Seiten.
 
+
             **Returns:**
 
             None: Führt Aktionen je nach Ergebnis der Validierung aus.
