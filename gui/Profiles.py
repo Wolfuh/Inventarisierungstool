@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 import customtkinter as ctk
 
-import configuration
 import gui_prototyp
 import Mainpages
 import os
@@ -51,6 +50,7 @@ class Profil(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         from ThemeManager import ThemeManager
+        from configuration import Einstellungen
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         self.configure(bg='white')
 
@@ -149,7 +149,7 @@ class Profil(tk.Frame):
             einstellungen_button = tk.Button(verzeichniss, text="Einstellungen", bd=0, bg=ThemeManager.SRH_Grey,
                                              fg='black',
                                              font=("Inter", 20, 'bold'),
-                                             command=lambda: controller.show_frame(configuration.Einstellungen))
+                                             command=lambda: controller.show_frame(Einstellungen))
             verzeichniss_help_button = tk.Button(verzeichniss, text="Hilfe", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                                  font=("Inter", 20, 'bold'),
                                                  command=lambda: controller.show_frame(Help))
@@ -215,6 +215,7 @@ class Admin_User(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         from ThemeManager import ThemeManager
+        from configuration import Einstellungen
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         self.configure(bg='white')
 
@@ -355,7 +356,7 @@ class Admin_User(tk.Frame):
             einstellungen_button = tk.Button(verzeichniss, text="Einstellungen", bd=0, bg=ThemeManager.SRH_Grey,
                                              fg='black',
                                              font=("Inter", 20, 'bold'),
-                                             command=lambda: controller.show_frame(configuration.Einstellungen))
+                                             command=lambda: controller.show_frame(Einstellungen))
             verzeichniss_help_button = tk.Button(verzeichniss, text="Hilfe", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                                  font=("Inter", 20, 'bold'),
                                                  command=lambda: controller.show_frame(Help))
@@ -463,6 +464,7 @@ class Admin(tk.Frame):
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         tk.Frame.__init__(self, parent)
         from ThemeManager import ThemeManager
+        from configuration import Einstellungen
         self.configure(bg='white')
 
         # Header-Label für die Profilseite
@@ -519,7 +521,7 @@ class Admin(tk.Frame):
 
         einstellungen_button = tk.Button(verzeichniss, text="Einstellungen", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                          font=("Inter", 20, 'bold'),
-                                         command=lambda: controller.show_frame(configuration.Einstellungen))
+                                         command=lambda: controller.show_frame(Einstellungen))
         einstellungen_button.pack(pady=10, anchor='w')
 
         verzeichniss_help_button = tk.Button(verzeichniss, text="Hilfe", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -634,6 +636,7 @@ class Stats(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         from ThemeManager import ThemeManager
+        from configuration import Einstellungen
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         self.configure(bg='white')
 
@@ -690,7 +693,7 @@ class Stats(tk.Frame):
 
         einstellungen_button = tk.Button(verzeichniss, text="Einstellungen", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                          font=("Inter", 20, 'bold'),
-                                         command=lambda: controller.show_frame(configuration.Einstellungen))
+                                         command=lambda: controller.show_frame(Einstellungen))
         einstellungen_button.pack(pady=10, anchor='w')
 
         verzeichniss_help_button = tk.Button(verzeichniss, text="Hilfe", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -722,6 +725,7 @@ class Help(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         from ThemeManager import ThemeManager
+        from configuration import Einstellungen
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         self.configure(bg='white')
 
@@ -819,6 +823,8 @@ class Help(tk.Frame):
         help.place(relx=0.85, rely=0.5, anchor="center")
 
         # Linksseitige Navigationsbutton für verschiedene Ansichten
+
+
         user_button = tk.Button(verzeichniss, text="User", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                 font=("Inter", 20, 'bold'),
                                 command=lambda: controller.show_frame(Profil))
@@ -834,9 +840,10 @@ class Help(tk.Frame):
                                  command=lambda: controller.show_frame(Stats))
         stats_button.pack(pady=10, anchor='w')
 
+
         einstellungen_button = tk.Button(verzeichniss, text="Einstellungen", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                          font=("Inter", 20, 'bold'),
-                                         command=lambda: controller.show_frame(configuration.Einstellungen))
+                                         command=lambda: controller.show_frame(Einstellungen))
         einstellungen_button.pack(pady=10, anchor='w')
 
         verzeichniss_help_button = tk.Button(verzeichniss, text="Hilfe", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
