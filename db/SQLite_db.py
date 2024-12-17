@@ -197,6 +197,52 @@ def item_update_damage(name,tag,foreign_item_num, type, image, description, entr
         print(f"Database error: {e}")
         return False
 
+def update_item(item_data):
+    """
+    Aktualisiert einen bestehenden Eintrag in der Tabelle 'items' anhand der ID.
+
+    :param db_path: Pfad zur SQLite-Datenbankdatei
+    :param item_data: Ein Dictionary mit den Schlüsseln:
+                      'ID', 'Name', 'Gruppe', 'Raum', 'amount',
+                      'Details', 'service_tag', 'added_by_user',
+                      'Typ', 'Status'
+    """
+    query = """
+    UPDATE items
+    SET Name = :Name,
+        Gruppe = :Gruppe,
+        Raum = :Raum,
+        amount = :amount,
+        Details = :Details,
+        service_tag = :service_tag,
+        added_by_user = :added_by_user,
+        Typ = :Typ,
+        Status = :Status
+    WHERE ID = :ID;
+    """
+
+    try:
+        # Verbindung zur Datenbank herstellen
+        connection = init_connection()
+        cursor = connection.cursor()
+
+        # SQL-Query ausführen
+        cursor.execute(query, item_data)
+
+        # Änderungen speichern
+        connection.commit()
+        if cursor.rowcount > 0:
+            print("Eintrag erfolgreich aktualisiert.")
+        else:
+            print("Kein Eintrag mit der angegebenen ID gefunden.")
+
+    except sqlite3.Error as e:
+        print(f"Fehler beim Aktualisieren der Daten: {e}")
+
+    finally:
+        # Verbindung schließen
+        if connection:
+            connection.close()
 
 
 ##############################

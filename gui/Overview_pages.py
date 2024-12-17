@@ -583,6 +583,7 @@ class Gerateansicht(tk.Frame):
         self.typ_aktuell_label.place(x=5, y=50)
         typ_frame.place(x=900, y=220)
 
+
         # Dropdown Menü Typen
         typ_drop = tk.Button(typ_frame, text="↓", bd=0, bg='white',
                              font=("Inter", 20, 'bold'),
@@ -941,8 +942,11 @@ class Gerateansicht(tk.Frame):
 
         # Button Speichern
         def button_click():
+            update_item(self.update_items_on_save())
             controller.show_frame(Ubersicht)
+            
             messagebox.showinfo("Erfolgreich", "Änderungen erfolgreich gespeichert")
+            
 
         speichern_button = tk.Button(buttons_frame, image=self.speichern_img, bd=0, bg='white', command=button_click)
         speichern_button.place(x=330, y=10)
@@ -954,6 +958,8 @@ class Gerateansicht(tk.Frame):
                                command=lambda: controller.show_frame(Ubersicht))
 
         all_button.pack(pady=10, anchor='w')
+
+        
 
         def show_dropdown_grp1():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
@@ -1086,11 +1092,14 @@ class Gerateansicht(tk.Frame):
         help.place(relx=0.85, rely=0.5, anchor="center")
         mainpage.place(relx=0.16, rely=0.16, anchor='nw')
 
+
+
+
+
     def update_data(self, data):
 
         self.name_entry.delete(0, tk.END)
         self.name_entry.insert(0, data[1])
-
         self.tag_entry.delete(0, tk.END)
         self.tag_entry.insert(0, data[6])
 
@@ -1106,3 +1115,19 @@ class Gerateansicht(tk.Frame):
 
         self.standort_entry.delete(0, tk.END)
         self.standort_entry.insert(0, data[2])
+
+    def update_items_on_save(self): #Gibt ein Dictonairy mit allen Akktuellen Werten des Items zurück
+        import cache
+        updated_items = {
+                                "ID": cache.selected_item[0],
+                                "Name": self.name_entry.get(),
+                                "Gruppe": cache.selected_item[2],
+                                "Raum": self.standort_entry.get(),
+                                "amount": cache.selected_item[4],
+                                "Details": self.details_entry.get(),
+                                "service_tag": self.tag_entry.get(),
+                                "added_by_user": cache.selected_item[7],
+                                "Typ": self.typ_aktuell_label.cget("text"),
+                                "Status": self.status_aktuell_label.cget("text")
+                            }
+        return updated_items
