@@ -1089,17 +1089,17 @@ class Gerateansicht(tk.Frame):
     def update_data(self, data):
 
         self.name_entry.delete(0, tk.END)
-        self.name_entry.insert(0, data[0])
+        self.name_entry.insert(0, data[1])
 
         self.tag_entry.delete(0, tk.END)
-        self.tag_entry.insert(0, data[5])
+        self.tag_entry.insert(0, data[6])
 
-        self.typ_aktuell_label.configure(text=data[6])
+        self.typ_aktuell_label.configure(text=data[7])
 
-        self.status_aktuell_label.configure(text=data[7])
+        self.status_aktuell_label.configure(text=data[8])
 
         self.details_entry.delete(0, tk.END)
-        self.details_entry.insert(0, data[4])
+        self.details_entry.insert(0, data[5])
 
         self.anzahl_entry.delete(0, tk.END)
         self.anzahl_entry.insert(0, data[3])
