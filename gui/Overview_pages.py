@@ -34,7 +34,7 @@ class Ubersicht(tk.Frame):
     :ivar mainpage_frame: Frame für die Navigationsbutton, um zur Hauptseite zurückzukehren.
     :ivar tree: Baumstruktur für die tabellarische Darstellung von Daten.
     """
-
+    
     def __init__(self, parent, controller):
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         tk.Frame.__init__(self, parent)
@@ -102,9 +102,10 @@ class Ubersicht(tk.Frame):
         tree = ttk.Treeview(self.tabelle_frame, columns=("c1", "c2", "c3", "c4", "c5"), show="headings",
                             height=5)
 
-        def show_right_table(item_position: int, suchgruppe,
-                             search_word):  # item_position benötigt Zahl, für den gesuchten Ort
+        def show_right_table(item_position: int, suchgruppe, search_word):  
+            # item_position benötigt Zahl, für den gesuchten Ort
             # Spaltennamen aus der Datenbank holen
+            print(item_position, suchgruppe, search_word)
             items_uberschrift = fetch_headers("items", [""])
 
             # Überschriften konfigurieren
@@ -137,6 +138,7 @@ class Ubersicht(tk.Frame):
                     color = "#f3f3f3" if i % 2 == 0 else "white"
                     tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
                     i += 1
+            print("wurde erfolgt")
 
         # Gruppe 1
         def show_dropdown_grp1():
@@ -360,6 +362,7 @@ class Ubersicht(tk.Frame):
         tree.configure(yscrollcommand=scroll.set)
 
         def starting_table():
+            print("TOBIASSS")
             # Spaltennamen aus der Datenbank holen
             tree.delete(*tree.get_children())
             items_uberschrift = fetch_headers("items", [""])
@@ -380,7 +383,17 @@ class Ubersicht(tk.Frame):
                 color = "#f3f3f3" if i % 2 == 0 else "white"
                 tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
 
-        starting_table()
+        current_group = Mainpages.MainPage.get_current_group() 
+
+        def show_the_active_group():
+            if current_group:
+                show_right_table(2,"1","ANDERE")
+                print("richtig aufgerufen")
+                print(current_group)
+            else:
+                starting_table()
+                print("falsch aufgerufen")
+        show_the_active_group()
 
         # Gerät aus Tabelle öffnen
         def on_item_select(event):
@@ -409,6 +422,10 @@ class Ubersicht(tk.Frame):
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
         self.tabelle_frame.place(relx=0.15, rely=0.3, relwidth=0.85, height=800)
+
+                   
+
+        
 
 
 def showDetails(selected_Item, tree, controller):

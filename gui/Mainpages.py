@@ -6,7 +6,7 @@ from customtkinter import *
 import gui_prototyp
 import Overview_pages
 import Profiles
-
+current_group = ""  # Globale Variable zur Speicherung der Gruppe
 
 class MainPage(tk.Frame):
     """
@@ -85,29 +85,29 @@ class MainPage(tk.Frame):
 
         all = ctk.CTkButton(self, text="Alle Anzeigen", fg_color='white', text_color=ThemeManager.SRH_Blau,
                                      font=("Inter", 20), corner_radius=8, hover=False,
-                                     command=lambda: controller.show_frame(Overview_pages.Ubersicht))
+                                     command=lambda: controller.show_frame(Overview_pages.Ubersicht))       
+
         def handle_group_click(controller, group):
+            global current_group
+            current_group = group
+            obj1 = Overview_pages.Ubersicht(parent, controller)
             print(f"Gruppe {group} wurde geklickt!")
-            #controller.set_current_group()
+            
             controller.show_frame(Overview_pages.Ubersicht)
 
         i = 1
         place = 0
         self.images = []  # Liste, um Bildreferenzen zu speichern
-        print("jetzt gehts loossss")
+        
         while i < 9:
             # Bild für den Button laden
             img = tk.PhotoImage(file=root_path + f"/gui/assets/Gruppe{i}.png")
-            print("bild wird auf variable gesetzt")
             self.images.append(img)  # Bildreferenz speichern, damit es nicht gelöscht wird
-            print("knopf wird erstellt")
-            
+                        
             # Button erstellen
             bildgr = tk.Button(self, image=img, bd=0, bg='white',
                        command=lambda group=i: handle_group_click(controller, group))
                                                     
-            print("ähhh irgentwas")
-            
             # Position bestimmen
             if i > 4:
                 hight = 0.55
@@ -118,14 +118,8 @@ class MainPage(tk.Frame):
                 
             place = place + 0.2
             bildgr.place(relx=place, rely=hight, anchor='n')
-            print(i)
-            
-            i += 1
-            
-        
-            
-
-              
+                        
+            i += 1             
 
         seitevor = ctk.CTkButton(self, image=self.imgseitevor, text="", fg_color='white', text_color='black',
                                  font=("Inter", 20, 'bold'),
@@ -149,6 +143,10 @@ class MainPage(tk.Frame):
         seitevor.place(relx=0.51, rely=0.80, anchor='n')
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
         bottom.place(relx=0, rely=0.85, relwidth=1, relheight=0.13)
+    def get_current_group(): # gibt die aktuelle Gruppe zurück
+        print("HÄÄÄ")
+        print(current_group)
+        return current_group
 
 
 class MainPageS2(tk.Frame):
@@ -400,3 +398,4 @@ class Mainpage_empty(tk.Frame):
         seiteback.place(relx=0.49, rely=0.80, anchor='n')
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
         bottom.place(relx=0, rely=0.85, relwidth=1, relheight=0.13)
+
