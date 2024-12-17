@@ -66,14 +66,7 @@ class MainPage(tk.Frame):
         self.imglogin = gui_prototyp.load_image(root_path+"/gui/assets/Closeicon.png")
         self.imgprofil = gui_prototyp.load_image(root_path+"/gui/assets/profileicon.png")
         self.imghelp = tk.PhotoImage(file=root_path + "/gui/assets/helpicon.png")
-        self.imgbildgr1 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe_1.png")
-        self.imgbildgr2 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe2.png")
-        self.imgbildgr3 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe3.png")
-        self.imgbildgr4 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe4.png")
-        self.imgbildgr5 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe5.png")
-        self.imgbildgr6 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe6.png")
-        self.imgbildgr7 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe7.png")
-        self.imgbildgr8 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe8.png")
+        
         self.imgseitevor = tk.PhotoImage(file=root_path+"/gui/assets/pageforward_icon.png")
 
         # Platzierung der Buttons
@@ -86,26 +79,49 @@ class MainPage(tk.Frame):
                              hover=True, hover_color='#e25a1f', text="",
                              command=lambda: controller.show_frame(Profiles.Help))
 
-        bildgr1 = tk.Button(self, image=self.imgbildgr1, bd=0, bg='white',
-                            command=lambda: controller.show_frame(Overview_pages.Ubersicht))
-        bildgr2 = tk.Button(self, image=self.imgbildgr2, bd=0, bg='white',
-                            command=lambda: controller.show_frame(Overview_pages.Ubersicht))
-        bildgr3 = tk.Button(self, image=self.imgbildgr3, bd=0, bg='white',
-                            command=lambda: controller.show_frame(Overview_pages.Ubersicht))
-        bildgr4 = tk.Button(self, image=self.imgbildgr4, bd=0, bg='white',
-                            command=lambda: controller.show_frame(Overview_pages.Ubersicht))
-        bildgr5 = tk.Button(self, image=self.imgbildgr5, bd=0, bg='white',
-                            command=lambda: controller.show_frame(Overview_pages.Ubersicht))
-        bildgr6 = tk.Button(self, image=self.imgbildgr6, bd=0, bg='white',
-                            command=lambda: controller.show_frame(Overview_pages.Ubersicht))
-        bildgr7 = tk.Button(self, image=self.imgbildgr7, bd=0, bg='white',
-                            command=lambda: controller.show_frame(Overview_pages.Ubersicht))
-        bildgr8 = tk.Button(self, image=self.imgbildgr8, bd=0, bg='white',
-                            command=lambda: controller.show_frame(Overview_pages.Ubersicht))
-
         all = ctk.CTkButton(self, text="Alle Anzeigen", fg_color='white', text_color=ThemeManager.SRH_Blau,
                                      font=("Inter", 20), corner_radius=8, hover=False,
                                      command=lambda: controller.show_frame(Overview_pages.Ubersicht))
+        def handle_group_click(controller, group):
+            print(f"Gruppe {group} wurde geklickt!")
+            #controller.set_current_group()
+            controller.show_frame(Overview_pages.Ubersicht)
+
+        i = 1
+        place = 0
+        self.images = []  # Liste, um Bildreferenzen zu speichern
+        print("jetzt gehts loossss")
+        while i < 9:
+            # Bild für den Button laden
+            img = tk.PhotoImage(file=root_path + f"/gui/assets/Gruppe{i}.png")
+            print("bild wird auf variable gesetzt")
+            self.images.append(img)  # Bildreferenz speichern, damit es nicht gelöscht wird
+            print("knopf wird erstellt")
+            
+            # Button erstellen
+            bildgr = tk.Button(self, image=img, bd=0, bg='white',
+                       command=lambda group=i: handle_group_click(controller, group))
+                                                    
+            print("ähhh irgentwas")
+            
+            # Position bestimmen
+            if i > 4:
+                hight = 0.55
+                if i == 5:
+                    place = 0  # Zurücksetzen der horizontalen Position
+            else:
+                hight = 0.25
+                
+            place = place + 0.2
+            bildgr.place(relx=place, rely=hight, anchor='n')
+            print(i)
+            
+            i += 1
+            
+        
+            
+
+              
 
         seitevor = ctk.CTkButton(self, image=self.imgseitevor, text="", fg_color='white', text_color='black', font=("Inter", 20, 'bold'),
                       corner_radius=8, hover=False,
@@ -122,15 +138,6 @@ class MainPage(tk.Frame):
         profil.place(relx=0.90, rely=0.5, anchor="center")
         help.place(relx=0.85, rely=0.5, anchor="center")
 
-        bildgr1.place(relx=0.20, rely=0.25, anchor='n')
-        bildgr2.place(relx=0.40, rely=0.25, anchor='n')
-        bildgr3.place(relx=0.60, rely=0.25, anchor='n')
-        bildgr4.place(relx=0.80, rely=0.25, anchor='n')
-
-        bildgr5.place(relx=0.20, rely=0.55, anchor='n')
-        bildgr6.place(relx=0.40, rely=0.55, anchor='n')
-        bildgr7.place(relx=0.60, rely=0.55, anchor='n')
-        bildgr8.place(relx=0.80, rely=0.55, anchor='n')
 
         all.place(relx=0.01, rely=0.18, anchor='w')
         seitevor.place(relx=0.51, rely=0.80, anchor='n')
@@ -196,7 +203,7 @@ class MainPageS2(tk.Frame):
         self.imglogin = gui_prototyp.load_image(root_path+"/gui/assets/Closeicon.png")
         self.imgprofil = gui_prototyp.load_image(root_path+"/gui/assets/profileicon.png")
         self.imghelp = tk.PhotoImage(file=root_path + "/gui/assets/helpicon.png")
-        self.imgbildgr1 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe_1.png")
+        self.imgbildgr1 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe1.png")
         self.imgbildgr2 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe2.png")
         self.imgbildgr3 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe3.png")
         self.imgbildgr4 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe4.png")
@@ -220,6 +227,13 @@ class MainPageS2(tk.Frame):
                              hover=True, hover_color='#e25a1f', text="",
                              command=lambda: controller.show_frame(Profiles.Help))
 
+        # Buttons zum Wechseln zwischen den Hauptseiten und "Alle anzeigen" Button für die Übersichtsseite
+        all = ctk.CTkButton(self, text="Alle Anzeigen", fg_color='white', text_color=ThemeManager.SRH_Blau,
+                            font=("Inter", 20), corner_radius=8, hover=False,
+                            command=lambda: controller.show_frame(Overview_pages.Ubersicht))
+
+
+
         bildgr1 = tk.Button(self, image=self.imgbildgr1, bd=0, bg='white',
                             command=lambda: controller.show_frame(Overview_pages.Ubersicht))
         bildgr2 = tk.Button(self, image=self.imgbildgr2, bd=0, bg='white',
@@ -237,10 +251,7 @@ class MainPageS2(tk.Frame):
         # bildgr8 = tk.Button(self, image=self.imgbildgr8, bd=0, bg='white',
         # command=lambda: controller.show_frame(Ubersicht))
 
-        # Buttons zum Wechseln zwischen den Hauptseiten und "Alle anzeigen" Button für die Übersichtsseite
-        all = ctk.CTkButton(self, text="Alle Anzeigen", fg_color='white', text_color=ThemeManager.SRH_Blau,
-                            font=("Inter", 20), corner_radius=8, hover=False,
-                            command=lambda: controller.show_frame(Overview_pages.Ubersicht))
+        
 
         seitevor = ctk.CTkButton(self, image=self.imgseitevor, text="", fg_color='white', text_color='black',
                                  font=("Inter", 20, 'bold'),
