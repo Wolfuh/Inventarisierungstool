@@ -1,13 +1,11 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
-from tkinter import *
 import customtkinter as ctk
 from customtkinter import *
 
 import os
 import gui_prototyp
 import Mainpages
-import configuration
 import Profiles
 from datetime import datetime
 from tkinter import simpledialog
@@ -63,8 +61,8 @@ class Ubersicht(tk.Frame):
         self.rowconfigure(0, weight=1)
 
         # Laden der Bilder für die Navigation und Header Buttons
-        self.imglogin = gui_prototyp.load_image(root_path+"/gui/assets/Closeicon.png")
-        self.imgprofil = gui_prototyp.load_image(root_path+"/gui/assets/profileicon.png")
+        self.imglogin = gui_prototyp.load_image(root_path + "/gui/assets/Closeicon.png")
+        self.imgprofil = gui_prototyp.load_image(root_path + "/gui/assets/profileicon.png")
         self.imghelp = tk.PhotoImage(file=root_path + "/gui/assets/helpicon.png")
         self.imgmainpage = tk.PhotoImage(file=root_path + "/gui/assets/backtosite_icon_grey.png")
 
@@ -87,24 +85,27 @@ class Ubersicht(tk.Frame):
         profil.place(relx=0.90, rely=0.5, anchor="center")
         help.place(relx=0.85, rely=0.5, anchor="center")
 
-        mainpage = ctk.CTkButton(self.mainpage_frame, text="↩", fg_color='white', text_color=ThemeManager.SRH_Grey, width=5,
+        mainpage = ctk.CTkButton(self.mainpage_frame, text="↩", fg_color='white', text_color=ThemeManager.SRH_Grey,
+                                 width=5,
                                  font=("Inter", 50, 'bold'), corner_radius=8, hover=False,
                                  command=lambda: controller.show_frame(Mainpages.MainPage))
         mainpage.place(relx=0, rely=0)
 
         # "Alle Anzeigen" Button in der Seitenleiste
-        all_button = ctk.CTkButton(verzeichniss, text="Alle Anzeigen", fg_color=ThemeManager.SRH_Grey, text_color='black',
-                            font=("Inter", 20), corner_radius=8, hover=False,
-                            command=lambda: starting_table())                            #controller.show_frame(Ubersicht))
+        all_button = ctk.CTkButton(verzeichniss, text="Alle Anzeigen", fg_color=ThemeManager.SRH_Grey,
+                                   text_color='black',
+                                   font=("Inter", 20), corner_radius=8, hover=False,
+                                   command=lambda: starting_table())  # controller.show_frame(Ubersicht))
 
         all_button.pack(pady=10, anchor='w')
 
         tree = ttk.Treeview(self.tabelle_frame, columns=("c1", "c2", "c3", "c4", "c5"), show="headings",
                             height=5)
 
-        def show_right_table(item_position: int, suchgruppe, search_word): # item_position benötigt Zahl, für den gesuchten Ort
+        def show_right_table(item_position: int, suchgruppe,
+                             search_word):  # item_position benötigt Zahl, für den gesuchten Ort
             # Spaltennamen aus der Datenbank holen
-            items_uberschrift = fetch_headers("items",[""])
+            items_uberschrift = fetch_headers("items", [""])
 
             # Überschriften konfigurieren
             tree["columns"] = items_uberschrift
@@ -114,26 +115,28 @@ class Ubersicht(tk.Frame):
 
             items_data = fetch_tables("items", [""])
 
-            tree.delete(* tree.get_children())
+            tree.delete(*tree.get_children())
 
             type_sort = ["Hardwawre", "Software", "Peripherie"]
 
             # Daten aus DB einfügen
             i = 0
             for item in items_data:
-                if (item[2] and str(item[2]) == suchgruppe) and search_word == "ANDERE" and not str(item[item_position]) in type_sort:
-                    formatted_row = [value if value is not None else "-" for value in item] # Leere Felder durch "-" ersetzen
+                if (item[2] and str(item[2]) == suchgruppe) and search_word == "ANDERE" and not str(
+                        item[item_position]) in type_sort:
+                    formatted_row = [value if value is not None else "-" for value in
+                                     item]  # Leere Felder durch "-" ersetzen
                     color = "#f3f3f3" if i % 2 == 0 else "white"
                     tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
                     i += 1
 
-                elif (item[2] and str(item[2]) == suchgruppe) and (not search_word or str(item[item_position]) == search_word):
-                    formatted_row = [value if value is not None else "-" for value in item] # Leere Felder durch "-" ersetzen
+                elif (item[2] and str(item[2]) == suchgruppe) and (
+                        not search_word or str(item[item_position]) == search_word):
+                    formatted_row = [value if value is not None else "-" for value in
+                                     item]  # Leere Felder durch "-" ersetzen
                     color = "#f3f3f3" if i % 2 == 0 else "white"
                     tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
                     i += 1
-
-
 
         # Gruppe 1
         def show_dropdown_grp1():
@@ -266,7 +269,7 @@ class Ubersicht(tk.Frame):
         self.imgHinzufugen = gui_prototyp.load_image(root_path+"/gui/assets/Adding_Icon.png")
         self.imgAktionen = gui_prototyp.load_image(root_path+"/gui/assets/Aktionen_Button.png")
 
-        def fill_in_sort(table,where, DESC_OR_ASC):
+        def fill_in_sort(table, where, DESC_OR_ASC):
             items_uberschrift = fetch_headers("items",[""])
 
             # Überschriften konfigurieren
@@ -275,26 +278,25 @@ class Ubersicht(tk.Frame):
                 tree.column(up, anchor=CENTER, width=100)
                 tree.heading(up, text=up)
 
-            items_data = table_sort(table,where,[""], DESC_OR_ASC)
+            items_data = table_sort(table, where, [""], DESC_OR_ASC)
 
-            tree.delete(* tree.get_children())
+            tree.delete(*tree.get_children())
 
             # Daten aus DB einfügen
             i = 0
             for item in items_data:
-                formatted_row = [value if value is not None else "-" for value in item] # Leere Felder durch "-" ersetzen
+                formatted_row = [value if value is not None else "-" for value in
+                                 item]  # Leere Felder durch "-" ersetzen
                 color = "#f3f3f3" if i % 2 == 0 else "white"
                 tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
                 i += 1
 
-
-
         # Filterfunktion
         def show_dropdown_Filter():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg='white', fg='black')
-            dropdown_menu.add_command(label="→ Status", command=lambda: fill_in_sort("items","Status","DESC"))
-            dropdown_menu.add_command(label="→ ID", command=lambda: fill_in_sort("items","ID","ASC"))
-            dropdown_menu.add_command(label="→ Typ", command=lambda: fill_in_sort("items","Typ","DESC"))
+            dropdown_menu.add_command(label="→ Status", command=lambda: fill_in_sort("items", "Status", "DESC"))
+            dropdown_menu.add_command(label="→ ID", command=lambda: fill_in_sort("items", "ID", "ASC"))
+            dropdown_menu.add_command(label="→ Typ", command=lambda: fill_in_sort("items", "Typ", "DESC"))
             dropdown_menu.add_command(label="→ Andere", command=lambda: print("nach anderen sortieren"))
             dropdown_menu.post(Filter_button.winfo_rootx(), Filter_button.winfo_rooty() + Filter_button.winfo_height())
 
@@ -306,10 +308,10 @@ class Ubersicht(tk.Frame):
         # Suche
 
         def search_bar_output():
-            suche_text = suche_entry.get()            
+            suche_text = suche_entry.get()
             search_results = search_bar_update(suche_text)
-            tree.delete(* tree.get_children())
-            
+            tree.delete(*tree.get_children())
+
             # Daten aus DB einfügen
             i = 0
             for item in search_results:
@@ -317,14 +319,14 @@ class Ubersicht(tk.Frame):
                 tree.insert("", "end", values=item, tags=("even" if i % 2 == 0 else "odd"))
                 i += 1
 
-
-        suche_button = ctk.CTkButton(self.ubersicht_frame, image=self.imgSuche, corner_radius=8, border_width=0, fg_color="transparent", hover_color='#D9D9D9',
-                                 command=lambda: search_bar_output())
-        suche_entry = ctk.CTkEntry(self.ubersicht_frame, corner_radius=8, fg_color="#D9D9D9",  text_color="black", border_width=0, font=("Inter", 12))
+        suche_button = ctk.CTkButton(self.ubersicht_frame, image=self.imgSuche, corner_radius=8, border_width=0,
+                                     fg_color="transparent", hover_color='#D9D9D9',
+                                     command=lambda: search_bar_output())
+        suche_entry = ctk.CTkEntry(self.ubersicht_frame, corner_radius=8, fg_color="#D9D9D9", text_color="black",
+                                   border_width=0, font=("Inter", 12))
 
         suche_button.place(relx=0.1, rely=0.1, relheight=0.04, relwidth=0.022)
         suche_entry.place(relx=0.125, rely=0.1, relwidth=0.33, relheight=0.04)
-
 
         # Hinzufügen
         Hinzufugen_button = tk.Button(self.ubersicht_frame, image=self.imgHinzufugen, bd=0, bg='white',
@@ -339,13 +341,12 @@ class Ubersicht(tk.Frame):
         # Tabelle
         # Styling
         style = ttk.Style()
-        #style.theme_use("")
+        # style.theme_use("")
         style.configure("Treeview.Heading", font=("Inter", 12), background="#D9D9D9", foreground="#6E6893")
         style.configure("Treeview", font=("Arial", 11), rowheight=35, background="white", foreground="black")
         style.map("Treeview", background=[("selected", "#D9D9D9")], foreground=[("selected", "black")])
         style.configure("evenrow.Treeview", background="#f2f2f2")
         style.configure("oddrow.Treeview", background="white")
-
 
         scroll = ctk.CTkScrollbar(
             self.tabelle_frame,
@@ -360,8 +361,8 @@ class Ubersicht(tk.Frame):
 
         def starting_table():
             # Spaltennamen aus der Datenbank holen
-            tree.delete(* tree.get_children())
-            items_uberschrift = fetch_headers("items",[""])
+            tree.delete(*tree.get_children())
+            items_uberschrift = fetch_headers("items", [""])
 
             # Überschriften konfigurieren
             tree["columns"] = items_uberschrift
@@ -373,10 +374,12 @@ class Ubersicht(tk.Frame):
 
             # Daten aus DB einfügen
 
-            for i,row in enumerate(items_data):
-                formatted_row = [value if value is not None else "-" for value in row] # Leere Felder durch "-" ersetzen
+            for i, row in enumerate(items_data):
+                formatted_row = [value if value is not None else "-" for value in
+                                 row]  # Leere Felder durch "-" ersetzen
                 color = "#f3f3f3" if i % 2 == 0 else "white"
                 tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
+
         starting_table()
 
         # Gerät aus Tabelle öffnen
@@ -387,26 +390,26 @@ class Ubersicht(tk.Frame):
                 selected_Item = tree.focus()
                 print(f"Ausgewähltes Item: {selected_Item}")
                 if selected_Item:
-                    #exports the data to a cache file for later usage
+                    # exports the data to a cache file for later usage
                     cache.selected_item = showDetails(selected_Item, tree, controller)
 
             except Exception as e:
                 print(f"Fehler bei der Auswahl {e}")
 
-
         tree.bind("<Double-1>", on_item_select)
 
-        #Farben für Tags definieren
+        # Farben für Tags definieren
         tree.tag_configure("even", background="#f7f7f7")
         tree.tag_configure("odd", background="white")
 
         tree.place(x=120, y=0, width=1280, height=650)
         scroll.place(x=1400, y=0)
         # Setze explizite Mindesthöhe für Zeile 5
-        #self.tabelle_frame.grid_rowconfigure(5, minsize=10)
+        # self.tabelle_frame.grid_rowconfigure(5, minsize=10)
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
         self.tabelle_frame.place(relx=0.15, rely=0.3, relwidth=0.85, height=800)
+
 
 def showDetails(selected_Item, tree, controller):
     data = tree.item(selected_Item, "values")
@@ -416,6 +419,7 @@ def showDetails(selected_Item, tree, controller):
     details.update_data(data)
     controller.show_frame(Gerateansicht)
     return data
+
 
 #######################################################################################################################
 
@@ -455,6 +459,7 @@ class Gerateansicht(tk.Frame):
     :ivar typ_aktuell_label: Text-Label zur Anzeige des aktuellen Gerätetyps.
     :type typ_aktuell_label: ctk.CTkLabel
     """
+
     def __init__(self, parent, controller):
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         tk.Frame.__init__(self, parent)
@@ -476,9 +481,9 @@ class Gerateansicht(tk.Frame):
         self.gerateansicht_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
 
         # Bilder laden
-        self.imglogin = tk.PhotoImage(file=root_path+"/gui/assets/Closeicon.png")
-        self.imgmainpage = tk.PhotoImage(file=root_path+"/gui/assets/backtosite_grey_icon.png")
-        self.imgprofil = gui_prototyp.load_image(root_path+"/gui/assets/profileicon.png")
+        self.imglogin = tk.PhotoImage(file=root_path + "/gui/assets/Closeicon.png")
+        self.imgmainpage = tk.PhotoImage(file=root_path + "/gui/assets/backtosite_grey_icon.png")
+        self.imgprofil = gui_prototyp.load_image(root_path + "/gui/assets/profileicon.png")
         self.imghelp = tk.PhotoImage(file=root_path + "/gui/assets/helpicon.png")
 
         # Stil für Header und Footer anpassen
@@ -502,10 +507,10 @@ class Gerateansicht(tk.Frame):
                              hover=True, hover_color='#e25a1f', text="",
                              command=lambda: controller.show_frame(Profiles.Help))
 
-
         # Mainpage-Button innerhalb von gerateansicht_frame, an der gleichen Position wie das profilbild in Profil
         mainpage = ctk.CTkButton(self, text="↩", fg_color='white', text_color=ThemeManager.SRH_Grey, width=5,
-                                     font=("Inter", 50, 'bold'), corner_radius=8, hover=False, command=lambda: controller.show_frame(Ubersicht))
+                                 font=("Inter", 50, 'bold'), corner_radius=8, hover=False,
+                                 command=lambda: controller.show_frame(Ubersicht))
         # Seiteninhalt
         tree = ttk.Treeview(self.gerateansicht_frame, columns=("c1", "c2", "c3"), show="headings",
                             height=5)
@@ -521,7 +526,7 @@ class Gerateansicht(tk.Frame):
         tree.configure(yscrollcommand=scroll.set)
 
         # Spaltennamen aus der Datenbank holen
-        tree.delete(* tree.get_children())
+        tree.delete(*tree.get_children())
         items_uberschrift = fetch_headers("history", ["indexnum", "foreign_item_num"])
 
         # Überschriften konfigurieren
@@ -534,12 +539,10 @@ class Gerateansicht(tk.Frame):
 
         # Daten aus DB einfügen
 
-        for i,row in enumerate(items_data):
-            formatted_row = [value if value is not None else "-" for value in row] # Leere Felder durch "-" ersetzen
+        for i, row in enumerate(items_data):
+            formatted_row = [value if value is not None else "-" for value in row]  # Leere Felder durch "-" ersetzen
             color = "#f3f3f3" if i % 2 == 0 else "white"
             tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
-
-
 
         # tree.column("#1", anchor=CENTER, width=50)
         # tree.heading("#1", text="Benutzer")
@@ -550,20 +553,21 @@ class Gerateansicht(tk.Frame):
         tree.place(x=0, y=20, relwidth=0.40, relheight=0.5)
         scroll.place(x=770, y=20, relheight=0.5)
 
-
-        name_frame = ctk.CTkFrame(self.gerateansicht_frame, width=480, height=88, bg_color='transparent', fg_color='transparent', border_width=1, border_color='#B8B7B7', corner_radius=8)
+        name_frame = ctk.CTkFrame(self.gerateansicht_frame, width=480, height=88, bg_color='transparent',
+                                  fg_color='transparent', border_width=1, border_color='#B8B7B7', corner_radius=8)
         name_label = ctk.CTkLabel(name_frame, text="Gerätename", text_color='#858383', font=("Inter", 25, 'bold'))
-        self.name_entry = ctk.CTkEntry(name_frame, text_color='black', font=("Inter", 20), border_width=0, fg_color='transparent')
+        self.name_entry = ctk.CTkEntry(name_frame, text_color='black', font=("Inter", 20), border_width=0,
+                                       fg_color='transparent')
         name_label.place(x=5, y=5)
         self.name_entry.place(x=5, y=50)
         name_frame.place(x=900, y=20)
 
-
         tag_frame = ctk.CTkFrame(self.gerateansicht_frame, width=480, height=88, bg_color='transparent',
-                                  fg_color='transparent', border_width=1, border_color='#B8B7B7', corner_radius=8)
-        tag_label = ctk.CTkLabel(tag_frame, text="Servicetag/Seriennummer", text_color='#858383', font=("Inter", 25, 'bold'))
+                                 fg_color='transparent', border_width=1, border_color='#B8B7B7', corner_radius=8)
+        tag_label = ctk.CTkLabel(tag_frame, text="Servicetag/Seriennummer", text_color='#858383',
+                                 font=("Inter", 25, 'bold'))
         self.tag_entry = ctk.CTkEntry(tag_frame, text_color='black', font=("Inter", 20), border_width=0,
-                                       fg_color='transparent')
+                                      fg_color='transparent')
         tag_label.place(x=5, y=5)
         self.tag_entry.place(x=5, y=50)
         tag_frame.place(x=900, y=120)
@@ -573,23 +577,24 @@ class Gerateansicht(tk.Frame):
         typ_label = ctk.CTkLabel(typ_frame, text="Gerätetyp", text_color='#858383',
                                  font=("Inter", 25, 'bold'))
         self.typ_aktuell_label = ctk.CTkLabel(typ_frame, text="", text_color='black',
-                                 font=("Inter", 20))
+                                              font=("Inter", 20))
         typ_label.place(x=5, y=5)
         self.typ_aktuell_label.place(x=5, y=50)
         typ_frame.place(x=900, y=220)
 
-       #Dropdown Menü Typen
+        # Dropdown Menü Typen
         typ_drop = tk.Button(typ_frame, text="↓", bd=0, bg='white',
-                                font=("Inter", 20, 'bold'),
-                                command=lambda: controller.show_frame())
+                             font=("Inter", 20, 'bold'),
+                             command=lambda: controller.show_frame())
         typ_drop = tk.Button(typ_frame, text="Typ", bd=0, bg='white', fg='black',
-                                font=("Inter", 20, 'bold'),
-                                command=lambda: controller.show_frame())
+                             font=("Inter", 20, 'bold'),
+                             command=lambda: controller.show_frame())
 
         typ_drop = tk.Button(typ_frame, text="↓", bd=0, bg='white', fg='black',
-                                font=("Inter", 20, 'bold'),
-                                command=lambda: typ_dropdown())  # Button öffnet Dropdown-Menü
+                             font=("Inter", 20, 'bold'),
+                             command=lambda: typ_dropdown())  # Button öffnet Dropdown-Menü
         typ_drop.place(x=420, y=30)
+
         def typ_dropdown():
             dropdown_menu = tk.Menu(typ_frame, tearoff=0, bd=1, bg='white', fg='black')
             dropdown_menu.add_command(label="→ PC", command=lambda: print("PC ausgewählt"))
@@ -608,25 +613,25 @@ class Gerateansicht(tk.Frame):
             )
 
         status_frame = ctk.CTkFrame(self.gerateansicht_frame, width=480, height=88, bg_color='transparent',
-                                 fg_color='transparent', border_width=1, border_color='#B8B7B7', corner_radius=8)
+                                    fg_color='transparent', border_width=1, border_color='#B8B7B7', corner_radius=8)
         status_label = ctk.CTkLabel(status_frame, text="Status", text_color='#858383',
-                                 font=("Inter", 25, 'bold'))
+                                    font=("Inter", 25, 'bold'))
         self.status_aktuell_label = ctk.CTkLabel(status_frame, text="", text_color='black',
-                                              font=("Inter", 20))
+                                                 font=("Inter", 20))
         status_label.place(x=5, y=5)
         self.status_aktuell_label.place(x=5, y=50)
         status_frame.place(x=900, y=320)
 
         status_drop = tk.Button(status_frame, text="↓", bd=0, bg='white',
-                             fg=ThemeManager.SRH_Grey,
-                             font=("Inter", 20, 'bold'),
-                             command=lambda: controller.show_frame())
+                                fg=ThemeManager.SRH_Grey,
+                                font=("Inter", 20, 'bold'),
+                                command=lambda: controller.show_frame())
         status_drop = tk.Button(status_frame, text="Status", bd=0, bg='white', fg='black',
-                             font=("Inter", 20, 'bold'),
-                             command=lambda: controller.show_frame())
+                                font=("Inter", 20, 'bold'),
+                                command=lambda: controller.show_frame())
         status_drop = tk.Button(status_frame, text="↓", bd=0, bg='white', fg='black',
-                             font=("Inter", 20, 'bold'),
-                             command=lambda: status_dropdown())  # Button öffnet Dropdown-Menü
+                                font=("Inter", 20, 'bold'),
+                                command=lambda: status_dropdown())  # Button öffnet Dropdown-Menü
         status_drop.place(x=420, y=30)
 
         # Dropdown Menü Status
@@ -635,9 +640,9 @@ class Gerateansicht(tk.Frame):
             dropdown_menu.add_command(label=f"{'✔'.ljust(3)} in Betrieb", command=lambda: print("Produkt in Betrieb"))
             dropdown_menu.add_command(label=f"{'⛔'.ljust(1)} in Wartung", command=lambda: print("Produkt in Wartung"))
             dropdown_menu.add_command(label=f"{'⚠'.ljust(1)} Beschädigt", command=lambda: print("Produkt beschädigt"))
-            dropdown_menu.add_command(label=f"{'✔'.ljust(2)} verfügbar", command=lambda: print("Produkt zum Mieten bereit"))
+            dropdown_menu.add_command(label=f"{'✔'.ljust(2)} verfügbar",
+                                      command=lambda: print("Produkt zum Mieten bereit"))
             dropdown_menu.add_command(label=f"{'❌'.ljust(3)} gemietet", command=lambda: print("Produkt gemietet"))
-
 
             dropdown_menu.post(
                 status_drop.winfo_rootx() - 62,  # Verschiebt das Menü 50 Pixel nach links
@@ -645,25 +650,25 @@ class Gerateansicht(tk.Frame):
             )
 
         anzahl_frame = ctk.CTkFrame(self.gerateansicht_frame, width=480, height=88, bg_color='transparent',
-                                      fg_color='transparent', border_width=1, border_color='#B8B7B7', corner_radius=8)
+                                    fg_color='transparent', border_width=1, border_color='#B8B7B7', corner_radius=8)
         anzahl_label = ctk.CTkLabel(anzahl_frame, text="Stückzahl", text_color='#858383',
-                                      font=("Inter", 25, 'bold'))
+                                    font=("Inter", 25, 'bold'))
         self.anzahl_entry = ctk.CTkEntry(anzahl_frame, text_color='black', font=("Inter", 20), border_width=0,
-                                           fg_color='transparent')
+                                         fg_color='transparent')
 
         details_frame = ctk.CTkFrame(self.gerateansicht_frame, width=480, height=88, bg_color='transparent',
-                                      fg_color='transparent', border_width=1, border_color='#B8B7B7', corner_radius=8)
+                                     fg_color='transparent', border_width=1, border_color='#B8B7B7', corner_radius=8)
         details_label = ctk.CTkLabel(details_frame, text="Details", text_color='#858383',
-                                      font=("Inter", 25, 'bold'))
+                                     font=("Inter", 25, 'bold'))
         self.details_entry = ctk.CTkEntry(details_frame, text_color='black', font=("Inter", 20), border_width=0,
-                                           fg_color='transparent')
+                                          fg_color='transparent')
 
         standort_frame = ctk.CTkFrame(self.gerateansicht_frame, width=480, height=88, bg_color='transparent',
-                                 fg_color='transparent', border_width=1, border_color='#B8B7B7', corner_radius=8)
+                                      fg_color='transparent', border_width=1, border_color='#B8B7B7', corner_radius=8)
         standort_label = ctk.CTkLabel(standort_frame, text="Standort (Haus, Raum)", text_color='#858383',
-                                 font=("Inter", 25, 'bold'))
+                                      font=("Inter", 25, 'bold'))
         self.standort_entry = ctk.CTkEntry(standort_frame, text_color='black', font=("Inter", 20), border_width=0,
-                                      fg_color='transparent')
+                                           fg_color='transparent')
         anzahl_label.place(x=5, y=5)
         self.anzahl_entry.place(x=5, y=50)
         anzahl_frame.place(x=900, y=420)
@@ -676,19 +681,20 @@ class Gerateansicht(tk.Frame):
         self.standort_entry.place(x=5, y=50)
         standort_frame.place(x=900, y=620)
 
-        #Button
+        # Button
         buttons_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=0, relief="solid")
-        #Img definitionen
-        self.schaeden_img = gui_prototyp.load_image(root_path+"/gui/assets/Button_Schaeden.png")
-        self.buchung_img = gui_prototyp.load_image(root_path+"/gui/assets/Button_Buchung.png")
-        self.speichern_img = gui_prototyp.load_image(root_path+"/gui/assets/Button_Speichern.png")
+        # Img definitionen
+        self.schaeden_img = gui_prototyp.load_image(root_path + "/gui/assets/Button_Schaeden.png")
+        self.buchung_img = gui_prototyp.load_image(root_path + "/gui/assets/Button_Buchung.png")
+        self.speichern_img = gui_prototyp.load_image(root_path + "/gui/assets/Button_Speichern.png")
         self.upload1_img = gui_prototyp.load_image(root_path + "/gui/assets/Button_PicDrop.png")
 
         # Button Bilder hochladen
         upload_frame = tk.Frame(self.gerateansicht_frame, bg='white')
         upload_button = tk.Button(upload_frame, image=self.upload1_img, bd=0, bg='white',
                                   command=lambda: print("Bild hochgeladen"))
-        #Button Schäden
+
+        # Button Schäden
         def open_schaeden_page():
             import cache
             schaeden_page = tk.Toplevel()  # root
@@ -708,21 +714,24 @@ class Gerateansicht(tk.Frame):
 
             name_label = tk.Label(info_frame, text="Gerätename", bg='white', font=("Inter", 19))
             name_entry_frame = ctk.CTkFrame(info_frame, width=150, height=40, bg_color='transparent',
-                                            fg_color='transparent', border_width=1, border_color='#B8B7B7', corner_radius=8)
+                                            fg_color='transparent', border_width=1, border_color='#B8B7B7',
+                                            corner_radius=8)
             name_entry = ctk.CTkEntry(name_entry_frame, text_color='black', font=("Inter", 15), border_width=0,
-                                    fg_color='transparent', width=100)
-            pre_filled_name = cache.selected_item[0] # enters the name of the selected item into the field
+                                      fg_color='transparent', width=100)
+            pre_filled_name = cache.selected_item[0]  # enters the name of the selected item into the field
             name_entry.insert(0, pre_filled_name)  # Insert text at position 0 (start of the field)
 
             tag_label = tk.Label(info_frame, text="Tag", bg='white', font=("Inter", 19))
             tag_entry_frame = ctk.CTkFrame(info_frame, width=150, height=40, bg_color='transparent',
-                                        fg_color='transparent', border_width=1, border_color='#B8B7B7', corner_radius=8)
+                                           fg_color='transparent', border_width=1, border_color='#B8B7B7',
+                                           corner_radius=8)
             tag_entry = ctk.CTkEntry(tag_entry_frame, text_color='black', font=("Inter", 15), border_width=0,
-                                    fg_color='transparent', width=100)
+                                     fg_color='transparent', width=100)
 
             date_label = tk.Label(info_frame, text="Datum", bg='white', font=("Inter", 19))
             date_entry_frame = ctk.CTkFrame(info_frame, width=150, height=40, bg_color='transparent',
-                                            fg_color='transparent', border_width=1, border_color='#B8B7B7', corner_radius=8)
+                                            fg_color='transparent', border_width=1, border_color='#B8B7B7',
+                                            corner_radius=8)
             date_entry = datetime.now().strftime("%d.%m.%Y")
             current_date = tk.Label(date_entry_frame, text=date_entry, font=("Inter", 13), bg='white', fg='black', bd=0)
 
@@ -731,13 +740,15 @@ class Gerateansicht(tk.Frame):
                                                     fg_color='transparent', border_width=1, border_color='#B8B7B7',
                                                     corner_radius=8)
             beschreibung_entry = ctk.CTkEntry(beschreibung_entry_frame, fg_color='transparent', text_color='black',
-                                            font=("Inter", 13), width=380, height=382, border_width=1,
-                                            border_color='#B8B7B7', corner_radius=8)
+                                              font=("Inter", 13), width=380, height=382, border_width=1,
+                                              border_color='#B8B7B7', corner_radius=8)
 
             # Verlauf
             verlauf_label = tk.Label(verlauf_frame, text="Verlauf", bg='white', font=("Inter", 19))
-            verlauf_inh_entry = ctk.CTkEntry(verlauf_frame, fg_color='transparent', text_color='black', font=("Inter", 13),
-                                            width=380, height=382, border_width=1, border_color='#B8B7B7', corner_radius=8)
+            verlauf_inh_entry = ctk.CTkEntry(verlauf_frame, fg_color='transparent', text_color='black',
+                                             font=("Inter", 13),
+                                             width=380, height=382, border_width=1, border_color='#B8B7B7',
+                                             corner_radius=8)
 
             # Button-Funktion
             def process_user_input():
@@ -746,21 +757,20 @@ class Gerateansicht(tk.Frame):
                 name = name_entry.get()
                 tag = tag_entry.get()
                 beschreibung = beschreibung_entry.get()
-                img = "noch kein img vorhanden" # der upload img button hat noch keine funktion
+                img = "noch kein img vorhanden"  # der upload img button hat noch keine funktion
 
                 schaeden_page.destroy()
 
                 # Hier kannst du die Daten weiterverarbeiten
-               # ausgabe an die Funktion, die die Daten in die Datenbank weiterreicht
-                item_update_damage(name,tag,cache.selected_item[1],"DMG",img,beschreibung)
-
+                # ausgabe an die Funktion, die die Daten in die Datenbank weiterreicht
+                item_update_damage(name, tag, cache.selected_item[1], "DMG", img, beschreibung)
 
             # Buttons
             schaeden_button_frame = tk.Frame(schaeden_page, bg='white', bd=1)
             close_button = tk.Button(schaeden_button_frame, image=self.aktualisieren_img, bd=0, bg='white',
-                                    command=process_user_input)
+                                     command=process_user_input)
             upload_button = tk.Button(schaeden_button_frame, image=self.upload_img, bd=0, bg='white',
-                                    command=lambda: print("Bild hochgeladen"))
+                                      command=lambda: print("Bild hochgeladen"))
 
             # Placement
             name_label.place(x=0, y=2)
@@ -788,9 +798,9 @@ class Gerateansicht(tk.Frame):
             verlauf_frame.place(x=409, y=0, width=409, height=444)
             schaeden_button_frame.place(x=409, y=444, width=409, height=150)
 
-
-        #Funktion zuende
-        schaeden_button = tk.Button(buttons_frame, image=self.schaeden_img, bd=0, bg='white', command=open_schaeden_page)
+        # Funktion zuende
+        schaeden_button = tk.Button(buttons_frame, image=self.schaeden_img, bd=0, bg='white',
+                                    command=open_schaeden_page)
         schaeden_button.place(x=5, y=10)
 
         def open_buchen_page():
@@ -809,17 +819,20 @@ class Gerateansicht(tk.Frame):
 
             name_label = tk.Label(info_frame, text="Gerätename", bg='white',
                                   font=("Inter", 19))
-            name_entry = ctk.CTkEntry(info_frame, fg_color='transparent', text_color='black', font=("Inter", 15), width=150, border_width=1, border_color='#B8B7B7', corner_radius=8)
+            name_entry = ctk.CTkEntry(info_frame, fg_color='transparent', text_color='black', font=("Inter", 15),
+                                      width=150, border_width=1, border_color='#B8B7B7', corner_radius=8)
 
             tag_label = tk.Label(info_frame, text="Servicetag", bg='white',
                                  font=("Inter", 19))
-            tag_entry = ctk.CTkEntry(info_frame, fg_color='transparent', text_color='black', font=("Inter", 15), width=150, border_width=1, border_color='#B8B7B7', corner_radius=8)
+            tag_entry = ctk.CTkEntry(info_frame, fg_color='transparent', text_color='black', font=("Inter", 15),
+                                     width=150, border_width=1, border_color='#B8B7B7', corner_radius=8)
 
             verlauf_label = tk.Label(info_frame, text="Verlauf", bg='white',
-                                          font=("Inter", 19))
-            verlauf_entry = ctk.CTkEntry(info_frame, fg_color='transparent', text_color='black', font=("Inter", 15), width=380, height=382, border_width=1, border_color='#B8B7B7', corner_radius=8)
+                                     font=("Inter", 19))
+            verlauf_entry = ctk.CTkEntry(info_frame, fg_color='transparent', text_color='black', font=("Inter", 15),
+                                         width=380, height=382, border_width=1, border_color='#B8B7B7', corner_radius=8)
 
-            #Datum
+            # Datum
             def ask_startdate():
 
                 # Benutzer nach Datum fragen
@@ -832,7 +845,8 @@ class Gerateansicht(tk.Frame):
                     start_result_label.config(text="Ungültiges Datum!")
 
             # Button zur Datumseingabe
-            ask_date_button = ctk.CTkButton(date_frame,text="Startdatum",command=ask_startdate, corner_radius=8, fg_color="#6F6C6C", text_color="white", hover_color="#081424")
+            ask_date_button = ctk.CTkButton(date_frame, text="Startdatum", command=ask_startdate, corner_radius=8,
+                                            fg_color="#6F6C6C", text_color="white", hover_color="#081424")
             ask_date_button.place(x=0, y=0)
 
             start_result_label = tk.Label(date_frame, text="Kein Datum ausgewählt", font=("Arial", 14), bg='white')
@@ -851,7 +865,8 @@ class Gerateansicht(tk.Frame):
                     end_result_label.config(text="Ungültiges Datum!")
                 # Button zur Datumseingabe
 
-            ask_date_button = ctk.CTkButton(date_frame,text="Enddatum",command=ask_enddate, corner_radius=8, fg_color="#081424", text_color="white", hover_color="#6F6C6C")
+            ask_date_button = ctk.CTkButton(date_frame, text="Enddatum", command=ask_enddate, corner_radius=8,
+                                            fg_color="#081424", text_color="white", hover_color="#6F6C6C")
             ask_date_button.place(x=0, y=100)
             # Ergebnis-Label
             end_result_label = tk.Label(date_frame, text="Kein Datum ausgewählt", font=("Arial", 14), bg='white')
@@ -861,7 +876,6 @@ class Gerateansicht(tk.Frame):
             buchen_button_frame = tk.Frame(buchen_page, bg='white', bd=1)
             close_button = tk.Button(buchen_button_frame, image=self.aktualisieren_img, bd=0, bg='white',
                                      command=buchen_page.destroy)
-
 
             # Placement
             name_label.place(x=0, y=2)
@@ -882,18 +896,18 @@ class Gerateansicht(tk.Frame):
 
         # Button Buchung
         buchung_button = tk.Button(buttons_frame, image=self.buchung_img, bd=0, bg='white',
-                                       command=open_buchen_page)
+                                   command=open_buchen_page)
         buchung_button.place(x=165, y=10)
 
-        #Button Speichern
+        # Button Speichern
         def button_click():
             controller.show_frame(Ubersicht)
-            messagebox.showinfo("Erfolgreich","Änderungen erfolgreich gespeichert")
+            messagebox.showinfo("Erfolgreich", "Änderungen erfolgreich gespeichert")
+
         speichern_button = tk.Button(buttons_frame, image=self.speichern_img, bd=0, bg='white', command=button_click)
         speichern_button.place(x=330, y=10)
 
-
-        #Verzeichniss
+        # Verzeichniss
         # "Alle Anzeigen" Button in der Seitenleiste
         all_button = tk.Button(verzeichniss, text="Alle anzeigen", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                font=("Inter", 20, 'bold'),
@@ -1031,7 +1045,6 @@ class Gerateansicht(tk.Frame):
         profil.place(relx=0.90, rely=0.5, anchor="center")
         help.place(relx=0.85, rely=0.5, anchor="center")
         mainpage.place(relx=0.16, rely=0.16, anchor='nw')
-
 
     def update_data(self, data):
 

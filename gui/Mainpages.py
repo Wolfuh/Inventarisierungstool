@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import ttk
-import os
 import customtkinter as ctk
 from customtkinter import *
 
@@ -44,6 +43,7 @@ class MainPage(tk.Frame):
     :ivar imgseitevor: Bild für den Button zur nächsten Seite.
     :type imgseitevor: PhotoImage
     """
+
     def __init__(self, parent, controller):
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         tk.Frame.__init__(self, parent)
@@ -63,17 +63,21 @@ class MainPage(tk.Frame):
         self.rowconfigure(0, weight=1)
 
         # laden der Bilder für die Buttons und der Gruppen
-        self.imglogin = gui_prototyp.load_image(root_path+"/gui/assets/Closeicon.png")
-        self.imgprofil = gui_prototyp.load_image(root_path+"/gui/assets/profileicon.png")
+        self.imglogin = gui_prototyp.load_image(root_path + "/gui/assets/Closeicon.png")
+        self.imgprofil = gui_prototyp.load_image(root_path + "/gui/assets/profileicon.png")
         self.imghelp = tk.PhotoImage(file=root_path + "/gui/assets/helpicon.png")
         
         self.imgseitevor = tk.PhotoImage(file=root_path+"/gui/assets/pageforward_icon.png")
 
         # Platzierung der Buttons
-        login = ctk.CTkButton(header, image=self.imglogin, fg_color=ThemeManager.SRH_Orange, bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
-                              hover=True, hover_color='#e25a1f', text="", command=lambda :controller.show_frame(gui_prototyp.LogInWindow))
-        profil = ctk.CTkButton(header, image=self.imgprofil, fg_color=ThemeManager.SRH_Orange, bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
-                              hover=True, hover_color='#e25a1f', text="", command=lambda: controller.show_frame(Profiles.Profil))
+        login = ctk.CTkButton(header, image=self.imglogin, fg_color=ThemeManager.SRH_Orange,
+                              bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
+                              hover=True, hover_color='#e25a1f', text="",
+                              command=lambda: controller.show_frame(gui_prototyp.LogInWindow))
+        profil = ctk.CTkButton(header, image=self.imgprofil, fg_color=ThemeManager.SRH_Orange,
+                               bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
+                               hover=True, hover_color='#e25a1f', text="",
+                               command=lambda: controller.show_frame(Profiles.Profil))
         help = ctk.CTkButton(header, image=self.imghelp, fg_color=ThemeManager.SRH_Orange,
                              bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
                              hover=True, hover_color='#e25a1f', text="",
@@ -123,9 +127,11 @@ class MainPage(tk.Frame):
 
               
 
-        seitevor = ctk.CTkButton(self, image=self.imgseitevor, text="", fg_color='white', text_color='black', font=("Inter", 20, 'bold'),
-                      corner_radius=8, hover=False,
-                      command=lambda: controller.show_frame(MainPageS2), width=200, height=30, hover_color=ThemeManager.SRH_Orange)
+        seitevor = ctk.CTkButton(self, image=self.imgseitevor, text="", fg_color='white', text_color='black',
+                                 font=("Inter", 20, 'bold'),
+                                 corner_radius=8, hover=False,
+                                 command=lambda: controller.show_frame(MainPageS2), width=200, height=30,
+                                 hover_color=ThemeManager.SRH_Orange)
 
         # Festlegung des Styles für Header- und Footer Labels, Positionierung der Navigationsbuttons im Header, die
         # Anordnung der Bildgruppen-Buttons in einem Rasterlayout, sowie Platzierungen.
@@ -181,6 +187,7 @@ class MainPageS2(tk.Frame):
     :ivar imgseiteback: Bildressource für den Rückwärts-Navigationsbutton.
     :type imgseiteback: tk.PhotoImage
     """
+
     def __init__(self, parent, controller):
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         tk.Frame.__init__(self, parent)
@@ -200,8 +207,8 @@ class MainPageS2(tk.Frame):
         self.rowconfigure(0, weight=1)
 
         # laden der Bilder für Buttons und Gruppen, Buttons für die Navigation (Login, Profil und Bildgruppen)
-        self.imglogin = gui_prototyp.load_image(root_path+"/gui/assets/Closeicon.png")
-        self.imgprofil = gui_prototyp.load_image(root_path+"/gui/assets/profileicon.png")
+        self.imglogin = gui_prototyp.load_image(root_path + "/gui/assets/Closeicon.png")
+        self.imgprofil = gui_prototyp.load_image(root_path + "/gui/assets/profileicon.png")
         self.imghelp = tk.PhotoImage(file=root_path + "/gui/assets/helpicon.png")
         self.imgbildgr1 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe1.png")
         self.imgbildgr2 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe2.png")
@@ -259,10 +266,10 @@ class MainPageS2(tk.Frame):
                                  command=lambda: controller.show_frame(Mainpage_empty), width=10, height=30,
                                  hover_color=ThemeManager.SRH_Orange)
         seiteback = ctk.CTkButton(self, image=self.imgseiteback, text="", fg_color='white', text_color='black',
-                                 font=("Inter", 20, 'bold'),
-                                 corner_radius=8, hover=False,
-                                 command=lambda: controller.show_frame(MainPage), width=10, height=30,
-                                 hover_color=ThemeManager.SRH_Orange)
+                                  font=("Inter", 20, 'bold'),
+                                  corner_radius=8, hover=False,
+                                  command=lambda: controller.show_frame(MainPage), width=10, height=30,
+                                  hover_color=ThemeManager.SRH_Orange)
 
         # Style Konfiguration für Header und Footer, Platzierung der Buttons, Header und Footer
         style = ttk.Style()
@@ -290,6 +297,7 @@ class MainPageS2(tk.Frame):
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
         bottom.place(relx=0, rely=0.85, relwidth=1, relheight=0.13)
 
+
 class Mainpage_empty(tk.Frame):
 
     def __init__(self, parent, controller):
@@ -299,10 +307,9 @@ class Mainpage_empty(tk.Frame):
         self.configure(bg='white')
 
         # Erstellung vom header und Footer und Konfiguration des Hauptanzeigenbereiches
-        #self.main_empty_frame = tk.Frame(self, bg='black')
+        # self.main_empty_frame = tk.Frame(self, bg='black')
         header = ttk.Label(self, text="Startseite", anchor="center", style="Header.TLabel")
         bottom = ttk.Label(self, style="Footer.TLabel")
-
 
         # Layout Festlegung der flexiblen Skalierung der Mainpage2
         self.columnconfigure(0, weight=1)
@@ -311,8 +318,8 @@ class Mainpage_empty(tk.Frame):
         self.rowconfigure(0, weight=1)
 
         # laden der Bilder für Buttons und Gruppen, Buttons für die Navigation (Login, Profil und Bildgruppen)
-        self.imglogin = gui_prototyp.load_image(root_path+"/gui/assets/Closeicon.png")
-        self.imgprofil = gui_prototyp.load_image(root_path+"/gui/assets/profileicon.png")
+        self.imglogin = gui_prototyp.load_image(root_path + "/gui/assets/Closeicon.png")
+        self.imgprofil = gui_prototyp.load_image(root_path + "/gui/assets/profileicon.png")
         self.imghelp = tk.PhotoImage(file=root_path + "/gui/assets/helpicon.png")
         # self.imgbildgr1 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe_1.png")
         # self.imgbildgr2 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe2.png")
@@ -322,8 +329,8 @@ class Mainpage_empty(tk.Frame):
         # self.imgbildgr6 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe6.png")
         # self.imgbildgr7 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe7.png")
         # #self.imgbildgr8 = tk.PhotoImage(file=root_path+"/gui/assets/Gruppe8.png")
-        self.imgseitevor = tk.PhotoImage(file=root_path+"/gui/assets/pageforward_icon.png")
-        self.imgseiteback = tk.PhotoImage(file=root_path+"/gui/assets/pageback_icon.png")
+        self.imgseitevor = tk.PhotoImage(file=root_path + "/gui/assets/pageforward_icon.png")
+        self.imgseiteback = tk.PhotoImage(file=root_path + "/gui/assets/pageback_icon.png")
 
         login = ctk.CTkButton(header, image=self.imglogin, fg_color=ThemeManager.SRH_Orange,
                               bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
@@ -339,7 +346,7 @@ class Mainpage_empty(tk.Frame):
                              hover=True, hover_color='#e25a1f', text="",
                              command=lambda: controller.show_frame(Profiles.Help))
 
-        #Frames für die Gruppen
+        # Frames für die Gruppen
         frame_gr1 = tk.Frame(self, bg='#FBFBFB')
         frame_gr2 = tk.Frame(self, bg='#FBFBFB')
         frame_gr3 = tk.Frame(self, bg='#FBFBFB')
@@ -361,10 +368,10 @@ class Mainpage_empty(tk.Frame):
                                  command=lambda: controller.show_frame(MainPageS2), width=10, height=30,
                                  hover_color=ThemeManager.SRH_Orange)
         seiteback = ctk.CTkButton(self, image=self.imgseiteback, text="", fg_color='white', text_color='black',
-                                 font=("Inter", 20, 'bold'),
-                                 corner_radius=8, hover=False,
-                                 command=lambda: controller.show_frame(MainPageS2), width=10, height=30,
-                                 hover_color=ThemeManager.SRH_Orange)
+                                  font=("Inter", 20, 'bold'),
+                                  corner_radius=8, hover=False,
+                                  command=lambda: controller.show_frame(MainPageS2), width=10, height=30,
+                                  hover_color=ThemeManager.SRH_Orange)
 
         # Style Konfiguration für Header und Footer, Platzierung der Buttons, Header und Footer
         style = ttk.Style()
@@ -373,12 +380,12 @@ class Mainpage_empty(tk.Frame):
         style.configure("Footer.TLabel", background=ThemeManager.SRH_Grey)
 
         ###### Plazierung #######
-        #self.main_empty_frame.place(relx=0, rely=0.15, relwidth=1, relheight=0.7)
+        # self.main_empty_frame.place(relx=0, rely=0.15, relwidth=1, relheight=0.7)
         login.place(relx=0.95, rely=0.5, anchor="center")
         profil.place(relx=0.90, rely=0.5, anchor="center")
         help.place(relx=0.85, rely=0.5, anchor="center")
 
-        frame_gr1.place(relx=0.20, rely=0.25, width=244, height=244,anchor='n')
+        frame_gr1.place(relx=0.20, rely=0.25, width=244, height=244, anchor='n')
         frame_gr2.place(relx=0.40, rely=0.25, width=244, height=244, anchor='n')
         frame_gr3.place(relx=0.60, rely=0.25, width=244, height=244, anchor='n')
         frame_gr4.place(relx=0.80, rely=0.25, width=244, height=244, anchor='n')
