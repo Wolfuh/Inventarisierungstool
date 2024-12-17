@@ -1,13 +1,13 @@
 import tkinter as tk
 from tkinter import ttk
 import customtkinter as ctk
-from customtkinter import *
 
 import gui_prototyp
 import Mainpages
 import Overview_pages
 import Profiles
 import os
+
 
 class Einstellungen(tk.Frame):
     """
@@ -40,6 +40,7 @@ class Einstellungen(tk.Frame):
     :ivar dark: Bild für die Dark-Theme-Schalterposition.
     :type dark: tk.PhotoImage
     """
+
     def __init__(self, parent, controller):
         super().__init__()
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
@@ -67,9 +68,9 @@ class Einstellungen(tk.Frame):
 
         # Navigationsbuttons im Header (Login und Mainpage)
         self.imglogin = tk.PhotoImage(
-            file=root_path+"/gui/assets/Closeicon.png")
+            file=root_path + "/gui/assets/Closeicon.png")
         self.imgmainpage = tk.PhotoImage(
-            file=root_path+"/gui/assets/backtosite_icon.png")
+            file=root_path + "/gui/assets/backtosite_icon.png")
         self.imghelp = tk.PhotoImage(file=root_path + "/gui/assets/helpicon.png")
 
         login = ctk.CTkButton(self.header, image=self.imglogin, fg_color=ThemeManager.SRH_Orange,
@@ -112,8 +113,8 @@ class Einstellungen(tk.Frame):
         einstellungen_button.pack(pady=10, anchor='w')
 
         verzeichniss_help_button = tk.Button(verzeichniss, text="Hilfe", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                         font=("Inter", 20, 'bold'),
-                                         command=lambda: controller.show_frame(Profiles.Help))
+                                             font=("Inter", 20, 'bold'),
+                                             command=lambda: controller.show_frame(Profiles.Help))
         verzeichniss_help_button.pack(pady=10, anchor='w')
 
         # Platziung des Verzeichnisses (Navigationsleiste)
@@ -156,8 +157,8 @@ class Einstellungen(tk.Frame):
 
         # Bildvariablen zur Theme-Umschaltung
         try:
-            self.light = tk.PhotoImage(file=root_path+"/gui/assets/switchoff.png")
-            self.dark = tk.PhotoImage(file=root_path+"/gui/assets/switchon.png")
+            self.light = tk.PhotoImage(file=root_path + "/gui/assets/switchoff.png")
+            self.dark = tk.PhotoImage(file=root_path + "/gui/assets/switchon.png")
         except tk.EXCEPTION as e:
             print(f"Fehler beim laden der Bilder: {e}")
             return  # Beende falls die Bilder nicht geladen werden können
@@ -243,34 +244,35 @@ class Einstellungen(tk.Frame):
         datenbank_label.place(relx=0.0, rely=0.59)
 
         def open_spalten_page():
-            spalten_page = tk.Toplevel()#root
+            spalten_page = tk.Toplevel()  # root
             spalten_page.title("Spalte hinzufügen")
             spalten_page.geometry("400x200+500+300")
             spalten_page.configure(bg='white')
 
             spalten_page.grab_set()
-            #Bilder
-            self.aktualisieren_img = gui_prototyp.load_image(root_path+"/gui/assets/Button_Aktualisieren.png")
-            self.upload_img = gui_prototyp.load_image(root_path+"/gui/assets/Button_Drop.png")
+            # Bilder
+            self.aktualisieren_img = gui_prototyp.load_image(root_path + "/gui/assets/Button_Aktualisieren.png")
+            self.upload_img = gui_prototyp.load_image(root_path + "/gui/assets/Button_Drop.png")
 
-            #Informationen
+            # Informationen
             info_frame = tk.Frame(spalten_page, bg='white', bd=1)
 
             name_label = tk.Label(info_frame, text="Name", bg='white',
-                                      font=("Inter", 19))
+                                  font=("Inter", 19))
             name_entry = tk.Entry(info_frame, bg='#D9D9D9', bd=0,
-                                      font=("Inter", 19, 'italic'))
+                                  font=("Inter", 19, 'italic'))
 
             tabelle_label = tk.Label(info_frame, text="Tabelle", bg='white',
-                                      font=("Inter", 19))
-            tabelle_entry = tk.Entry(info_frame, bg= '#D9D9D9', bd=0,
-                                      font=("Inter", 19, 'italic'))
+                                     font=("Inter", 19))
+            tabelle_entry = tk.Entry(info_frame, bg='#D9D9D9', bd=0,
+                                     font=("Inter", 19, 'italic'))
 
-            #Buttons
+            # Buttons
             button_frame = tk.Frame(spalten_page, bg='white', bd=1)
-            close_button = tk.Button(button_frame, image=self.aktualisieren_img, bd=0, bg='white', command=spalten_page.destroy)
+            close_button = tk.Button(button_frame, image=self.aktualisieren_img, bd=0, bg='white',
+                                     command=spalten_page.destroy)
 
-            #Placement
+            # Placement
             name_label.place(x=0, y=2)
             name_entry.place(x=100, y=2, width=150)
 
@@ -281,7 +283,7 @@ class Einstellungen(tk.Frame):
             info_frame.place(x=0, y=0, width=600, height=594)
             button_frame.place(x=100, y=100, width=409, height=150)
 
-        #Funktion zuende
+        # Funktion zuende
         addSpalten_button = tk.Button(self.einstellung_frame, text="Spalte\t+", bd=0, bg='white', fg='black',
                                       font=("Inter", 16),
                                       command=open_spalten_page)
@@ -289,7 +291,7 @@ class Einstellungen(tk.Frame):
         addSpalten_button.place(relx=0.01, rely=0.64, relheight=0.032)
 
         def open_typ_page():
-            typ_page = tk.Toplevel()#root
+            typ_page = tk.Toplevel()  # root
             typ_page.title("Typ hinzufügen")
             typ_page.geometry("400x200+500+300")
             typ_page.configure(bg='white')
@@ -297,23 +299,24 @@ class Einstellungen(tk.Frame):
             # Modal-Fenster aktivieren
             typ_page.grab_set()
 
-            #Bilder
-            self.aktualisieren_img = gui_prototyp.load_image(root_path+"/gui/assets/Button_Aktualisieren.png")
-            self.upload_img = gui_prototyp.load_image(root_path+"/gui/assets/Button_Drop.png")
+            # Bilder
+            self.aktualisieren_img = gui_prototyp.load_image(root_path + "/gui/assets/Button_Aktualisieren.png")
+            self.upload_img = gui_prototyp.load_image(root_path + "/gui/assets/Button_Drop.png")
 
-            #Informationen
+            # Informationen
             info_frame = tk.Frame(typ_page, bg='white', bd=1)
 
             name_label = tk.Label(info_frame, text="Name", bg='white',
-                                      font=("Inter", 19))
+                                  font=("Inter", 19))
             name_entry = tk.Entry(info_frame, bg='#D9D9D9', bd=0,
-                                      font=("Inter", 19, 'italic'))
+                                  font=("Inter", 19, 'italic'))
 
-            #Buttons
+            # Buttons
             button_frame = tk.Frame(typ_page, bg='white', bd=1)
-            close_button = tk.Button(button_frame, image=self.aktualisieren_img, bd=0, bg='white', command=typ_page.destroy)
+            close_button = tk.Button(button_frame, image=self.aktualisieren_img, bd=0, bg='white',
+                                     command=typ_page.destroy)
 
-            #Placement
+            # Placement
             name_label.place(x=0, y=2)
             name_entry.place(x=100, y=2, width=150)
 
@@ -321,41 +324,42 @@ class Einstellungen(tk.Frame):
             info_frame.place(x=0, y=0, width=600, height=594)
             button_frame.place(x=100, y=100, width=409, height=150)
 
-        #Funktion zuende
+        # Funktion zuende
         addTyp_button = tk.Button(self.einstellung_frame, text="Typ\t+", bd=0, bg='white', fg='black',
-                                     font=("Inter", 16),
-                                     command=open_typ_page)
+                                  font=("Inter", 16),
+                                  command=open_typ_page)
         addTyp_button.place(relx=0.01, rely=0.69, relheight=0.032)
 
         def open_status_page():
-            spalten_page = tk.Toplevel()#root
+            spalten_page = tk.Toplevel()  # root
             spalten_page.title("Status hinzufügen")
             spalten_page.geometry("400x200+500+300")
             spalten_page.configure(bg='white')
 
             spalten_page.grab_set()
-            #Bilder
-            self.aktualisieren_img = gui_prototyp.load_image(root_path+"/gui/assets/Button_Aktualisieren.png")
-            self.upload_img = gui_prototyp.load_image(root_path+"/gui/assets/Button_Drop.png")
+            # Bilder
+            self.aktualisieren_img = gui_prototyp.load_image(root_path + "/gui/assets/Button_Aktualisieren.png")
+            self.upload_img = gui_prototyp.load_image(root_path + "/gui/assets/Button_Drop.png")
 
-            #Informationen
+            # Informationen
             info_frame = tk.Frame(spalten_page, bg='white', bd=1)
 
             name_label = tk.Label(info_frame, text="Name", bg='white',
-                                      font=("Inter", 19))
+                                  font=("Inter", 19))
             name_entry = tk.Entry(info_frame, bg='#D9D9D9', bd=0,
-                                      font=("Inter", 19, 'italic'))
+                                  font=("Inter", 19, 'italic'))
 
             icon_label = tk.Label(info_frame, text="Icon", bg='white',
                                   font=("Inter", 19))
             icon_entry = tk.Entry(info_frame, bg='#D9D9D9', bd=0,
                                   font=("Inter", 19, 'italic'))
 
-            #Buttons
+            # Buttons
             button_frame = tk.Frame(spalten_page, bg='white', bd=1)
-            close_button = tk.Button(button_frame, image=self.aktualisieren_img, bd=0, bg='white', command=spalten_page.destroy)
+            close_button = tk.Button(button_frame, image=self.aktualisieren_img, bd=0, bg='white',
+                                     command=spalten_page.destroy)
 
-            #Placement
+            # Placement
             name_label.place(x=0, y=2)
             name_entry.place(x=100, y=2, width=150)
             icon_label.place(x=0, y=50)
@@ -365,11 +369,11 @@ class Einstellungen(tk.Frame):
             info_frame.place(x=0, y=0, width=600, height=594)
             button_frame.place(x=100, y=100, width=409, height=150)
 
-        #Funktion zuende
+        # Funktion zuende
 
         addStatus_button = tk.Button(self.einstellung_frame, text="Status\t+", bd=0, bg='white', fg='black',
-                                  font=("Inter", 16),
-                                  command=open_status_page)
+                                     font=("Inter", 16),
+                                     command=open_status_page)
         addStatus_button.place(relx=0.01, rely=0.74, relheight=0.032)
 
         addGerat_button = tk.Button(self.einstellung_frame, text="Gerät\t+", bd=0, bg='white', fg='black',
@@ -380,4 +384,3 @@ class Einstellungen(tk.Frame):
         # Platzierung der Hauptframe-Bereiche
         self.einstellung_frame.place(relx=0.15, rely=0.15, relwidth=1, relheight=0.85)
         self.header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
-

@@ -69,7 +69,7 @@ class GuiTest(tk.Tk):
 
         #Fensterkonfigurationen
         self.title("Prototyp")
-        self.resizable(False, False)
+        self.resizable(True, True)
         self.geometry("1920x1080")
         self.iconbitmap(root_path + "/gui/assets/prototyp_download.ico")
 

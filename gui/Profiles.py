@@ -1,8 +1,6 @@
 import tkinter as tk
-from operator import truediv
 from tkinter import ttk, messagebox
 import customtkinter as ctk
-from customtkinter import *
 
 import configuration
 import gui_prototyp
@@ -49,6 +47,7 @@ class Profil(tk.Frame):
     :ivar useremail: Label zur Anzeige der E-Mail-Adresse.
     :type useremail: tk.Label
     """
+
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         from ThemeManager import ThemeManager
@@ -92,14 +91,14 @@ class Profil(tk.Frame):
                                   command=lambda: controller.show_frame(gui_prototyp.LogInWindow))
 
             mainpage = ctk.CTkButton(header, image=self.imgmainpage, fg_color=ThemeManager.SRH_Orange,
-                                   bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
-                                   hover=True, hover_color='#e25a1f', text="",
-                                   command=lambda: controller.show_frame(Mainpages.MainPage))
-
-            help = ctk.CTkButton(header, image=self.imghelp, fg_color=ThemeManager.SRH_Orange,
                                      bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
                                      hover=True, hover_color='#e25a1f', text="",
-                                     command=lambda: controller.show_frame(Help))
+                                     command=lambda: controller.show_frame(Mainpages.MainPage))
+
+            help = ctk.CTkButton(header, image=self.imghelp, fg_color=ThemeManager.SRH_Orange,
+                                 bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
+                                 hover=True, hover_color='#e25a1f', text="",
+                                 command=lambda: controller.show_frame(Help))
 
             # Seiteninhalt
             profilbild = tk.Button(self.profil_frame, image=self.imgProfileTest, bd=0, bg='white',
@@ -195,6 +194,7 @@ class Profil(tk.Frame):
         thread = threading.Thread(target=update_label, daemon=True)
         thread.start()
 
+
 class Admin_User(tk.Frame):
     """
     Die Klasse "Admin_User" stellt das GUI für die Verwaltung eines
@@ -211,6 +211,7 @@ class Admin_User(tk.Frame):
     :ivar imgmainpage: Enthält das Bild``` fürpython den
      Button
      """
+
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         from ThemeManager import ThemeManager
@@ -255,60 +256,68 @@ class Admin_User(tk.Frame):
                                   command=lambda: controller.show_frame(gui_prototyp.LogInWindow))
 
             mainpage = ctk.CTkButton(header, image=self.imgmainpage, fg_color=ThemeManager.SRH_Orange,
-                                   bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
-                                   hover=True, hover_color='#e25a1f', text="",
-                                   command=lambda: controller.show_frame(Mainpages.MainPage))
-
-            help = ctk.CTkButton(header, image=self.imghelp, fg_color=ThemeManager.SRH_Orange,
                                      bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
                                      hover=True, hover_color='#e25a1f', text="",
-                                     command=lambda: controller.show_frame(Help))
+                                     command=lambda: controller.show_frame(Mainpages.MainPage))
+
+            help = ctk.CTkButton(header, image=self.imghelp, fg_color=ThemeManager.SRH_Orange,
+                                 bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
+                                 hover=True, hover_color='#e25a1f', text="",
+                                 command=lambda: controller.show_frame(Help))
 
             # Seiteninhalt
             profilbild = tk.Button(self.admin_profil_frame, image=self.imgProfileTest, bd=0, bg='white',
                                    command=lambda: controller.show_frame(Mainpages.MainPage))
             admin_username = tk.Label(self.admin_profil_frame, text="Username", bd=0, bg='white', fg='#6F6C6C',
-                                font=("Poppins", 15))
-            self.admin_username = tk.Entry(self.admin_profil_frame, text=" ", bd=0, bg='white', fg='black', font=("Poppins", 18))
+                                      font=("Poppins", 15))
+            self.admin_username = tk.Entry(self.admin_profil_frame, text=" ", bd=0, bg='white', fg='black',
+                                           font=("Poppins", 18))
 
-            admin_vorname = tk.Label(self.admin_profil_frame, text="Vorname", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 15))
-            self.admin_vorname = tk.Entry(self.admin_profil_frame, text=user_stuff[1] if user_stuff[1] else "", bd=0, bg='white',
-                                    fg='black', font=("Poppins", 18))
+            admin_vorname = tk.Label(self.admin_profil_frame, text="Vorname", bd=0, bg='white', fg='#6F6C6C',
+                                     font=("Poppins", 15))
+            self.admin_vorname = tk.Entry(self.admin_profil_frame, text=user_stuff[1] if user_stuff[1] else "", bd=0,
+                                          bg='white',
+                                          fg='black', font=("Poppins", 18))
 
             admin_nachname = tk.Label(self.admin_profil_frame, text="Nachname", bd=0, bg='white', fg='#6F6C6C',
-                                font=("Poppins", 15))
-            self.admin_nachname = tk.Entry(self.admin_profil_frame, text=user_stuff[2] if user_stuff[2] else "", bd=0, bg='white',
-                                     fg='black', font=("Poppins", 18))
+                                      font=("Poppins", 15))
+            self.admin_nachname = tk.Entry(self.admin_profil_frame, text=user_stuff[2] if user_stuff[2] else "", bd=0,
+                                           bg='white',
+                                           fg='black', font=("Poppins", 18))
 
-            admin_gruppen = tk.Label(self.admin_profil_frame, text="Gruppen", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 15))
+            admin_gruppen = tk.Label(self.admin_profil_frame, text="Gruppen", bd=0, bg='white', fg='#6F6C6C',
+                                     font=("Poppins", 15))
             self.admin_gruppen = tk.Entry(self.admin_profil_frame, text=user_stuff[3] if user_stuff[3] else "", bd=0,
-                                        bg='white', fg='black', font=("Poppins", 18))
+                                          bg='white', fg='black', font=("Poppins", 18))
 
-            admin_email = tk.Label(self.admin_profil_frame, text="Email", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 15))
+            admin_email = tk.Label(self.admin_profil_frame, text="Email", bd=0, bg='white', fg='#6F6C6C',
+                                   font=("Poppins", 15))
             self.admin_email = tk.Entry(self.admin_profil_frame, text="@srhk.de", bd=0, bg='white', fg='black',
-                                      font=("Poppins", 18))
+                                        font=("Poppins", 18))
 
-            rechte = tk.Label(self.admin_profil_frame, text="Rechte", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 15))
+            rechte = tk.Label(self.admin_profil_frame, text="Rechte", bd=0, bg='white', fg='#6F6C6C',
+                              font=("Poppins", 15))
             rechte_frame = tk.Frame(self.admin_profil_frame, bg='#D9D9D9')
             admin_adminrechte = tk.Label(self.admin_profil_frame, text="Admin", bd=0, bg='white',
-                                   fg='black' if user_stuff[0][0] == "admin" else '#6F6C6C', font=("Poppins", 18))
+                                         fg='black' if user_stuff[0][0] == "admin" else '#6F6C6C', font=("Poppins", 18))
             admin_ausbilderrechte = tk.Label(self.admin_profil_frame, text="Ausbilder", bd=0, bg='white',
-                                       fg='black' if user_stuff[0][0] == "admin" else '#6F6C6C', font=("Poppins", 18))
+                                             fg='black' if user_stuff[0][0] == "admin" else '#6F6C6C',
+                                             font=("Poppins", 18))
             admin_userrechte = tk.Label(self.admin_profil_frame, text="Schüler", bd=0, bg='white',
-                                  fg='black' if user_stuff[0][0] == 'user' else '#6F6C6C', font=("Poppins", 18))
+                                        fg='black' if user_stuff[0][0] == 'user' else '#6F6C6C', font=("Poppins", 18))
 
-            #Speicherbutton
+            # Speicherbutton
             def admin_button_click():
                 controller.show_frame(Admin)
                 messagebox.showinfo("Erfolgreich", "User erfolgreich gespeichert")
 
             admin_speichern_button = ctk.CTkButton(self, text="Speichern", fg_color=ThemeManager.SRH_Orange,
-                                                text_color="white", font=('Inter', 20, 'bold'),
-                                                corner_radius=8, hover=True, hover_color=ThemeManager.SRH_DarkBlau,
-                                                command=admin_button_click, width=137, height=44)
+                                                   text_color="white", font=('Inter', 20, 'bold'),
+                                                   corner_radius=8, hover=True, hover_color=ThemeManager.SRH_DarkBlau,
+                                                   command=admin_button_click, width=137, height=44)
             admin_speichern_button.place(x=1670, y=950)
 
-            #Löschbutton
+            # Löschbutton
             def admin_delete_click():
                 confirm = messagebox.askokcancel("Löschen", "User löschen?")
 
@@ -318,14 +327,16 @@ class Admin_User(tk.Frame):
                 else:  # Wenn der Benutzer "Abbrechen" klickt
                     messagebox.showinfo("Abgebrochen", "Löschen abgebrochen, User wurde nicht gelöscht.")
 
-            admin_delete_button = ctk.CTkButton(self, text="Löschen", fg_color=ThemeManager.SRH_DarkBlau, text_color="white",font=('Inter', 20, 'bold'),
-                                                corner_radius=8, hover=True, hover_color=ThemeManager.SRH_Orange, command=admin_delete_click, width=137, height=44)
+            admin_delete_button = ctk.CTkButton(self, text="Löschen", fg_color=ThemeManager.SRH_DarkBlau,
+                                                text_color="white", font=('Inter', 20, 'bold'),
+                                                corner_radius=8, hover=True, hover_color=ThemeManager.SRH_Orange,
+                                                command=admin_delete_click, width=137, height=44)
             admin_delete_button.place(x=1500, y=950)
 
 
             adminpage = ctk.CTkButton(self, text="↩", fg_color='white', text_color=ThemeManager.SRH_Grey, width=5,
-                                     font=("Inter", 50, 'bold'), corner_radius=8, hover=False,
-                                     command=lambda: controller.show_frame(Admin))
+                                      font=("Inter", 50, 'bold'), corner_radius=8, hover=False,
+                                      command=lambda: controller.show_frame(Admin))
             adminpage.place(relx=0.16, rely=0.16, anchor='nw')
 
             # Seitennavigations-Buttons für Benutzer, Admin, Statistiken und Einstellungen
@@ -411,9 +422,11 @@ class Admin_User(tk.Frame):
 
 class Admin(tk.Frame):
     """
-    Erstellt die Administrationsseite mit Navigation, Such- und Hinzufügefunktionen sowie einer Tabelle zur Anzeige von Benutzerdaten.
+    Erstellt die Administrationsseite mit Navigation, Such- und Hinzufügefunktionen sowie einer
+    Tabelle zur Anzeige von Benutzerdaten.
 
-    Diese Klasse konfiguriert die Administrationsansicht, in der Administratoren Benutzer verwalten, Daten anzeigen und navigieren können.
+    Diese Klasse konfiguriert die Administrationsansicht, in der Administratoren Benutzer verwalten,
+    Daten anzeigen und navigieren können.
 
     **Args:**
 
@@ -422,21 +435,27 @@ class Admin(tk.Frame):
 
     **Attributes:**
 
-    - imglogin, imgmainpage, imgSuche, imgHinzufugen (PhotoImage): Bildobjekte für Navigationsbuttons, Such- und Hinzufügen-Funktionen.
+    - imglogin, imgmainpage, imgSuche, imgHinzufugen (PhotoImage): Bildobjekte für Navigationsbuttons,
+      Such- und Hinzufügen-Funktionen.
     - header (ttk.Label): Label als Header der Seite mit dem Titel "Administration".
-    - verzeichniss (tk.Frame): Seitenleiste mit Navigationsbuttons für verschiedene Abschnitte (z. B. Benutzer, Statistiken).
-    - tabelle_frame (tk.Frame): Hauptbereich der Seite, der die Suche, die Hinzufügen-Schaltfläche und die Tabelle enthält.
+    - verzeichniss (tk.Frame): Seitenleiste mit Navigationsbuttons für verschiedene Abschnitte
+      (z. B. Benutzer, Statistiken).
+    - tabelle_frame (tk.Frame): Hauptbereich der Seite, der die Suche, die Hinzufügen-Schaltfläche
+      und die Tabelle enthält.
     - tree (ttk.Treeview): Ansicht zur Anzeige der Benutzerdaten in tabellarischer Form.
     - scroll (ttk.Scrollbar): Vertikale Bildlaufleiste für die Tabelle.
 
     **Verwendet:**
 
     - login (tk.Button), mainpage (tk.Button): Schaltflächen für die Navigation zur Login-Seite und zur Hauptseite.
-    - user_button, admin_button, stats_button, einstellungen_button (tk.Button): Schaltflächen zur Navigation zwischen Benutzern, Admin-Daten, Statistiken und Einstellungen.
-    - suche_button (ctk.CTkButton), suche_entry (ctk.CTkEntry): Suchfelder und -schaltflächen zur Filterung der Daten in der Tabelle.
+    - user_button, admin_button, stats_button, einstellungen_button (tk.Button): Schaltflächen zur Navigation
+      zwischen Benutzern, Admin-Daten, Statistiken und Einstellungen.
+    - suche_button (ctk.CTkButton), suche_entry (ctk.CTkEntry): Suchfelder und -schaltflächen zur Filterung
+      der Daten in der Tabelle.
     - Hinzufugen_button (tk.Button): Schaltfläche zum Hinzufügen eines Benutzers oder Geräts.
     - Spaltenüberschriften und Daten der Tabelle werden dynamisch aus einer Datenbank geladen.
-    - showDetails (function): Funktion, die beim Doppelklick auf einen Tabelleneintrag Details des ausgewählten Benutzers anzeigt.
+    - showDetails (function): Funktion, die beim Doppelklick auf einen Tabelleneintrag Details
+      des ausgewählten Benutzers anzeigt.
 
     """
 
@@ -549,7 +568,7 @@ class Admin(tk.Frame):
         tree.configure(yscrollcommand=scroll.set)
 
         # Spaltennamen aus der Datenbank holen
-        users_uberschrift = fetch_headers("benutzer",["Passwort"])
+        users_uberschrift = fetch_headers("benutzer", ["Passwort"])
 
         # Überschriften konfigurieren
         tree["columns"] = users_uberschrift
@@ -557,7 +576,7 @@ class Admin(tk.Frame):
             tree.column(up, anchor='center', width=100)
             tree.heading(up, text=up)
 
-        users_data = fetch_tables("benutzer",["Passwort"])
+        users_data = fetch_tables("benutzer", ["Passwort"])
 
         # Daten aus DB einfügen
 
@@ -611,6 +630,7 @@ class Stats(tk.Frame):
     :ivar imgmainpage: Bild für den Zurück-zur-Hauptseite-Button.
     :ivar imghelp: Bild für den Hilfe-Button.
     """
+
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         from ThemeManager import ThemeManager
@@ -674,13 +694,14 @@ class Stats(tk.Frame):
         einstellungen_button.pack(pady=10, anchor='w')
 
         verzeichniss_help_button = tk.Button(verzeichniss, text="Hilfe", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                font=("Inter", 20, 'bold'),
-                                command=lambda: controller.show_frame(Help))
+                                             font=("Inter", 20, 'bold'),
+                                             command=lambda: controller.show_frame(Help))
         verzeichniss_help_button.pack(pady=10, anchor='w')
 
         # Platzierung des Hauptinhaltsbereichs und der Navigationsleiste
         self.stats_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
+
 
 class Help(tk.Frame):
     """
@@ -696,7 +717,8 @@ class Help(tk.Frame):
     :ivar imgmainpage: Bild für den Zurück-zur-Hauptseite-Button.
     :ivar imghelp: Bild für den Hilfe-Button.
     """
-#from configuration import Einstellungen
+
+    # from configuration import Einstellungen
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         from ThemeManager import ThemeManager
@@ -823,8 +845,9 @@ class Help(tk.Frame):
         verzeichniss_help_button.pack(pady=10, anchor='w')
         einstellungen_button.pack(pady=10, anchor='w')
 
-        #Seiteninhalt
-        #help_frame ist ein scrollable Frame, Labels müssen auf dem Frame platziert werden, und passend angepasst werden, damit das funktioniert (siehe Beispiel)
+        # Seiteninhalt
+        # help_frame ist ein scrollable Frame, Labels müssen auf dem Frame platziert werden,
+        # und passend angepasst werden, damit das funktioniert (siehe Beispiel)
         help_frame = ctk.CTkScrollableFrame(self.hilfe_frame, fg_color='white', scrollbar_fg_color='white',
                                             scrollbar_button_hover_color=ThemeManager.SRH_Orange,
                                             scrollbar_button_color=ThemeManager.SRH_Grey, height=1000, width=1000)
