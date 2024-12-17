@@ -718,7 +718,7 @@ class Gerateansicht(tk.Frame):
                                             corner_radius=8)
             name_entry = ctk.CTkEntry(name_entry_frame, text_color='black', font=("Inter", 15), border_width=0,
                                       fg_color='transparent', width=100)
-            pre_filled_name = cache.selected_item[0]  # enters the name of the selected item into the field
+            pre_filled_name = cache.selected_item[1]  # enters the name of the selected item into the field
             name_entry.insert(0, pre_filled_name)  # Insert text at position 0 (start of the field)
 
             tag_label = tk.Label(info_frame, text="Tag", bg='white', font=("Inter", 19))
@@ -727,6 +727,8 @@ class Gerateansicht(tk.Frame):
                                            corner_radius=8)
             tag_entry = ctk.CTkEntry(tag_entry_frame, text_color='black', font=("Inter", 15), border_width=0,
                                      fg_color='transparent', width=100)
+            pre_filled_tag = cache.selected_item[6]  # enters the name of the selected item into the field
+            tag_entry.insert(0, pre_filled_tag)  # Insert text at position 0 (start of the field)
 
             date_label = tk.Label(info_frame, text="Datum", bg='white', font=("Inter", 19))
             date_entry_frame = ctk.CTkFrame(info_frame, width=150, height=40, bg_color='transparent',
@@ -763,7 +765,7 @@ class Gerateansicht(tk.Frame):
 
                 # Hier kannst du die Daten weiterverarbeiten
                 # ausgabe an die Funktion, die die Daten in die Datenbank weiterreicht
-                item_update_damage(name, tag, cache.selected_item[1], "DMG", img, beschreibung)
+                item_update_damage(name, tag, cache.selected_item[0], "DMG", img, beschreibung)
 
             # Buttons
             schaeden_button_frame = tk.Frame(schaeden_page, bg='white', bd=1)
@@ -804,6 +806,7 @@ class Gerateansicht(tk.Frame):
         schaeden_button.place(x=5, y=10)
 
         def open_buchen_page():
+            import cache
             buchen_page = tk.Toplevel()  # root
             buchen_page.title("Gerät buchen")
             buchen_page.geometry("819x594+500+300")
@@ -821,11 +824,15 @@ class Gerateansicht(tk.Frame):
                                   font=("Inter", 19))
             name_entry = ctk.CTkEntry(info_frame, fg_color='transparent', text_color='black', font=("Inter", 15),
                                       width=150, border_width=1, border_color='#B8B7B7', corner_radius=8)
+            pre_filled_name = cache.selected_item[1]  # enters the name of the selected item into the field
+            name_entry.insert(0, pre_filled_name)  # Insert text at position 0 (start of the field)
 
             tag_label = tk.Label(info_frame, text="Servicetag", bg='white',
                                  font=("Inter", 19))
             tag_entry = ctk.CTkEntry(info_frame, fg_color='transparent', text_color='black', font=("Inter", 15),
                                      width=150, border_width=1, border_color='#B8B7B7', corner_radius=8)
+            pre_filled_tag = cache.selected_item[6]  # enters the name of the selected item into the field
+            tag_entry.insert(0, pre_filled_tag)  # Insert text at position 0 (start of the field)
 
             verlauf_label = tk.Label(info_frame, text="Verlauf", bg='white',
                                      font=("Inter", 19))
@@ -833,6 +840,9 @@ class Gerateansicht(tk.Frame):
                                          width=380, height=382, border_width=1, border_color='#B8B7B7', corner_radius=8)
 
             # Datum
+            global global_input_date
+            global global_input_enddate
+
             def ask_startdate():
 
                 # Benutzer nach Datum fragen
@@ -841,6 +851,8 @@ class Gerateansicht(tk.Frame):
                     # Datum validieren
                     datetime.strptime(entered_date, "%d.%m.%Y")
                     start_result_label.config(text=f"von: {entered_date}")
+                    global global_input_date
+                    global_input_date = entered_date
                 except (ValueError, TypeError):
                     start_result_label.config(text="Ungültiges Datum!")
 
@@ -859,6 +871,8 @@ class Gerateansicht(tk.Frame):
                 try:
                     # Datum validieren
                     datetime.strptime(entered_date, "%d.%m.%Y")
+                    global global_input_enddate
+                    global_input_enddate = entered_date
 
                     end_result_label.config(text=f"bis: {entered_date}")
                 except ValueError:
@@ -872,11 +886,30 @@ class Gerateansicht(tk.Frame):
             end_result_label = tk.Label(date_frame, text="Kein Datum ausgewählt", font=("Arial", 14), bg='white')
             end_result_label.place(x=150, y=100)
 
+            
+            # Button-Funktion
+            def process_user_input():
+                import cache
+                # Werte aus den Eingabefeldern abrufen
+                name = name_entry.get()
+                tag = tag_entry.get()
+                global global_input_date
+                eingangsdatum = global_input_date
+                global global_input_enddate
+                enddatum = global_input_enddate
+                img = "noch kein img vorhanden"  # der upload img button hat noch keine funktion
+
+                buchen_page.destroy()
+
+                # Hier kannst du die Daten weiterverarbeiten
+                # ausgabe an die Funktion, die die Daten in die Datenbank weiterreicht
+                item_update_damage(name, tag, cache.selected_item[0], "BUCHUNG", img, "BUCHUNG" ,eingangsdatum, enddatum)
+
+            
             # Buttons
             buchen_button_frame = tk.Frame(buchen_page, bg='white', bd=1)
             close_button = tk.Button(buchen_button_frame, image=self.aktualisieren_img, bd=0, bg='white',
-                                     command=buchen_page.destroy)
-
+                                     command=process_user_input)
             # Placement
             name_label.place(x=0, y=2)
             name_entry.place(x=150, y=2)
