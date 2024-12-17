@@ -521,37 +521,38 @@ class Gerateansicht(tk.Frame):
             command=tree.yview,
             height=650
         )
+        def dbupdate():
+            # Treeview Scrollverbindung
+            tree.configure(yscrollcommand=scroll.set)
 
-        # Treeview Scrollverbindung
-        tree.configure(yscrollcommand=scroll.set)
+            # Spaltennamen aus der Datenbank holen
+            tree.delete(*tree.get_children())
+            items_uberschrift = fetch_headers("history", ["indexnum", "foreign_item_num"])
 
-        # Spaltennamen aus der Datenbank holen
-        tree.delete(*tree.get_children())
-        items_uberschrift = fetch_headers("history", ["indexnum", "foreign_item_num"])
+            # Überschriften konfigurieren
+            tree["columns"] = items_uberschrift
+            for up in items_uberschrift:
+                tree.column(up, anchor=CENTER, width=100)
+                tree.heading(up, text=up)
 
-        # Überschriften konfigurieren
-        tree["columns"] = items_uberschrift
-        for up in items_uberschrift:
-            tree.column(up, anchor=CENTER, width=100)
-            tree.heading(up, text=up)
-
-        items_data = fetch_tables("history", ["indexnum", "foreign_item_num"])
+            items_data = fetch_tables("history", ["indexnum", "foreign_item_num"])
 
         # Daten aus DB einfügen
+        
+            for i, row in enumerate(items_data):
+                formatted_row = [value if value is not None else "-" for value in row]  # Leere Felder durch "-" ersetzen
+                color = "#f3f3f3" if i % 2 == 0 else "white"
+                tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
 
-        for i, row in enumerate(items_data):
-            formatted_row = [value if value is not None else "-" for value in row]  # Leere Felder durch "-" ersetzen
-            color = "#f3f3f3" if i % 2 == 0 else "white"
-            tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
-
-        # tree.column("#1", anchor=CENTER, width=50)
-        # tree.heading("#1", text="Benutzer")
-        # tree.column("#2", anchor=CENTER, width=100)
-        # tree.heading("#2", text="Datum")
-        # tree.column("#3", anchor=CENTER, width=200)
-        # tree.heading("#3", text="Änderung")
-        tree.place(x=0, y=20, relwidth=0.40, relheight=0.5)
-        scroll.place(x=770, y=20, relheight=0.5)
+            # tree.column("#1", anchor=CENTER, width=50)
+            # tree.heading("#1", text="Benutzer")
+            # tree.column("#2", anchor=CENTER, width=100)
+            # tree.heading("#2", text="Datum")
+            # tree.column("#3", anchor=CENTER, width=200)
+            # tree.heading("#3", text="Änderung")
+            tree.place(x=0, y=20, relwidth=0.40, relheight=0.5)
+            scroll.place(x=770, y=20, relheight=0.5)
+        dbupdate()
 
         name_frame = ctk.CTkFrame(self.gerateansicht_frame, width=480, height=88, bg_color='transparent',
                                   fg_color='transparent', border_width=1, border_color='#B8B7B7', corner_radius=8)
@@ -762,10 +763,12 @@ class Gerateansicht(tk.Frame):
                 img = "noch kein img vorhanden"  # der upload img button hat noch keine funktion
 
                 schaeden_page.destroy()
+                dbupdate()
 
                 # Hier kannst du die Daten weiterverarbeiten
                 # ausgabe an die Funktion, die die Daten in die Datenbank weiterreicht
                 item_update_damage(name, tag, cache.selected_item[0], "DMG", img, beschreibung)
+                dbupdate()
 
             # Buttons
             schaeden_button_frame = tk.Frame(schaeden_page, bg='white', bd=1)
@@ -805,6 +808,12 @@ class Gerateansicht(tk.Frame):
                                     command=open_schaeden_page)
         schaeden_button.place(x=5, y=10)
 
+
+        # Datum
+        global global_input_date
+        global global_input_enddate
+        global_input_date=datetime.now().strftime('%d.%m.%Y')
+        global_input_enddate=datetime.now().strftime('%d.%m.%Y')
         def open_buchen_page():
             import cache
             buchen_page = tk.Toplevel()  # root
@@ -838,10 +847,6 @@ class Gerateansicht(tk.Frame):
                                      font=("Inter", 19))
             verlauf_entry = ctk.CTkEntry(info_frame, fg_color='transparent', text_color='black', font=("Inter", 15),
                                          width=380, height=382, border_width=1, border_color='#B8B7B7', corner_radius=8)
-
-            # Datum
-            global global_input_date
-            global global_input_enddate
 
             def ask_startdate():
 
@@ -884,7 +889,7 @@ class Gerateansicht(tk.Frame):
                                             fg_color="#081424", text_color="white", hover_color="#6F6C6C")
             ask_date_button.place(x=0, y=100)
             # Ergebnis-Label
-            end_result_label = tk.Label(date_frame, text="Kein Datum ausgewählt", font=("Arial", 14), bg='white')
+            end_result_label = tk.Label(date_frame, text=datetime.now().strftime('bis: %d.%m.%Y'), font=("Arial", 14), bg='white')
             end_result_label.place(x=150, y=100)
 
             
@@ -905,6 +910,7 @@ class Gerateansicht(tk.Frame):
                 # Hier kannst du die Daten weiterverarbeiten
                 # ausgabe an die Funktion, die die Daten in die Datenbank weiterreicht
                 item_update_damage(name, tag, cache.selected_item[0], "BUCHUNG", img, "BUCHUNG" ,eingangsdatum, enddatum)
+                dbupdate()
 
             
             # Buttons
