@@ -860,8 +860,9 @@ class Gerateansicht(tk.Frame):
             ask_date_button = ctk.CTkButton(date_frame, text="Startdatum", command=ask_startdate, corner_radius=8,
                                             fg_color="#6F6C6C", text_color="white", hover_color="#081424")
             ask_date_button.place(x=0, y=0)
-
-            start_result_label = tk.Label(date_frame, text="Kein Datum ausgewählt", font=("Arial", 14), bg='white')
+            
+            from datetime import datetime
+            start_result_label = tk.Label(date_frame, text=datetime.now().strftime('von: %d.%m.%Y'), font=("Arial", 14), bg='white')
             start_result_label.place(x=150, y=0)
 
             def ask_enddate():

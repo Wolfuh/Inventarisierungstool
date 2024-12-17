@@ -150,10 +150,52 @@ def table_sort(table_name, sorted_by, excluded_columns, DESC_OR_ASC):  #sortiert
         if my_db:
             my_db.close()
 
+def item_update_damage(name,tag,foreign_item_num, type, image, description, entry_date=None, end_date=None):
+    """
+    Inserts data into the database table with columns:
+    foreign_item_num, indexnum (auto-increment), type, image, description, entry_date, end_date.
 
+    Parameters:
+        name (str): Itemname
+        Tag (str): an welchem Tag wurde es hochgeladen
+        foreign_item_num (int): Foreign key referring to an item.
+        type (str): Type of the data.
+        image (str): Path or URL to the image.
+        description (str): Description of the data.
+        entry_date (str): Entry date in YYYY-MM-DD format (optional).
+        end_date (str): End date in YYYY-MM-DD format (optional).
 
+    Returns:
+        bool: True if the insertion was successful, False otherwise.
+    """
+    from datetime import datetime
+    
 
+    
+    if entry_date is None:
+        entry_date = datetime.now().strftime('%d.%m.%Y')
 
+    try:
+        # Connect to the SQLite database
+        conn = init_connection()
+        cursor = conn.cursor()
+
+        # Insert data into the table
+        cursor.execute(
+            """
+            INSERT INTO history(name, tag, foreign_item_num, type, image, description, entry_date, end_date)
+            VALUES (? ,?, ?, ?, ?, ?, ?, ?)
+            """,
+            (name, tag, foreign_item_num, type, image, description, entry_date, end_date)
+        )
+
+        # Commit the transaction and close the connection
+        conn.commit()
+        conn.close()
+        return True
+    except sqlite3.Error as e:
+        print(f"Database error: {e}")
+        return False
 
 
 
@@ -179,52 +221,7 @@ def group_search(search_number):
 
 
 
-def item_update_damage(name,tag,foreign_item_num, type, image, description, entry_date=None, end_date=None):
-    """
-    Inserts data into the database table with columns:
-    foreign_item_num, indexnum (auto-increment), type, image, description, entry_date, end_date.
 
-    Parameters:
-        name (str): Itemname
-        Tag (str): an welchem Tag wurde es hochgeladen
-        foreign_item_num (int): Foreign key referring to an item.
-        type (str): Type of the data.
-        image (str): Path or URL to the image.
-        description (str): Description of the data.
-        entry_date (str): Entry date in YYYY-MM-DD format (optional).
-        end_date (str): End date in YYYY-MM-DD format (optional).
-
-    Returns:
-        bool: True if the insertion was successful, False otherwise.
-    """
-    from datetime import datetime
-    
-
-    
-    if entry_date is None:
-        entry_date = datetime.now().strftime('%Y-%m-%d')
-
-    try:
-        # Connect to the SQLite database
-        conn = init_connection()
-        cursor = conn.cursor()
-
-        # Insert data into the table
-        cursor.execute(
-            """
-            INSERT INTO history(name, tag, foreign_item_num, type, image, description, entry_date, end_date)
-            VALUES (? ,?, ?, ?, ?, ?, ?, ?)
-            """,
-            (name, tag, foreign_item_num, type, image, description, entry_date, end_date)
-        )
-
-        # Commit the transaction and close the connection
-        conn.commit()
-        conn.close()
-        return True
-    except sqlite3.Error as e:
-        print(f"Database error: {e}")
-        return False
 
 
 
