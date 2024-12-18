@@ -276,8 +276,9 @@ class Einstellungen(tk.Frame):
 
             spalten_page.grab_set()
             # Bilder
-            self.aktualisieren_img = gui_prototyp.load_image(root_path + "/gui/assets/Button_Aktualisieren.png")
-            self.upload_img = gui_prototyp.load_image(root_path + "/gui/assets/Button_Drop.png")
+            from gui_prototyp import load_image
+            self.aktualisieren_img = load_image(root_path + "/gui/assets/Button_Aktualisieren.png")
+            self.upload_img = load_image(root_path + "/gui/assets/Button_Drop.png")
 
             # Informationen
             info_frame = tk.Frame(spalten_page, bg='white', bd=1)
@@ -325,8 +326,9 @@ class Einstellungen(tk.Frame):
             typ_page.grab_set()
 
             # Bilder
-            self.aktualisieren_img = gui_prototyp.load_image(root_path + "/gui/assets/Button_Aktualisieren.png")
-            self.upload_img = gui_prototyp.load_image(root_path + "/gui/assets/Button_Drop.png")
+            from gui_prototyp import load_image
+            self.aktualisieren_img = load_image(root_path + "/gui/assets/Button_Aktualisieren.png")
+            self.upload_img = load_image(root_path + "/gui/assets/Button_Drop.png")
 
             # Informationen
             info_frame = tk.Frame(typ_page, bg='white', bd=1)
