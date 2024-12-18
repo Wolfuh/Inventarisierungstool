@@ -616,15 +616,29 @@ class Gerateansicht(tk.Frame):
 
         def typ_dropdown():
             dropdown_menu = tk.Menu(typ_frame, tearoff=0, bd=1, bg='white', fg='black')
-            dropdown_menu.add_command(label="→ PC", command=lambda: print("PC ausgewählt"))
-            dropdown_menu.add_command(label="→ Laptop", command=lambda: print("Laptop ausgewählt"))
-            dropdown_menu.add_command(label="→ Bildschirm", command=lambda: print("Bildschirm ausgewählt"))
-            dropdown_menu.add_command(label="→ Raspberrypie", command=lambda: print("Raspberrypie ausgewählt"))
-            dropdown_menu.add_command(label="→ Dockingstation", command=lambda: print("Dockingstation ausgewählt"))
-            dropdown_menu.add_command(label="→ Drucker", command=lambda: print("Drucker ausgewählt"))
-            dropdown_menu.add_command(label="→ Kabel", command=lambda: print("Kabel ausgewählt"))
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: print("Peripherie ausgewählt"))
-            dropdown_menu.add_command(label="→ Sonstiges", command=lambda: print("Sonstiges ausgewählt"))
+                      
+            #Liste der Kategorien, die im Dropdown angezeigt werden sollen 
+            Kategorienname = [
+                "PC",
+                "Laptop",
+                "Bildschirm",
+                "Raspberrypie",
+                "Dockingstation",
+                "Drucker",
+                "Kabel",
+                "Peripherie",
+                "Software",
+                "Sonstiges"
+                ]
+            for i in range(0, len(Kategorienname)): #itteriert jeden Eintrag der Eingabeliste 
+                value = Kategorienname[i]
+                dropdown_menu.add_command(
+                    label=f"→ {value}",  #Bezeichnung des Labels ( Eintrag stelle i der Eingabeliste)
+                    command=lambda value=value: [ #command, der Ausgeführt wird, wenn Im Dropdown Menü eine Auswahloption angeklickt wird
+                        self.typ_aktuell_label.configure(text=value), #ändern des dargstellten Wertes auf neue Auswahl
+                        print(f"{value} ausgewählt") #Console Log
+                                                ]
+                                         )
 
             dropdown_menu.post(
                 typ_drop.winfo_rootx() - 77,
@@ -656,12 +670,27 @@ class Gerateansicht(tk.Frame):
         # Dropdown Menü Status
         def status_dropdown():
             dropdown_menu = tk.Menu(status_frame, tearoff=0, bd=1, bg='white', fg='black')
-            dropdown_menu.add_command(label=f"{'✔'.ljust(3)} in Betrieb", command=lambda: print("Produkt in Betrieb"))
-            dropdown_menu.add_command(label=f"{'⛔'.ljust(1)} in Wartung", command=lambda: print("Produkt in Wartung"))
-            dropdown_menu.add_command(label=f"{'⚠'.ljust(1)} Beschädigt", command=lambda: print("Produkt beschädigt"))
-            dropdown_menu.add_command(label=f"{'✔'.ljust(2)} verfügbar",
-                                      command=lambda: print("Produkt zum Mieten bereit"))
-            dropdown_menu.add_command(label=f"{'❌'.ljust(3)} gemietet", command=lambda: print("Produkt gemietet"))
+            #Beim auswählen eines Punktes im Menü wird ein command ausgeführt, der den Text des Labels auf den jeweilig 
+            #ausgewählten Wert setzt(der Inhalt wird später in der Speichern Funktion abgefragt und in die Datenbank übertragen)
+            
+            #Liste der Kategorien, die im Dropdown angezeigt werden sollen 
+            Kategorienname = [
+                "⛔In Wartung",
+                "✔Verfügbar",
+                "❌Gemietet"
+                             ]
+
+            for i in range(0, len(Kategorienname)): #itteriert jeden Eintrag der Eingabeliste 
+                value = Kategorienname[i]
+                dropdown_menu.add_command(
+                    label=f"→ {value}",  #Bezeichnung des Labels ( Eintrag stelle i der Eingabeliste)
+                    command=lambda value=value: [ #command, der Ausgeführt wird, wenn Im Dropdown Menü eine Auswahloption angeklickt wird
+                        self.status_aktuell_label.configure(text=value), #ändern des dargstellten Wertes auf neue Auswahl
+                        print(f"Produkt {value}") #Console Log
+                                                ]
+                                         )
+
+
 
             dropdown_menu.post(
                 status_drop.winfo_rootx() - 62,  # Verschiebt das Menü 50 Pixel nach links
@@ -959,8 +988,8 @@ class Gerateansicht(tk.Frame):
 
         # Button Speichern
         def button_click():
-            update_item(self.update_items_on_save())
-            controller.show_frame(Ubersicht)
+            update_item(self.update_items_on_save()) #Auktalisieren der geänderten EInträge in der Datenbank
+            controller.show_frame(Ubersicht) #Zurückgehen auf Übersicht
             
             messagebox.showinfo("Erfolgreich", "Änderungen erfolgreich gespeichert")
             
