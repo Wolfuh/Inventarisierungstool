@@ -245,6 +245,46 @@ def update_item(item_data):
             connection.close()
 
 
+def show_image_from_db(indexnum):
+    from tkinter import Toplevel, Label
+    from PIL import Image, ImageTk
+    import io
+    try:
+        # Connect to the SQLite database
+        conn = init_connection()
+        cursor = conn.cursor()
+        
+        # Fetch the image data for the secified index number
+        cursor.execute("SELECT image FROM history WHERE indexnum = ?", (indexnum,))
+        result = cursor.fetchone()
+        
+        if result is None or result[0] is None:
+            print("No image found for the given index number.")
+            return None
+        print("Image selected")
+        image_data = result[0]
+        conn.close()
+        
+        # Create a popup window
+        popup = Toplevel()
+        popup.title(f"Image Viewer - Index {indexnum}")
+        
+        # Convert binary data to an image
+        image = Image.open(io.BytesIO(image_data))
+        photo = ImageTk.PhotoImage(image)
+        
+        # Display the image in the popup window
+        label = Label(popup, image=photo)
+        label.image = photo  # Keep a reference to avoid garbage collection
+        label.pack()
+        
+        popup.mainloop()
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+
+
+
 ##############################
 ## UNBENUTZTE DEFINITIONEN: ##
 ##############################
