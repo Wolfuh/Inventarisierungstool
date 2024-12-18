@@ -1,12 +1,9 @@
 import tkinter as tk
 from tkinter import ttk
 import customtkinter as ctk
-
-import gui_prototyp
-import Mainpages
-import Overview_pages
-import Profiles
 import os
+
+from gui import Mainpages
 
 
 class Einstellungen(tk.Frame):
@@ -73,48 +70,76 @@ class Einstellungen(tk.Frame):
             file=root_path + "/gui/assets/backtosite_icon.png")
         self.imghelp = tk.PhotoImage(file=root_path + "/gui/assets/helpicon.png")
 
+        def logout():
+            from gui_prototyp import LogInWindow
+            controller.show_frame(LogInWindow)
+
         login = ctk.CTkButton(self.header, image=self.imglogin, fg_color=ThemeManager.SRH_Orange,
                               bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
                               hover=True, hover_color='#e25a1f', text="",
-                              command=lambda: controller.show_frame(gui_prototyp.LogInWindow))
+                              command=logout)
+
+        def show_mainpage():
+            from Mainpages import MainPage
+            controller.show_frame(MainPage)
 
         mainpage = ctk.CTkButton(self.header, image=self.imgmainpage, fg_color=ThemeManager.SRH_Orange,
                                  bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
                                  hover=True, hover_color='#e25a1f', text="",
-                                 command=lambda: controller.show_frame(Mainpages.MainPage))
+                                 command=show_mainpage())
+
+        def show_help():
+            from Profiles import Help
+            controller.show_frame(Help)
 
         help = ctk.CTkButton(self.header, image=self.imghelp, fg_color=ThemeManager.SRH_Orange,
                              bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
                              hover=True, hover_color='#e25a1f', text="",
-                             command=lambda: controller.show_frame(Profiles.Help))
+                             command=show_help)
 
         login.place(relx=0.95, rely=0.5, anchor="center")
         mainpage.place(relx=0.90, rely=0.5, anchor="center")
         help.place(relx=0.85, rely=0.5, anchor="center")
 
+        def show_profile():
+            from Profiles import Profil
+            controller.show_frame(Profil)
+
         user_button = tk.Button(verzeichniss, text="User", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                 font=("Inter", 20, 'bold'),
-                                command=lambda: controller.show_frame(Profiles.Profil))
+                                command=show_profile)
         user_button.pack(pady=10, anchor='w')
+
+        def show_admin():
+            from Profiles import Admin
+            controller.show_frame(Admin)
 
         admin_button = tk.Button(verzeichniss, text="Administration", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                  font=("Inter", 20, 'bold'),
-                                 command=lambda: controller.show_frame(Profiles.Admin))
+                                 command=show_admin)
         admin_button.pack(pady=10, anchor='w')
+
+        def show_stats():
+            from Profiles import Stats
+            controller.show_frame(Stats)
 
         stats_button = tk.Button(verzeichniss, text="Statistiken", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                  font=("Inter", 20, 'bold'),
-                                 command=lambda: controller.show_frame(Profiles.Stats))
+                                 command=show_stats)
         stats_button.pack(pady=10, anchor='w')
+
+        def show_config():
+            controller.show_frame(Einstellungen)
 
         einstellungen_button = tk.Button(verzeichniss, text="Einstellungen", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                          font=("Inter", 20, 'bold'),
-                                         command=lambda: controller.show_frame(Einstellungen))
+                                         command=show_config)
         einstellungen_button.pack(pady=10, anchor='w')
+
 
         verzeichniss_help_button = tk.Button(verzeichniss, text="Hilfe", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                              font=("Inter", 20, 'bold'),
-                                             command=lambda: controller.show_frame(Profiles.Help))
+                                             command=show_help)
         verzeichniss_help_button.pack(pady=10, anchor='w')
 
         # Platziung des Verzeichnisses (Navigationsleiste)
@@ -376,9 +401,12 @@ class Einstellungen(tk.Frame):
                                      command=open_status_page)
         addStatus_button.place(relx=0.01, rely=0.74, relheight=0.032)
 
+        def show_device_view():
+            from Overview_pages import Gerateansicht
+            controller.show_frame(Gerateansicht)
         addGerat_button = tk.Button(self.einstellung_frame, text="Gerät\t+", bd=0, bg='white', fg='black',
                                     font=("Inter", 16),
-                                    command=lambda: controller.show_frame(Overview_pages.Gerateansicht))
+                                    command=show_device_view)
         addGerat_button.place(relx=0.01, rely=0.79, relheight=0.032)
 
         # Platzierung der Hauptframe-Bereiche
