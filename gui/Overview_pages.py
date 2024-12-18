@@ -1128,10 +1128,10 @@ class Gerateansicht(tk.Frame):
         self.details_entry.insert(0, data[5])
 
         self.anzahl_entry.delete(0, tk.END)
-        self.anzahl_entry.insert(0, data[3])
+        self.anzahl_entry.insert(0, data[4])
 
         self.standort_entry.delete(0, tk.END)
-        self.standort_entry.insert(0, data[2])
+        self.standort_entry.insert(0, data[3])
 
     def update_items_on_save(self): #Gibt ein Dictonairy mit allen Akktuellen Werten des Items zurück
         import cache
@@ -1140,7 +1140,7 @@ class Gerateansicht(tk.Frame):
                                 "Name": self.name_entry.get(),
                                 "Gruppe": cache.selected_item[2],
                                 "Raum": self.standort_entry.get(),
-                                "amount": cache.selected_item[4],
+                                "amount": self.anzahl_entry.get(),
                                 "Details": self.details_entry.get(),
                                 "service_tag": self.tag_entry.get(),
                                 "added_by_user": cache.selected_item[7],
