@@ -94,6 +94,9 @@ class GuiTest(tk.Tk):
             self.frames[Page] = frame # Das erstellte Frame wird dem 'frames'-Dictionary des Hauptfensters hinzugefügt, wobei die Seitenklasse als Schlüssel dient.
             frame.grid(row=0, column=0, sticky="nsew") # Jedes Frame wird in einem übergeordneten Container platziert und mit 'grid' positioniert,
                                                         # wobei es den gesamten verfügbaren Platz ('nsew') einnimmt.
+            print("DEBUG: Frame:" , frame , "erstellt.")
+
+        print("DEBUG: logInWindow show frame.")
         self.show_frame(LogInWindow)
 
     def show_frame(self, cont):

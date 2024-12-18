@@ -67,28 +67,42 @@ class Ubersicht(tk.Frame):
         self.imgmainpage = tk.PhotoImage(file=root_path + "/gui/assets/backtosite_icon_grey.png")
 
         # Login und Profil Buttons im Header-Bereich, Platzierung der Buttons, Header und Sidebar
+        def login_overview():
+            controller.show_frame(gui_prototyp.LogInWindow)
+
         login = ctk.CTkButton(header, image=self.imglogin, fg_color=ThemeManager.SRH_Orange,
                               bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
                               hover=True, hover_color='#e25a1f', text="",
-                              command=lambda: controller.show_frame(gui_prototyp.LogInWindow))
+                              command=login_overview())
+
+
+        def profil_overview():
+            controller.show_frame(Profiles.Profil)
 
         profil = ctk.CTkButton(header, image=self.imgprofil, fg_color=ThemeManager.SRH_Orange,
                                bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
                                hover=True, hover_color='#e25a1f', text="",
-                               command=lambda: controller.show_frame(Profiles.Profil))
+                               command=profil_overview())
+
+        def help_overview():
+            controller.show_frame(Profiles.Help)
+
         help = ctk.CTkButton(header, image=self.imghelp, fg_color=ThemeManager.SRH_Orange,
                              bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
                              hover=True, hover_color='#e25a1f', text="",
-                             command=lambda: controller.show_frame(Profiles.Help))
+                             command=help_overview())
 
         login.place(relx=0.95, rely=0.5, anchor="center")
         profil.place(relx=0.90, rely=0.5, anchor="center")
         help.place(relx=0.85, rely=0.5, anchor="center")
 
+        def mainpage_overview():
+            controller.show_frame(Mainpages.MainPage)
+
         mainpage = ctk.CTkButton(self.mainpage_frame, text="↩", fg_color='white', text_color=ThemeManager.SRH_Grey,
                                  width=5,
                                  font=("Inter", 50, 'bold'), corner_radius=8, hover=False,
-                                 command=lambda: controller.show_frame(Mainpages.MainPage))
+                                 command=mainpage_overview())
         mainpage.place(relx=0, rely=0)
 
         # "Alle Anzeigen" Button in der Seitenleiste
@@ -331,8 +345,11 @@ class Ubersicht(tk.Frame):
         suche_entry.place(relx=0.125, rely=0.1, relwidth=0.33, relheight=0.04)
 
         # Hinzufügen
+        def hinzufugen_overview():
+            controller.show_frame(Gerateansicht)
+
         Hinzufugen_button = tk.Button(self.ubersicht_frame, image=self.imgHinzufugen, bd=0, bg='white',
-                                      command=lambda: controller.show_frame(Gerateansicht))
+                                      command=lambda:hinzufugen_overview())
         Hinzufugen_button.place(relx=0.5, rely=0.1)
 
         # Aktionen
