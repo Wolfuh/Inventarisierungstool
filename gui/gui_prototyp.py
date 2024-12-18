@@ -216,8 +216,5 @@ def load_image(image_path):
         print(f"Warnung: Bild '{image_path}' nicht gefunden.")
         return None
 
-try:
-    app = GuiTest()
-    app.mainloop()
-except Exception as e:
-    print(f"Fehler beim Starten des Programms: {e}")
+app = GuiTest()
+app.mainloop()
