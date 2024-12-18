@@ -71,7 +71,8 @@ class MainPage(tk.Frame):
 
         # Platzierung der Buttons
         def logout():
-            controller.show_frame(gui_prototyp.LogInWindow)
+            from gui_prototyp import LogInWindow
+            controller.show_frame(LogInWindow)
 
         login = ctk.CTkButton(header, image=self.imglogin, fg_color=ThemeManager.SRH_Orange,
                               bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
@@ -79,8 +80,8 @@ class MainPage(tk.Frame):
                               command=logout())
 
         def profil():
-            import Profiles
-            controller.show_frame(Profiles.Profil)
+            from Profiles import Profil
+            controller.show_frame(Profil)
 
         profil = ctk.CTkButton(header, image=self.imgprofil, fg_color=ThemeManager.SRH_Orange,
                                bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
