@@ -136,7 +136,6 @@ class Einstellungen(tk.Frame):
                                          command=show_config)
         einstellungen_button.pack(pady=10, anchor='w')
 
-
         verzeichniss_help_button = tk.Button(verzeichniss, text="Hilfe", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                              font=("Inter", 20, 'bold'),
                                              command=show_help)
@@ -365,8 +364,9 @@ class Einstellungen(tk.Frame):
 
             spalten_page.grab_set()
             # Bilder
-            self.aktualisieren_img = gui_prototyp.load_image(root_path + "/gui/assets/Button_Aktualisieren.png")
-            self.upload_img = gui_prototyp.load_image(root_path + "/gui/assets/Button_Drop.png")
+            from gui_prototyp import load_image
+            self.aktualisieren_img = load_image(root_path + "/gui/assets/Button_Aktualisieren.png")
+            self.upload_img = load_image(root_path + "/gui/assets/Button_Drop.png")
 
             # Informationen
             info_frame = tk.Frame(spalten_page, bg='white', bd=1)
@@ -406,6 +406,7 @@ class Einstellungen(tk.Frame):
         def show_device_view():
             from Overview_pages import Gerateansicht
             controller.show_frame(Gerateansicht)
+
         addGerat_button = tk.Button(self.einstellung_frame, text="Gerät\t+", bd=0, bg='white', fg='black',
                                     font=("Inter", 16),
                                     command=show_device_view)
