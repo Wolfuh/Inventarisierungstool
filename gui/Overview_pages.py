@@ -4,14 +4,11 @@ import customtkinter as ctk
 from customtkinter import *
 
 import os
-import gui_prototyp
-import Mainpages
-import Profiles
 from datetime import datetime
 from tkinter import simpledialog
 import sys
 
-sys.path.append(os.path.join(os.path.dirname(__file__),'..'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from db.SQLite_db import *
 
@@ -34,7 +31,7 @@ class Ubersicht(tk.Frame):
     :ivar mainpage_frame: Frame für die Navigationsbutton, um zur Hauptseite zurückzukehren.
     :ivar tree: Baumstruktur für die tabellarische Darstellung von Daten.
     """
-    
+
     def __init__(self, parent, controller):
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         tk.Frame.__init__(self, parent)
@@ -61,23 +58,25 @@ class Ubersicht(tk.Frame):
         self.rowconfigure(0, weight=1)
 
         # Laden der Bilder für die Navigation und Header Buttons
-        self.imglogin = gui_prototyp.load_image(root_path + "/gui/assets/Closeicon.png")
-        self.imgprofil = gui_prototyp.load_image(root_path + "/gui/assets/profileicon.png")
+        from gui_prototyp import load_image
+        self.imglogin = load_image(root_path + "/gui/assets/Closeicon.png")
+        self.imgprofil = load_image(root_path + "/gui/assets/profileicon.png")
         self.imghelp = tk.PhotoImage(file=root_path + "/gui/assets/helpicon.png")
         self.imgmainpage = tk.PhotoImage(file=root_path + "/gui/assets/backtosite_icon_grey.png")
 
         # Login und Profil Buttons im Header-Bereich, Platzierung der Buttons, Header und Sidebar
         def login_overview():
-            controller.show_frame(gui_prototyp.LogInWindow)
+            from gui_prototyp import LogInWindow
+            controller.show_frame(LogInWindow)
 
         login = ctk.CTkButton(header, image=self.imglogin, fg_color=ThemeManager.SRH_Orange,
                               bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
                               hover=True, hover_color='#e25a1f', text="",
                               command=login_overview())
 
-
         def profil_overview():
-            controller.show_frame(Profiles.Profil)
+            from Profiles import Profil
+            controller.show_frame(Profil)
 
         profil = ctk.CTkButton(header, image=self.imgprofil, fg_color=ThemeManager.SRH_Orange,
                                bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
@@ -85,7 +84,8 @@ class Ubersicht(tk.Frame):
                                command=profil_overview())
 
         def help_overview():
-            controller.show_frame(Profiles.Help)
+            from Profiles import Help
+            controller.show_frame(Help)
 
         help = ctk.CTkButton(header, image=self.imghelp, fg_color=ThemeManager.SRH_Orange,
                              bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
@@ -97,7 +97,8 @@ class Ubersicht(tk.Frame):
         help.place(relx=0.85, rely=0.5, anchor="center")
 
         def mainpage_overview():
-            controller.show_frame(Mainpages.MainPage)
+            from Mainpages import MainPage
+            controller.show_frame(MainPage)
 
         mainpage = ctk.CTkButton(self.mainpage_frame, text="↩", fg_color='white', text_color=ThemeManager.SRH_Grey,
                                  width=5,
@@ -116,7 +117,7 @@ class Ubersicht(tk.Frame):
         tree = ttk.Treeview(self.tabelle_frame, columns=("c1", "c2", "c3", "c4", "c5"), show="headings",
                             height=5)
 
-        def show_right_table(item_position: int, suchgruppe, search_word):  
+        def show_right_table(item_position: int, suchgruppe, search_word):
             # item_position benötigt Zahl, für den gesuchten Ort
             # Spaltennamen aus der Datenbank holen
             print(item_position, suchgruppe, search_word)
@@ -157,11 +158,16 @@ class Ubersicht(tk.Frame):
         # Gruppe 1
         def show_dropdown_grp1():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: show_right_table(2,"1","")) #Alle Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: show_right_table(8,"1","Hardwawre")) # nur Hardware Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Software", command=lambda: show_right_table(8,"1","Software")) # nur Software Produkte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: show_right_table(8,"1","Peripherie")) # nur Peripherie mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Andere", command=lambda: show_right_table(8,"1","ANDERE")) # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: show_right_table(2, "1",
+                                                                                                 ""))  # Alle Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: show_right_table(8, "1",
+                                                                                           "Hardwawre"))  # nur Hardware Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Software", command=lambda: show_right_table(8, "1",
+                                                                                           "Software"))  # nur Software Produkte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: show_right_table(8, "1",
+                                                                                             "Peripherie"))  # nur Peripherie mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Andere", command=lambda: show_right_table(8, "1",
+                                                                                         "ANDERE"))  # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
             dropdown_menu.post(grp1_button.winfo_rootx(), grp1_button.winfo_rooty() + grp1_button.winfo_height())
 
         grp1_button = tk.Button(verzeichniss, text="Gruppe 1   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -172,11 +178,16 @@ class Ubersicht(tk.Frame):
         # Gruppe 2
         def show_dropdown_grp2():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: show_right_table(2,"2","")) #Alle Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: show_right_table(8,"2","Hardwawre")) # nur Hardware Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Software", command=lambda: show_right_table(8,"2","Software")) # nur Software Produkte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: show_right_table(8,"2","Peripherie")) # nur Peripherie mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Andere", command=lambda: show_right_table(8,"2","ANDERE")) # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: show_right_table(2, "2",
+                                                                                                 ""))  # Alle Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: show_right_table(8, "2",
+                                                                                           "Hardwawre"))  # nur Hardware Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Software", command=lambda: show_right_table(8, "2",
+                                                                                           "Software"))  # nur Software Produkte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: show_right_table(8, "2",
+                                                                                             "Peripherie"))  # nur Peripherie mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Andere", command=lambda: show_right_table(8, "2",
+                                                                                         "ANDERE"))  # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
             dropdown_menu.post(grp2_button.winfo_rootx(), grp2_button.winfo_rooty() + grp2_button.winfo_height())
 
         grp2_button = tk.Button(verzeichniss, text="Gruppe 2   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -187,11 +198,16 @@ class Ubersicht(tk.Frame):
         # Gruppe 3
         def show_dropdown_grp3():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: show_right_table(2,"3","")) #Alle Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: show_right_table(8,"3","Hardwawre")) # nur Hardware Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Software", command=lambda: show_right_table(8,"3","Software")) # nur Software Produkte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: show_right_table(8,"3","Peripherie")) # nur Peripherie mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Andere", command=lambda: show_right_table(8,"3","ANDERE")) # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: show_right_table(2, "3",
+                                                                                                 ""))  # Alle Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: show_right_table(8, "3",
+                                                                                           "Hardwawre"))  # nur Hardware Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Software", command=lambda: show_right_table(8, "3",
+                                                                                           "Software"))  # nur Software Produkte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: show_right_table(8, "3",
+                                                                                             "Peripherie"))  # nur Peripherie mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Andere", command=lambda: show_right_table(8, "3",
+                                                                                         "ANDERE"))  # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
             dropdown_menu.post(grp3_button.winfo_rootx(), grp3_button.winfo_rooty() + grp3_button.winfo_height())
 
         grp3_button = tk.Button(verzeichniss, text="Gruppe 3   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -202,11 +218,16 @@ class Ubersicht(tk.Frame):
         # Gruppe 4
         def show_dropdown_grp4():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: show_right_table(2,"4","")) #Alle Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: show_right_table(8,"4","Hardwawre")) # nur Hardware Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Software", command=lambda: show_right_table(8,"4","Sorftware")) # nur Software Produkte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: show_right_table(8,"4","Peripherie")) # nur Peripherie mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Andere", command=lambda: show_right_table(8,"4","ANDERE")) # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: show_right_table(2, "4",
+                                                                                                 ""))  # Alle Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: show_right_table(8, "4",
+                                                                                           "Hardwawre"))  # nur Hardware Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Software", command=lambda: show_right_table(8, "4",
+                                                                                           "Sorftware"))  # nur Software Produkte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: show_right_table(8, "4",
+                                                                                             "Peripherie"))  # nur Peripherie mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Andere", command=lambda: show_right_table(8, "4",
+                                                                                         "ANDERE"))  # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
             dropdown_menu.post(grp4_button.winfo_rootx(), grp4_button.winfo_rooty() + grp4_button.winfo_height())
 
         grp4_button = tk.Button(verzeichniss, text="Gruppe 4   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -217,11 +238,16 @@ class Ubersicht(tk.Frame):
         # Gruppe 5
         def show_dropdown_grp5():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: show_right_table(2,"5","")) #Alle Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: show_right_table(8,"5","Hardwawre")) # nur Hardware Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Software", command=lambda: show_right_table(8,"5","Software")) # nur Software Produkte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: show_right_table(8,"5","Peripherie")) # nur Peripherie mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Andere", command=lambda: show_right_table(8,"5","ANDERE")) # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: show_right_table(2, "5",
+                                                                                                 ""))  # Alle Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: show_right_table(8, "5",
+                                                                                           "Hardwawre"))  # nur Hardware Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Software", command=lambda: show_right_table(8, "5",
+                                                                                           "Software"))  # nur Software Produkte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: show_right_table(8, "5",
+                                                                                             "Peripherie"))  # nur Peripherie mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Andere", command=lambda: show_right_table(8, "5",
+                                                                                         "ANDERE"))  # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
             dropdown_menu.post(grp5_button.winfo_rootx(), grp5_button.winfo_rooty() + grp5_button.winfo_height())
 
         grp5_button = tk.Button(verzeichniss, text="Gruppe 5   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -232,11 +258,16 @@ class Ubersicht(tk.Frame):
         # Gruppe 6
         def show_dropdown_grp6():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: show_right_table(2,"6","")) #Alle Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: show_right_table(8,"6","Hardwawre")) # nur Hardware Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Software", command=lambda: show_right_table(8,"6","Software")) # nur Software Produkte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: show_right_table(8,"6","Peripherie")) # nur Peripherie mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Andere", command=lambda: show_right_table(8,"6","ANDERE")) # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: show_right_table(2, "6",
+                                                                                                 ""))  # Alle Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: show_right_table(8, "6",
+                                                                                           "Hardwawre"))  # nur Hardware Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Software", command=lambda: show_right_table(8, "6",
+                                                                                           "Software"))  # nur Software Produkte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: show_right_table(8, "6",
+                                                                                             "Peripherie"))  # nur Peripherie mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Andere", command=lambda: show_right_table(8, "6",
+                                                                                         "ANDERE"))  # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
             dropdown_menu.post(grp6_button.winfo_rootx(), grp6_button.winfo_rooty() + grp6_button.winfo_height())
 
         grp6_button = tk.Button(verzeichniss, text="Gruppe 6   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -247,11 +278,16 @@ class Ubersicht(tk.Frame):
         # Gruppe 7
         def show_dropdown_grp7():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: show_right_table(2,"7","")) #Alle Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: show_right_table(8,"7","Hardwawre")) # nur Hardware Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Software", command=lambda: show_right_table(8,"7","Software")) # nur Software Produkte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: show_right_table(8,"7","Peripherie")) # nur Peripherie mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Andere", command=lambda: show_right_table(8,"7","ANDERE")) # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: show_right_table(2, "7",
+                                                                                                 ""))  # Alle Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: show_right_table(8, "7",
+                                                                                           "Hardwawre"))  # nur Hardware Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Software", command=lambda: show_right_table(8, "7",
+                                                                                           "Software"))  # nur Software Produkte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: show_right_table(8, "7",
+                                                                                             "Peripherie"))  # nur Peripherie mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Andere", command=lambda: show_right_table(8, "7",
+                                                                                         "ANDERE"))  # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
             dropdown_menu.post(grp7_button.winfo_rootx(), grp7_button.winfo_rooty() + grp7_button.winfo_height())
 
         grp7_button = tk.Button(verzeichniss, text="Gruppe 7   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -262,11 +298,16 @@ class Ubersicht(tk.Frame):
         # Gruppe 8
         def show_dropdown_grp8():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: show_right_table(2,"8","")) #Alle Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: show_right_table(8,"8","Hardwawre")) # nur Hardware Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Software", command=lambda: show_right_table(8,"8","Software")) # nur Software Produkte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: show_right_table(8,"8","Peripherie")) # nur Peripherie mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Andere", command=lambda: show_right_table(8,"8","ANDERE")) # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: show_right_table(2, "8",
+                                                                                                 ""))  # Alle Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: show_right_table(8, "8",
+                                                                                           "Hardwawre"))  # nur Hardware Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Software", command=lambda: show_right_table(8, "8",
+                                                                                           "Software"))  # nur Software Produkte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: show_right_table(8, "8",
+                                                                                             "Peripherie"))  # nur Peripherie mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Andere", command=lambda: show_right_table(8, "8",
+                                                                                         "ANDERE"))  # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
             dropdown_menu.post(grp8_button.winfo_rootx(), grp8_button.winfo_rooty() + grp8_button.winfo_height())
 
         grp8_button = tk.Button(verzeichniss, text="Gruppe 8   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -280,13 +321,14 @@ class Ubersicht(tk.Frame):
         # command=lambda: controller.show_frame(Gerateansicht))
         # switch_button.grid(row=4, column=0, pady=20)
         # Bilder
-        self.imgFilter = gui_prototyp.load_image(root_path+"/gui/assets/Filter_Button.png")
-        self.imgSuche = gui_prototyp.load_image(root_path+"/gui/assets/Search.png")
-        self.imgHinzufugen = gui_prototyp.load_image(root_path+"/gui/assets/Adding_Icon.png")
-        self.imgAktionen = gui_prototyp.load_image(root_path+"/gui/assets/Aktionen_Button.png")
+        from gui_prototyp import load_image
+        self.imgFilter = load_image(root_path + "/gui/assets/Filter_Button.png")
+        self.imgSuche = load_image(root_path + "/gui/assets/Search.png")
+        self.imgHinzufugen = load_image(root_path + "/gui/assets/Adding_Icon.png")
+        self.imgAktionen = load_image(root_path + "/gui/assets/Aktionen_Button.png")
 
         def fill_in_sort(table, where, DESC_OR_ASC):
-            items_uberschrift = fetch_headers("items",[""])
+            items_uberschrift = fetch_headers("items", [""])
 
             # Überschriften konfigurieren
             tree["columns"] = items_uberschrift
@@ -349,7 +391,7 @@ class Ubersicht(tk.Frame):
             controller.show_frame(Gerateansicht)
 
         Hinzufugen_button = tk.Button(self.ubersicht_frame, image=self.imgHinzufugen, bd=0, bg='white',
-                                      command=lambda:hinzufugen_overview())
+                                      command=lambda: hinzufugen_overview())
         Hinzufugen_button.place(relx=0.5, rely=0.1)
 
         # Aktionen
@@ -400,16 +442,18 @@ class Ubersicht(tk.Frame):
                 color = "#f3f3f3" if i % 2 == 0 else "white"
                 tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
 
-        current_group = Mainpages.MainPage.get_current_group() 
+        from Mainpages import MainPage
+        current_group = MainPage.get_current_group
 
         def show_the_active_group():
             if current_group:
-                show_right_table(2,"1","ANDERE")
+                show_right_table(2, "1", "ANDERE")
                 print("richtig aufgerufen")
                 print(current_group)
             else:
                 starting_table()
                 print("falsch aufgerufen")
+
         show_the_active_group()
 
         # Gerät aus Tabelle öffnen
@@ -439,10 +483,6 @@ class Ubersicht(tk.Frame):
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
         self.tabelle_frame.place(relx=0.15, rely=0.3, relwidth=0.85, height=800)
-
-                   
-
-        
 
 
 def showDetails(selected_Item, tree, controller):
@@ -515,9 +555,10 @@ class Gerateansicht(tk.Frame):
         self.gerateansicht_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
 
         # Bilder laden
+        from gui_prototyp import load_image
         self.imglogin = tk.PhotoImage(file=root_path + "/gui/assets/Closeicon.png")
         self.imgmainpage = tk.PhotoImage(file=root_path + "/gui/assets/backtosite_grey_icon.png")
-        self.imgprofil = gui_prototyp.load_image(root_path + "/gui/assets/profileicon.png")
+        self.imgprofil = load_image(root_path + "/gui/assets/profileicon.png")
         self.imghelp = tk.PhotoImage(file=root_path + "/gui/assets/helpicon.png")
 
         # Stil für Header und Footer anpassen
@@ -527,24 +568,41 @@ class Gerateansicht(tk.Frame):
         style.configure("Footer.TLabel", background=ThemeManager.SRH_Grey)
 
         # Buttons hinzufügen
+
+        def login():
+            from gui_prototyp import LogInWindow
+            controller.show_frame(LogInWindow)
+
         login = ctk.CTkButton(header, image=self.imglogin, fg_color=ThemeManager.SRH_Orange,
                               bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
                               hover=True, hover_color='#e25a1f', text="",
-                              command=lambda: controller.show_frame(gui_prototyp.LogInWindow))
+                              command=login)
+
+        def profil():
+            from Profiles import Profil
+            controller.show_frame(Profil)
 
         profil = ctk.CTkButton(header, image=self.imgprofil, fg_color=ThemeManager.SRH_Orange,
                                bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
                                hover=True, hover_color='#e25a1f', text="",
-                               command=lambda: controller.show_frame(Profiles.Profil))
+                               command=profil)
+
+        def help():
+            from Profiles import Help
+            controller.show_frame(Help)
+
         help = ctk.CTkButton(header, image=self.imghelp, fg_color=ThemeManager.SRH_Orange,
                              bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
                              hover=True, hover_color='#e25a1f', text="",
-                             command=lambda: controller.show_frame(Profiles.Help))
+                             command=help)
 
         # Mainpage-Button innerhalb von gerateansicht_frame, an der gleichen Position wie das profilbild in Profil
+        def mainpage():
+            controller.show_frame(Ubersicht)
+
         mainpage = ctk.CTkButton(self, text="↩", fg_color='white', text_color=ThemeManager.SRH_Grey, width=5,
                                  font=("Inter", 50, 'bold'), corner_radius=8, hover=False,
-                                 command=lambda: controller.show_frame(Ubersicht))
+                                 command=mainpage)
         # Seiteninhalt
         tree = ttk.Treeview(self.gerateansicht_frame, columns=("c1", "c2", "c3"), show="headings",
                             height=5)
@@ -555,6 +613,7 @@ class Gerateansicht(tk.Frame):
             command=tree.yview,
             height=650
         )
+
         def dbupdate():
             # Treeview Scrollverbindung
             tree.configure(yscrollcommand=scroll.set)
@@ -571,10 +630,11 @@ class Gerateansicht(tk.Frame):
 
             items_data = fetch_tables("history", ["indexnum", "foreign_item_num"])
 
-        # Daten aus DB einfügen
-        
+            # Daten aus DB einfügen
+
             for i, row in enumerate(items_data):
-                formatted_row = [value if value is not None else "-" for value in row]  # Leere Felder durch "-" ersetzen
+                formatted_row = [value if value is not None else "-" for value in
+                                 row]  # Leere Felder durch "-" ersetzen
                 color = "#f3f3f3" if i % 2 == 0 else "white"
                 tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
 
@@ -586,6 +646,7 @@ class Gerateansicht(tk.Frame):
             # tree.heading("#3", text="Änderung")
             tree.place(x=0, y=20, relwidth=0.40, relheight=0.5)
             scroll.place(x=770, y=20, relheight=0.5)
+
         dbupdate()
 
         name_frame = ctk.CTkFrame(self.gerateansicht_frame, width=480, height=88, bg_color='transparent',
@@ -616,7 +677,6 @@ class Gerateansicht(tk.Frame):
         typ_label.place(x=5, y=5)
         self.typ_aktuell_label.place(x=5, y=50)
         typ_frame.place(x=900, y=220)
-
 
         # Dropdown Menü Typen
         typ_drop = tk.Button(typ_frame, text="↓", bd=0, bg='white',
@@ -720,10 +780,11 @@ class Gerateansicht(tk.Frame):
         # Button
         buttons_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=0, relief="solid")
         # Img definitionen
-        self.schaeden_img = gui_prototyp.load_image(root_path + "/gui/assets/Button_Schaeden.png")
-        self.buchung_img = gui_prototyp.load_image(root_path + "/gui/assets/Button_Buchung.png")
-        self.speichern_img = gui_prototyp.load_image(root_path + "/gui/assets/Button_Speichern.png")
-        self.upload1_img = gui_prototyp.load_image(root_path + "/gui/assets/Button_PicDrop.png")
+        from gui_prototyp import load_image
+        self.schaeden_img = load_image(root_path + "/gui/assets/Button_Schaeden.png")
+        self.buchung_img = load_image(root_path + "/gui/assets/Button_Buchung.png")
+        self.speichern_img = load_image(root_path + "/gui/assets/Button_Speichern.png")
+        self.upload1_img = load_image(root_path + "/gui/assets/Button_PicDrop.png")
 
         # Button Bilder hochladen
         upload_frame = tk.Frame(self.gerateansicht_frame, bg='white')
@@ -741,8 +802,9 @@ class Gerateansicht(tk.Frame):
             schaeden_page.grab_set()
 
             # Bilder
-            self.aktualisieren_img = gui_prototyp.load_image(root_path + "/gui/assets/Button_Aktualisieren.png")
-            self.upload_img = gui_prototyp.load_image(root_path + "/gui/assets/Button_Drop.png")
+            from gui_prototyp import load_image
+            self.aktualisieren_img = load_image(root_path + "/gui/assets/Button_Aktualisieren.png")
+            self.upload_img = load_image(root_path + "/gui/assets/Button_Drop.png")
 
             # Informationen
             info_frame = tk.Frame(schaeden_page, bg='white', bd=1)
@@ -843,12 +905,12 @@ class Gerateansicht(tk.Frame):
                                     command=open_schaeden_page)
         schaeden_button.place(x=5, y=10)
 
-
         # Datum
         global global_input_date
         global global_input_enddate
-        global_input_date=datetime.now().strftime('%d.%m.%Y')
-        global_input_enddate=datetime.now().strftime('%d.%m.%Y')
+        global_input_date = datetime.now().strftime('%d.%m.%Y')
+        global_input_enddate = datetime.now().strftime('%d.%m.%Y')
+
         def open_buchen_page():
             import cache
             buchen_page = tk.Toplevel()  # root
@@ -858,7 +920,8 @@ class Gerateansicht(tk.Frame):
 
             buchen_page.grab_set()
             # Bilder
-            self.aktualisieren_img = gui_prototyp.load_image(root_path + "/gui/assets/Button_Aktualisieren.png")
+            from gui_prototyp import load_image
+            self.aktualisieren_img = load_image(root_path + "/gui/assets/Button_Aktualisieren.png")
 
             # Informationen
             info_frame = tk.Frame(buchen_page, bg='white', bd=1)
@@ -900,9 +963,10 @@ class Gerateansicht(tk.Frame):
             ask_date_button = ctk.CTkButton(date_frame, text="Startdatum", command=ask_startdate, corner_radius=8,
                                             fg_color="#6F6C6C", text_color="white", hover_color="#081424")
             ask_date_button.place(x=0, y=0)
-            
+
             from datetime import datetime
-            start_result_label = tk.Label(date_frame, text=datetime.now().strftime('von: %d.%m.%Y'), font=("Arial", 14), bg='white')
+            start_result_label = tk.Label(date_frame, text=datetime.now().strftime('von: %d.%m.%Y'), font=("Arial", 14),
+                                          bg='white')
             start_result_label.place(x=150, y=0)
 
             def ask_enddate():
@@ -924,10 +988,10 @@ class Gerateansicht(tk.Frame):
                                             fg_color="#081424", text_color="white", hover_color="#6F6C6C")
             ask_date_button.place(x=0, y=100)
             # Ergebnis-Label
-            end_result_label = tk.Label(date_frame, text=datetime.now().strftime('bis: %d.%m.%Y'), font=("Arial", 14), bg='white')
+            end_result_label = tk.Label(date_frame, text=datetime.now().strftime('bis: %d.%m.%Y'), font=("Arial", 14),
+                                        bg='white')
             end_result_label.place(x=150, y=100)
 
-            
             # Button-Funktion
             def process_user_input():
                 import cache
@@ -944,10 +1008,10 @@ class Gerateansicht(tk.Frame):
 
                 # Hier kannst du die Daten weiterverarbeiten
                 # ausgabe an die Funktion, die die Daten in die Datenbank weiterreicht
-                item_update_damage(name, tag, cache.selected_item[0], "BUCHUNG", img, "BUCHUNG" ,eingangsdatum, enddatum)
+                item_update_damage(name, tag, cache.selected_item[0], "BUCHUNG", img, "BUCHUNG", eingangsdatum,
+                                   enddatum)
                 dbupdate()
 
-            
             # Buttons
             buchen_button_frame = tk.Frame(buchen_page, bg='white', bd=1)
             close_button = tk.Button(buchen_button_frame, image=self.aktualisieren_img, bd=0, bg='white',
@@ -978,30 +1042,36 @@ class Gerateansicht(tk.Frame):
         def button_click():
             update_item(self.update_items_on_save())
             controller.show_frame(Ubersicht)
-            
+
             messagebox.showinfo("Erfolgreich", "Änderungen erfolgreich gespeichert")
-            
 
         speichern_button = tk.Button(buttons_frame, image=self.speichern_img, bd=0, bg='white', command=button_click)
         speichern_button.place(x=330, y=10)
 
         # Verzeichniss
         # "Alle Anzeigen" Button in der Seitenleiste
+
+        def all_button():
+            controller.show_frame(Ubersicht)
+
         all_button = tk.Button(verzeichniss, text="Alle anzeigen", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                font=("Inter", 20, 'bold'),
-                               command=lambda: controller.show_frame(Ubersicht))
+                               command=all_button)
 
         all_button.pack(pady=10, anchor='w')
 
-        
-
         def show_dropdown_grp1():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: print("Alles wird angezeigt")) #Alle Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: print("Hardware wird angezeigt")) # nur Hardware Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Software", command=lambda: print("Software wird angezeigt")) # nur Software Produkte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: print("Peripherie wird angezeigt")) # nur Peripherie mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Andere", command=lambda: print("Andere wird angezeigt")) # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: print(
+                "Alles wird angezeigt"))  # Alle Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: print(
+                "Hardware wird angezeigt"))  # nur Hardware Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Software", command=lambda: print(
+                "Software wird angezeigt"))  # nur Software Produkte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: print(
+                "Peripherie wird angezeigt"))  # nur Peripherie mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Andere", command=lambda: print(
+                "Andere wird angezeigt"))  # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
             dropdown_menu.post(grp1_button.winfo_rootx(), grp1_button.winfo_rooty() + grp1_button.winfo_height())
 
         grp1_button = tk.Button(verzeichniss, text="Gruppe 1   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -1012,11 +1082,16 @@ class Gerateansicht(tk.Frame):
         # Gruppe 2
         def show_dropdown_grp2():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: print("Alles wird angezeigt")) #Alle Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: print("Hardware wird angezeigt")) # nur Hardware Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Software", command=lambda: print("Software wird angezeigt")) # nur Software Produkte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: print("Peripherie wird angezeigt")) # nur Peripherie mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Andere", command=lambda: print("Andere wird angezeigt")) # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: print(
+                "Alles wird angezeigt"))  # Alle Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: print(
+                "Hardware wird angezeigt"))  # nur Hardware Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Software", command=lambda: print(
+                "Software wird angezeigt"))  # nur Software Produkte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: print(
+                "Peripherie wird angezeigt"))  # nur Peripherie mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Andere", command=lambda: print(
+                "Andere wird angezeigt"))  # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
             dropdown_menu.post(grp2_button.winfo_rootx(), grp2_button.winfo_rooty() + grp2_button.winfo_height())
 
         grp2_button = tk.Button(verzeichniss, text="Gruppe 2   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -1027,11 +1102,16 @@ class Gerateansicht(tk.Frame):
         # Gruppe 3
         def show_dropdown_grp3():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: print("Alles wird angezeigt")) #Alle Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: print("Hardware wird angezeigt")) # nur Hardware Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Software", command=lambda: print("Software wird angezeigt")) # nur Software Produkte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: print("Peripherie wird angezeigt")) # nur Peripherie mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Andere", command=lambda: print("Andere wird angezeigt")) # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: print(
+                "Alles wird angezeigt"))  # Alle Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: print(
+                "Hardware wird angezeigt"))  # nur Hardware Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Software", command=lambda: print(
+                "Software wird angezeigt"))  # nur Software Produkte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: print(
+                "Peripherie wird angezeigt"))  # nur Peripherie mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Andere", command=lambda: print(
+                "Andere wird angezeigt"))  # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
             dropdown_menu.post(grp3_button.winfo_rootx(), grp3_button.winfo_rooty() + grp3_button.winfo_height())
 
         grp3_button = tk.Button(verzeichniss, text="Gruppe 3   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -1042,11 +1122,16 @@ class Gerateansicht(tk.Frame):
         # Gruppe 4
         def show_dropdown_grp4():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: print("Alles wird angezeigt")) #Alle Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: print("Hardware wird angezeigt")) # nur Hardware Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Software", command=lambda: print("Software wird angezeigt")) # nur Software Produkte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: print("Peripherie wird angezeigt")) # nur Peripherie mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Andere", command=lambda: print("Andere wird angezeigt")) # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: print(
+                "Alles wird angezeigt"))  # Alle Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: print(
+                "Hardware wird angezeigt"))  # nur Hardware Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Software", command=lambda: print(
+                "Software wird angezeigt"))  # nur Software Produkte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: print(
+                "Peripherie wird angezeigt"))  # nur Peripherie mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Andere", command=lambda: print(
+                "Andere wird angezeigt"))  # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
             dropdown_menu.post(grp4_button.winfo_rootx(), grp4_button.winfo_rooty() + grp4_button.winfo_height())
 
         grp4_button = tk.Button(verzeichniss, text="Gruppe 4   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -1057,11 +1142,16 @@ class Gerateansicht(tk.Frame):
         # Gruppe 5
         def show_dropdown_grp5():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: print("Alles wird angezeigt")) #Alle Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: print("Hardware wird angezeigt")) # nur Hardware Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Software", command=lambda: print("Software wird angezeigt")) # nur Software Produkte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: print("Peripherie wird angezeigt")) # nur Peripherie mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Andere", command=lambda: print("Andere wird angezeigt")) # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: print(
+                "Alles wird angezeigt"))  # Alle Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: print(
+                "Hardware wird angezeigt"))  # nur Hardware Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Software", command=lambda: print(
+                "Software wird angezeigt"))  # nur Software Produkte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: print(
+                "Peripherie wird angezeigt"))  # nur Peripherie mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Andere", command=lambda: print(
+                "Andere wird angezeigt"))  # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
             dropdown_menu.post(grp5_button.winfo_rootx(), grp5_button.winfo_rooty() + grp5_button.winfo_height())
 
         grp5_button = tk.Button(verzeichniss, text="Gruppe 5   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -1072,11 +1162,16 @@ class Gerateansicht(tk.Frame):
         # Gruppe 6
         def show_dropdown_grp6():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: print("Alles wird angezeigt")) #Alle Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: print("Hardware wird angezeigt")) # nur Hardware Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Software", command=lambda: print("Software wird angezeigt")) # nur Software Produkte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: print("Peripherie wird angezeigt")) # nur Peripherie mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Andere", command=lambda: print("Andere wird angezeigt")) # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: print(
+                "Alles wird angezeigt"))  # Alle Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: print(
+                "Hardware wird angezeigt"))  # nur Hardware Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Software", command=lambda: print(
+                "Software wird angezeigt"))  # nur Software Produkte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: print(
+                "Peripherie wird angezeigt"))  # nur Peripherie mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Andere", command=lambda: print(
+                "Andere wird angezeigt"))  # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
             dropdown_menu.post(grp6_button.winfo_rootx(), grp6_button.winfo_rooty() + grp6_button.winfo_height())
 
         grp6_button = tk.Button(verzeichniss, text="Gruppe 6   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -1087,11 +1182,16 @@ class Gerateansicht(tk.Frame):
         # Gruppe 7
         def show_dropdown_grp7():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: print("Alles wird angezeigt")) #Alle Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: print("Hardware wird angezeigt")) # nur Hardware Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Software", command=lambda: print("Software wird angezeigt")) # nur Software Produkte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: print("Peripherie wird angezeigt")) # nur Peripherie mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Andere", command=lambda: print("Andere wird angezeigt")) # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: print(
+                "Alles wird angezeigt"))  # Alle Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: print(
+                "Hardware wird angezeigt"))  # nur Hardware Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Software", command=lambda: print(
+                "Software wird angezeigt"))  # nur Software Produkte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: print(
+                "Peripherie wird angezeigt"))  # nur Peripherie mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Andere", command=lambda: print(
+                "Andere wird angezeigt"))  # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
             dropdown_menu.post(grp7_button.winfo_rootx(), grp7_button.winfo_rooty() + grp7_button.winfo_height())
 
         grp7_button = tk.Button(verzeichniss, text="Gruppe 7   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -1102,11 +1202,16 @@ class Gerateansicht(tk.Frame):
         # Gruppe 8
         def show_dropdown_grp8():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: print("Alles wird angezeigt")) #Alle Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: print("Hardware wird angezeigt")) # nur Hardware Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Software", command=lambda: print("Software wird angezeigt")) # nur Software Produkte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: print("Peripherie wird angezeigt")) # nur Peripherie mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Andere", command=lambda: print("Andere wird angezeigt")) # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: print(
+                "Alles wird angezeigt"))  # Alle Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: print(
+                "Hardware wird angezeigt"))  # nur Hardware Objekte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Software", command=lambda: print(
+                "Software wird angezeigt"))  # nur Software Produkte mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: print(
+                "Peripherie wird angezeigt"))  # nur Peripherie mit der Gruppe x werden angezeigt
+            dropdown_menu.add_command(label="→ Andere", command=lambda: print(
+                "Andere wird angezeigt"))  # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
             dropdown_menu.post(grp8_button.winfo_rootx(), grp8_button.winfo_rooty() + grp8_button.winfo_height())
 
         grp8_button = tk.Button(verzeichniss, text="Gruppe 8   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -1125,10 +1230,6 @@ class Gerateansicht(tk.Frame):
         profil.place(relx=0.90, rely=0.5, anchor="center")
         help.place(relx=0.85, rely=0.5, anchor="center")
         mainpage.place(relx=0.16, rely=0.16, anchor='nw')
-
-
-
-
 
     def update_data(self, data):
 
@@ -1150,18 +1251,18 @@ class Gerateansicht(tk.Frame):
         self.standort_entry.delete(0, tk.END)
         self.standort_entry.insert(0, data[3])
 
-    def update_items_on_save(self): #Gibt ein Dictonairy mit allen Akktuellen Werten des Items zurück
+    def update_items_on_save(self):  # Gibt ein Dictonairy mit allen Akktuellen Werten des Items zurück
         import cache
         updated_items = {
-                                "ID": cache.selected_item[0],
-                                "Name": self.name_entry.get(),
-                                "Gruppe": cache.selected_item[2],
-                                "Raum": self.standort_entry.get(),
-                                "amount": self.anzahl_entry.get(),
-                                "Details": self.details_entry.get(),
-                                "service_tag": self.tag_entry.get(),
-                                "added_by_user": cache.selected_item[7],
-                                "Typ": self.typ_aktuell_label.cget("text"),
-                                "Status": self.status_aktuell_label.cget("text")
-                            }
+            "ID": cache.selected_item[0],
+            "Name": self.name_entry.get(),
+            "Gruppe": cache.selected_item[2],
+            "Raum": self.standort_entry.get(),
+            "amount": self.anzahl_entry.get(),
+            "Details": self.details_entry.get(),
+            "service_tag": self.tag_entry.get(),
+            "added_by_user": cache.selected_item[7],
+            "Typ": self.typ_aktuell_label.cget("text"),
+            "Status": self.status_aktuell_label.cget("text")
+        }
         return updated_items
