@@ -3,8 +3,6 @@ from tkinter import ttk
 import customtkinter as ctk
 import os
 
-from gui import Mainpages
-
 
 class Einstellungen(tk.Frame):
     """
