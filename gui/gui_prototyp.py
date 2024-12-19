@@ -3,13 +3,10 @@ from tkinter import ttk, messagebox, PhotoImage
 import os
 import customtkinter as ctk
 from customtkinter import *
-import configuration  # Should be a class instead of a module if instantiated
-import Mainpages
-import Overview_pages
-import ThemeManager
-import Profiles
+from PIL import Image
 import importlib.util
 import sys
+import cache
 
 sys.path.append(os.path.join(os.path.dirname(__file__),'..'))
 
@@ -81,13 +78,15 @@ class GuiTest(tk.Tk):
 
         self.frames = {}
 
-        # Only attempt to instantiate Einstellungen if it's a class
-        pages = [LogInWindow, Mainpages.MainPage, Mainpages.MainPageS2, Mainpages.Mainpage_empty,
-                 Overview_pages.Ubersicht, Overview_pages.Gerateansicht, configuration.Einstellungen,
-                 Profiles.Profil, Profiles.Admin, Profiles.Stats, Profiles.Help, Profiles.Admin_User]
+        from Mainpages import MainPage, MainPageS2, Mainpage_empty
+        from Overview_pages import Ubersicht, Gerateansicht
+        from configuration import Einstellungen
+        from Profiles import Admin, Admin_User, Profil, Help, Stats
 
-        if hasattr(configuration, "Einstellungen"):
-            pages.append(configuration.Einstellungen)
+        # Only attempt to instantiate Einstellungen if it's a class
+        pages = [LogInWindow, MainPage, MainPageS2, Mainpage_empty,
+                 Ubersicht, Gerateansicht, Einstellungen,
+                 Profil, Admin, Stats, Help, Admin_User]
 
         for Page in pages: # Die Schleife iteriert über alle Seitenklassen, die in der Liste 'pages' enthalten sind.
             frame = Page(container, self) # Für jede Seite wird ein neues Frame-Objekt erstellt, das als Instanz dieser Klasse gilt.
