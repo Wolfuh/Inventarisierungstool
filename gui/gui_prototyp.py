@@ -5,16 +5,23 @@ import customtkinter as ctk
 from customtkinter import *
 import configuration  # Should be a class instead of a module if instantiated
 import Mainpages
-import Overview_pages
+try:
+    import Overview_pages
+except ImportError as e:
+    print(f"Fehler beim Importieren von Overview_pages: {e}")
 import ThemeManager
-import Profiles
+try:
+    import Profiles
+except ImportError as e:
+    print(f"Fehler beim Importieren von Profiles: {e}")
 import importlib.util
 import sys
-
 sys.path.append(os.path.join(os.path.dirname(__file__),'..'))
-
 from db.SQLite_db import *
-
+try:
+    import _DPIAwarness
+except ImportError as e:
+    print(f"Fehler beim Importieren von _DPIAwarness: {e}")
 
 '''
 root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
@@ -26,9 +33,11 @@ spec = importlib.util.spec_from_file_location("login_DB", login_DB_path)
 # login_DB = importlib.util.module_from_spec(spec)
 # spec.loader.exec_module(login_DB)
 '''
+
 #########################
 #      Mainwindow       #
 #########################
+
 
 class GuiTest(tk.Tk):
     """
@@ -70,8 +79,12 @@ class GuiTest(tk.Tk):
         #Fensterkonfigurationen
         self.title("Prototyp")
         self.resizable(True, True)
+        print("DEBUG: Fenstergrößenanpassung aktiviert.")
         self.geometry("1920x1080")
-        self.iconbitmap(root_path + "/gui/assets/prototyp_download.ico")
+        try:
+            self.iconbitmap(root_path + "/gui/assets/prototyp_download.ico")
+        except Exception as e:
+            print(f"Warnung: Icon konnte nicht geladen werden. {e}")
 
         # Main container für Frames
         container = tk.Frame(self)
@@ -90,19 +103,39 @@ class GuiTest(tk.Tk):
             pages.append(configuration.Einstellungen)
 
         for Page in pages: # Die Schleife iteriert über alle Seitenklassen, die in der Liste 'pages' enthalten sind.
-            frame = Page(container, self) # Für jede Seite wird ein neues Frame-Objekt erstellt, das als Instanz dieser Klasse gilt.
-            self.frames[Page] = frame # Das erstellte Frame wird dem 'frames'-Dictionary des Hauptfensters hinzugefügt, wobei die Seitenklasse als Schlüssel dient.
-            frame.grid(row=0, column=0, sticky="nsew") # Jedes Frame wird in einem übergeordneten Container platziert und mit 'grid' positioniert,
+            try:
+                frame = Page(container, self) # Für jede Seite wird ein neues Frame-Objekt erstellt, das als Instanz dieser Klasse gilt.
+                self.frames[Page] = frame # Das erstellte Frame wird dem 'frames'-Dictionary des Hauptfensters hinzugefügt, wobei die Seitenklasse als Schlüssel dient.
+                frame.grid(row=0, column=0, sticky="nsew") # Jedes Frame wird in einem übergeordneten Container platziert und mit 'grid' positioniert,
                                                         # wobei es den gesamten verfügbaren Platz ('nsew') einnimmt.
-        self.show_frame(LogInWindow)
+                print("DEBUG: Frame:", frame, "erstellt.")
+            except Exception as e:
+                print(f"Fehler beim Initialisieren der Seite {Page}: {e}")
 
-    def show_frame(self, cont):
-        frame = self.frames[cont]
-        frame.tkraise()
+                print("DEBUG: logInWindow show frame.")
+                self.show_frame(LogInWindow)
+            
+            def show_frame(self, cont):
+                """
+                Zeigt den angegebenen Frame (Seite) im Hauptfenster an.
+                
+                :param cont: Die Klassereferenz des Frames, der angezeigt werden soll.
+                """
+                try:
+                    frame = self.frames[cont]
+                    frame.tkraise()
+                except KeyError as e:
+                    print(f"Fehler beim Wechseln zu Frame {cont}: {e}")
+
+    def show_frame(self, LogInWindow):
+        pass
+
 
 #########################
 #      Loginwindow      #
 #########################
+
+
 class LogInWindow(tk.Frame):
     """
     Initialisiert ein Login-Fenster als Tkinter-Frame und konfiguriert dessen Layout und Ereignisse.
@@ -124,12 +157,21 @@ class LogInWindow(tk.Frame):
     **Methods:**
     login(): Überprüft die Anmeldedaten und zeigt das Hauptanwendungsfenster an, falls die Anmeldung erfolgreich ist.
     """
-    def __init__(self, parent, controller):
-        super().__init__(parent)
-        from ThemeManager import ThemeManager
-        self.configure(bg='white')
 
-        #Style Konfigurationen
+    def __init__(self, parent, controller):
+        global username_entry, password_entry, username_label, password_label, login_button, login_frame
+        super().__init__(parent)
+        try:
+            from ThemeManager import ThemeManager
+        except ImportError as e:
+            print(f"Fehler beim Import von ThemeManager: {e}")
+            self.configure(bg='white')
+
+        try:
+            self.configure(bg='white')
+        except Exception as e:
+            print(f"Fehler bei der Methode configure: {e}")
+            
         header = ttk.Label(self, text="Login", anchor="center", style="Header.TLabel")
         bottom = ttk.Label(self, style="Footer.TLabel")
 
@@ -138,58 +180,70 @@ class LogInWindow(tk.Frame):
                         font=("Inter", 50, 'bold'))
         style.configure("Footer.TLabel", background=ThemeManager.SRH_Grey)
 
-        def login():
+        def login(username: str = None, password: str = None):
             """
             Überprüft Anmeldeinformationen und navigiert bei Erfolg zur Hauptseite.
-
+        
             Diese Funktion validiert die Eingaben aus den Feldern `username_entry` und `password_entry`.
             Bei korrekter Eingabe wird die Hauptseite angezeigt, andernfalls erscheint eine Fehlermeldung.
-
+        
             **Args:**
-
+        
             Keine direkten Argumente. Nutzereingaben stammen aus `username_entry` und `password_entry`.
-
+        
             **Attributes:**
-
+        
             - username_entry (ctk.CTkEntry): Eingabe für den Benutzernamen.
             - password_entry (ctk.CTkEntry): Maskiertes Eingabefeld für das Passwort.
             - controller (object): Steuert den Wechsel zwischen Seiten.
-
-
+        
+        
             **Returns:**
-
+        
             None: Führt Aktionen je nach Ergebnis der Validierung aus.
-
+        
             **Seiteneffekte:**
-
+        
             - Wechselt zur Hauptseite bei korrekter Anmeldung.
             - Zeigt Fehlermeldung und leert das Passwortfeld bei falscher Eingabe.
             """
-
-            if login_lookup(username_entry.get(), password_entry.get()):
-                controller.show_frame(Mainpages.MainPage)
-                username_entry.delete(0, 'end')
-                password_entry.delete(0, 'end')
-            else:
-                messagebox.showinfo(title="Fehler", message="Passwort oder Benutzername falsch")
-                password_entry.delete(0, 'end')
-
+            try:
+                print(username, password)
+                if login_lookup(username, password):
+                    controller.show_frame(Mainpages.MainPage)
+                    username_entry.delete(0, 'end')
+                    password_entry.delete(0, 'end')
+                else:
+                    messagebox.showinfo(title="Fehler", message="Passwort oder Benutzername falsch")
+                    password_entry.delete(0, 'end')
+            except Exception as e:
+                messagebox.showerror("Fehler", f"Anmeldeproblem: {e}")
+        
         def on_enter(event=None):
             """Führt Login aus, wenn die Enter-Taste gedrückt wird."""
-            login()
+            try:
+                login(username_entry.get(), password_entry.get())
+            except Exception as e:
+                print(f"Fehler während des Login-Vorgangs: {e}")
 
         # Login Frame Elements
-        login_frame = tk.Frame(self, bg='white')
-        username_label = tk.Label(login_frame, text="Benutzername", bg='white', font=("Inter", 19))
-        username_entry = ctk.CTkEntry(login_frame, text_color='black', font=("Inter", 20), border_width=1, corner_radius=8,
-                                       fg_color='white', width=200)
-        password_label = tk.Label(login_frame, text="Passwort", bg='white', font=("Inter", 19))
-        password_entry = ctk.CTkEntry(login_frame, text_color='black', font=("Inter", 20), border_width=1, corner_radius=8,
-                     fg_color='white', width=200, show = "*") #Zeig Passwort mit ******
-        login_button = ctk.CTkButton(login_frame, text="Login", fg_color='#081424', text_color='white', font=("Inter", 20, 'bold'), corner_radius=8,
-                                     command=login, width=200, height=30, hover_color=ThemeManager.SRH_Orange)
+        print("DEBUG: Initialisierung der Login-Widgets.")
 
-        ###### Plazierung #######
+        try:
+            login_frame = tk.Frame(self, bg='white')
+            username_label = tk.Label(login_frame, text="Benutzername", bg='white', font=("Inter", 19))
+            username_entry = ctk.CTkEntry(login_frame, text_color='black', font=("Inter", 20), border_width=1, corner_radius=8,
+                                      fg_color='white', width=200)
+            password_label = tk.Label(login_frame, text="Passwort", bg='white', font=("Inter", 19))
+            password_entry = ctk.CTkEntry(login_frame, text_color='black', font=("Inter", 20), border_width=1, corner_radius=8,
+                                   fg_color='white', width=200, show="*")  # Zeigt Passwort als ******
+            login_button = ctk.CTkButton(login_frame, text="Login", fg_color='#081424', text_color='white', font=("Inter", 20, 'bold'),
+                                 corner_radius=8, command=lambda: login(username_entry.get(), password_entry.get()), width=200, height=30, hover_color=ThemeManager.SRH_Orange)
+        except Exception as e:
+            print(f"Fehler bei der Initialisierung der Login-Widgets: {e}")
+
+        ###### Platzierung #######
+        
         # Bindet die Enter-Taste an die Funktion "on_enter"
         self.bind("<Return>", on_enter)
         username_entry.bind("<Return>", on_enter)
@@ -205,16 +259,18 @@ class LogInWindow(tk.Frame):
         bottom.place(relx=0, rely=0.85, relwidth=1, relheight=0.13)
         login_frame.place(relx=0.5, rely=0.5, anchor="center")
 
-# Funktion, wenn Bild nicht geladen werden kann
 def load_image(image_path):
+    """
+    Lädt ein Bild von einem angegebenen Pfad und gibt ein PhotoImage-Objekt zurück.
+    Zeigt eine Warnung, wenn das Bild nicht gefunden wird.
+    """
     if os.path.exists(image_path):
         return tk.PhotoImage(file=image_path)
     else:
         print(f"Warnung: Bild '{image_path}' nicht gefunden.")
-        return None
 
 try:
     app = GuiTest()
     app.mainloop()
 except Exception as e:
-    print(f"Fehler beim Starten des Programms: {e}")
+    print(f"Fehler beim Starten der GUI: {e}")
