@@ -8,6 +8,9 @@ import Overview_pages
 import Profiles
 current_group = ""  # Globale Variable zur Speicherung der Gruppe
 
+import logging, loggerStyleAnsiEscSgr
+loggerStyleAnsiEscSgr.logger
+
 class MainPage(tk.Frame):
     """
     Repräsentiert die Hauptseite einer grafischen Benutzeroberfläche (GUI) mit Kopf- und Fußbereich,
@@ -144,8 +147,7 @@ class MainPage(tk.Frame):
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
         bottom.place(relx=0, rely=0.85, relwidth=1, relheight=0.13)
     def get_current_group(): # gibt die aktuelle Gruppe zurück
-        print("HÄÄÄ")
-        print(current_group)
+        logging.debug(f"{loggerStyleAnsiEscSgr.foregroundColor.brightyellow}get_current_group{loggerStyleAnsiEscSgr.foregroundColor.yellow}(){loggerStyleAnsiEscSgr.foregroundColor.reset} returned '{current_group}' (type: '{type(current_group)}')")
         return current_group
 
 

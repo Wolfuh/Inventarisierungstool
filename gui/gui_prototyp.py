@@ -14,7 +14,8 @@ import sys
 sys.path.append(os.path.join(os.path.dirname(__file__),'..'))
 
 from db.SQLite_db import *
-
+import logging, loggerStyleAnsiEscSgr
+loggerStyleAnsiEscSgr.logger
 
 '''
 root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
@@ -170,6 +171,7 @@ class LogInWindow(tk.Frame):
                 controller.show_frame(Mainpages.MainPage)
                 username_entry.delete(0, 'end')
                 password_entry.delete(0, 'end')
+                logging.info(f"'{username_global}' hat sich erfolgreich angemeldet.")
             else:
                 messagebox.showinfo(title="Fehler", message="Passwort oder Benutzername falsch")
                 password_entry.delete(0, 'end')
