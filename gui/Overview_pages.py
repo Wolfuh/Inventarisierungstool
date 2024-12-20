@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
+import tkinter.filedialog
 import customtkinter as ctk
 from customtkinter import *
 
@@ -106,7 +107,7 @@ class Ubersicht(tk.Frame):
             # item_position benötigt Zahl, für den gesuchten Ort
             # Spaltennamen aus der Datenbank holen
             print(item_position, suchgruppe, search_word)
-            items_uberschrift = fetch_headers("items", [""])
+            items_uberschrift = fetch_headers("items", ["image"])
 
             # Überschriften konfigurieren
             tree["columns"] = items_uberschrift
@@ -114,7 +115,7 @@ class Ubersicht(tk.Frame):
                 tree.column(up, anchor=CENTER, width=100)
                 tree.heading(up, text=up)
 
-            items_data = fetch_tables("items", [""])
+            items_data = fetch_tables("items", ["image"])
 
             tree.delete(*tree.get_children())
 
@@ -365,7 +366,7 @@ class Ubersicht(tk.Frame):
             print("TOBIASSS")
             # Spaltennamen aus der Datenbank holen
             tree.delete(*tree.get_children())
-            items_uberschrift = fetch_headers("items", [""])
+            items_uberschrift = fetch_headers("items", ["image"])
 
             # Überschriften konfigurieren
             tree["columns"] = items_uberschrift
@@ -373,7 +374,7 @@ class Ubersicht(tk.Frame):
                 tree.column(up, anchor=CENTER, width=100)
                 tree.heading(up, text=up)
 
-            items_data = fetch_tables("items", [""])
+            items_data = fetch_tables("items", ["image"])
 
             # Daten aus DB einfügen
 
@@ -544,7 +545,7 @@ class Gerateansicht(tk.Frame):
 
             # Spaltennamen aus der Datenbank holen
             tree.delete(*tree.get_children())
-            items_uberschrift = fetch_headers("history", ["indexnum", "foreign_item_num"])
+            items_uberschrift = fetch_headers("history", [ "foreign_item_num", "image", "name", "tag"])
 
             # Überschriften konfigurieren
             tree["columns"] = items_uberschrift
@@ -552,23 +553,34 @@ class Gerateansicht(tk.Frame):
                 tree.column(up, anchor=CENTER, width=100)
                 tree.heading(up, text=up)
 
-            items_data = fetch_tables("history", ["indexnum", "foreign_item_num"])
+            items_data = fetch_tables("history", [ "foreign_item_num", "image", "name", "tag"])
 
-        # Daten aus DB einfügen
-        
+            # Daten aus DB einfügen
             for i, row in enumerate(items_data):
                 formatted_row = [value if value is not None else "-" for value in row]  # Leere Felder durch "-" ersetzen
                 color = "#f3f3f3" if i % 2 == 0 else "white"
                 tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
 
-            # tree.column("#1", anchor=CENTER, width=50)
-            # tree.heading("#1", text="Benutzer")
-            # tree.column("#2", anchor=CENTER, width=100)
-            # tree.heading("#2", text="Datum")
-            # tree.column("#3", anchor=CENTER, width=200)
-            # tree.heading("#3", text="Änderung")
             tree.place(x=0, y=20, relwidth=0.40, relheight=0.5)
             scroll.place(x=770, y=20, relheight=0.5)
+
+            # Add row click event
+            tree.bind("<<TreeviewSelect>>", on_row_click)
+
+        def on_row_click(event):
+            # Get the selected item
+            selected_item = tree.focus()  # Returns the ID of the selected item
+            item_data = tree.item(selected_item, "values")  # Fetch the values of the selected row
+
+            # Retrieve the indexnum (assuming it's the first column)
+            if item_data:
+                print(f"Selected itemdata: {item_data}")
+                if item_data[1] == 'DMG':
+                    indexnum = item_data[0]  # Replace with the desired index number
+                    show_image_from_db(indexnum)
+            
+            
+        
         dbupdate()
 
         name_frame = ctk.CTkFrame(self.gerateansicht_frame, width=480, height=88, bg_color='transparent',
@@ -759,6 +771,7 @@ class Gerateansicht(tk.Frame):
             # Informationen
             info_frame = tk.Frame(schaeden_page, bg='white', bd=1)
             verlauf_frame = tk.Frame(schaeden_page, bg='white', bd=1)
+            
 
             name_label = tk.Label(info_frame, text="Gerätename", bg='white', font=("Inter", 19))
             name_entry_frame = ctk.CTkFrame(info_frame, width=150, height=40, bg_color='transparent',
@@ -807,7 +820,7 @@ class Gerateansicht(tk.Frame):
                 name = name_entry.get()
                 tag = tag_entry.get()
                 beschreibung = beschreibung_entry.get()
-                img = "noch kein img vorhanden"  # der upload img button hat noch keine funktion
+                img = self.last_uploaded_file   
 
                 schaeden_page.destroy()
                 dbupdate()
@@ -819,10 +832,15 @@ class Gerateansicht(tk.Frame):
 
             # Buttons
             schaeden_button_frame = tk.Frame(schaeden_page, bg='white', bd=1)
+            
+            self.last_uploaded_file = None
+            upload_button = tk.Button(schaeden_button_frame, image=self.upload_img, bd=0, bg='white',
+                                      command=lambda:[
+                                        self.image_to_binary(self.choose_image_popup()),
+                                       print("Bild hochgeladen")])
             close_button = tk.Button(schaeden_button_frame, image=self.aktualisieren_img, bd=0, bg='white',
                                      command=process_user_input)
-            upload_button = tk.Button(schaeden_button_frame, image=self.upload_img, bd=0, bg='white',
-                                      command=lambda: print("Bild hochgeladen"))
+            
 
             # Placement
             name_label.place(x=0, y=2)
@@ -861,6 +879,7 @@ class Gerateansicht(tk.Frame):
         global global_input_enddate
         global_input_date=datetime.now().strftime('%d.%m.%Y')
         global_input_enddate=datetime.now().strftime('%d.%m.%Y')
+
         def open_buchen_page():
             import cache
             buchen_page = tk.Toplevel()  # root
@@ -1177,3 +1196,31 @@ class Gerateansicht(tk.Frame):
                                 "Status": self.status_aktuell_label.cget("text")
                             }
         return updated_items
+
+
+    def choose_image_popup(self):
+        import tkinter
+
+        file = tkinter.filedialog.askopenfilename()
+        return file
+
+
+
+    def image_to_binary(self,image_path):
+        try:
+            # Open the image file in binary read mode
+            with open(image_path, 'rb') as image_file:
+                binary_data = image_file.read()
+                self.last_uploaded_file = binary_data
+            return binary_data
+        except FileNotFoundError:
+            print("Error: Image file not found.")
+            return None
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            return None
+    
+    
+
+    
+    
