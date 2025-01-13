@@ -94,7 +94,7 @@ class MainPage(tk.Frame):
             global current_group
             current_group = group
             obj1 = Overview_pages.Ubersicht(parent, controller)
-            print(f"Gruppe {group} wurde geklickt!")
+            logging.info(f"Gruppe {group} wurde geklickt!")
             
             controller.show_frame(Overview_pages.Ubersicht)
 
