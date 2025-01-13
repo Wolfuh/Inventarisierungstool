@@ -15,7 +15,8 @@ import sys
 sys.path.append(os.path.join(os.path.dirname(__file__),'..'))
 
 from db.SQLite_db import *
-
+import logging, loggerStyleAnsiEscSgr
+loggerStyleAnsiEscSgr.logger
 
 class Ubersicht(tk.Frame):
     """
@@ -100,24 +101,28 @@ class Ubersicht(tk.Frame):
 
         all_button.pack(pady=10, anchor='w')
 
-        tree = ttk.Treeview(self.tabelle_frame, columns=("c1", "c2", "c3", "c4", "c5"), show="headings",
+        overview_table_tree = ttk.Treeview(self.tabelle_frame, columns=("c1", "c2", "c3", "c4", "c5"), show="headings",
                             height=5)
+        overview_table_tree.place(x=120, y=0, width=1280, height=650); print(f"Tree l105:\n'{overview_table_tree.get_children()}' - wurde gerade definiert")
 
+        print(type(overview_table_tree)); print(overview_table_tree)
         def show_right_table(item_position: int, suchgruppe, search_word):  
             # item_position benötigt Zahl, für den gesuchten Ort
             # Spaltennamen aus der Datenbank holen
-            print(item_position, suchgruppe, search_word)
+            logging.debug(f"{loggerStyleAnsiEscSgr.foregroundColor.brightyellow}show_right_table{loggerStyleAnsiEscSgr.foregroundColor.yellow}(\
+{loggerStyleAnsiEscSgr.foregroundColor.reset}item_position='{item_position}' (type: '{type(item_position)}'), suchgruppe='{suchgruppe}' \
+(type: '{type(suchgruppe)}'), search_word='{search_word}' (type: '{type(search_word)}'){loggerStyleAnsiEscSgr.foregroundColor.yellow}){loggerStyleAnsiEscSgr.foregroundColor.reset}")
             items_uberschrift = fetch_headers("items", ["image"])
 
             # Überschriften konfigurieren
-            tree["columns"] = items_uberschrift
+            overview_table_tree["columns"] = items_uberschrift
             for up in items_uberschrift:
-                tree.column(up, anchor=CENTER, width=100)
-                tree.heading(up, text=up)
+                overview_table_tree.column(up, anchor=CENTER, width=100)
+                overview_table_tree.heading(up, text=up)
+            print(f"Tree l119:\n'{overview_table_tree.get_children()}'")
 
             items_data = fetch_tables("items", ["image"])
-
-            tree.delete(*tree.get_children())
+            overview_table_tree.delete(*overview_table_tree.get_children()); print(f"Tree l122:\n'{overview_table_tree.get_children()}'")
 
             type_sort = ["Hardwawre", "Software", "Peripherie"]
 
@@ -129,7 +134,7 @@ class Ubersicht(tk.Frame):
                     formatted_row = [value if value is not None else "-" for value in
                                      item]  # Leere Felder durch "-" ersetzen
                     color = "#f3f3f3" if i % 2 == 0 else "white"
-                    tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
+                    overview_table_tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd")); print(f"Tree l134:\n'{overview_table_tree.get_children()}'")
                     i += 1
 
                 elif (item[2] and str(item[2]) == suchgruppe) and (
@@ -137,9 +142,22 @@ class Ubersicht(tk.Frame):
                     formatted_row = [value if value is not None else "-" for value in
                                      item]  # Leere Felder durch "-" ersetzen
                     color = "#f3f3f3" if i % 2 == 0 else "white"
-                    tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
+                    overview_table_tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd")); print(f"Tree l142:\n'{overview_table_tree.get_children()}'")
                     i += 1
-            print("wurde erfolgt")
+            print(f"Tree l144:\n'{overview_table_tree.get_children()}'")
+            logging.debug(f"{loggerStyleAnsiEscSgr.foregroundColor.brightyellow}show_right_table{loggerStyleAnsiEscSgr.foregroundColor.yellow}(){loggerStyleAnsiEscSgr.foregroundColor.reset} wurde ausgeführt")
+
+        # current_group = Mainpages.MainPage.get_current_group()
+
+        def show_the_active_group():
+            current_group = Mainpages.MainPage.get_current_group()
+            if current_group:
+                show_right_table(8,"3","")
+                logging.debug(f"{loggerStyleAnsiEscSgr.foregroundColor.brightyellow}show_the_active_group{loggerStyleAnsiEscSgr.foregroundColor.yellow}(){loggerStyleAnsiEscSgr.foregroundColor.reset} mit Wert '{current_group}' (type: '{type(current_group)}') für current_group aufgerufen")
+            else:
+                starting_table()
+                logging.debug(f"{loggerStyleAnsiEscSgr.foregroundColor.brightyellow}show_the_active_group{loggerStyleAnsiEscSgr.foregroundColor.yellow}(){loggerStyleAnsiEscSgr.foregroundColor.reset} ohne Wert für current_group aufgerufen!\n\
+starte {loggerStyleAnsiEscSgr.foregroundColor.brightyellow}starting_table{loggerStyleAnsiEscSgr.foregroundColor.yellow}(){loggerStyleAnsiEscSgr.foregroundColor.reset}")
 
         # Gruppe 1
         def show_dropdown_grp1():
@@ -149,6 +167,7 @@ class Ubersicht(tk.Frame):
             dropdown_menu.add_command(label="→ Software", command=lambda: show_right_table(8,"1","Software")) # nur Software Produkte mit der Gruppe x werden angezeigt
             dropdown_menu.add_command(label="→ Peripherie", command=lambda: show_right_table(8,"1","Peripherie")) # nur Peripherie mit der Gruppe x werden angezeigt
             dropdown_menu.add_command(label="→ Andere", command=lambda: show_right_table(8,"1","ANDERE")) # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
+            dropdown_menu.add_command(label="TEST", command=lambda: show_the_active_group())
             dropdown_menu.post(grp1_button.winfo_rootx(), grp1_button.winfo_rooty() + grp1_button.winfo_height())
 
         grp1_button = tk.Button(verzeichniss, text="Gruppe 1   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -276,14 +295,14 @@ class Ubersicht(tk.Frame):
             items_uberschrift = fetch_headers("items",[""])
 
             # Überschriften konfigurieren
-            tree["columns"] = items_uberschrift
+            overview_table_tree["columns"] = items_uberschrift
             for up in items_uberschrift:
-                tree.column(up, anchor=CENTER, width=100)
-                tree.heading(up, text=up)
+                overview_table_tree.column(up, anchor=CENTER, width=100)
+                overview_table_tree.heading(up, text=up)
 
             items_data = table_sort(table, where, [""], DESC_OR_ASC)
 
-            tree.delete(*tree.get_children())
+            overview_table_tree.delete(*overview_table_tree.get_children()); print(f"Tree l301:\n'{overview_table_tree.get_children()}'")
 
             # Daten aus DB einfügen
             i = 0
@@ -291,7 +310,7 @@ class Ubersicht(tk.Frame):
                 formatted_row = [value if value is not None else "-" for value in
                                  item]  # Leere Felder durch "-" ersetzen
                 color = "#f3f3f3" if i % 2 == 0 else "white"
-                tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
+                overview_table_tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd")); print(f"Tree l310:\n'{overview_table_tree.get_children()}'")
                 i += 1
 
         # Filterfunktion
@@ -313,13 +332,13 @@ class Ubersicht(tk.Frame):
         def search_bar_output():
             suche_text = suche_entry.get()
             search_results = search_bar_update(suche_text)
-            tree.delete(*tree.get_children())
+            overview_table_tree.delete(*overview_table_tree.get_children())
 
             # Daten aus DB einfügen
             i = 0
             for item in search_results:
                 color = "#f3f3f3" if i % 2 == 0 else "white"
-                tree.insert("", "end", values=item, tags=("even" if i % 2 == 0 else "odd"))
+                overview_table_tree.insert("", "end", values=item, tags=("even" if i % 2 == 0 else "odd"))
                 i += 1
 
         suche_button = ctk.CTkButton(self.ubersicht_frame, image=self.imgSuche, corner_radius=8, border_width=0,
@@ -355,25 +374,25 @@ class Ubersicht(tk.Frame):
             self.tabelle_frame,
             button_color=ThemeManager.SRH_Grey,
             orientation="vertical",
-            command=tree.yview,
+            command=overview_table_tree.yview,
             height=650
         )
 
         # Treeview Scrollverbindung
-        tree.configure(yscrollcommand=scroll.set)
+        overview_table_tree.configure(yscrollcommand=scroll.set); print(f"Tree l378:\n'{overview_table_tree.get_children()}'")
 
         def starting_table():
-            print("TOBIASSS")
+            logging.debug(f"{loggerStyleAnsiEscSgr.foregroundColor.brightyellow}starting_table{loggerStyleAnsiEscSgr.foregroundColor.yellow}(){loggerStyleAnsiEscSgr.foregroundColor.reset} wird ausgeführt")
             # Spaltennamen aus der Datenbank holen
-            tree.delete(*tree.get_children())
+            overview_table_tree.delete(*overview_table_tree.get_children()); print(f"Tree l383:\n'{overview_table_tree.get_children()}'")
             items_uberschrift = fetch_headers("items", ["image"])
 
             # Überschriften konfigurieren
-            tree["columns"] = items_uberschrift
+            overview_table_tree["columns"] = items_uberschrift
             for up in items_uberschrift:
-                tree.column(up, anchor=CENTER, width=100)
-                tree.heading(up, text=up)
-
+                overview_table_tree.column(up, anchor=CENTER, width=100)
+                overview_table_tree.heading(up, text=up)
+            print(f"Tree l391:\n'{overview_table_tree.get_children()}'")
             items_data = fetch_tables("items", ["image"])
 
             # Daten aus DB einfügen
@@ -382,47 +401,37 @@ class Ubersicht(tk.Frame):
                 formatted_row = [value if value is not None else "-" for value in
                                  row]  # Leere Felder durch "-" ersetzen
                 color = "#f3f3f3" if i % 2 == 0 else "white"
-                tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
-
-        current_group = Mainpages.MainPage.get_current_group() 
-
-        def show_the_active_group():
-            if current_group:
-                show_right_table(2,"1","ANDERE")
-                print("richtig aufgerufen")
-                print(current_group)
-            else:
-                starting_table()
-                print("falsch aufgerufen")
-        show_the_active_group()
+                overview_table_tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
+            print(f"Tree l401:\n'{overview_table_tree.get_children()}'")
+            logging.debug(f"{loggerStyleAnsiEscSgr.foregroundColor.brightyellow}starting_table{loggerStyleAnsiEscSgr.foregroundColor.yellow}(){loggerStyleAnsiEscSgr.foregroundColor.reset} wurde ausgeführt")
 
         # Gerät aus Tabelle öffnen
         def on_item_select(event):
             try:
                 import cache
 
-                selected_Item = tree.focus()
+                selected_Item = overview_table_tree.focus()
                 print(f"Ausgewähltes Item: {selected_Item}")
                 if selected_Item:
                     # exports the data to a cache file for later usage
-                    cache.selected_item = showDetails(selected_Item, tree, controller)
+                    cache.selected_item = showDetails(selected_Item, overview_table_tree, controller)
 
             except Exception as e:
                 print(f"Fehler bei der Auswahl {e}")
 
-        tree.bind("<Double-1>", on_item_select)
+        overview_table_tree.bind("<Double-1>", on_item_select)
 
         # Farben für Tags definieren
-        tree.tag_configure("even", background="#f7f7f7")
-        tree.tag_configure("odd", background="white")
+        overview_table_tree.tag_configure("even", background="#f7f7f7")
+        overview_table_tree.tag_configure("odd", background="white")
 
-        tree.place(x=120, y=0, width=1280, height=650)
         scroll.place(x=1400, y=0)
         # Setze explizite Mindesthöhe für Zeile 5
         # self.tabelle_frame.grid_rowconfigure(5, minsize=10)
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
         self.tabelle_frame.place(relx=0.15, rely=0.3, relwidth=0.85, height=800)
+        show_the_active_group()
 
                    
 
@@ -1219,8 +1228,3 @@ class Gerateansicht(tk.Frame):
         except Exception as e:
             print(f"An error occurred: {e}")
             return None
-    
-    
-
-    
-    
