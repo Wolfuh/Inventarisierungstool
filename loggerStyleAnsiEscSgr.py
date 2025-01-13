@@ -32,25 +32,53 @@ ch.setFormatter(CustomFormatter())
 logger.addHandler(ch)
 
 # ANSI ESC SGR
-escSeqStart = "\33["
+controlSequenceIntroducer = "\33["
 sgrReset = "0m"
+
+class baseColors():
+    black = "0"
+    red = "1"
+    green = "2"
+    yellow = "3"
+    blue = "4"
+    magenta = "5"
+    cyan = "6"
+    white = "7"
+
 class foregroundColor():
-    black = escSeqStart + "30m"
-    red = escSeqStart + "31m"
-    green = escSeqStart + "32m"
-    yellow = escSeqStart + "33m"
-    blue = escSeqStart + "34m"
-    magenta = escSeqStart + "35m"
-    cyan = escSeqStart + "36m"
-    white = escSeqStart + "37m"
-    brightBlack = escSeqStart + "90m"
-    gray = brightBlack
-    grey = brightBlack
-    brightRed = escSeqStart + "91m"
-    brightGreen = escSeqStart + "92m"
-    brightyellow = escSeqStart + "93m"
-    brightblue = escSeqStart + "94m"
-    brightmagenta = escSeqStart + "95m"
-    brightcyan = escSeqStart + "96m"
-    brightwhite = escSeqStart + "97m"
-    reset = escSeqStart + sgrReset
+    black = f"{controlSequenceIntroducer}3{baseColors.black}m"
+    red = f"{controlSequenceIntroducer}3{baseColors.red}m"
+    green = f"{controlSequenceIntroducer}3{baseColors.green}m"
+    yellow = f"{controlSequenceIntroducer}3{baseColors.yellow}m"
+    blue = f"{controlSequenceIntroducer}3{baseColors.blue}m"
+    magenta = f"{controlSequenceIntroducer}3{baseColors.magenta}m"
+    cyan = f"{controlSequenceIntroducer}3{baseColors.cyan}m"
+    white = f"{controlSequenceIntroducer}3{baseColors.white}m"
+    brightBlack = gray = grey = f"{controlSequenceIntroducer}9{baseColors.black}m"
+    brightRed = f"{controlSequenceIntroducer}9{baseColors.red}m"
+    brightGreen = f"{controlSequenceIntroducer}9{baseColors.green}m"
+    brightyellow = f"{controlSequenceIntroducer}9{baseColors.yellow}m"
+    brightblue = f"{controlSequenceIntroducer}9{baseColors.blue}m"
+    brightmagenta = f"{controlSequenceIntroducer}9{baseColors.magenta}m"
+    brightcyan = f"{controlSequenceIntroducer}9{baseColors.cyan}m"
+    brightwhite = f"{controlSequenceIntroducer}9{baseColors.white}m"
+    reset = controlSequenceIntroducer + sgrReset
+
+class backgroundColor():
+    black = f"{controlSequenceIntroducer}4{baseColors.black}m"
+    red = f"{controlSequenceIntroducer}4{baseColors.red}m"
+    green = f"{controlSequenceIntroducer}4{baseColors.green}m"
+    yellow = f"{controlSequenceIntroducer}4{baseColors.yellow}m"
+    blue = f"{controlSequenceIntroducer}4{baseColors.blue}m"
+    magenta = f"{controlSequenceIntroducer}4{baseColors.magenta}m"
+    cyan = f"{controlSequenceIntroducer}4{baseColors.cyan}m"
+    white = f"{controlSequenceIntroducer}4{baseColors.white}m"
+    brightBlack = gray = grey = f"{controlSequenceIntroducer}10{baseColors.black}m"
+    brightRed = f"{controlSequenceIntroducer}10{baseColors.red}m"
+    brightGreen = f"{controlSequenceIntroducer}10{baseColors.green}m"
+    brightyellow = f"{controlSequenceIntroducer}10{baseColors.yellow}m"
+    brightblue = f"{controlSequenceIntroducer}10{baseColors.blue}m"
+    brightmagenta = f"{controlSequenceIntroducer}10{baseColors.magenta}m"
+    brightcyan = f"{controlSequenceIntroducer}10{baseColors.cyan}m"
+    brightwhite = f"{controlSequenceIntroducer}10{baseColors.white}m"
+    reset = controlSequenceIntroducer + sgrReset
