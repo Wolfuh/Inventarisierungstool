@@ -2817,6 +2817,7 @@ class Einstellungen(tk.Frame):
             admin_button.config(bg=ThemeManager.Darkmode_Grey, fg="white")
             stats_button.config(bg=ThemeManager.Darkmode_Grey, fg="white")
             einstellungen_button.config(bg=ThemeManager.Darkmode_Grey, fg="white")
+            verzeichniss_help_button.config(bg=ThemeManager.Darkmode_Grey, fg="white")
 
             addSpalten_button.config(bg=ThemeManager.Darkmode_Black, fg="white")
             addTyp_button.config(bg=ThemeManager.Darkmode_Black, fg="white")
@@ -2836,6 +2837,7 @@ class Einstellungen(tk.Frame):
             admin_button.config(bg=ThemeManager.SRH_Grey, fg="black")
             stats_button.config(bg=ThemeManager.SRH_Grey, fg="black")
             einstellungen_button.config(bg=ThemeManager.SRH_Grey, fg="black")
+            verzeichniss_help_button.config(bg=ThemeManager.SRH_Grey, fg="black")
 
             addSpalten_button.config(bg="white", fg="black")
             addTyp_button.config(bg="white", fg="black")
