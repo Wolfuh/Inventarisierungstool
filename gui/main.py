@@ -1628,7 +1628,7 @@ class Gerateansicht(tk.Frame):
                 eingangsdatum = global_input_date
                 global global_input_enddate
                 enddatum = global_input_enddate
-                img = "noch kein img vorhanden"  # der upload img button hat noch keine funktion
+                img = None  # der upload img button hat noch keine funktion
 
                 buchen_page.destroy()
 
