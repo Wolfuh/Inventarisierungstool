@@ -30,6 +30,37 @@ spec = importlib.util.spec_from_file_location("login_DB", login_DB_path)
 # spec.loader.exec_module(login_DB)
 '''
 
+# TreeLogger
+class TreeLogFormatter(logging.Formatter):
+    grey = "\33[38;20m"
+    yellow = "\33[33;20m"
+    red = "\33[31;20m"
+    bold_red = "\33[31;1m"
+    reset = "\33[0m"
+    format = "%(name)s %(filename)s:%(lineno)d:\n%(message)s"
+
+    FORMATS = {
+        logging.DEBUG: grey + format + reset,
+        logging.INFO: grey + format + reset,
+        logging.WARNING: yellow + format + reset,
+        logging.ERROR: red + format + reset,
+        logging.CRITICAL: bold_red + format + reset
+    }
+
+    def format(self, record):
+        log_fmt = self.FORMATS.get(record.levelno)
+        formatter = logging.Formatter(log_fmt)
+        return formatter.format(record)
+
+TreeLogger = logging.getLogger("Tree")
+TreeLogger.setLevel(logging.INFO) # <- auf "DEBUG" setzten, um die Log-Ausgaben des Trees einzublenden
+
+TreeLoggerch = logging.StreamHandler()
+TreeLoggerch.setFormatter(TreeLogFormatter())
+
+TreeLogger.addHandler(TreeLoggerch)
+TreeLogger.propagate=False
+
 ###################################
 #୧‿̩͙ ˖︵ ꕀ⠀ ♱ Main ♱⠀ ꕀ ︵˖ ‿̩͙୨#
 ###################################
@@ -700,8 +731,7 @@ class Ubersicht(tk.Frame):
         overview_table_tree = ttk.Treeview(self.tabelle_frame, columns=("c1", "c2", "c3", "c4", "c5"), show="headings",
                                            height=5)
         overview_table_tree.place(x=120, y=0, width=1280, height=650)
-        print(
-            f"Tree l{inspect.currentframe().f_back.f_lineno}:\n'{overview_table_tree.get_children()}' - wurde gerade definiert")
+        TreeLogger.debug(f"'{overview_table_tree.get_children()}' - wurde gerade definiert")
 
         print(type(overview_table_tree));
         print(overview_table_tree)
@@ -720,11 +750,11 @@ class Ubersicht(tk.Frame):
             for up in items_uberschrift:
                 overview_table_tree.column(up, anchor=CENTER, width=100)
                 overview_table_tree.heading(up, text=up)
-            print(f"Tree l{inspect.currentframe().f_back.f_lineno}:\n'{overview_table_tree.get_children()}'")
+            TreeLogger.debug(f"'{overview_table_tree.get_children()}'")
 
             items_data = fetch_tables("items", ["image"])
             overview_table_tree.delete(*overview_table_tree.get_children())
-            print(f"Tree l{inspect.currentframe().f_back.f_lineno}:\n'{overview_table_tree.get_children()}'")
+            TreeLogger.debug(f"'{overview_table_tree.get_children()}'")
 
             type_sort = ["Hardwawre", "Software", "Peripherie"]
 
@@ -737,7 +767,7 @@ class Ubersicht(tk.Frame):
                                      item]  # Leere Felder durch "-" ersetzen
                     color = "#f3f3f3" if i % 2 == 0 else "white"
                     overview_table_tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
-                    print(f"Tree l{inspect.currentframe().f_back.f_lineno}:\n'{overview_table_tree.get_children()}'")
+                    TreeLogger.debug(f"'{overview_table_tree.get_children()}'")
                     i += 1
 
                 elif (item[2] and str(item[2]) == suchgruppe) and (
@@ -746,9 +776,9 @@ class Ubersicht(tk.Frame):
                                      item]  # Leere Felder durch "-" ersetzen
                     color = "#f3f3f3" if i % 2 == 0 else "white"
                     overview_table_tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
-                    print(f"Tree l{inspect.currentframe().f_back.f_lineno}:\n'{overview_table_tree.get_children()}'")
+                    TreeLogger.debug(f"'{overview_table_tree.get_children()}'")
                     i += 1
-            print(f"Tree l{inspect.currentframe().f_back.f_lineno}:\n'{overview_table_tree.get_children()}'")
+            TreeLogger.debug(f"'{overview_table_tree.get_children()}'")
             logging.debug(
                 f"{loggerStyleAnsiEscSgr.foregroundColor.brightyellow}show_right_table{loggerStyleAnsiEscSgr.foregroundColor.yellow}(){loggerStyleAnsiEscSgr.foregroundColor.reset} wurde ausgeführt")
 
@@ -950,7 +980,7 @@ starte {loggerStyleAnsiEscSgr.foregroundColor.brightyellow}starting_table{logger
             items_data = table_sort(table, where, [""], DESC_OR_ASC)
 
             overview_table_tree.delete(*overview_table_tree.get_children())
-            print(f"Tree l{inspect.currentframe().f_back.f_lineno}:\n'{overview_table_tree.get_children()}'")
+            TreeLogger.debug(f"'{overview_table_tree.get_children()}'")
 
             # Daten aus DB einfügen
             i = 0
@@ -959,7 +989,7 @@ starte {loggerStyleAnsiEscSgr.foregroundColor.brightyellow}starting_table{logger
                                  item]  # Leere Felder durch "-" ersetzen
                 color = "#f3f3f3" if i % 2 == 0 else "white"
                 overview_table_tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
-                print(f"Tree l{inspect.currentframe().f_back.f_lineno}:\n'{overview_table_tree.get_children()}'")
+                TreeLogger.debug(f"'{overview_table_tree.get_children()}'")
                 i += 1
 
         # Filterfunktion
@@ -1029,14 +1059,14 @@ starte {loggerStyleAnsiEscSgr.foregroundColor.brightyellow}starting_table{logger
 
         # Treeview Scrollverbindung
         overview_table_tree.configure(yscrollcommand=scroll.set)
-        print(f"Tree l{inspect.currentframe().f_back.f_lineno}:\n'{overview_table_tree.get_children()}'")
+        TreeLogger.debug(f"'{overview_table_tree.get_children()}'")
 
         def starting_table():
             logging.debug(
                 f"{loggerStyleAnsiEscSgr.foregroundColor.brightyellow}starting_table{loggerStyleAnsiEscSgr.foregroundColor.yellow}(){loggerStyleAnsiEscSgr.foregroundColor.reset} wird ausgeführt")
             # Spaltennamen aus der Datenbank holen
             overview_table_tree.delete(*overview_table_tree.get_children())
-            print(f"Tree l{inspect.currentframe().f_back.f_lineno}:\n'{overview_table_tree.get_children()}'")
+            TreeLogger.debug(f"'{overview_table_tree.get_children()}'")
             items_uberschrift = fetch_headers("items", ["image"])
 
             # Überschriften konfigurieren
@@ -1044,7 +1074,7 @@ starte {loggerStyleAnsiEscSgr.foregroundColor.brightyellow}starting_table{logger
             for up in items_uberschrift:
                 overview_table_tree.column(up, anchor=CENTER, width=100)
                 overview_table_tree.heading(up, text=up)
-            print(f"Tree l{inspect.currentframe().f_back.f_lineno}:\n'{overview_table_tree.get_children()}'")
+            TreeLogger.debug(f"'{overview_table_tree.get_children()}'")
             items_data = fetch_tables("items", ["image"])
 
             # Daten aus DB einfügen
@@ -1054,7 +1084,7 @@ starte {loggerStyleAnsiEscSgr.foregroundColor.brightyellow}starting_table{logger
                                  row]  # Leere Felder durch "-" ersetzen
                 color = "#f3f3f3" if i % 2 == 0 else "white"
                 overview_table_tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
-            print(f"Tree l{inspect.currentframe().f_back.f_lineno}:\n'{overview_table_tree.get_children()}'")
+            TreeLogger.debug(f"'{overview_table_tree.get_children()}'")
             logging.debug(
                 f"{loggerStyleAnsiEscSgr.foregroundColor.brightyellow}starting_table{loggerStyleAnsiEscSgr.foregroundColor.yellow}(){loggerStyleAnsiEscSgr.foregroundColor.reset} wurde ausgeführt")
 
