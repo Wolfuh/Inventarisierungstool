@@ -1400,6 +1400,57 @@ class Gerateansicht(tk.Frame):
                 status_drop.winfo_rooty() + status_drop.winfo_height()
             )
 
+        gruppe_frame = ctk.CTkFrame(self.gerateansicht_frame, width=480, height=88, bg_color='transparent',
+                                    fg_color='transparent', border_width=1, border_color='#B8B7B7', corner_radius=8)
+        gruppe_label = ctk.CTkLabel(gruppe_frame, text="Gruppe", text_color='#858383',
+                                    font=("Inter", 25, 'bold'))
+        self.gruppe_aktuell_label = ctk.CTkLabel(gruppe_frame, text="", text_color='black',
+                                                 font=("Inter", 20))
+
+        gruppe_label.place(x=5, y=5)
+        self.gruppe_aktuell_label.place(x=5, y=50)
+        gruppe_frame.place(x=900, y=420)
+        # gruppe_drop = tk.Button(gruppe_frame, text="↓", bd=0, bg='white',
+        #                         fg=ThemeManager.SRH_Grey,
+        #                         font=("Inter", 20, 'bold'),
+        #                         command=lambda: controller.show_frame())
+        # gruppe_drop = tk.Button(gruppe_frame, text="Gruppe", bd=0, bg='white', fg='black',
+        #                         font=("Inter", 20, 'bold'),
+        #                        command=lambda: controller.show_frame())
+        def gruppe_dropdown():
+            gruppe_dropdown_menu = tk.Menu(gruppe_frame, tearoff=0, bd=1, bg='white', fg='black')
+            # Beim auswählen eines Punktes im Menü wird ein command ausgeführt, der den Text des Labels auf den jeweilig
+            # ausgewählten Wert setzt(der Inhalt wird später in der Speichern Funktion abgefragt und in die Datenbank übertragen)
+
+            # Liste der Kategorien, die im Dropdown angezeigt werden sollen
+            Gruppenname = [
+                "1",
+                "2",
+                "3"
+            ]
+
+            # Iteriere über die Kategoriennamen
+            for i in range(0, len(Gruppenname)):
+                value2 = Gruppenname[i]
+                gruppe_dropdown_menu.add_command(
+                    label=f"→ {value2}",  # Bezeichnung des Labels
+                    command=lambda value=value2: [  # Binde den aktuellen Wert von `value`
+                        self.gruppe_aktuell_label.configure(text=value),  # Ändere den Text des Labels
+                        print(f"Produkt {value}")  # Ausgabe in der Konsole
+                    ]
+                )
+
+            gruppe_dropdown_menu.post(
+                gruppe_drop.winfo_rootx() - 62,  # Verschiebt das Menü 50 Pixel nach links
+                gruppe_drop.winfo_rooty() + gruppe_drop.winfo_height()
+        )
+
+        gruppe_drop = tk.Button(gruppe_frame, text="↓", bd=0, bg='white', fg='black',
+                                font=("Inter", 20, 'bold'),
+                                command=lambda: gruppe_dropdown())  # Button öffnet Dropdown-Menü
+        gruppe_drop.place(x=420, y=30)
+
+
         anzahl_frame = ctk.CTkFrame(self.gerateansicht_frame, width=480, height=88, bg_color='transparent',
                                     fg_color='transparent', border_width=1, border_color='#B8B7B7', corner_radius=8)
         anzahl_label = ctk.CTkLabel(anzahl_frame, text="Stückzahl", text_color='#858383',
@@ -1422,15 +1473,15 @@ class Gerateansicht(tk.Frame):
                                            fg_color='transparent')
         anzahl_label.place(x=5, y=5)
         self.anzahl_entry.place(x=5, y=50)
-        anzahl_frame.place(x=900, y=420)
+        anzahl_frame.place(x=900, y=520)
 
         details_label.place(x=5, y=5)
         self.details_entry.place(x=5, y=50)
-        details_frame.place(x=900, y=520)
+        details_frame.place(x=900, y=620)
 
         standort_label.place(x=5, y=5)
         self.standort_entry.place(x=5, y=50)
-        standort_frame.place(x=900, y=620)
+        standort_frame.place(x=900, y=720)
 
         # Button
         buttons_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=0, relief="solid")
@@ -1438,12 +1489,7 @@ class Gerateansicht(tk.Frame):
         self.schaeden_img = load_image(root_path + "/gui/assets/Button_Schaeden.png")
         self.buchung_img = load_image(root_path + "/gui/assets/Button_Buchung.png")
         self.speichern_img = load_image(root_path + "/gui/assets/Button_Speichern.png")
-        self.upload1_img = load_image(root_path + "/gui/assets/Button_PicDrop.png")
 
-        # Button Bilder hochladen
-        upload_frame = tk.Frame(self.gerateansicht_frame, bg='white')
-        upload_button = tk.Button(upload_frame, image=self.upload1_img, bd=0, bg='white',
-                                  command=lambda: print("Bild hochgeladen"))
 
         # Button Schäden
         def open_schaeden_page():
@@ -1872,9 +1918,7 @@ class Gerateansicht(tk.Frame):
         grp8_button.pack(pady=10, anchor='w')
 
         # Positionierung
-        upload_button.place(x=100, y=0)
-        upload_frame.place(x=0, y=520, relwidth=0.40, height=300)
-        buttons_frame.place(x=900, y=710, width=480, height=74)
+        buttons_frame.place(x=150, y=710, width=480, height=74)
 
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
@@ -1893,6 +1937,8 @@ class Gerateansicht(tk.Frame):
         self.typ_aktuell_label.configure(text=data[8])
 
         self.status_aktuell_label.configure(text=data[9])
+
+        self.gruppe_aktuell_label.configure(text=data[2])
 
         self.details_entry.delete(0, tk.END)
         self.details_entry.insert(0, data[5])
