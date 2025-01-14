@@ -283,7 +283,22 @@ def show_image_from_db(indexnum):
         print(f"An error occurred: {e}")
 
 
-
+def show_history_table(item_ID, excluded_columns):
+    try:
+        my_db = init_connection()
+        cur = my_db.cursor()
+        columns = fetch_headers("history", excluded_columns)
+        if columns:
+            cur.execute(f"SELECT {', '.join(columns)} FROM history WHERE foreign_item_num = ?", item_ID)
+            results = cur.fetchall()
+        
+        return results
+    except sqlite3.Error as e:
+        return [], "Fehler beim Abrufen der Historie:", str(e)
+    finally:
+        if my_db:
+            my_db.close()
+            
 
 ##############################
 ## UNBENUTZTE DEFINITIONEN: ##
@@ -303,7 +318,7 @@ def group_search(search_number):
             my_db.close()
 
 
-  
+
 
 
 
