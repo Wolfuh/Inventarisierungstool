@@ -2520,9 +2520,17 @@ class Admin(tk.Frame):
         suche_button.place(relx=0.075, rely=0.1, relheight=0.04, relwidth=0.028)
         suche_entry.place(relx=0.108, rely=0.1, relwidth=0.33, relheight=0.04)
 
+        def openEmptyUser():
+            details = controller.frames[Admin_User]
+            details.update_admindata(['', '', '', '', '', '', ''])
+            controller.show_frame(Admin_User)
+            
         # Hinzufügen
         Hinzufugen_button = tk.Button(self.tabelle_frame, image=self.imgHinzufugen, bd=0, bg='white',
-                                      command=lambda: controller.show_frame(Admin_User))
+                                      command = openEmptyUser)
+        
+        
+        
         Hinzufugen_button.place(x=1280, y=100)
         # Tabelle
         # Styling
