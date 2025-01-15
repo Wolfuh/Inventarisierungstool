@@ -1140,7 +1140,7 @@ def showDetails(selected_Item, tree, controller):
 
     details = controller.frames[Gerateansicht]
     details.update_data(data)
-    details.update(data)
+    details.update_history_table(data)
     controller.show_frame(Gerateansicht)
     return data
 
@@ -1945,7 +1945,7 @@ class Gerateansicht(tk.Frame):
         help.place(relx=0.85, rely=0.5, anchor="center")
         mainpage.place(relx=0.16, rely=0.16, anchor='nw')
 
-    def update(controller,data):
+    def update_history_table(controller,data):
         tree = ttk.Treeview(controller.gerateansicht_frame, columns=("c1", "c2", "c3"), show="headings",
                                 height=5)
         scroll = ctk.CTkScrollbar(
@@ -1972,6 +1972,7 @@ class Gerateansicht(tk.Frame):
                 tree.column(up, anchor=CENTER, width=100)
                 tree.heading(up, text=up)
 
+            print(item_ID)
             items_data = show_history_table(item_ID, ["foreign_item_num", "image", "name", "tag"])
 
             # Daten aus DB einfügen

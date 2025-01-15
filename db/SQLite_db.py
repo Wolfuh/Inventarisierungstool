@@ -289,7 +289,7 @@ def show_history_table(item_ID, excluded_columns):
         cur = my_db.cursor()
         columns = fetch_headers("history", excluded_columns)
         if columns:
-            cur.execute(f"SELECT {', '.join(columns)} FROM history WHERE foreign_item_num = ?", item_ID)
+            cur.execute(f"SELECT {', '.join(columns)} FROM history WHERE foreign_item_num = ?", (item_ID,))
             results = cur.fetchall()
         
         return results
@@ -298,7 +298,8 @@ def show_history_table(item_ID, excluded_columns):
     finally:
         if my_db:
             my_db.close()
-            
+
+
 
 ##############################
 ## UNBENUTZTE DEFINITIONEN: ##
