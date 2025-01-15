@@ -10,6 +10,7 @@ import customtkinter as ctk
 from customtkinter import *
 from datetime import datetime
 import importlib.util
+from ThemeManager import ThemeManager
 
 current_group = ""
 
@@ -170,7 +171,7 @@ class LogInWindow(tk.Frame):
 
     def __init__(self, parent, controller):
         super().__init__(parent)
-        from ThemeManager import ThemeManager
+        
         self.configure(bg='white')
 
         # Style Konfigurationen
@@ -297,7 +298,7 @@ class MainPage(tk.Frame):
     def __init__(self, parent, controller):
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         tk.Frame.__init__(self, parent)
-        from ThemeManager import ThemeManager
+        
         self.configure(bg='white')
 
         # Konfiguration des Kopf- und Fußbereich
@@ -446,7 +447,7 @@ class MainPageS2(tk.Frame):
     def __init__(self, parent, controller):
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         tk.Frame.__init__(self, parent)
-        from ThemeManager import ThemeManager
+        
         self.configure(bg='white')
 
         # Erstellung vom header und Footer und Konfiguration des Hauptanzeigenbereiches
@@ -558,7 +559,7 @@ class Mainpage_empty(tk.Frame):
     def __init__(self, parent, controller):
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         tk.Frame.__init__(self, parent)
-        from ThemeManager import ThemeManager
+        
         self.configure(bg='white')
 
         # Erstellung vom header und Footer und Konfiguration des Hauptanzeigenbereiches
@@ -683,7 +684,7 @@ class Ubersicht(tk.Frame):
     def __init__(self, parent, controller):
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         tk.Frame.__init__(self, parent)
-        from ThemeManager import ThemeManager
+        
         self.configure(bg='white')
 
         # Stilkonfiguration für Header und Footer, Erstellung vom Header und des Überschriftbereiches.
@@ -1139,6 +1140,7 @@ def showDetails(selected_Item, tree, controller):
 
     details = controller.frames[Gerateansicht]
     details.update_data(data)
+    details.update(data)
     controller.show_frame(Gerateansicht)
     return data
 
@@ -1187,7 +1189,7 @@ class Gerateansicht(tk.Frame):
     def __init__(self, parent, controller):
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         tk.Frame.__init__(self, parent)
-        from ThemeManager import ThemeManager
+        
         self.configure(bg='white')
 
         # Konfiguration der Grid-Struktur für die gesamte Seite
@@ -1943,6 +1945,62 @@ class Gerateansicht(tk.Frame):
         help.place(relx=0.85, rely=0.5, anchor="center")
         mainpage.place(relx=0.16, rely=0.16, anchor='nw')
 
+    def update(controller,data):
+        tree = ttk.Treeview(controller.gerateansicht_frame, columns=("c1", "c2", "c3"), show="headings",
+                                height=5)
+        scroll = ctk.CTkScrollbar(
+            controller.gerateansicht_frame,
+            button_color=ThemeManager.SRH_Grey,
+            orientation="vertical",
+            command=tree.yview,
+            height=650
+        )
+
+        item_ID = data[0]
+
+        def dbupdate(item_ID):
+            # Treeview Scrollverbindung
+            tree.configure(yscrollcommand=scroll.set)
+
+            # Spaltennamen aus der Datenbank holen
+            tree.delete(*tree.get_children())
+            items_uberschrift = fetch_headers("history", ["foreign_item_num", "image", "name", "tag"])
+
+            # Überschriften konfigurieren
+            tree["columns"] = items_uberschrift
+            for up in items_uberschrift:
+                tree.column(up, anchor=CENTER, width=100)
+                tree.heading(up, text=up)
+
+            items_data = show_history_table(item_ID, ["foreign_item_num", "image", "name", "tag"])
+
+            # Daten aus DB einfügen
+            for i, row in enumerate(items_data):
+                formatted_row = [value if value is not None else "-" for value in
+                                    row]  # Leere Felder durch "-" ersetzen
+                color = "#f3f3f3" if i % 2 == 0 else "white"
+                tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
+
+            tree.place(x=0, y=20, relwidth=0.40, relheight=0.5)
+            scroll.place(x=770, y=20, relheight=0.5)
+
+            # Add row click event
+            tree.bind("<<TreeviewSelect>>", on_row_click)
+        
+        def on_row_click(event):
+            # Get the selected item
+            selected_item = tree.focus()  # Returns the ID of the selected item
+            item_data = tree.item(selected_item, "values")  # Fetch the values of the selected row
+
+            # Retrieve the indexnum (assuming it's the first column)
+            if item_data:
+                print(f"Selected itemdata: {item_data}")
+                if item_data[1] == 'DMG':
+                    indexnum = item_data[0]  # Replace with the desired index number
+                    show_image_from_db(indexnum)
+        
+        dbupdate(item_ID)
+
     def update_data(self, data):
 
         self.name_entry.delete(0, tk.END)
@@ -2041,7 +2099,7 @@ class Profil(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        from ThemeManager import ThemeManager
+        
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         self.configure(bg='white')
 
@@ -2208,7 +2266,7 @@ class Admin_User(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        from ThemeManager import ThemeManager
+        
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         self.configure(bg='white')
 
@@ -2458,7 +2516,7 @@ class Admin(tk.Frame):
     def __init__(self, parent, controller):
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         tk.Frame.__init__(self, parent)
-        from ThemeManager import ThemeManager
+        
         self.configure(bg='white')
 
         # Header-Label für die Profilseite
@@ -2641,7 +2699,7 @@ class Stats(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        from ThemeManager import ThemeManager
+        
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         self.configure(bg='white')
 
@@ -2751,7 +2809,7 @@ class Einstellungen(tk.Frame):
         super().__init__()
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         tk.Frame.__init__(self, parent)
-        from ThemeManager import ThemeManager
+        
 
         self.configure(bg='white')
         self.switch_value = True
@@ -3116,7 +3174,7 @@ class Help(tk.Frame):
     # from configuration import Einstellungen
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        from ThemeManager import ThemeManager
+        
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         self.configure(bg='white')
 
