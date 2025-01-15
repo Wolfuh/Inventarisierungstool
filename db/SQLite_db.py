@@ -319,8 +319,113 @@ def group_search(search_number):
             my_db.close()
 
 
+def get_group_table_lenght():
+    try:
+        my_db = init_connection()
+        cur = my_db.cursor()
+
+        # Query to fetch the maximum index
+        query = "SELECT MAX(`index`) AS max_index FROM groups;"
+        
+        # Execute the query
+        cur.execute(query)
+        result = cur.fetchone()
+
+        # Extract the maximum index value
+        max_index = result[0] if result else None
+
+        return max_index
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return None
+
+    finally:
+        # Always close the cursor and connection
+        cur.close()
+        my_db.close()
+
+def get_group_information_from_db(groupindex):
+    try:
+        # Initialize the database connection
+        my_db = init_connection()
+        cur = my_db.cursor()
+
+        # Query to fetch groupname and image based on groupindex
+        query = """
+            SELECT groupname, image 
+            FROM groups 
+            WHERE `index` = ?;
+        """
+
+        # Execute the query with the provided groupindex
+        cur.execute(query, (groupindex,))
+        result = cur.fetchone()
+
+        if result:
+            groupname, image = result
+            return {"groupname": groupname, "image": image}
+        else:
+            return None  # No matching row found
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return None
+
+    finally:
+        cur.close()
+        my_db.close()
+    
+
+def choose_image_popup():
+        import tkinter
+
+        file = tkinter.filedialog.askopenfilename()
+        return file
+
+def image_to_binary(image_path):
+    try:
+        # Open the image file in binary read mode
+        with open(image_path, 'rb') as image_file:
+            binary_data = image_file.read()
+        return binary_data
+    except FileNotFoundError:
+        print("Error: Image file not found.")
+        return None
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return None
 
 
+def update_image_at_index(index, image):
+    try:
+        # Initialize the database connection
+        my_db = init_connection()
+        cur = my_db.cursor()
+
+        # SQL query to update the image at a specific index
+        query = """
+            UPDATE groups 
+            SET image = ? 
+            WHERE `index` = ?;
+        """
+
+        # Execute the query with the provided index and image
+        cur.execute(query, (image, index))
+        my_db.commit()  # Commit the transaction to save changes
+
+        print(f"Successfully updated image at index {index}.")
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+    finally:
+        # Ensure resources are properly closed
+        cur.close()
+        my_db.close()
+
+
+    
 
 
 

@@ -257,7 +257,23 @@ class LogInWindow(tk.Frame):
 
 #######################################
 # ୧‿̩͙ ˖︵ ꕀ⠀ ♱ Mainpage ♱⠀ ꕀ ︵˖ ‿̩͙୨#
+#☭☭☭☭☭☭☭☭☭☭☭☭☭☭☭☭☭☭☭☭☭☭☭☭☭☭☭#
+# ♜	 ♞	 ♝	♛	♚	♝	♞	♜
+# ♟	 ♟	 ♟	♟	♟	♟	♟	♟
+# 	 	 	 	 	 	 	 
+# 	 	 	 	 	 	 	 
+# 	 	 	 	 	 	 	            
+# 	 	                             
+# ♙	 ♙	 ♙	♙	♙	♙	♙	♙   
+# ♖	 ♘	 ♗	♕	♔	♗	♘	♖   
+#☭☭☭☭☭☭☭☭☭☭☭☭☭☭☭☭☭☭☭☭☭☭☭☭☭☭☭#
 #######################################
+
+import io
+from PIL import Image, ImageTk
+import tkinter as tk
+from tkinter import ttk
+import customtkinter as ctk
 
 class MainPage(tk.Frame):
     def __init__(self, parent, controller):
@@ -266,11 +282,18 @@ class MainPage(tk.Frame):
         
         self.controller = controller
         self.root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
-
         
+        # Holen der Anzahl der Gruppen aus der Datenbank
+        self.groupAmount = get_group_table_lenght()
+        
+        # Holen der Gruppendaten
+        self.groupInfo = []
+        for i in range(1, self.groupAmount + 1):  # Beachte, dass wir hier mit 1 statt 0 anfangen, falls die IDs in der DB bei 1 beginnen
+            group_data = get_group_information_from_db(i)
+            if group_data:  # Überprüfen, ob die Daten korrekt geladen wurden
+                self.groupInfo.append(group_data)
 
         # Gruppendaten (alle Gruppen)
-        self.group_data = [f"Gruppe{i}" for i in range(1, 21)]  # Beispiel: 20 Gruppen
         self.groups_per_page = 8  # Anzahl der Gruppen pro Seite
         self.current_page = 0  # Aktuelle Seite
 
@@ -296,25 +319,30 @@ class MainPage(tk.Frame):
         # Erste Seite rendern
         self.render_page()
 
-    
     def render_page(self):
         """Rendert die aktuelle Seite mit den Gruppen-Buttons."""
         # Löschen der vorherigen Buttons
         for widget in self.main_frame.winfo_children():
             widget.destroy()
 
-        # Gruppen für die aktuelle Seite berechnen
+        # Berechnung der Gruppen für die aktuelle Seite
         start_index = self.current_page * self.groups_per_page
         end_index = start_index + self.groups_per_page
-        current_groups = self.group_data[start_index:end_index]
+        current_groups = self.groupInfo[start_index:end_index]
 
         # Buttons für die aktuellen Gruppen hinzufügen
-        for i, group_name in enumerate(current_groups):
-            img_path = f"{self.root_path}/gui/assets/{group_name}.png"
-            try:
-                img = tk.PhotoImage(file=img_path)
-            except tk.TclError:
-                img = tk.PhotoImage(width=100, height=100)  # Fallback bei fehlendem Bild
+        for i, group_data in enumerate(current_groups):
+            group_name = group_data.get("groupname")
+            img_data = group_data.get("image")
+
+            if not group_name:
+                continue  # Wenn kein Gruppenname vorhanden ist, überspringen
+
+            # Bild aus Binärdaten erstellen, falls vorhanden
+            if img_data:
+                img = self.create_image_from_binary(img_data)
+            else:
+                img = self.create_placeholder_image()
 
             btn = tk.Button(
                 self.main_frame,
@@ -332,7 +360,7 @@ class MainPage(tk.Frame):
         # Button-Sichtbarkeit prüfen
         self.prev_button.configure(state=tk.NORMAL if self.current_page > 0 else tk.DISABLED)
         self.next_button.configure(
-            state=tk.NORMAL if end_index < len(self.group_data) else tk.DISABLED
+            state=tk.NORMAL if end_index < len(self.groupInfo) else tk.DISABLED
         )
 
     def prev_page(self):
@@ -342,15 +370,42 @@ class MainPage(tk.Frame):
             self.render_page()
 
     def next_page(self):
-        """Weiter zur nächsten Seite."""
-        if (self.current_page + 1) * self.groups_per_page < len(self.group_data):
+        """Zurück zur nächsten Seite."""
+        if (self.current_page + 1) * self.groups_per_page < len(self.groupInfo):
             self.current_page += 1
             self.render_page()
+
+    def create_image_from_binary(self, img_data):
+        """Erstellt ein PhotoImage-Objekt aus Binärdaten und skaliert es auf 240x244 Pixel."""
+        from io import BytesIO
+        from PIL import Image
+
+        img = Image.open(BytesIO(img_data))
+        img = img.convert("RGBA")  # Sicherstellen, dass es ein RGBA-Bild ist
+        img = img.resize((240, 244), Image.LANCZOS)  # Bild auf 240x244 Pixel skalieren (mit LANCZOS statt ANTIALIAS)
+        return ImageTk.PhotoImage(img)
+
+
+    def create_placeholder_image(self):
+        """Erstellt ein leeres Bild (leeren Kasten) als Platzhalter, wenn kein Bild vorhanden ist und skaliert es auf 240x244 Pixel."""
+        from PIL import Image, ImageDraw
+
+        # Erstellen eines leeren Bildes mit einer Größe von 240x244 und einer Hintergrundfarbe
+        width, height = 240, 244
+        placeholder_img = Image.new("RGBA", (width, height), color=(200, 200, 200))  # Grauer Kasten
+
+        # Optional: Ein Text oder Symbol auf den leeren Kasten setzen
+        draw = ImageDraw.Draw(placeholder_img)
+        draw.text((width // 4, height // 4), "Kein Bild", fill="black")
+
+        return ImageTk.PhotoImage(placeholder_img)
+
 
     def handle_group_click(self, group_name):
         """Aktion ausführen, wenn eine Gruppe angeklickt wird."""
         logging.info(f"Gruppe {group_name} wurde geklickt!")
         self.controller.show_frame(Ubersicht)
+
 
 
     def get_current_group(self):  # gibt die aktuelle Gruppe zurück
