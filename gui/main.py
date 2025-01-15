@@ -8,15 +8,16 @@ import tkinter as tk
 from tkinter import ttk, messagebox, PhotoImage, simpledialog, filedialog
 import customtkinter as ctk
 from customtkinter import *
-import ThemeManager
 from datetime import datetime
 import importlib.util
+
 current_group = ""
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from db.SQLite_db import *
 import logging, loggerStyleAnsiEscSgr
+
 loggerStyleAnsiEscSgr.logger
 
 '''
@@ -29,6 +30,7 @@ spec = importlib.util.spec_from_file_location("login_DB", login_DB_path)
 # login_DB = importlib.util.module_from_spec(spec)
 # spec.loader.exec_module(login_DB)
 '''
+
 
 # TreeLogger
 class TreeLogFormatter(logging.Formatter):
@@ -52,17 +54,19 @@ class TreeLogFormatter(logging.Formatter):
         formatter = logging.Formatter(log_fmt)
         return formatter.format(record)
 
+
 TreeLogger = logging.getLogger("Tree")
-TreeLogger.setLevel(logging.INFO) # <- auf "DEBUG" setzten, um die Log-Ausgaben des Trees einzublenden
+TreeLogger.setLevel(logging.INFO)  # <- auf "DEBUG" setzten, um die Log-Ausgaben des Trees einzublenden
 
 TreeLoggerch = logging.StreamHandler()
 TreeLoggerch.setFormatter(TreeLogFormatter())
 
 TreeLogger.addHandler(TreeLoggerch)
-TreeLogger.propagate=False
+TreeLogger.propagate = False
+
 
 ###################################
-#୧‿̩͙ ˖︵ ꕀ⠀ ♱ Main ♱⠀ ꕀ ︵˖ ‿̩͙୨#
+# ୧‿̩͙ ˖︵ ꕀ⠀ ♱ Main ♱⠀ ꕀ ︵˖ ‿̩͙୨#R
 ###################################
 
 class GuiTest(tk.Tk):
@@ -102,7 +106,7 @@ class GuiTest(tk.Tk):
         super().__init__(*args, **kwargs)
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
-        #Fensterkonfigurationen
+        # Fensterkonfigurationen
         self.title("Prototyp")
         self.resizable(True, True)
         self.geometry("1920x1080")
@@ -124,19 +128,23 @@ class GuiTest(tk.Tk):
         if hasattr(Einstellungen, "Einstellungen"):
             pages.append(Einstellungen)
 
-        for Page in pages: # Die Schleife iteriert über alle Seitenklassen, die in der Liste 'pages' enthalten sind.
-            frame = Page(container, self) # Für jede Seite wird ein neues Frame-Objekt erstellt, das als Instanz dieser Klasse gilt.
-            self.frames[Page] = frame # Das erstellte Frame wird dem 'frames'-Dictionary des Hauptfensters hinzugefügt, wobei die Seitenklasse als Schlüssel dient.
-            frame.grid(row=0, column=0, sticky="nsew") # Jedes Frame wird in einem übergeordneten Container platziert und mit 'grid' positioniert,
-                                                        # wobei es den gesamten verfügbaren Platz ('nsew') einnimmt.
+        for Page in pages:  # Die Schleife iteriert über alle Seitenklassen, die in der Liste 'pages' enthalten sind.
+            frame = Page(container,
+                         self)  # Für jede Seite wird ein neues Frame-Objekt erstellt, das als Instanz dieser Klasse gilt.
+            self.frames[
+                Page] = frame  # Das erstellte Frame wird dem 'frames'-Dictionary des Hauptfensters hinzugefügt, wobei die Seitenklasse als Schlüssel dient.
+            frame.grid(row=0, column=0,
+                       sticky="nsew")  # Jedes Frame wird in einem übergeordneten Container platziert und mit 'grid' positioniert,
+            # wobei es den gesamten verfügbaren Platz ('nsew') einnimmt.
         self.show_frame(LogInWindow)
 
     def show_frame(self, cont):
         frame = self.frames[cont]
         frame.tkraise()
 
+
 ####################################
-#୧‿̩͙ ˖︵ ꕀ⠀ ♱ LogIn ♱⠀ ꕀ ︵˖ ‿̩͙୨#
+# ୧‿̩͙ ˖︵ ꕀ⠀ ♱ LogIn ♱⠀ ꕀ ︵˖ ‿̩͙୨#
 ####################################
 class LogInWindow(tk.Frame):
     """
@@ -159,12 +167,13 @@ class LogInWindow(tk.Frame):
     **Methods:**
     login(): Überprüft die Anmeldedaten und zeigt das Hauptanwendungsfenster an, falls die Anmeldung erfolgreich ist.
     """
+
     def __init__(self, parent, controller):
         super().__init__(parent)
         from ThemeManager import ThemeManager
         self.configure(bg='white')
 
-        #Style Konfigurationen
+        # Style Konfigurationen
         header = ttk.Label(self, text="Login", anchor="center", style="Header.TLabel")
         bottom = ttk.Label(self, style="Footer.TLabel")
 
@@ -217,12 +226,15 @@ class LogInWindow(tk.Frame):
         # Login Frame Elements
         login_frame = tk.Frame(self, bg='white')
         username_label = tk.Label(login_frame, text="Benutzername", bg='white', font=("Inter", 19))
-        username_entry = ctk.CTkEntry(login_frame, text_color='black', font=("Inter", 20), border_width=1, corner_radius=8,
-                                       fg_color='white', width=200)
+        username_entry = ctk.CTkEntry(login_frame, text_color='black', font=("Inter", 20), border_width=1,
+                                      corner_radius=8,
+                                      fg_color='white', width=200)
         password_label = tk.Label(login_frame, text="Passwort", bg='white', font=("Inter", 19))
-        password_entry = ctk.CTkEntry(login_frame, text_color='black', font=("Inter", 20), border_width=1, corner_radius=8,
-                     fg_color='white', width=200, show = "*") #Zeig Passwort mit ******
-        login_button = ctk.CTkButton(login_frame, text="Login", fg_color='#081424', text_color='white', font=("Inter", 20, 'bold'), corner_radius=8,
+        password_entry = ctk.CTkEntry(login_frame, text_color='black', font=("Inter", 20), border_width=1,
+                                      corner_radius=8,
+                                      fg_color='white', width=200, show="*")  # Zeig Passwort mit ******
+        login_button = ctk.CTkButton(login_frame, text="Login", fg_color='#081424', text_color='white',
+                                     font=("Inter", 20, 'bold'), corner_radius=8,
                                      command=login, width=200, height=30, hover_color=ThemeManager.SRH_Orange)
 
         ###### Plazierung #######
@@ -241,8 +253,9 @@ class LogInWindow(tk.Frame):
         bottom.place(relx=0, rely=0.85, relwidth=1, relheight=0.13)
         login_frame.place(relx=0.5, rely=0.5, anchor="center")
 
+
 #######################################
-#୧‿̩͙ ˖︵ ꕀ⠀ ♱ Mainpage ♱⠀ ꕀ ︵˖ ‿̩͙୨#
+# ୧‿̩͙ ˖︵ ꕀ⠀ ♱ Mainpage ♱⠀ ꕀ ︵˖ ‿̩͙୨#
 #######################################
 
 class MainPage(tk.Frame):
@@ -388,8 +401,9 @@ class MainPage(tk.Frame):
             f"{loggerStyleAnsiEscSgr.foregroundColor.brightyellow}get_current_group{loggerStyleAnsiEscSgr.foregroundColor.yellow}(){loggerStyleAnsiEscSgr.foregroundColor.reset} returned '{current_group}' (type: '{type(current_group)}')")
         return current_group
 
+
 ##########################################
-#୧‿̩͙ ˖︵ ꕀ⠀ ♱ Mainpage S2 ♱⠀ ꕀ ︵˖ ‿̩͙୨#
+# ୧‿̩͙ ˖︵ ꕀ⠀ ♱ Mainpage S2 ♱⠀ ꕀ ︵˖ ‿̩͙୨#
 ##########################################
 
 class MainPageS2(tk.Frame):
@@ -534,8 +548,9 @@ class MainPageS2(tk.Frame):
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
         bottom.place(relx=0, rely=0.85, relwidth=1, relheight=0.13)
 
+
 #############################################
-#୧‿̩͙ ˖︵ ꕀ⠀ ♱ Mainpage empty ♱⠀ ꕀ ︵˖ ‿̩͙୨#
+# ୧‿̩͙ ˖︵ ꕀ⠀ ♱ Mainpage empty ♱⠀ ꕀ ︵˖ ‿̩͙୨#
 #############################################
 
 class Mainpage_empty(tk.Frame):
@@ -641,8 +656,9 @@ class Mainpage_empty(tk.Frame):
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
         bottom.place(relx=0, rely=0.85, relwidth=1, relheight=0.13)
 
+
 ##############################################
-#୧‿̩͙ ˖︵ ꕀ⠀ ♱ Geräteübersicht ♱⠀ ꕀ ︵˖ ‿̩͙୨#
+# ୧‿̩͙ ˖︵ ꕀ⠀ ♱ Geräteübersicht ♱⠀ ꕀ ︵˖ ‿̩͙୨#
 ##############################################
 
 class Ubersicht(tk.Frame):
@@ -733,7 +749,7 @@ class Ubersicht(tk.Frame):
         overview_table_tree.place(x=120, y=0, width=1280, height=650)
         TreeLogger.debug(f"'{overview_table_tree.get_children()}' - wurde gerade definiert")
 
-        print(type(overview_table_tree));
+        print(type(overview_table_tree))
         print(overview_table_tree)
 
         def show_right_table(item_position: int, suchgruppe, search_word):
@@ -1128,7 +1144,7 @@ def showDetails(selected_Item, tree, controller):
 
 
 ############################################
-#୧‿̩͙ ˖︵ ꕀ⠀ ♱ Geräteansicht ♱⠀ ꕀ ︵˖ ‿̩͙୨#
+# ୧‿̩͙ ˖︵ ꕀ⠀ ♱ Geräteansicht ♱⠀ ꕀ ︵˖ ‿̩͙୨#
 ############################################
 
 class Gerateansicht(tk.Frame):
@@ -1985,8 +2001,9 @@ class Gerateansicht(tk.Frame):
             print(f"An error occurred: {e}")
             return None
 
+
 #####################################
-#୧‿̩͙ ˖︵ ꕀ⠀ ♱ Profil ♱⠀ ꕀ ︵˖ ‿̩͙୨#
+# ୧‿̩͙ ˖︵ ꕀ⠀ ♱ Profil ♱⠀ ꕀ ︵˖ ‿̩͙୨#
 #####################################
 
 class Profil(tk.Frame):
@@ -2139,7 +2156,6 @@ class Profil(tk.Frame):
             mainpage.place(relx=0.90, rely=0.5, anchor="center")
             help.place(relx=0.85, rely=0.5, anchor="center")
 
-
             profilbild.place(x=0, y=0)
 
             username.place(x=499, y=10)
@@ -2168,8 +2184,9 @@ class Profil(tk.Frame):
         thread = threading.Thread(target=update_label, daemon=True)
         thread.start()
 
+
 ###################################################
-#୧‿̩͙ ˖︵ ꕀ⠀ ♱ Adminansicht Profile ♱⠀ ꕀ ︵˖ ‿̩͙୨#
+# ୧‿̩͙ ˖︵ ꕀ⠀ ♱ Adminansicht Profile ♱⠀ ꕀ ︵˖ ‿̩͙୨#
 ###################################################
 
 class Admin_User(tk.Frame):
@@ -2310,7 +2327,6 @@ class Admin_User(tk.Frame):
                                                 command=admin_delete_click, width=137, height=44)
             admin_delete_button.place(x=1500, y=950)
 
-
             adminpage = ctk.CTkButton(self, text="↩", fg_color='white', text_color=ThemeManager.SRH_Grey, width=5,
                                       font=("Inter", 50, 'bold'), corner_radius=8, hover=False,
                                       command=lambda: controller.show_frame(Admin))
@@ -2347,7 +2363,6 @@ class Admin_User(tk.Frame):
             login.place(relx=0.95, rely=0.5, anchor="center")
             mainpage.place(relx=0.90, rely=0.5, anchor="center")
             help.place(relx=0.85, rely=0.5, anchor="center")
-
 
             profilbild.place(x=0, y=0)
 
@@ -2398,7 +2413,7 @@ class Admin_User(tk.Frame):
 
 
 ##############################################
-#୧‿̩͙ ˖︵ ꕀ⠀ ♱ Admin - Tabelle ♱⠀ ꕀ ︵˖ ‿̩͙୨#
+# ୧‿̩͙ ˖︵ ꕀ⠀ ♱ Admin - Tabelle ♱⠀ ꕀ ︵˖ ‿̩͙୨#
 ##############################################
 
 class Admin(tk.Frame):
@@ -2596,7 +2611,7 @@ class Admin(tk.Frame):
         tree.bind("<Double-1>", on_user_select)
 
 
-def showDetails(selected_User, tree, controller):
+def showDetails1(selected_User, tree, controller):
     data = tree.item(selected_User, "values")
     print(f"Daten des ausgewählten Items: {data}")
 
@@ -2604,8 +2619,9 @@ def showDetails(selected_User, tree, controller):
     details.update_admindata(data)
     controller.show_frame(Admin_User)
 
+
 ##########################################
-#୧‿̩͙ ˖︵ ꕀ⠀ ♱ Statistiken ♱⠀ ꕀ ︵˖ ‿̩͙୨#
+# ୧‿̩͙ ˖︵ ꕀ⠀ ♱ Statistiken ♱⠀ ꕀ ︵˖ ‿̩͙୨#
 ##########################################
 
 class Stats(tk.Frame):
@@ -2694,8 +2710,9 @@ class Stats(tk.Frame):
         self.stats_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
 
+
 ############################################
-#୧‿̩͙ ˖︵ ꕀ⠀ ♱ Einstellungen ♱⠀ ꕀ ︵˖ ‿̩͙୨#
+# ୧‿̩͙ ˖︵ ꕀ⠀ ♱ Einstellungen ♱⠀ ꕀ ︵˖ ‿̩͙୨#
 ############################################
 
 class Einstellungen(tk.Frame):
@@ -3076,8 +3093,9 @@ class Einstellungen(tk.Frame):
         self.einstellung_frame.place(relx=0.15, rely=0.15, relwidth=1, relheight=0.85)
         self.header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
 
+
 #########################################
-#୧‿̩͙ ˖︵ ꕀ⠀ ♱ Hilfsseite ♱⠀ ꕀ ︵˖ ‿̩͙୨#
+# ୧‿̩͙ ˖︵ ꕀ⠀ ♱ Hilfsseite ♱⠀ ꕀ ︵˖ ‿̩͙୨#
 #########################################
 
 class Help(tk.Frame):
@@ -3197,7 +3215,6 @@ class Help(tk.Frame):
 
         # Linksseitige Navigationsbutton für verschiedene Ansichten
 
-
         user_button = tk.Button(verzeichniss, text="User", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                 font=("Inter", 20, 'bold'),
                                 command=lambda: controller.show_frame(Profil))
@@ -3212,7 +3229,6 @@ class Help(tk.Frame):
                                  font=("Inter", 20, 'bold'),
                                  command=lambda: controller.show_frame(Stats))
         stats_button.pack(pady=10, anchor='w')
-
 
         einstellungen_button = tk.Button(verzeichniss, text="Einstellungen", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                          font=("Inter", 20, 'bold'),
@@ -3240,10 +3256,9 @@ class Help(tk.Frame):
             label = ctk.CTkLabel(help_frame, text=f"Label {i + 1}", text_color="black")
             label.pack(pady=5, padx=5, anchor="w")
 
-
-        #Beispiel
-        #label = ctk.CTkLabel(help_frame, text='Test', text_color="black")
-        #label.pack(pady=5, padx=5, anchor="w")
+        # Beispiel
+        # label = ctk.CTkLabel(help_frame, text='Test', text_color="black")
+        # label.pack(pady=5, padx=5, anchor="w")
         # Erstelle die inneren Frames
         # help_main_frame = tk.Frame(help_frame, bg='green')
         # help_profile_frame = tk.Frame(help_frame, bg='yellow')
@@ -3266,6 +3281,7 @@ def load_image(image_path):
     else:
         print(f"Warnung: Bild '{image_path}' nicht gefunden.")
         return None
+
 
 # try:
 #     app = GuiTest()
