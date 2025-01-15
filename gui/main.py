@@ -1441,11 +1441,10 @@ class Gerateansicht(tk.Frame):
             # ausgewählten Wert setzt(der Inhalt wird später in der Speichern Funktion abgefragt und in die Datenbank übertragen)
 
             # Liste der Kategorien, die im Dropdown angezeigt werden sollen
-            Gruppenname = [
-                "1",
-                "2",
-                "3"
-            ]
+            
+            Gruppenname = []
+            for i in range(1,9):
+                Gruppenname.append(i)
 
             # Iteriere über die Kategoriennamen
             for i in range(0, len(Gruppenname)):
@@ -2029,7 +2028,7 @@ class Gerateansicht(tk.Frame):
         updated_items = {
             "ID": cache.selected_item[0],
             "Name": self.name_entry.get(),
-            "Gruppe": cache.selected_item[2],
+            "Gruppe": self.gruppe_aktuell_label.cget("text"),
             "Raum": self.standort_entry.get(),
             "amount": self.anzahl_entry.get(),
             "Details": self.details_entry.get(),
@@ -2037,6 +2036,7 @@ class Gerateansicht(tk.Frame):
             "added_by_user": cache.selected_item[7],
             "Typ": self.typ_aktuell_label.cget("text"),
             "Status": self.status_aktuell_label.cget("text")
+            
         }
         return updated_items
 
