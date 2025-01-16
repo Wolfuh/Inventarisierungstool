@@ -1031,6 +1031,9 @@ starte {loggerStyleAnsiEscSgr.foregroundColor.brightyellow}starting_table{logger
         suche_entry = ctk.CTkEntry(self.ubersicht_frame, corner_radius=8, fg_color="#D9D9D9", text_color="black",
                                    border_width=0, font=("Inter", 12))
 
+        # Binde die Enter-Taste an die Suchfunktion
+        suche_entry.bind("<Return>", lambda event: search_bar_output())
+
         suche_button.place(relx=0.1, rely=0.1, relheight=0.04, relwidth=0.022)
         suche_entry.place(relx=0.125, rely=0.1, relwidth=0.33, relheight=0.04)
 
