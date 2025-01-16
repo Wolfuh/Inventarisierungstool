@@ -6,6 +6,7 @@ import customtkinter as ctk
 from customtkinter import *
 from datetime import datetime
 from ThemeManager import ThemeManager
+import cache
 
 current_group = ""
 
@@ -597,16 +598,7 @@ class Mainpage_empty(tk.Frame):
                              hover=True, hover_color='#e25a1f', text="",
                              command=lambda: controller.show_frame(Help))
 
-        # Frames für die Gruppen
-        frame_gr1 = tk.Frame(self, bg='#FBFBFB')
-        frame_gr2 = tk.Frame(self, bg='#FBFBFB')
-        frame_gr3 = tk.Frame(self, bg='#FBFBFB')
-        frame_gr4 = tk.Frame(self, bg='#FBFBFB')
-
-        frame_gr5 = tk.Frame(self, bg='#FBFBFB')
-        frame_gr6 = tk.Frame(self, bg='#FBFBFB')
-        frame_gr7 = tk.Frame(self, bg='#FBFBFB')
-        frame_gr8 = tk.Frame(self, bg='#FBFBFB')
+        
 
         # Buttons zum Wechseln zwischen den Hauptseiten und "Alle anzeigen" Button für die Übersichtsseite
         all = ctk.CTkButton(self, text="Alle Anzeigen", fg_color='white', text_color=ThemeManager.SRH_Blau,
@@ -636,15 +628,18 @@ class Mainpage_empty(tk.Frame):
         profil.place(relx=0.90, rely=0.5, anchor="center")
         help.place(relx=0.85, rely=0.5, anchor="center")
 
-        frame_gr1.place(relx=0.20, rely=0.25, width=244, height=244, anchor='n')
-        frame_gr2.place(relx=0.40, rely=0.25, width=244, height=244, anchor='n')
-        frame_gr3.place(relx=0.60, rely=0.25, width=244, height=244, anchor='n')
-        frame_gr4.place(relx=0.80, rely=0.25, width=244, height=244, anchor='n')
-
-        frame_gr5.place(relx=0.20, rely=0.55, width=244, height=244, anchor='n')
-        frame_gr6.place(relx=0.40, rely=0.55, width=244, height=244, anchor='n')
-        frame_gr7.place(relx=0.60, rely=0.55, width=244, height=244, anchor='n')
-        frame_gr8.place(relx=0.80, rely=0.55, width=244, height=244, anchor='n')
+        # Frames für die Gruppen
+        frame_for_group = tk.Frame(self, bg='#FBFBFB')
+        
+        
+        
+        x_pos = 0.2; y_pos =0.25
+        for _ in range(8): 
+            frame_for_group.place(relx=x_pos, rely=y_pos, width=244, height=244, anchor='n')
+            x_pos += 0.2
+            if x_pos == 0.8:
+                x_pos = 0.2; y_pos = 0.55
+            
 
         all.place(relx=0.01, rely=0.18, anchor='w')
         seitevor.place(relx=0.51, rely=0.80, anchor='n')
@@ -776,8 +771,7 @@ class Ubersicht(tk.Frame):
                 if (item[2] and str(item[2]) == suchgruppe) and search_word == "ANDERE" and not str(
                         item[item_position]) in type_sort:
                     formatted_row = [value if value is not None else "-" for value in
-                                     item]  # Leere Felder durch "-" ersetzen
-                    color = "#f3f3f3" if i % 2 == 0 else "white"
+                                     item]  # Leere Felder durch "-" ersetzen        
                     overview_table_tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
                     TreeLogger.debug(f"'{overview_table_tree.get_children()}'")
                     i += 1
@@ -785,8 +779,7 @@ class Ubersicht(tk.Frame):
                 elif (item[2] and str(item[2]) == suchgruppe) and (
                         not search_word or str(item[item_position]) == search_word):
                     formatted_row = [value if value is not None else "-" for value in
-                                     item]  # Leere Felder durch "-" ersetzen
-                    color = "#f3f3f3" if i % 2 == 0 else "white"
+                                     item]  # Leere Felder durch "-" ersetzen        
                     overview_table_tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
                     TreeLogger.debug(f"'{overview_table_tree.get_children()}'")
                     i += 1
@@ -998,8 +991,7 @@ starte {loggerStyleAnsiEscSgr.foregroundColor.brightyellow}starting_table{logger
             i = 0
             for item in items_data:
                 formatted_row = [value if value is not None else "-" for value in
-                                 item]  # Leere Felder durch "-" ersetzen
-                color = "#f3f3f3" if i % 2 == 0 else "white"
+                                 item]  # Leere Felder durch "-" ersetzen    
                 overview_table_tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
                 TreeLogger.debug(f"'{overview_table_tree.get_children()}'")
                 i += 1
@@ -1028,7 +1020,7 @@ starte {loggerStyleAnsiEscSgr.foregroundColor.brightyellow}starting_table{logger
             # Daten aus DB einfügen
             i = 0
             for item in search_results:
-                color = "#f3f3f3" if i % 2 == 0 else "white"
+                
                 overview_table_tree.insert("", "end", values=item, tags=("even" if i % 2 == 0 else "odd"))
                 i += 1
 
@@ -1093,8 +1085,7 @@ starte {loggerStyleAnsiEscSgr.foregroundColor.brightyellow}starting_table{logger
 
             for i, row in enumerate(items_data):
                 formatted_row = [value if value is not None else "-" for value in
-                                 row]  # Leere Felder durch "-" ersetzen
-                color = "#f3f3f3" if i % 2 == 0 else "white"
+                                 row]  # Leere Felder durch "-" ersetzen    
                 overview_table_tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
             TreeLogger.debug(f"'{overview_table_tree.get_children()}'")
             logging.debug(
@@ -1103,7 +1094,7 @@ starte {loggerStyleAnsiEscSgr.foregroundColor.brightyellow}starting_table{logger
         # Gerät aus Tabelle öffnen
         def on_item_select(event):
             try:
-                import cache
+                
 
                 selected_Item = overview_table_tree.focus()
                 print(f"Ausgewähltes Item: {selected_Item}")
@@ -1262,8 +1253,7 @@ class Gerateansicht(tk.Frame):
             # Daten aus DB einfügen
             for i, row in enumerate(items_data):
                 formatted_row = [value if value is not None else "-" for value in
-                                 row]  # Leere Felder durch "-" ersetzen
-                color = "#f3f3f3" if i % 2 == 0 else "white"
+                                 row]  # Leere Felder durch "-" ersetzen    
                 tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
 
             tree.place(x=0, y=20, relwidth=0.40, relheight=0.5)
@@ -1504,7 +1494,7 @@ class Gerateansicht(tk.Frame):
 
         # Button Schäden
         def open_schaeden_page():
-            import cache
+            
             schaeden_page = tk.Toplevel()  # root
             schaeden_page.title("Schäden eintragen")
             schaeden_page.geometry("819x594+500+300")
@@ -1562,7 +1552,7 @@ class Gerateansicht(tk.Frame):
 
             # Button-Funktion
             def process_user_input():
-                import cache
+                
                 # Werte aus den Eingabefeldern abrufen
                 name = name_entry.get()
                 tag = tag_entry.get()
@@ -1626,7 +1616,7 @@ class Gerateansicht(tk.Frame):
         global_input_enddate = datetime.now().strftime('%d.%m.%Y')
 
         def open_buchen_page():
-            import cache
+            
             buchen_page = tk.Toplevel()  # root
             buchen_page.title("Gerät buchen")
             buchen_page.geometry("819x594+500+300")
@@ -1677,7 +1667,7 @@ class Gerateansicht(tk.Frame):
                                             fg_color="#6F6C6C", text_color="white", hover_color="#081424")
             ask_date_button.place(x=0, y=0)
 
-            from datetime import datetime
+            
             start_result_label = tk.Label(date_frame, text=datetime.now().strftime('von: %d.%m.%Y'), font=("Arial", 14),
                                           bg='white')
             start_result_label.place(x=150, y=0)
@@ -1707,7 +1697,7 @@ class Gerateansicht(tk.Frame):
 
             # Button-Funktion
             def process_user_input():
-                import cache
+                
                 # Werte aus den Eingabefeldern abrufen
                 name = name_entry.get()
                 tag = tag_entry.get()
@@ -1971,8 +1961,7 @@ class Gerateansicht(tk.Frame):
             # Daten aus DB einfügen
             for i, row in enumerate(items_data):
                 formatted_row = [value if value is not None else "-" for value in
-                                 row]  # Leere Felder durch "-" ersetzen
-                color = "#f3f3f3" if i % 2 == 0 else "white"
+                                 row]  # Leere Felder durch "-" ersetzen    
                 tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
 
             tree.place(x=0, y=20, relwidth=0.40, relheight=0.5)
@@ -2018,7 +2007,7 @@ class Gerateansicht(tk.Frame):
         self.standort_entry.insert(0, data[3])
 
     def update_items_on_save(self):  # Gibt ein Dictonairy mit allen Akktuellen Werten des Items zurück
-        import cache
+        
         updated_items = {
             "ID": cache.selected_item[0],
             "Name": self.name_entry.get(),
@@ -2354,7 +2343,7 @@ class Admin(tk.Frame):
         ######################################################################
 
         def open_admin_user_page(self):
-            import cache
+            
 
             ###################################################
             # ୧‿̩͙ ˖︵ ꕀ⠀ ♱ Adminansicht Profile ♱⠀ ꕀ ︵˖ ‿̩͙୨#
@@ -2620,7 +2609,6 @@ class Admin(tk.Frame):
 
         for i, row in enumerate(users_data):
             us_formatted_row = [value if value is not None else "-" for value in row]  # Leere Felder durch "-" ersetzen
-            color = "#f3f3f3" if i % 2 == 0 else "white"
             tree.insert("", "end", values=us_formatted_row, tags=("even" if i % 2 == 0 else "odd"))
         # Farben für Tags definieren
         tree.tag_configure("even", background="#f7f7f7")

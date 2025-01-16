@@ -406,7 +406,7 @@ def group_search(search_number):
 
 # for i,row in enumerate(users_data):
 #     us_formatted_row = [value if value is not None else "-" for value in row] # Leere Felder durch "-" ersetzen
-#     color = "#f3f3f3" if i % 2 == 0 else "white"
+#     
 #     tree.insert("", "end", values=us_formatted_row, tags=("even" if i % 2 == 0 else "odd"))
 
 
@@ -453,7 +453,7 @@ def group_search(search_number):
 
 # for i,row in enumerate(items_data):
 #     formatted_row = [value if value is not None else "-" for value in row] # Leere Felder durch "-" ersetzen
-#     color = "#f3f3f3" if i % 2 == 0 else "white"
+#     
 #     tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
 
 
