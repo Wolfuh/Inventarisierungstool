@@ -751,6 +751,7 @@ class Ubersicht(tk.Frame):
             items_uberschrift = fetch_headers("items", ["image"])
 
             # Überschriften konfigurieren
+
             overview_table_tree["columns"] = items_uberschrift
             for up in items_uberschrift:
                 overview_table_tree.column(up, anchor=CENTER, width=100)
