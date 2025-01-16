@@ -746,13 +746,12 @@ class Ubersicht(tk.Frame):
         def show_right_table(item_position: int, suchgruppe, search_word):
             # item_position benötigt Zahl, für den gesuchten Ort
             # Spaltennamen aus der Datenbank holen
-            logging.debug(
-                f"{loggerStyleAnsiEscSgr.foregroundColor.brightyellow}show_right_table{loggerStyleAnsiEscSgr.foregroundColor.yellow}(\
-{loggerStyleAnsiEscSgr.foregroundColor.reset}item_position='{item_position}' (type: '{type(item_position)}'), suchgruppe='{suchgruppe}' \
-(type: '{type(suchgruppe)}'), search_word='{search_word}' (type: '{type(search_word)}'){loggerStyleAnsiEscSgr.foregroundColor.yellow}){loggerStyleAnsiEscSgr.foregroundColor.reset}")
+            logging.debug(f"{loggerStyleAnsiEscSgr.foregroundColor.brightyellow}\show_right_table{loggerStyleAnsiEscSgr.foregroundColor.yellow}({loggerStyleAnsiEscSgr.foregroundColor.reset}item_position='{item_position}' (type: '{type(item_position)}'), suchgruppe='{suchgruppe}' (type: '{type(suchgruppe)}'), search_word='{search_word}' (type: '{type(search_word)}'){loggerStyleAnsiEscSgr.foregroundColor.yellow}){loggerStyleAnsiEscSgr.foregroundColor.reset}")
+
             items_uberschrift = fetch_headers("items", ["image"])
 
             # Überschriften konfigurieren
+
             overview_table_tree["columns"] = items_uberschrift
             for up in items_uberschrift:
                 overview_table_tree.column(up, anchor=CENTER, width=100)
@@ -811,6 +810,7 @@ starte {loggerStyleAnsiEscSgr.foregroundColor.brightyellow}starting_table{logger
             dropdown_menu.add_command(label="→ Software", command=lambda: show_right_table(8, "1",
                                                                                            "Software"))  # nur Software Produkte mit der Gruppe x werden angezeigt
             dropdown_menu.add_command(label="→ Peripherie", command=lambda: show_right_table(8, "1",
+
                                                                                              "Peripherie"))  # nur Peripherie mit der Gruppe x werden angezeigt
             dropdown_menu.add_command(label="→ Andere", command=lambda: show_right_table(8, "1",
                                                                                          "ANDERE"))  # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
@@ -1002,6 +1002,7 @@ starte {loggerStyleAnsiEscSgr.foregroundColor.brightyellow}starting_table{logger
             dropdown_menu.add_command(label="→ Status", command=lambda: fill_in_sort("items", "Status", "DESC"))
             dropdown_menu.add_command(label="→ ID", command=lambda: fill_in_sort("items", "ID", "ASC"))
             dropdown_menu.add_command(label="→ Typ", command=lambda: fill_in_sort("items", "Typ", "DESC"))
+            dropdown_menu.add_command(label="→ Gruppe", command=lambda:fill_in_sort("items", "Gruppe", "ASC"))
             dropdown_menu.add_command(label="→ Andere", command=lambda: print("nach anderen sortieren"))
             dropdown_menu.post(Filter_button.winfo_rootx(), Filter_button.winfo_rooty() + Filter_button.winfo_height())
 
@@ -3072,10 +3073,8 @@ class Help(tk.Frame):
         self.hilfe_frame = tk.Frame(self, bg='white')
 
         # Bilder für die Login- und Hauptseite-Buttons laden
-        self.imglogin = tk.PhotoImage(
-            file=root_path + "/gui/assets/Closeicon.png")
-        self.imgmainpage = tk.PhotoImage(
-            file=root_path + "/gui/assets/backtosite_icon.png")
+        self.imglogin = tk.PhotoImage(file=root_path + "/gui/assets/Closeicon.png")
+        self.imgmainpage = tk.PhotoImage(file=root_path + "/gui/assets/backtosite_icon.png")
         self.imghelp = tk.PhotoImage(file=root_path + "/gui/assets/helpicon.png")
 
         # Header-Navigationsbuttons (Login und Hauptseite), Platzierung der Header-Buttons
@@ -3182,7 +3181,6 @@ class Help(tk.Frame):
                                              font=("Inter", 20, 'bold'),
                                              command=lambda: controller.show_frame(Help))
         verzeichniss_help_button.pack(pady=10, anchor='w')
-        einstellungen_button.pack(pady=10, anchor='w')
 
         # Seiteninhalt
         # help_frame ist ein scrollable Frame, Labels müssen auf dem Frame platziert werden,
