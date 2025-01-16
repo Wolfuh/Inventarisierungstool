@@ -598,8 +598,6 @@ class Mainpage_empty(tk.Frame):
                              hover=True, hover_color='#e25a1f', text="",
                              command=lambda: controller.show_frame(Help))
 
-        
-
         # Buttons zum Wechseln zwischen den Hauptseiten und "Alle anzeigen" Button für die Übersichtsseite
         all = ctk.CTkButton(self, text="Alle Anzeigen", fg_color='white', text_color=ThemeManager.SRH_Blau,
                             font=("Inter", 20), corner_radius=8, hover=False,
@@ -630,16 +628,15 @@ class Mainpage_empty(tk.Frame):
 
         # Frames für die Gruppen
         frame_for_group = tk.Frame(self, bg='#FBFBFB')
-        
-        
-        
-        x_pos = 0.2; y_pos =0.25
-        for _ in range(8): 
+
+        x_pos = 0.2;
+        y_pos = 0.25
+        for _ in range(8):
             frame_for_group.place(relx=x_pos, rely=y_pos, width=244, height=244, anchor='n')
             x_pos += 0.2
             if x_pos == 0.8:
-                x_pos = 0.2; y_pos = 0.55
-            
+                x_pos = 0.2;
+                y_pos = 0.55
 
         all.place(relx=0.01, rely=0.18, anchor='w')
         seitevor.place(relx=0.51, rely=0.80, anchor='n')
@@ -746,7 +743,8 @@ class Ubersicht(tk.Frame):
         def show_right_table(item_position: int, suchgruppe, search_word):
             # item_position benötigt Zahl, für den gesuchten Ort
             # Spaltennamen aus der Datenbank holen
-            logging.debug(f"{loggerStyleAnsiEscSgr.foregroundColor.brightyellow}\show_right_table{loggerStyleAnsiEscSgr.foregroundColor.yellow}({loggerStyleAnsiEscSgr.foregroundColor.reset}item_position='{item_position}' (type: '{type(item_position)}'), suchgruppe='{suchgruppe}' (type: '{type(suchgruppe)}'), search_word='{search_word}' (type: '{type(search_word)}'){loggerStyleAnsiEscSgr.foregroundColor.yellow}){loggerStyleAnsiEscSgr.foregroundColor.reset}")
+            logging.debug(
+                f"{loggerStyleAnsiEscSgr.foregroundColor.brightyellow}\show_right_table{loggerStyleAnsiEscSgr.foregroundColor.yellow}({loggerStyleAnsiEscSgr.foregroundColor.reset}item_position='{item_position}' (type: '{type(item_position)}'), suchgruppe='{suchgruppe}' (type: '{type(suchgruppe)}'), search_word='{search_word}' (type: '{type(search_word)}'){loggerStyleAnsiEscSgr.foregroundColor.yellow}){loggerStyleAnsiEscSgr.foregroundColor.reset}")
 
             items_uberschrift = fetch_headers("items", ["image"])
 
@@ -770,7 +768,7 @@ class Ubersicht(tk.Frame):
                 if (item[2] and str(item[2]) == suchgruppe) and search_word == "ANDERE" and not str(
                         item[item_position]) in type_sort:
                     formatted_row = [value if value is not None else "-" for value in
-                                     item]  # Leere Felder durch "-" ersetzen        
+                                     item]  # Leere Felder durch "-" ersetzen
                     overview_table_tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
                     TreeLogger.debug(f"'{overview_table_tree.get_children()}'")
                     i += 1
@@ -778,7 +776,7 @@ class Ubersicht(tk.Frame):
                 elif (item[2] and str(item[2]) == suchgruppe) and (
                         not search_word or str(item[item_position]) == search_word):
                     formatted_row = [value if value is not None else "-" for value in
-                                     item]  # Leere Felder durch "-" ersetzen        
+                                     item]  # Leere Felder durch "-" ersetzen
                     overview_table_tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
                     TreeLogger.debug(f"'{overview_table_tree.get_children()}'")
                     i += 1
@@ -991,7 +989,7 @@ starte {loggerStyleAnsiEscSgr.foregroundColor.brightyellow}starting_table{logger
             i = 0
             for item in items_data:
                 formatted_row = [value if value is not None else "-" for value in
-                                 item]  # Leere Felder durch "-" ersetzen    
+                                 item]  # Leere Felder durch "-" ersetzen
                 overview_table_tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
                 TreeLogger.debug(f"'{overview_table_tree.get_children()}'")
                 i += 1
@@ -1002,7 +1000,7 @@ starte {loggerStyleAnsiEscSgr.foregroundColor.brightyellow}starting_table{logger
             dropdown_menu.add_command(label="→ Status", command=lambda: fill_in_sort("items", "Status", "DESC"))
             dropdown_menu.add_command(label="→ ID", command=lambda: fill_in_sort("items", "ID", "ASC"))
             dropdown_menu.add_command(label="→ Typ", command=lambda: fill_in_sort("items", "Typ", "DESC"))
-            dropdown_menu.add_command(label="→ Gruppe", command=lambda:fill_in_sort("items", "Gruppe", "ASC"))
+            dropdown_menu.add_command(label="→ Gruppe", command=lambda: fill_in_sort("items", "Gruppe", "ASC"))
             dropdown_menu.add_command(label="→ Andere", command=lambda: print("nach anderen sortieren"))
             dropdown_menu.post(Filter_button.winfo_rootx(), Filter_button.winfo_rooty() + Filter_button.winfo_height())
 
@@ -1021,7 +1019,6 @@ starte {loggerStyleAnsiEscSgr.foregroundColor.brightyellow}starting_table{logger
             # Daten aus DB einfügen
             i = 0
             for item in search_results:
-                
                 overview_table_tree.insert("", "end", values=item, tags=("even" if i % 2 == 0 else "odd"))
                 i += 1
 
@@ -1089,7 +1086,7 @@ starte {loggerStyleAnsiEscSgr.foregroundColor.brightyellow}starting_table{logger
 
             for i, row in enumerate(items_data):
                 formatted_row = [value if value is not None else "-" for value in
-                                 row]  # Leere Felder durch "-" ersetzen    
+                                 row]  # Leere Felder durch "-" ersetzen
                 overview_table_tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
             TreeLogger.debug(f"'{overview_table_tree.get_children()}'")
             logging.debug(
@@ -1098,7 +1095,6 @@ starte {loggerStyleAnsiEscSgr.foregroundColor.brightyellow}starting_table{logger
         # Gerät aus Tabelle öffnen
         def on_item_select(event):
             try:
-                
 
                 selected_Item = overview_table_tree.focus()
                 print(f"Ausgewähltes Item: {selected_Item}")
@@ -1257,7 +1253,7 @@ class Gerateansicht(tk.Frame):
             # Daten aus DB einfügen
             for i, row in enumerate(items_data):
                 formatted_row = [value if value is not None else "-" for value in
-                                 row]  # Leere Felder durch "-" ersetzen    
+                                 row]  # Leere Felder durch "-" ersetzen
                 tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
 
             tree.place(x=0, y=20, relwidth=0.40, relheight=0.5)
@@ -1498,7 +1494,7 @@ class Gerateansicht(tk.Frame):
 
         # Button Schäden
         def open_schaeden_page():
-            
+
             schaeden_page = tk.Toplevel()  # root
             schaeden_page.title("Schäden eintragen")
             schaeden_page.geometry("819x594+500+300")
@@ -1556,7 +1552,6 @@ class Gerateansicht(tk.Frame):
 
             # Button-Funktion
             def process_user_input():
-                
                 # Werte aus den Eingabefeldern abrufen
                 name = name_entry.get()
                 tag = tag_entry.get()
@@ -1620,7 +1615,7 @@ class Gerateansicht(tk.Frame):
         global_input_enddate = datetime.now().strftime('%d.%m.%Y')
 
         def open_buchen_page():
-            
+
             buchen_page = tk.Toplevel()  # root
             buchen_page.title("Gerät buchen")
             buchen_page.geometry("819x594+500+300")
@@ -1671,7 +1666,6 @@ class Gerateansicht(tk.Frame):
                                             fg_color="#6F6C6C", text_color="white", hover_color="#081424")
             ask_date_button.place(x=0, y=0)
 
-            
             start_result_label = tk.Label(date_frame, text=datetime.now().strftime('von: %d.%m.%Y'), font=("Arial", 14),
                                           bg='white')
             start_result_label.place(x=150, y=0)
@@ -1701,7 +1695,7 @@ class Gerateansicht(tk.Frame):
 
             # Button-Funktion
             def process_user_input():
-                
+
                 # Werte aus den Eingabefeldern abrufen
                 name = name_entry.get()
                 tag = tag_entry.get()
@@ -1965,7 +1959,7 @@ class Gerateansicht(tk.Frame):
             # Daten aus DB einfügen
             for i, row in enumerate(items_data):
                 formatted_row = [value if value is not None else "-" for value in
-                                 row]  # Leere Felder durch "-" ersetzen    
+                                 row]  # Leere Felder durch "-" ersetzen
                 tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
 
             tree.place(x=0, y=20, relwidth=0.40, relheight=0.5)
@@ -2011,7 +2005,7 @@ class Gerateansicht(tk.Frame):
         self.standort_entry.insert(0, data[3])
 
     def update_items_on_save(self):  # Gibt ein Dictonairy mit allen Akktuellen Werten des Items zurück
-        
+
         updated_items = {
             "ID": cache.selected_item[0],
             "Name": self.name_entry.get(),
@@ -2263,13 +2257,16 @@ class Admin(tk.Frame):
         self.imgmainpage = tk.PhotoImage(file=self.root_path + "/gui/assets/backtosite_icon.png")
         self.imghelp = tk.PhotoImage(file=self.root_path + "/gui/assets/helpicon.png")
 
-        login = ctk.CTkButton(header, image=self.imglogin, fg_color=ThemeManager.SRH_Orange, bg_color=ThemeManager.SRH_Orange,
+        login = ctk.CTkButton(header, image=self.imglogin, fg_color=ThemeManager.SRH_Orange,
+                              bg_color=ThemeManager.SRH_Orange,
                               corner_radius=40, height=10, width=10, hover=True, hover_color='#e25a1f', text="",
                               command=lambda: self.controller.show_frame(LogInWindow))
-        mainpage = ctk.CTkButton(header, image=self.imgmainpage, fg_color=ThemeManager.SRH_Orange, bg_color=ThemeManager.SRH_Orange,
+        mainpage = ctk.CTkButton(header, image=self.imgmainpage, fg_color=ThemeManager.SRH_Orange,
+                                 bg_color=ThemeManager.SRH_Orange,
                                  corner_radius=40, height=10, width=10, hover=True, hover_color='#e25a1f', text="",
                                  command=lambda: self.controller.show_frame(MainPage))
-        help_button = ctk.CTkButton(header, image=self.imghelp, fg_color=ThemeManager.SRH_Orange, bg_color=ThemeManager.SRH_Orange,
+        help_button = ctk.CTkButton(header, image=self.imghelp, fg_color=ThemeManager.SRH_Orange,
+                                    bg_color=ThemeManager.SRH_Orange,
                                     corner_radius=40, height=10, width=10, hover=True, hover_color='#e25a1f', text="",
                                     command=lambda: self.controller.show_frame(Help))
 
@@ -2299,12 +2296,15 @@ class Admin(tk.Frame):
 
     def initialize_table_frame(self):
         """Erstellt und positioniert die Tabelle und die zugehörigen Bedienelemente."""
-        
+
         self.imgSuche = load_image(self.root_path + "/gui/assets/Search.png")
         self.imgHinzufugen = load_image(self.root_path + "/gui/assets/Adding_Icon.png")
 
         suche_entry = ctk.CTkEntry(self.tabelle_frame, corner_radius=8, fg_color="#D9D9D9", text_color="black",
                                    border_width=0, font=("Inter", 12))
+
+        suche_entry.bind("<Return>", lambda event: print("ersetz mich"))
+
         suche_button = ctk.CTkButton(self.tabelle_frame, image=self.imgSuche, corner_radius=8, border_width=0,
                                      fg_color="transparent", hover_color='#D9D9D9',
                                      command=lambda: print(f"nach {suche_entry.get()} gesucht"))
@@ -2327,14 +2327,13 @@ class Admin(tk.Frame):
         style.configure("evenrow.Treeview", background="#f2f2f2")
         style.configure("oddrow.Treeview", background="white")
 
-        
         scroll = ctk.CTkScrollbar(self.tabelle_frame, button_color=ThemeManager.SRH_Grey,
                                   orientation="vertical", command=self.tree.yview, height=600)
         self.tree.configure(yscrollcommand=scroll.set)
 
         headers = fetch_headers("benutzer", ["Passwort"])
         data = fetch_tables("benutzer", ["Passwort"])
-        
+
         self.tree["columns"] = headers
         for header in headers:
             self.tree.column(header, anchor='center', width=100)
@@ -2414,53 +2413,53 @@ class Admin(tk.Frame):
         self.aktualisieren_img = load_image(root_path + "/gui/assets/Button_Aktualisieren.png")
 
         # Seiteninhalt
-        
+
         profilbild = tk.Button(self.admin_profil_frame, image=self.imgProfileTest, bd=0, bg='white',
-                                command=lambda: self.controller.show_frame(MainPage))
+                               command=lambda: self.controller.show_frame(MainPage))
         admin_username = tk.Label(self.admin_profil_frame, text="Username", bd=0, bg='white',
-                                    fg='#6F6C6C',
-                                    font=("Poppins", 15))
+                                  fg='#6F6C6C',
+                                  font=("Poppins", 15))
         self.admin_username = tk.Entry(self.admin_profil_frame, text=" ", bd=0, bg='white', fg='black',
-                                        font=("Poppins", 18))
+                                       font=("Poppins", 18))
 
         admin_vorname = tk.Label(self.admin_profil_frame, text="Vorname", bd=0, bg='white',
-                                    fg='#6F6C6C',
-                                    font=("Poppins", 15))
+                                 fg='#6F6C6C',
+                                 font=("Poppins", 15))
         self.admin_vorname = tk.Entry(self.admin_profil_frame,
-                                        text=user_stuff[1] if user_stuff[1] else "", bd=0,
-                                        bg='white',
-                                        fg='black', font=("Poppins", 18))
+                                      text=user_stuff[1] if user_stuff[1] else "", bd=0,
+                                      bg='white',
+                                      fg='black', font=("Poppins", 18))
 
         admin_nachname = tk.Label(self.admin_profil_frame, text="Nachname", bd=0, bg='white',
-                                    fg='#6F6C6C',
-                                    font=("Poppins", 15))
+                                  fg='#6F6C6C',
+                                  font=("Poppins", 15))
         self.admin_nachname = tk.Entry(self.admin_profil_frame,
-                                        text=user_stuff[2] if user_stuff[2] else "", bd=0,
-                                        bg='white',
-                                        fg='black', font=("Poppins", 18))
+                                       text=user_stuff[2] if user_stuff[2] else "", bd=0,
+                                       bg='white',
+                                       fg='black', font=("Poppins", 18))
 
         admin_gruppen = tk.Label(self.admin_profil_frame, text="Gruppen", bd=0, bg='white',
-                                    fg='#6F6C6C',
-                                    font=("Poppins", 15))
+                                 fg='#6F6C6C',
+                                 font=("Poppins", 15))
         self.admin_gruppen = tk.Entry(self.admin_profil_frame,
-                                        text=user_stuff[3] if user_stuff[3] else "", bd=0,
-                                        bg='white', fg='black', font=("Poppins", 18))
+                                      text=user_stuff[3] if user_stuff[3] else "", bd=0,
+                                      bg='white', fg='black', font=("Poppins", 18))
 
         admin_email = tk.Label(self.admin_profil_frame, text="Email", bd=0, bg='white', fg='#6F6C6C',
-                                font=("Poppins", 15))
+                               font=("Poppins", 15))
         self.admin_email = tk.Entry(self.admin_profil_frame, text="@srhk.de", bd=0, bg='white',
                                     fg='black',
                                     font=("Poppins", 18))
 
         rechte = tk.Label(self.admin_profil_frame, text="Rechte", bd=0, bg='white', fg='#6F6C6C',
-                            font=("Poppins", 15))
+                          font=("Poppins", 15))
         rechte_frame = tk.Frame(self.admin_profil_frame, bg='#D9D9D5')  # statt 5 -> 9
         admin_adminrechte = tk.Label(self.admin_profil_frame, text="Admin", bd=0, bg='white',
-                                        fg='black' if user_stuff[0][0] == "admin" else '#6F6C6C',
-                                        font=("Poppins", 18))
+                                     fg='black' if user_stuff[0][0] == "admin" else '#6F6C6C',
+                                     font=("Poppins", 18))
         admin_ausbilderrechte = tk.Label(self.admin_profil_frame, text="Ausbilder", bd=0, bg='white',
-                                            fg='black' if user_stuff[0][0] == "admin" else '#6F6C6C',
-                                            font=("Poppins", 18))
+                                         fg='black' if user_stuff[0][0] == "admin" else '#6F6C6C',
+                                         font=("Poppins", 18))
         admin_userrechte = tk.Label(self.admin_profil_frame, text="Schüler", bd=0, bg='white',
                                     fg='black' if user_stuff[0][0] == 'user' else '#6F6C6C',
                                     font=("Poppins", 18))
@@ -2471,10 +2470,10 @@ class Admin(tk.Frame):
             messagebox.showinfo("Erfolgreich", "User erfolgreich gespeichert")
 
         admin_speichern_button = ctk.CTkButton(admin_user_page, text="Speichern", fg_color=ThemeManager.SRH_Orange,
-                                                text_color="white", font=('Inter', 20, 'bold'),
-                                                corner_radius=8, hover=True,
-                                                hover_color=ThemeManager.SRH_DarkBlau,
-                                                command=admin_button_click, width=137, height=44)
+                                               text_color="white", font=('Inter', 20, 'bold'),
+                                               corner_radius=8, hover=True,
+                                               hover_color=ThemeManager.SRH_DarkBlau,
+                                               command=admin_button_click, width=137, height=44)
         admin_speichern_button.place(x=1000, y=800)
 
         # Löschbutton
@@ -2495,9 +2494,9 @@ class Admin(tk.Frame):
         admin_delete_button.place(x=830, y=800)
 
         adminpage = ctk.CTkButton(admin_user_page, text="↩", fg_color='white', text_color=ThemeManager.SRH_Grey,
-                                    width=5,
-                                    font=("Inter", 50, 'bold'), corner_radius=8, hover=False,
-                                    command=admin_user_page.destroy)
+                                  width=5,
+                                  font=("Inter", 50, 'bold'), corner_radius=8, hover=False,
+                                  command=admin_user_page.destroy)
         adminpage.place(relx=0.05, rely=0.16, anchor='nw')
 
         ###### Plazierung #######
@@ -2564,8 +2563,6 @@ class Admin(tk.Frame):
                 self.showDetails1(selected_User)
         except Exception as e:
             print(f"Fehler bei der Auswahl {e}")
-
-
 
 
 ##########################################
