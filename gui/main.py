@@ -1,15 +1,10 @@
-import os
-import sys
 import time
 import threading
-import logging
-import inspect
 import tkinter as tk
 from tkinter import ttk, messagebox, PhotoImage, simpledialog, filedialog
 import customtkinter as ctk
 from customtkinter import *
 from datetime import datetime
-import importlib.util
 from ThemeManager import ThemeManager
 
 current_group = ""
@@ -1442,9 +1437,9 @@ class Gerateansicht(tk.Frame):
             # ausgewählten Wert setzt(der Inhalt wird später in der Speichern Funktion abgefragt und in die Datenbank übertragen)
 
             # Liste der Kategorien, die im Dropdown angezeigt werden sollen
-            
+
             Gruppenname = []
-            for i in range(1,9):
+            for i in range(1, 9):
                 Gruppenname.append(i)
 
             # Iteriere über die Kategoriennamen
@@ -2035,7 +2030,7 @@ class Gerateansicht(tk.Frame):
             "added_by_user": cache.selected_item[7],
             "Typ": self.typ_aktuell_label.cget("text"),
             "Status": self.status_aktuell_label.cget("text")
-            
+
         }
         return updated_items
 
@@ -2358,8 +2353,6 @@ class Admin(tk.Frame):
         ########################## Popup - Admin_User ########################
         ######################################################################
 
-
-
         def open_admin_user_page(self):
             import cache
 
@@ -2461,7 +2454,7 @@ class Admin(tk.Frame):
 
             rechte = tk.Label(self.admin_profil_frame, text="Rechte", bd=0, bg='white', fg='#6F6C6C',
                               font=("Poppins", 15))
-            rechte_frame = tk.Frame(self.admin_profil_frame, bg='#D9D9D5') #statt 5 -> 9
+            rechte_frame = tk.Frame(self.admin_profil_frame, bg='#D9D9D5')  # statt 5 -> 9
             admin_adminrechte = tk.Label(self.admin_profil_frame, text="Admin", bd=0, bg='white',
                                          fg='black' if user_stuff[0][0] == "admin" else '#6F6C6C',
                                          font=("Poppins", 18))
@@ -2650,7 +2643,6 @@ class Admin(tk.Frame):
                 print(f"Fehler bei der Auswahl {e}")
 
         tree.bind("<Double-1>", on_user_select)
-
 
 
 ##########################################
