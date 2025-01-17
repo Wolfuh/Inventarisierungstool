@@ -743,8 +743,7 @@ class Ubersicht(tk.Frame):
         def show_right_table(item_position: int, suchgruppe, search_word):
             # item_position benötigt Zahl, für den gesuchten Ort
             # Spaltennamen aus der Datenbank holen
-            logging.debug(
-                f"{loggerStyleAnsiEscSgr.foregroundColor.brightyellow}\show_right_table{loggerStyleAnsiEscSgr.foregroundColor.yellow}({loggerStyleAnsiEscSgr.foregroundColor.reset}item_position='{item_position}' (type: '{type(item_position)}'), suchgruppe='{suchgruppe}' (type: '{type(suchgruppe)}'), search_word='{search_word}' (type: '{type(search_word)}'){loggerStyleAnsiEscSgr.foregroundColor.yellow}){loggerStyleAnsiEscSgr.foregroundColor.reset}")
+            logging.debug(f"{loggerStyleAnsiEscSgr.foregroundColor.brightyellow}show_right_table{loggerStyleAnsiEscSgr.foregroundColor.yellow}({loggerStyleAnsiEscSgr.foregroundColor.reset}item_position='{item_position}' (type: '{type(item_position)}'), suchgruppe='{suchgruppe}' (type: '{type(suchgruppe)}'), search_word='{search_word}' (type: '{type(search_word)}'){loggerStyleAnsiEscSgr.foregroundColor.yellow}){loggerStyleAnsiEscSgr.foregroundColor.reset}")
 
             items_uberschrift = fetch_headers("items", ["image"])
 
@@ -1332,6 +1331,7 @@ class Gerateansicht(tk.Frame):
                 "Kabel",
                 "Peripherie",
                 "Software",
+                "Hardwawre",
                 "Sonstiges"
             ]
             for i in range(0, len(Kategorienname)):  # itteriert jeden Eintrag der Eingabeliste
