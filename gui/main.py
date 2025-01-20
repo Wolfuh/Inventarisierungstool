@@ -395,7 +395,7 @@ class MainPage(tk.Frame):
 
     def get_current_group(self):  # gibt die aktuelle Gruppe zurück
         logging.debug(
-            f"{loggerStyleAnsiEscSgr.foregroundColor.brightyellow}get_current_group{loggerStyleAnsiEscSgr.foregroundColor.yellow}(){loggerStyleAnsiEscSgr.foregroundColor.reset} returned '{current_group}' (type: '{type(current_group)}')")
+            f"{loggerStyleAnsiEscSgr.foregroundColor.brightYellow}get_current_group{loggerStyleAnsiEscSgr.foregroundColor.yellow}(){loggerStyleAnsiEscSgr.foregroundColor.reset} returned '{current_group}' (type: '{type(current_group)}')")
         return current_group
 
 
@@ -743,7 +743,7 @@ class Ubersicht(tk.Frame):
         def show_right_table(item_position: int, suchgruppe, search_word):
             # item_position benötigt Zahl, für den gesuchten Ort
             # Spaltennamen aus der Datenbank holen
-            logging.debug(f"{loggerStyleAnsiEscSgr.foregroundColor.brightyellow}show_right_table{loggerStyleAnsiEscSgr.foregroundColor.yellow}({loggerStyleAnsiEscSgr.foregroundColor.reset}item_position='{item_position}' (type: '{type(item_position)}'), suchgruppe='{suchgruppe}' (type: '{type(suchgruppe)}'), search_word='{search_word}' (type: '{type(search_word)}'){loggerStyleAnsiEscSgr.foregroundColor.yellow}){loggerStyleAnsiEscSgr.foregroundColor.reset}")
+            logging.debug(f"{loggerStyleAnsiEscSgr.foregroundColor.brightYellow}show_right_table{loggerStyleAnsiEscSgr.foregroundColor.yellow}({loggerStyleAnsiEscSgr.foregroundColor.reset}item_position='{item_position}' (type: '{type(item_position)}'), suchgruppe='{suchgruppe}' (type: '{type(suchgruppe)}'), search_word='{search_word}' (type: '{type(search_word)}'){loggerStyleAnsiEscSgr.foregroundColor.yellow}){loggerStyleAnsiEscSgr.foregroundColor.reset}")
 
             items_uberschrift = fetch_headers("items", ["image"])
 
@@ -781,7 +781,7 @@ class Ubersicht(tk.Frame):
                     i += 1
             TreeLogger.debug(f"'{overview_table_tree.get_children()}'")
             logging.debug(
-                f"{loggerStyleAnsiEscSgr.foregroundColor.brightyellow}show_right_table{loggerStyleAnsiEscSgr.foregroundColor.yellow}(){loggerStyleAnsiEscSgr.foregroundColor.reset} wurde ausgeführt")
+                f"{loggerStyleAnsiEscSgr.foregroundColor.brightYellow}show_right_table{loggerStyleAnsiEscSgr.foregroundColor.yellow}(){loggerStyleAnsiEscSgr.foregroundColor.reset} wurde ausgeführt")
 
         # current_group = Mainpages.MainPage.get_current_group()
 
@@ -790,12 +790,12 @@ class Ubersicht(tk.Frame):
             if current_group:
                 show_right_table(8, "3", "")
                 logging.debug(
-                    f"{loggerStyleAnsiEscSgr.foregroundColor.brightyellow}show_the_active_group{loggerStyleAnsiEscSgr.foregroundColor.yellow}(){loggerStyleAnsiEscSgr.foregroundColor.reset} mit Wert '{current_group}' (type: '{type(current_group)}') für current_group aufgerufen")
+                    f"{loggerStyleAnsiEscSgr.foregroundColor.brightYellow}show_the_active_group{loggerStyleAnsiEscSgr.foregroundColor.yellow}(){loggerStyleAnsiEscSgr.foregroundColor.reset} mit Wert '{current_group}' (type: '{type(current_group)}') für current_group aufgerufen")
             else:
                 starting_table()
                 logging.debug(
-                    f"{loggerStyleAnsiEscSgr.foregroundColor.brightyellow}show_the_active_group{loggerStyleAnsiEscSgr.foregroundColor.yellow}(){loggerStyleAnsiEscSgr.foregroundColor.reset} ohne Wert für current_group aufgerufen, \
-starte {loggerStyleAnsiEscSgr.foregroundColor.brightyellow}starting_table{loggerStyleAnsiEscSgr.foregroundColor.yellow}(){loggerStyleAnsiEscSgr.foregroundColor.reset}!")
+                    f"{loggerStyleAnsiEscSgr.foregroundColor.brightYellow}show_the_active_group{loggerStyleAnsiEscSgr.foregroundColor.yellow}(){loggerStyleAnsiEscSgr.foregroundColor.reset} ohne Wert für current_group aufgerufen, \
+starte {loggerStyleAnsiEscSgr.foregroundColor.brightYellow}starting_table{loggerStyleAnsiEscSgr.foregroundColor.yellow}(){loggerStyleAnsiEscSgr.foregroundColor.reset}!")
 
         # Gruppe 1
         def show_dropdown_grp1():
@@ -1067,7 +1067,7 @@ starte {loggerStyleAnsiEscSgr.foregroundColor.brightyellow}starting_table{logger
 
         def starting_table():
             logging.debug(
-                f"{loggerStyleAnsiEscSgr.foregroundColor.brightyellow}starting_table{loggerStyleAnsiEscSgr.foregroundColor.yellow}(){loggerStyleAnsiEscSgr.foregroundColor.reset} wird ausgeführt")
+                f"{loggerStyleAnsiEscSgr.foregroundColor.brightYellow}starting_table{loggerStyleAnsiEscSgr.foregroundColor.yellow}(){loggerStyleAnsiEscSgr.foregroundColor.reset} wird ausgeführt")
             # Spaltennamen aus der Datenbank holen
             overview_table_tree.delete(*overview_table_tree.get_children())
             TreeLogger.debug(f"'{overview_table_tree.get_children()}'")
@@ -1089,7 +1089,7 @@ starte {loggerStyleAnsiEscSgr.foregroundColor.brightyellow}starting_table{logger
                 overview_table_tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
             TreeLogger.debug(f"'{overview_table_tree.get_children()}'")
             logging.debug(
-                f"{loggerStyleAnsiEscSgr.foregroundColor.brightyellow}starting_table{loggerStyleAnsiEscSgr.foregroundColor.yellow}(){loggerStyleAnsiEscSgr.foregroundColor.reset} wurde ausgeführt")
+                f"{loggerStyleAnsiEscSgr.foregroundColor.brightYellow}starting_table{loggerStyleAnsiEscSgr.foregroundColor.yellow}(){loggerStyleAnsiEscSgr.foregroundColor.reset} wurde ausgeführt")
 
         # Gerät aus Tabelle öffnen
         def on_item_select(event):

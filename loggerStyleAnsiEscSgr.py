@@ -55,11 +55,11 @@ class foregroundColor():
     brightBlack = gray = grey = f"{controlSequenceIntroducer}9{baseColors.black}m"
     brightRed = f"{controlSequenceIntroducer}9{baseColors.red}m"
     brightGreen = f"{controlSequenceIntroducer}9{baseColors.green}m"
-    brightyellow = f"{controlSequenceIntroducer}9{baseColors.yellow}m"
-    brightblue = f"{controlSequenceIntroducer}9{baseColors.blue}m"
-    brightmagenta = f"{controlSequenceIntroducer}9{baseColors.magenta}m"
-    brightcyan = f"{controlSequenceIntroducer}9{baseColors.cyan}m"
-    brightwhite = f"{controlSequenceIntroducer}9{baseColors.white}m"
+    brightYellow = f"{controlSequenceIntroducer}9{baseColors.yellow}m"
+    brightBlue = f"{controlSequenceIntroducer}9{baseColors.blue}m"
+    brightMagenta = f"{controlSequenceIntroducer}9{baseColors.magenta}m"
+    brightCyan = f"{controlSequenceIntroducer}9{baseColors.cyan}m"
+    brightWhite = f"{controlSequenceIntroducer}9{baseColors.white}m"
     reset = controlSequenceIntroducer + sgrReset
 
 class backgroundColor():
@@ -74,9 +74,9 @@ class backgroundColor():
     brightBlack = gray = grey = f"{controlSequenceIntroducer}10{baseColors.black}m"
     brightRed = f"{controlSequenceIntroducer}10{baseColors.red}m"
     brightGreen = f"{controlSequenceIntroducer}10{baseColors.green}m"
-    brightyellow = f"{controlSequenceIntroducer}10{baseColors.yellow}m"
-    brightblue = f"{controlSequenceIntroducer}10{baseColors.blue}m"
-    brightmagenta = f"{controlSequenceIntroducer}10{baseColors.magenta}m"
-    brightcyan = f"{controlSequenceIntroducer}10{baseColors.cyan}m"
-    brightwhite = f"{controlSequenceIntroducer}10{baseColors.white}m"
+    brightYellow = f"{controlSequenceIntroducer}10{baseColors.yellow}m"
+    brightBlue = f"{controlSequenceIntroducer}10{baseColors.blue}m"
+    brightMagenta = f"{controlSequenceIntroducer}10{baseColors.magenta}m"
+    brightCyan = f"{controlSequenceIntroducer}10{baseColors.cyan}m"
+    brightWhite = f"{controlSequenceIntroducer}10{baseColors.white}m"
     reset = controlSequenceIntroducer + sgrReset
