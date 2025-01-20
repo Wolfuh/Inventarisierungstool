@@ -52,20 +52,17 @@ def lookup_user_stuff(): # Gibt die Nutzerinformationen
         return [], "Fehler beim Abrufen der Informationen:", str(e)
 
 
-def search_bar_update(search): # Aktualisiert die Sucheingabe für die items Tabelle - muss noch eingefügt werden
+def search_bar_update(table, excluded_columns, search): # Aktualisiert die Sucheingabe für die items Tabelle - muss noch eingefügt werden
     try:
         my_db = init_connection()
         cur = my_db.cursor()
 
-        cur.execute(f"PRAGMA table_info(items)")
-        columns = [row[1] for row in cur.fetchall()]  # Spaltennamen wiedergeben
-
-        if not columns:
-            return "Die Tabelle hat keine Spalten oder existiert nicht."
+        cur.execute(f"PRAGMA table_info({table})")  # Spaltennamen der Tabelle wiedergeben
+        columns = [row[1] for row in cur.fetchall() if row[1] not in excluded_columns]  # Spaltennamen wiedergeben
 
         # durchsucht alles aus der items Tabelle und gibt die komplette Zeile zurück
         where_clause = " OR ".join([f"{col} LIKE ?" for col in columns])
-        query = f"SELECT * FROM items WHERE {where_clause}"
+        query = f"SELECT * FROM {table} WHERE {where_clause}"
         cur.execute(query, [f"%{search}%"] * len(columns))
         answer_search = cur.fetchall()
         return answer_search
@@ -333,132 +330,3 @@ def group_search(search_number):
 
 
 
-
-
-
-
-############### DEBUG STUFF ###############
-# print(username_global)
-# sibllllll = search_bar_update("et")
-# print(sibllllll)
-# ha=add_user("peter", "Peter", "Pan", "FI99", "viewer")
-# print(ha)
-# dulli = fetch_tables("items", ["ID", "Gruppe", "Raum", "amount", "added_by_user"])
-# print(dulli)
-# sORtIÄRUNG = table_sort("items", "Gruppe")
-# print(sORtIÄRUNG)
-############### ENDE DEBUG ################
-
-
-
-
-
-
-
-
-
-#################################
-# def delete_username_global(): #
-#     global username_global    #   eventuell später einfügen
-#     username_global = ""      #
-#################################
-
-
-
-
-
-
-
-# import sys
-
-# sys.path.append(os.path.join(os.path.dirname(__file__),'..'))
-
-# from db.SQLite_db import *
-
-
-
-
-
-
-# root = tk.Tk()
-# root.title("miau")
-# root.geometry("600x400")
-# tree = ttk.Treeview(root, show="headings", height=15)
-# tree.pack(expand=True, fill="both")
-
-# ##################### Einfügen: Profiles -> 185 - 198 (Diese Datei importieren)
-# # AB HIER EINBINDEN #
-
-
-
-# # Spaltennamen aus der Datenbank holen
-# users_uberschrift = fetch_users_headers()
-
-# # Überschriften konfigurieren
-# tree["columns"] = users_uberschrift
-# for up in users_uberschrift:
-#     tree.column(up, anchor='center', width=100)
-#     tree.heading(up, text=up)
-
-# users_data = fetch_users()
-
-# # Daten aus DB einfügen
-
-# for i,row in enumerate(users_data):
-#     us_formatted_row = [value if value is not None else "-" for value in row] # Leere Felder durch "-" ersetzen
-#     
-#     tree.insert("", "end", values=us_formatted_row, tags=("even" if i % 2 == 0 else "odd"))
-
-
-
-# # BIS HIER #
-# ############
-
-# root.mainloop()
-
-
-
-
-
-
-
-
-
-
-
-
-# root = tk.Tk()
-# root.title("FOLKSWAGEN")
-# root.geometry("600x400")
-# tree = ttk.Treeview(root, show="headings", height=15)
-# tree.pack(expand=True, fill="both")
-
-# ##################### Einfügen: Overview -> 236 - 250 (Diese Datei importieren)
-# # AB HIER EINBINDEN #
-
-
-
-# # Spaltennamen aus der Datenbank holen
-# items_uberschrift = fetch_items_headers()
-
-# # Überschriften konfigurieren
-# tree["columns"] = items_uberschrift
-# for up in items_uberschrift:
-#     tree.column(up, anchor=CENTER, width=100)
-#     tree.heading(up, text=up)
-
-# items_data = fetch_items()
-
-# # Daten aus DB einfügen
-
-# for i,row in enumerate(items_data):
-#     formatted_row = [value if value is not None else "-" for value in row] # Leere Felder durch "-" ersetzen
-#     
-#     tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
-
-
-
-# # BIS HIER #
-# ############
-
-# root.mainloop()

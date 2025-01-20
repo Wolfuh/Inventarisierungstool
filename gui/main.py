@@ -971,7 +971,7 @@ starte {loggerStyleAnsiEscSgr.foregroundColor.brightyellow}starting_table{logger
         self.imgAktionen = load_image(root_path + "/gui/assets/Aktionen_Button.png")
 
         def fill_in_sort(table, where, DESC_OR_ASC):
-            items_uberschrift = fetch_headers("items", [""])
+            items_uberschrift = fetch_headers("items", ["image"])
 
             # Überschriften konfigurieren
             overview_table_tree["columns"] = items_uberschrift
@@ -1012,7 +1012,7 @@ starte {loggerStyleAnsiEscSgr.foregroundColor.brightyellow}starting_table{logger
 
         def search_bar_output():
             suche_text = suche_entry.get()
-            search_results = search_bar_update(suche_text)
+            search_results = search_bar_update("items", ["image"], suche_text)
             overview_table_tree.delete(*overview_table_tree.get_children())
 
             # Daten aus DB einfügen
@@ -1833,7 +1833,14 @@ class Profil(tk.Frame):
         thread = threading.Thread(target=update_label, daemon=True)
         thread.start()
 
-
+# herr copilot, kann ichmich bei ihnen melden, wenn ich fragen habe?
+# ja, natürlich. ich bin immer für sie da.
+# cool danke
+# gerne, kein problem. ich helfe ihnen gerne weiter.
+# danke, das ist sehr nett von ihnen.
+# ich habe einen wunsch: wenn du mir vorschlage gibst, dann bitte nicht die zeile vergrößern oder sowas... ist das okay?
+# ja, das ist okay. ich werde darauf achten.
+# danke, das ist sehr nett von ihnen.
 ##############################################
 # ୧‿̩͙ ˖︵ ꕀ⠀ ♱ Admin - Tabelle ♱⠀ ꕀ ︵˖ ‿̩͙୨#
 ##############################################
@@ -1909,18 +1916,18 @@ class Admin(tk.Frame):
         self.imgSuche = load_image(self.root_path + "/gui/assets/Search.png")
         self.imgHinzufugen = load_image(self.root_path + "/gui/assets/Adding_Icon.png")
 
-        suche_entry = ctk.CTkEntry(self.tabelle_frame, corner_radius=8, fg_color="#D9D9D9", text_color="black",
+        self.suche_entry = ctk.CTkEntry(self.tabelle_frame, corner_radius=8, fg_color="#D9D9D9", text_color="black",
                                    border_width=0, font=("Inter", 12))
 
-        suche_entry.bind("<Return>", lambda event: print("ersetz mich"))
+        self.suche_entry.bind("<Return>", lambda event: self.search_bar_output_users())
 
         suche_button = ctk.CTkButton(self.tabelle_frame, image=self.imgSuche, corner_radius=8, border_width=0,
                                      fg_color="transparent", hover_color='#D9D9D9',
-                                     command=lambda: print(f"nach {suche_entry.get()} gesucht"))
+                                     command=lambda: self.search_bar_output_users())
         Hinzufugen_button = tk.Button(self.tabelle_frame, image=self.imgHinzufugen, bd=0, bg='white',
                                       command=self.open_empty_user)
 
-        suche_entry.place(relx=0.108, rely=0.1, relwidth=0.33, relheight=0.04)
+        self.suche_entry.place(relx=0.108, rely=0.1, relwidth=0.33, relheight=0.04)
         suche_button.place(relx=0.075, rely=0.1, relheight=0.04, relwidth=0.028)
         Hinzufugen_button.place(x=1280, y=100)
 
@@ -1959,6 +1966,19 @@ class Admin(tk.Frame):
         scroll.place(x=1400, y=160)
 
         self.tree.bind("<Double-1>", self.on_user_select)
+
+        
+
+    def search_bar_output_users(self):
+            suche_text_users = self.suche_entry.get()
+            search_results = search_bar_update("benutzer", ["Passwort"], suche_text_users)
+            self.tree.delete(*self.tree.get_children())
+
+            # Daten aus DB einfügen
+            i = 0
+            for item in search_results:
+                self.tree.insert("", "end", values=item, tags=("even" if i % 2 == 0 else "odd"))
+                i += 1
 
     def open_empty_user(self):
         """Öffnet ein Fenster zum Hinzufügen eines neuen Benutzers."""
