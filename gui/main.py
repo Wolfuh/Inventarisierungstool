@@ -1193,6 +1193,16 @@ class Gerateansicht(tk.Frame):
                                              font=("Inter", 50, 'bold'), corner_radius=8, hover=False,
                                              command=lambda: self.controller.show_frame(Ubersicht))
 
+        self.mainpage_button.place(relx=0, rely=0)
+
+        # "Alle Anzeigen" Button in der Seitenleiste
+        self.all_button = ctk.CTkButton(self.verzeichniss, text="Alle Anzeigen", fg_color=ThemeManager.SRH_Grey,
+                                        bg_color=ThemeManager.SRH_Grey, text_color='black',
+                                        font=("Inter", 20), corner_radius=8, hover=False,
+                                        command=lambda: self.controller.show_frame(Ubersicht))
+
+        self.all_button.pack(pady=10, anchor='w')
+
         self.tree = ttk.Treeview(self.gerateansicht_frame, columns=("c1", "c2", "c3"), show="headings", height=5)
         self.scroll = ctk.CTkScrollbar(self.gerateansicht_frame, button_color=ThemeManager.SRH_Grey,
                                        orientation="vertical", command=self.tree.yview, height=650)
