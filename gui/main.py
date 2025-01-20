@@ -1010,6 +1010,7 @@ starte {loggerStyleAnsiEscSgr.foregroundColor.brightYellow}starting_table{logger
         # Suche
 
         def search_bar_output():
+
             suche_text = suche_entry.get()
             search_results = search_bar_update("items", ["image"], suche_text)
             overview_table_tree.delete(*overview_table_tree.get_children())
@@ -1038,22 +1039,7 @@ starte {loggerStyleAnsiEscSgr.foregroundColor.brightYellow}starting_table{logger
         # Hinzufügen
         Hinzufugen_button = tk.Button(self.ubersicht_frame, image=self.imgHinzufugen, bd=0, bg='white',
                                       command=lambda: controller.show_frame(Gerateansicht))
-        Hinzufugen_button.place(relx=0.5, rely=0.1)
-
-        # Aktionen
-        Aktionen_button = tk.Button(self.ubersicht_frame, image=self.imgAktionen, bd=0, bg='white',
-                                    command=lambda: print("Aktionen werden ausgeführt"))
-        Aktionen_button.place(relx=0.6, rely=0.1)
-
-        # Tabelle
-        # Styling
-        style = ttk.Style()
-        # style.theme_use("")
-        style.configure("Treeview.Heading", font=("Inter", 12), background="#D9D9D9", foreground="#6E6893")
-        style.configure("Treeview", font=("Arial", 11), rowheight=35, background="white", foreground="black")
-        style.map("Treeview", background=[("selected", "#D9D9D9")], foreground=[("selected", "black")])
-        style.configure("evenrow.Treeview", background="#f2f2f2")
-        style.configure("oddrow.Treeview", background="white")
+        Hinzufugen_button.place(relx=0.6, rely=0.1)
 
         scroll = ctk.CTkScrollbar(
             self.tabelle_frame,
@@ -1197,7 +1183,8 @@ class Gerateansicht(tk.Frame):
                                              font=("Inter", 50, 'bold'), corner_radius=8, hover=False,
                                              command=lambda: self.controller.show_frame(Ubersicht))
 
-        self.mainpage_button.place(relx=0, rely=0)
+        self.mainpage_button.place(relx=1, rely=1)
+
 
         # "Alle Anzeigen" Button in der Seitenleiste
         self.all_button = ctk.CTkButton(self.verzeichniss, text="Alle Anzeigen", fg_color=ThemeManager.SRH_Grey,
