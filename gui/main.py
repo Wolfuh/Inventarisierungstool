@@ -967,7 +967,6 @@ starte {loggerStyleAnsiEscSgr.foregroundColor.brightYellow}starting_table{logger
         self.imgFilter = load_image(root_path + "/gui/assets/Filter_Button.png")
         self.imgSuche = load_image(root_path + "/gui/assets/Search.png")
         self.imgHinzufugen = load_image(root_path + "/gui/assets/Adding_Icon.png")
-        self.imgAktionen = load_image(root_path + "/gui/assets/Aktionen_Button.png")
 
         def fill_in_sort(table, where, DESC_OR_ASC):
             items_uberschrift = fetch_headers("items", ["image"])
