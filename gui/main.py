@@ -1776,23 +1776,23 @@ class Profil(tk.Frame):
             user_button = tk.Button(verzeichniss, text="User", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                     font=("Inter", 20, 'bold'),
                                     command=lambda: controller.show_frame(Profil))
+            einstellungen_button = tk.Button(verzeichniss, text="Einstellungen", bd=0, bg=ThemeManager.SRH_Grey,
+                                             fg='black',
+                                             font=("Inter", 20, 'bold'),
+                                             command=lambda: controller.show_frame(Einstellungen))
 
             admin_button = tk.Button(verzeichniss, text="Administration", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                      font=("Inter", 20, 'bold'),
                                      command=lambda: controller.show_frame(Admin))
 
-            einstellungen_button = tk.Button(verzeichniss, text="Einstellungen", bd=0, bg=ThemeManager.SRH_Grey,
-                                             fg='black',
-                                             font=("Inter", 20, 'bold'),
-                                             command=lambda: controller.show_frame(Einstellungen))
             verzeichniss_help_button = tk.Button(verzeichniss, text="Hilfe", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                                  font=("Inter", 20, 'bold'),
                                                  command=lambda: controller.show_frame(Help))
 
             ###### Plazierung #######
             user_button.pack(pady=10, anchor='w')
-            admin_button.pack(pady=10, anchor='w')
             einstellungen_button.pack(pady=10, anchor='w')
+            admin_button.pack(pady=10, anchor='w')
             verzeichniss_help_button.pack(pady=10, anchor='w')
 
             login.place(relx=0.95, rely=0.5, anchor="center")
@@ -1883,8 +1883,8 @@ class Admin(tk.Frame):
 
         buttons = [
             ("User", Profil),
-            ("Administration", Admin),
             ("Einstellungen", Einstellungen),
+            ("Administration", Admin),
             ("Hilfe", Help),
         ]
 
