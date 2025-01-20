@@ -84,13 +84,13 @@ class GuiTest(tk.Tk):
 
     def __init__(self, *args, **kwargs):
         """
-        Initializes an application window with specific configurations and manages
-        different application frames within this window.
+        Initialisiert ein Anwendungsfenster mit bestimmten Konfigurationen und verwaltet
+        verschiedene Anwendungsrahmen innerhalb dieses Fensters.
 
-        The constructor sets up the window properties such as title, size, and icon,
-        and initializes a main container for managing frames. It dynamically
-        loads and stores multiple frames, which represent different pages
-        within the application. The application begins by displaying the
+        Der constructor richtet die Fenstereigenschaften wie Titel, Größe und Symbol ein,
+        und initialisiert einen Hauptcontainer für die Verwaltung von Frames. Er lädt dynamisch
+        lädt und speichert er mehrere Frames, die verschiedene Seiten
+        innerhalb der Anwendung darstellen. Die Anwendung beginnt mit der Anzeige von
         `Mainpages.MainPage` frame.
 
         :param args: Additional unnamed arguments passed to the parent class
