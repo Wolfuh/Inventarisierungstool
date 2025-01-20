@@ -340,8 +340,8 @@ class MainPage(tk.Frame):
         def handle_group_click(controller, group):
             global current_group
             current_group = group
+            logging.info(f"Gruppe {group} wurde angeklickt!")
             obj1 = Ubersicht(parent, controller)
-            logging.info(f"Gruppe {group} wurde geklickt!")
 
             controller.show_frame(Ubersicht)
 
@@ -674,6 +674,8 @@ class Ubersicht(tk.Frame):
 
         self.configure(bg='white')
 
+        logging.debug(f"Initialisiere Instanz von {loggerStyleAnsiEscSgr.foregroundColor.green}Ubersicht{loggerStyleAnsiEscSgr.foregroundColor.reset}...")
+
         # Stilkonfiguration für Header und Footer, Erstellung vom Header und des Überschriftbereiches.
         style = ttk.Style()
         style.configure("Header.TLabel", foreground='white',
@@ -737,9 +739,6 @@ class Ubersicht(tk.Frame):
         overview_table_tree.place(x=120, y=0, width=1280, height=650)
         TreeLogger.debug(f"'{overview_table_tree.get_children()}' - wurde gerade definiert")
 
-        print(type(overview_table_tree))
-        print(overview_table_tree)
-
         def show_right_table(item_position: int, suchgruppe, search_word):
             # item_position benötigt Zahl, für den gesuchten Ort
             # Spaltennamen aus der Datenbank holen
@@ -788,7 +787,7 @@ class Ubersicht(tk.Frame):
         def show_the_active_group():
             current_group = MainPage.get_current_group(self)
             if current_group:
-                show_right_table(8, "3", "")
+                show_right_table(8, current_group, "")
                 logging.debug(
                     f"{loggerStyleAnsiEscSgr.foregroundColor.brightYellow}show_the_active_group{loggerStyleAnsiEscSgr.foregroundColor.yellow}(){loggerStyleAnsiEscSgr.foregroundColor.reset} mit Wert '{current_group}' (type: '{type(current_group)}') für current_group aufgerufen")
             else:
@@ -1120,6 +1119,8 @@ starte {loggerStyleAnsiEscSgr.foregroundColor.brightYellow}starting_table{logger
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
         self.tabelle_frame.place(relx=0.15, rely=0.3, relwidth=0.85, height=800)
         show_the_active_group()
+
+        logging.debug(f"Instanz von {loggerStyleAnsiEscSgr.foregroundColor.green}Ubersicht{loggerStyleAnsiEscSgr.foregroundColor.reset} initialisiert.")
 
 
 def showDetails(selected_Item, tree, controller):
