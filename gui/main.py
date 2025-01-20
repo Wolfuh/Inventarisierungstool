@@ -2100,11 +2100,36 @@ class Admin(tk.Frame):
         admin_userrechte = tk.Label(self.admin_profil_frame, text="Schüler", bd=0, bg='white',
                                     fg='black' if user_stuff[0][0] == 'user' else '#6F6C6C',
                                     font=("Poppins", 18))
+        
+        self.admin_username.bind("<Return>", lambda event: admin_button_click())
+        self.admin_vorname.bind("<Return>", lambda event: admin_button_click())
+        self.admin_nachname.bind("<Return>", lambda event: admin_button_click())
+        self.admin_gruppen.bind("<Return>", lambda event: admin_button_click())
+        self.admin_email.bind("<Return>", lambda event: admin_button_click())
+
 
         # Speicherbutton
         def admin_button_click():
-            admin_user_page.destroy()
-            messagebox.showinfo("Erfolgreich", "User erfolgreich gespeichert")
+            try:
+                # Werte aus Eingabefeldern abrufen
+                new_username = self.admin_username.get()
+                new_first_name = self.admin_vorname.get()
+                new_last_name = self.admin_nachname.get()
+                new_class = self.admin_gruppen.get()
+                new_role = "user"
+                new_email = self.admin_email.get()
+                
+                add_user(new_username, new_first_name, new_last_name, new_class, new_role, new_email)
+
+                admin_user_page.destroy()
+                
+                # Erfolgsnachricht anzeigen
+                messagebox.showinfo("Erfolgreich", "User erfolgreich gespeichert")
+
+            except Exception as e:
+                # Fehlernachricht anzeigen
+                messagebox.showinfo("Fehler", "User konnte nicht gespeichert werden")
+
 
         admin_speichern_button = ctk.CTkButton(admin_user_page, text="Speichern", fg_color=ThemeManager.SRH_Orange,
                                                text_color="white", font=('Inter', 20, 'bold'),

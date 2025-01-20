@@ -72,7 +72,7 @@ def search_bar_update(table, excluded_columns, search): # Aktualisiert die Suche
         return [], "Fehler beim Abrufen der Informationen:", str(e)
 
 
-def add_user(new_username, new_first_name, new_last_name, new_class, new_role):
+def add_user(new_username, new_first_name, new_last_name, new_class, new_role, email):
     # fügt neuen Benutzer hinzu, benötigt 5 eingaben und überprüft diese
     try:
         new_username = new_username.replace(" ", "")
@@ -85,8 +85,8 @@ def add_user(new_username, new_first_name, new_last_name, new_class, new_role):
 
         hash_password = hashlib.sha512("Startnow!".encode()).hexdigest() # StartNow! als Standartpasswort festgelegt
 
-        cur.execute("INSERT INTO benutzer (Benutzername, Vorname, Nachname, Klasse, Passwort, Rolle) VALUES (?,?,?,?,?,?)", 
-                                (new_username, new_first_name, new_last_name, new_class, hash_password, new_role))
+        cur.execute("INSERT INTO benutzer (Benutzername, Vorname, Nachname, Klasse, Passwort, Rolle, Email) VALUES (?,?,?,?,?,?,?)", 
+                                (new_username, new_first_name, new_last_name, new_class, hash_password, new_role, email))
         my_db.commit() # führt die funktion aus
          
     except sqlite3.Error as e:

@@ -2,11 +2,11 @@ import sqlite3
 
 
 
-def add_user_(name, permission):
-    my_db = sqlite3.connect('./db/users.db')     # verbindung db
-    my_dbc = my_db.cursor()                     # cursor erstellen
-    my_dbc.execute("IMPORT INTO users (user_first_name, password, permission) VALUES (?, ?, ?)", name, permission)      # nameneingabe und rolleneingabe in db übertragen
-    my_db.commit()                                                                                                      # erstellung von z.B. Admin
+# def add_user_(name, permission):
+#     my_db = sqlite3.connect('./db/users.db')     # verbindung db
+#     my_dbc = my_db.cursor()                     # cursor erstellen
+#     my_dbc.execute("IMPORT INTO users (user_first_name, password, permission) VALUES (?, ?, ?)", name, permission)      # nameneingabe und rolleneingabe in db übertragen
+#     my_db.commit()                                                                                                      # erstellung von z.B. Admin
 
 
 def delete_user(zu_loeschende_person):
