@@ -58,11 +58,13 @@ def search_bar_update(table, excluded_columns, search): # Aktualisiert die Suche
         cur = my_db.cursor()
 
         cur.execute(f"PRAGMA table_info({table})")  # Spaltennamen der Tabelle wiedergeben
-        columns = [row[1] for row in cur.fetchall() if row[1] not in excluded_columns]  # Spaltennamen wiedergeben
+        uberschriften = cur.fetchall()
+        columns = [row[1] for row in uberschriften if row[1] not in excluded_columns]  # Spaltennamen wiedergeben
+        column_names = ", ".join(columns)  # Erzeugt eine durch Kommas getrennte Liste der Spaltennamen
 
         # durchsucht alles aus der items Tabelle und gibt die komplette Zeile zurück
         where_clause = " OR ".join([f"{col} LIKE ?" for col in columns])
-        query = f"SELECT * FROM {table} WHERE {where_clause}"
+        query = f"SELECT {column_names} FROM {table} WHERE {where_clause}"
         cur.execute(query, [f"%{search}%"] * len(columns))
         answer_search = cur.fetchall()
         return answer_search
