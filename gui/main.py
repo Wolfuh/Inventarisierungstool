@@ -120,7 +120,7 @@ class GuiTest(tk.Tk):
         # Only attempt to instantiate Einstellungen if it's a class
         pages = [LogInWindow, MainPage, MainPageS2, Mainpage_empty,
                  Ubersicht, Gerateansicht, Einstellungen,
-                 Profil, Admin, Stats, Help]
+                 Profil, Admin, Help]
 
         if hasattr(Einstellungen, "Einstellungen"):
             pages.append(Einstellungen)
@@ -1184,7 +1184,6 @@ class Gerateansicht(tk.Frame):
 
         self.mainpage_button.place(relx=1, rely=1)
 
-
         # "Alle Anzeigen" Button in der Seitenleiste
         self.all_button = ctk.CTkButton(self.verzeichniss, text="Alle Anzeigen", fg_color=ThemeManager.SRH_Grey,
                                         bg_color=ThemeManager.SRH_Grey, text_color='black',
@@ -1773,7 +1772,7 @@ class Profil(tk.Frame):
             userrechte = tk.Label(self.profil_frame, text="Schüler", bd=0, bg='white',
                                   fg='black' if user_stuff[0][0] == 'user' else '#6F6C6C', font=("Poppins", 18))
 
-            # Seitennavigations-Buttons für Benutzer, Admin, Statistiken und Einstellungen
+            # Seitennavigations-Buttons für Benutzer, Admin und Einstellungen
             user_button = tk.Button(verzeichniss, text="User", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                     font=("Inter", 20, 'bold'),
                                     command=lambda: controller.show_frame(Profil))
@@ -1781,10 +1780,6 @@ class Profil(tk.Frame):
             admin_button = tk.Button(verzeichniss, text="Administration", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                      font=("Inter", 20, 'bold'),
                                      command=lambda: controller.show_frame(Admin))
-
-            stats_button = tk.Button(verzeichniss, text="Statistiken", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                     font=("Inter", 20, 'bold'),
-                                     command=lambda: controller.show_frame(Stats))
 
             einstellungen_button = tk.Button(verzeichniss, text="Einstellungen", bd=0, bg=ThemeManager.SRH_Grey,
                                              fg='black',
@@ -1797,7 +1792,6 @@ class Profil(tk.Frame):
             ###### Plazierung #######
             user_button.pack(pady=10, anchor='w')
             admin_button.pack(pady=10, anchor='w')
-            stats_button.pack(pady=10, anchor='w')
             einstellungen_button.pack(pady=10, anchor='w')
             verzeichniss_help_button.pack(pady=10, anchor='w')
 
@@ -1890,7 +1884,6 @@ class Admin(tk.Frame):
         buttons = [
             ("User", Profil),
             ("Administration", Admin),
-            ("Statistiken", Stats),
             ("Einstellungen", Einstellungen),
             ("Hilfe", Help),
         ]
@@ -1960,19 +1953,18 @@ class Admin(tk.Frame):
 
         self.tree.bind("<Double-1>", self.on_user_select)
 
-
     def search_bar_output_users(self):
-            suche_text_users = self.suche_entry.get()
-            search_results = search_bar_update("benutzer", ["Passwort"], suche_text_users)
-            self.tree.delete(*self.tree.get_children())
+        suche_text_users = self.suche_entry.get()
+        search_results = search_bar_update("benutzer", ["Passwort"], suche_text_users)
+        self.tree.delete(*self.tree.get_children())
 
-            # Daten aus DB einfügen
-            i = 0
-            for item in search_results:
-                formatted_row = [value if value is not None else "-" for value in
-                                     item]
-                self.tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
-                i += 1
+        # Daten aus DB einfügen
+        i = 0
+        for item in search_results:
+            formatted_row = [value if value is not None else "-" for value in
+                             item]
+            self.tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
+            i += 1
 
     def open_empty_user(self):
         """Öffnet ein Fenster zum Hinzufügen eines neuen Benutzers."""
@@ -2093,7 +2085,6 @@ class Admin(tk.Frame):
         self.admin_gruppen.bind("<Return>", lambda event: admin_button_click())
         self.admin_email.bind("<Return>", lambda event: admin_button_click())
 
-
         # Speicherbutton
         def admin_button_click():
             try:
@@ -2213,97 +2204,6 @@ class Admin(tk.Frame):
             print(f"Fehler bei der Auswahl {e}")
 
 
-##########################################
-# ୧‿̩͙ ˖︵ ꕀ⠀ ♱ Statistiken ♱⠀ ꕀ ︵˖ ‿̩͙୨#
-##########################################
-
-class Stats(tk.Frame):
-    """
-    Stellt eine GUI für Statistiken bereit.
-
-    Diese Klasse repräsentiert eine Seite innerhalb einer GUI-Anwendung, die dem Anzeigen von Statistiken
-    dient. Es wird eine Kopfzeile, eine vertikale Navigationsleiste sowie verschiedene interaktive
-    Buttons bereitgestellt. Die Navigationsleiste ermöglicht den Wechsel zwischen verschiedenen
-    Ansichten der Anwendung.
-
-    :ivar stats_frame: Hauptinhaltbereich für die Statistikseite.
-    :ivar imglogin: Bild für den Login-Button.
-    :ivar imgmainpage: Bild für den Zurück-zur-Hauptseite-Button.
-    :ivar imghelp: Bild für den Hilfe-Button.
-    """
-
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-
-        root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
-        self.configure(bg='white')
-
-        # Header-Label für die Statistikseite
-        header = ttk.Label(self, text="Statistiken", anchor="center", style="Header.TLabel")
-        header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
-
-        # Navigationsleiste auf der linken Seite
-        verzeichniss = tk.Frame(self, bg=ThemeManager.SRH_Grey)
-        self.stats_frame = tk.Frame(self, bg='white')
-
-        # Bilder für die Login- und Hauptseite-Buttons laden
-        self.imglogin = tk.PhotoImage(
-            file=root_path + "/gui/assets/Closeicon.png")
-        self.imgmainpage = tk.PhotoImage(
-            file=root_path + "/gui/assets/backtosite_icon.png")
-        self.imghelp = tk.PhotoImage(file=root_path + "/gui/assets/helpicon.png")
-
-        # Header-Navigationsbuttons (Login und Hauptseite), Platzierung der Header-Buttons
-        login = ctk.CTkButton(header, image=self.imglogin, fg_color=ThemeManager.SRH_Orange,
-                              bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
-                              hover=True, hover_color='#e25a1f', text="",
-                              command=lambda: controller.show_frame(LogInWindow))
-
-        mainpage = ctk.CTkButton(header, image=self.imgmainpage, fg_color=ThemeManager.SRH_Orange,
-                                 bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
-                                 hover=True, hover_color='#e25a1f', text="",
-                                 command=lambda: controller.show_frame(MainPage))
-
-        help = ctk.CTkButton(header, image=self.imghelp, fg_color=ThemeManager.SRH_Orange,
-                             bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
-                             hover=True, hover_color='#e25a1f', text="",
-                             command=lambda: controller.show_frame(Help))
-
-        login.place(relx=0.95, rely=0.5, anchor="center")
-        mainpage.place(relx=0.90, rely=0.5, anchor="center")
-        help.place(relx=0.85, rely=0.5, anchor="center")
-
-        # Linksseitige Navigationsbutton für verschiedene Ansichten
-        user_button = tk.Button(verzeichniss, text="User", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                font=("Inter", 20, 'bold'),
-                                command=lambda: controller.show_frame(Profil))
-        user_button.pack(pady=10, anchor='w')
-
-        admin_button = tk.Button(verzeichniss, text="Administration", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                 font=("Inter", 20, 'bold'),
-                                 command=lambda: controller.show_frame(Admin))
-        admin_button.pack(pady=10, anchor='w')
-
-        stats_button = tk.Button(verzeichniss, text="Statistiken", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                 font=("Inter", 20, 'bold'),
-                                 command=lambda: controller.show_frame(Stats))
-        stats_button.pack(pady=10, anchor='w')
-
-        einstellungen_button = tk.Button(verzeichniss, text="Einstellungen", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                         font=("Inter", 20, 'bold'),
-                                         command=lambda: controller.show_frame(Einstellungen))
-        einstellungen_button.pack(pady=10, anchor='w')
-
-        verzeichniss_help_button = tk.Button(verzeichniss, text="Hilfe", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                             font=("Inter", 20, 'bold'),
-                                             command=lambda: controller.show_frame(Help))
-        verzeichniss_help_button.pack(pady=10, anchor='w')
-
-        # Platzierung des Hauptinhaltsbereichs und der Navigationsleiste
-        self.stats_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
-        verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
-
-
 ############################################
 # ୧‿̩͙ ˖︵ ꕀ⠀ ♱ Einstellungen ♱⠀ ꕀ ︵˖ ‿̩͙୨#
 ############################################
@@ -2395,20 +2295,15 @@ class Einstellungen(tk.Frame):
                                 command=lambda: controller.show_frame(Profil))
         user_button.pack(pady=10, anchor='w')
 
-        admin_button = tk.Button(verzeichniss, text="Administration", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                 font=("Inter", 20, 'bold'),
-                                 command=lambda: controller.show_frame(Admin))
-        admin_button.pack(pady=10, anchor='w')
-
-        stats_button = tk.Button(verzeichniss, text="Statistiken", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                 font=("Inter", 20, 'bold'),
-                                 command=lambda: controller.show_frame(Stats))
-        stats_button.pack(pady=10, anchor='w')
-
         einstellungen_button = tk.Button(verzeichniss, text="Einstellungen", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                          font=("Inter", 20, 'bold'),
                                          command=lambda: controller.show_frame(Einstellungen))
         einstellungen_button.pack(pady=10, anchor='w')
+
+        admin_button = tk.Button(verzeichniss, text="Administration", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
+                                 font=("Inter", 20, 'bold'),
+                                 command=lambda: controller.show_frame(Admin))
+        admin_button.pack(pady=10, anchor='w')
 
         verzeichniss_help_button = tk.Button(verzeichniss, text="Hilfe", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                              font=("Inter", 20, 'bold'),
@@ -2444,7 +2339,6 @@ class Einstellungen(tk.Frame):
             dropdown_menu.add_command(label="→ Excel", command=lambda: print("Excel ausgewählt"))
             dropdown_menu.add_command(label="→ SQL", command=lambda: print("SQL ausgewählt"))
             dropdown_menu.add_command(label="→ CSS", command=lambda: print("CSS ausgewählt"))
-            dropdown_menu.add_command(label="→ Andere", command=lambda: print("Andere ausgewählt"))
 
             dropdown_menu.post(format_drop.winfo_rootx(), format_drop.winfo_rooty() + format_drop.winfo_height())
 
@@ -2478,7 +2372,6 @@ class Einstellungen(tk.Frame):
             verzeichniss.config(bg=ThemeManager.Darkmode_Grey)
             user_button.config(bg=ThemeManager.Darkmode_Grey, fg="white")
             admin_button.config(bg=ThemeManager.Darkmode_Grey, fg="white")
-            stats_button.config(bg=ThemeManager.Darkmode_Grey, fg="white")
             einstellungen_button.config(bg=ThemeManager.Darkmode_Grey, fg="white")
             verzeichniss_help_button.config(bg=ThemeManager.Darkmode_Grey, fg="white")
 
@@ -2498,7 +2391,6 @@ class Einstellungen(tk.Frame):
             verzeichniss.config(bg=ThemeManager.SRH_Grey)
             user_button.config(bg=ThemeManager.SRH_Grey, fg="black")
             admin_button.config(bg=ThemeManager.SRH_Grey, fg="black")
-            stats_button.config(bg=ThemeManager.SRH_Grey, fg="black")
             einstellungen_button.config(bg=ThemeManager.SRH_Grey, fg="black")
             verzeichniss_help_button.config(bg=ThemeManager.SRH_Grey, fg="black")
 
@@ -2692,14 +2584,13 @@ class Einstellungen(tk.Frame):
 
 class Help(tk.Frame):
     """
-    Stellt eine GUI für Statistiken bereit.
+    Stellt eine GUI für die Hilfsseite bereit.
 
-    Diese Klasse repräsentiert eine Seite innerhalb einer GUI-Anwendung, die dem Anzeigen von Statistiken
+    Diese Klasse repräsentiert eine Seite innerhalb einer GUI-Anwendung, die dem Anzeigen von der Hilfsseite
     dient. Es wird eine Kopfzeile, eine vertikale Navigationsleiste sowie verschiedene interaktive
     Buttons bereitgestellt. Die Navigationsleiste ermöglicht den Wechsel zwischen verschiedenen
     Ansichten der Anwendung.
 
-    :ivar stats_frame: Hauptinhaltbereich für die Statistikseite.
     :ivar imglogin: Bild für den Login-Button.
     :ivar imgmainpage: Bild für den Zurück-zur-Hauptseite-Button.
     :ivar imghelp: Bild für den Hilfe-Button.
@@ -2810,20 +2701,15 @@ class Help(tk.Frame):
                                 command=lambda: controller.show_frame(Profil))
         user_button.pack(pady=10, anchor='w')
 
-        admin_button = tk.Button(verzeichniss, text="Administration", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                 font=("Inter", 20, 'bold'),
-                                 command=lambda: controller.show_frame(Admin))
-        admin_button.pack(pady=10, anchor='w')
-
-        stats_button = tk.Button(verzeichniss, text="Statistiken", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                 font=("Inter", 20, 'bold'),
-                                 command=lambda: controller.show_frame(Stats))
-        stats_button.pack(pady=10, anchor='w')
-
         einstellungen_button = tk.Button(verzeichniss, text="Einstellungen", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                          font=("Inter", 20, 'bold'),
                                          command=lambda: controller.show_frame(Einstellungen))
         einstellungen_button.pack(pady=10, anchor='w')
+
+        admin_button = tk.Button(verzeichniss, text="Administration", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
+                                 font=("Inter", 20, 'bold'),
+                                 command=lambda: controller.show_frame(Admin))
+        admin_button.pack(pady=10, anchor='w')
 
         verzeichniss_help_button = tk.Button(verzeichniss, text="Hilfe", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                              font=("Inter", 20, 'bold'),
