@@ -1018,7 +1018,10 @@ starte {loggerStyleAnsiEscSgr.foregroundColor.brightYellow}starting_table{logger
             # Daten aus DB einfügen
             i = 0
             for item in search_results:
-                overview_table_tree.insert("", "end", values=item, tags=("even" if i % 2 == 0 else "odd"))
+                formatted_row = [value if value is not None else "-" for value in
+                                     item]
+                i += 1
+                overview_table_tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
                 i += 1
 
         suche_button = ctk.CTkButton(self.ubersicht_frame, image=self.imgSuche, corner_radius=8, border_width=0,
@@ -1833,14 +1836,7 @@ class Profil(tk.Frame):
         thread = threading.Thread(target=update_label, daemon=True)
         thread.start()
 
-# herr copilot, kann ichmich bei ihnen melden, wenn ich fragen habe?
-# ja, natürlich. ich bin immer für sie da.
-# cool danke
-# gerne, kein problem. ich helfe ihnen gerne weiter.
-# danke, das ist sehr nett von ihnen.
-# ich habe einen wunsch: wenn du mir vorschlage gibst, dann bitte nicht die zeile vergrößern oder sowas... ist das okay?
-# ja, das ist okay. ich werde darauf achten.
-# danke, das ist sehr nett von ihnen.
+
 ##############################################
 # ୧‿̩͙ ˖︵ ꕀ⠀ ♱ Admin - Tabelle ♱⠀ ꕀ ︵˖ ‿̩͙୨#
 ##############################################
@@ -1967,7 +1963,6 @@ class Admin(tk.Frame):
 
         self.tree.bind("<Double-1>", self.on_user_select)
 
-        
 
     def search_bar_output_users(self):
             suche_text_users = self.suche_entry.get()
@@ -1977,7 +1972,9 @@ class Admin(tk.Frame):
             # Daten aus DB einfügen
             i = 0
             for item in search_results:
-                self.tree.insert("", "end", values=item, tags=("even" if i % 2 == 0 else "odd"))
+                formatted_row = [value if value is not None else "-" for value in
+                                     item]
+                self.tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
                 i += 1
 
     def open_empty_user(self):
