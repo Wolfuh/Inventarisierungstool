@@ -178,14 +178,12 @@ class LogInWindow(tk.Frame):
                 popup = tk.Toplevel(self)
                 popup.title("Passwort ändern")
                 popup.geometry("300x200")
-                popup.grab_set() # Fokus auf das Popup-Fenster
+                popup.grab_set()  # Fokus auf das Popup-Fenster
 
                 tk.Label(popup, text="Neues Passwort:", font=("Inter", 14)).pack(pady=10)
                 new_password_entry = ctk.CTkEntry(popup, text_color="black", font=("Inter", 14), border_width=1,
-                                                        corner_radius=8, fg_color="white", width=200, show="*")
+                                                  corner_radius=8, fg_color="white", width=200, show="*")
                 new_password_entry.pack(pady=10)
-
-
 
                 def set_new_password():
                     new_password = new_password_entry.get()
@@ -196,12 +194,14 @@ class LogInWindow(tk.Frame):
                         logging.info(f"'{username_entry.get()}' hat sich erfolgreich angemeldet.")
                         username_entry.delete(0, 'end')
                         password_entry.delete(0, 'end')
-                        messagebox.showinfo("Erfolg", passwort_staerke[1]) # zeigt erfolgreiches Ändern des Passworts
+                        messagebox.showinfo("Erfolg", passwort_staerke[1])  # zeigt erfolgreiches Ändern des Passworts
                     else:
-                        messagebox.showinfo("Fehler", passwort_staerke[1]) # zeigt die jeweilige Fehlermeldung
-                
-                new_own_password = ctk.CTkButton(popup, text="Passwort ändern", fg_color=ThemeManager.SRH_Orange, text_color='white', 
-                                                 font=("Inter", 14, 'bold'), corner_radius=8, command=set_new_password, width=200, height=30, hover_color=ThemeManager.SRH_Orange)
+                        messagebox.showinfo("Fehler", passwort_staerke[1])  # zeigt die jeweilige Fehlermeldung
+
+                new_own_password = ctk.CTkButton(popup, text="Passwort ändern", fg_color=ThemeManager.SRH_Orange,
+                                                 text_color='white',
+                                                 font=("Inter", 14, 'bold'), corner_radius=8, command=set_new_password,
+                                                 width=200, height=30, hover_color=ThemeManager.SRH_Orange)
                 new_own_password.pack(pady=10)
 
             user_login = login_lookup(username_entry.get(), password_entry.get())
@@ -2168,9 +2168,7 @@ class Einstellungen(tk.Frame):
 
     Sie enthält Widgets wie Header-Labels, Navigationsbuttons, Dropdown-Menüs und
     verschiedene Schaltflächen, mit denen der Benutzer zwischen verschiedenen
-    Abschnitten navigieren und Einstellungen anpassen kann. Zusätzlich unterstützt
-    sie die Umschaltung zwischen Light- und Darkmode, inklusive dynamischer
-    Anpassung der Benutzeroberfläche.
+    Abschnitten navigieren und Einstellungen anpassen kann.
 
     :ivar header: Das Header-Label der Seite „Einstellungen“, das als Titel
         dient.
@@ -2184,13 +2182,6 @@ class Einstellungen(tk.Frame):
     :ivar einstellung_frame: Der Rahmen, der den Hauptinhalt der Einstellungen
         darstellt.
     :type einstellung_frame: tk.Frame
-    :ivar switch_value: Boolean-Wert, der den aktuellen Status der
-        Theme-Umschaltung (Light- oder Darkmode) speichert.
-    :type switch_value: bool
-    :ivar light: Bild für die Light-Theme-Schalterposition.
-    :type light: tk.PhotoImage
-    :ivar dark: Bild für die Dark-Theme-Schalterposition.
-    :type dark: tk.PhotoImage
     """
 
     def __init__(self, parent, controller):
@@ -2309,60 +2300,6 @@ class Einstellungen(tk.Frame):
         except tk.EXCEPTION as e:
             print(f"Fehler beim laden der Bilder: {e}")
             return  # Beende falls die Bilder nicht geladen werden können
-
-        def toggle():
-            if self.switch_value:
-                apply_darkmode()
-                self.switch.config(image=self.dark, bg="black", activebackground="black")
-                self.switch_value = False
-            else:
-                apply_lightmode()
-                self.switch.config(image=self.light, bg="white", activebackground="white")
-                self.switch_value = True
-
-        # Funktion zum Anwenden des Darkmode
-        def apply_darkmode():
-            self.config(bg=ThemeManager.Darkmode_Black)
-            self.einstellung_frame.config(bg=ThemeManager.Darkmode_Black)
-            verzeichniss.config(bg=ThemeManager.Darkmode_Grey)
-            user_button.config(bg=ThemeManager.Darkmode_Grey, fg="white")
-            if does_user_have_the_right(13):
-                admin_button.config(bg=ThemeManager.Darkmode_Grey, fg="white")
-            einstellungen_button.config(bg=ThemeManager.Darkmode_Grey, fg="white")
-            verzeichniss_help_button.config(bg=ThemeManager.Darkmode_Grey, fg="white")
-
-            addSpalten_button.config(bg=ThemeManager.Darkmode_Black, fg="white")
-            addTyp_button.config(bg=ThemeManager.Darkmode_Black, fg="white")
-            addGerat_button.config(bg=ThemeManager.Darkmode_Black, fg="white")
-            addStatus_button.config(bg=ThemeManager.Darkmode_Black, fg="white")
-
-            details_label.config(bg=ThemeManager.Darkmode_Black, fg="white")
-            darstellung_label.config(bg=ThemeManager.Darkmode_Black, fg="white")
-            datenbank_label.config(bg=ThemeManager.Darkmode_Black, fg="white")
-
-        # Funktion zum Anwenden des Lightmodes
-        def apply_lightmode():
-            self.config(bg="white")
-            self.einstellung_frame.config(bg="white")
-            verzeichniss.config(bg=ThemeManager.SRH_Grey)
-            user_button.config(bg=ThemeManager.SRH_Grey, fg="black")
-            if does_user_have_the_right(13):
-                admin_button.config(bg=ThemeManager.SRH_Grey, fg="black")
-            einstellungen_button.config(bg=ThemeManager.SRH_Grey, fg="black")
-            verzeichniss_help_button.config(bg=ThemeManager.SRH_Grey, fg="black")
-
-            addSpalten_button.config(bg="white", fg="black")
-            addTyp_button.config(bg="white", fg="black")
-            addGerat_button.config(bg="white", fg="black")
-            addStatus_button.config(bg="white", fg="black")
-
-            details_label.config(bg="white", fg="black")
-            darstellung_label.config(bg="white", fg="black")
-            datenbank_label.config(bg="white", fg="black")
-
-        # Button zur Umschaltung des Themes
-        self.switch = tk.Button(self, image=self.light, bd=0, bg="white", activebackground="white", command=toggle)
-        self.switch.place(relx=0.16, rely=0.46)
 
         def change_header_color(event):
             # Dropdown zur Auswahl der Header-Farbe
