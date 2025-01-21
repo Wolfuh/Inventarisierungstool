@@ -333,24 +333,41 @@ def show_history_table(item_ID, excluded_columns):
 
 
 
-def does_user_have_the_right(wich_right):
-    try:
-        if not username_global == "Benutzername Ungültig":
-            my_db = init_connection()
-            cur = my_db.cursor()
-            cur.execute(f"SELECT Rolle FROM benutzer WHERE Benutzername = '{username_global}'") 
-            role = cur.fetchone()
+import sqlite3
 
-            cur.execute(f"SELECT * FROM permissions WHERE roles = '{role[0]}'")
-            right = cur.fetchone()
-            if right[wich_right] == "True":
-                return True
-            else:
-                return False
+def does_user_have_the_right(which_right):
+    try:
+        # Überprüfen, ob der Benutzername gültig ist
+        if username_global == "Benutzername Ungültig":
+            return False
+
+        # Verbindung zur Datenbank herstellen
+        my_db = init_connection()
+        cur = my_db.cursor()
+
+        # Sichere Abfragen mit Platzhaltern verwenden, um SQL-Injection zu vermeiden
+        cur.execute("SELECT Rolle FROM benutzer WHERE Benutzername = ?", (username_global,))
+        role = cur.fetchone()
+
+        # Prüfen, ob die Rolle gefunden wurde
+        if not role:
+            return False
+
+        cur.execute("SELECT * FROM permissions WHERE roles = ?", (role[0],))
+        right = cur.fetchone()
+
+        # Verbindung schließen
+        my_db.close()
+
+        # Prüfen, ob die Rechte vorhanden sind und ob das gewünschte Recht gesetzt ist
+        if right and right[which_right] == "True":
+            return True
         else:
             return False
     except sqlite3.Error as e:
-        return [], "Fehler beim Abrufen der Informationen:", str(e)
+        print("Fehler beim Abrufen der Informationen:", e)
+        return False
+
 
 
 
