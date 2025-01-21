@@ -207,7 +207,41 @@ class LogInWindow(tk.Frame):
             - Zeigt Fehlermeldung und leert das Passwortfeld bei falscher Eingabe.
             """
 
-            if login_lookup(username_entry.get(), password_entry.get()):
+            def show_password_change_popup(self):
+                popup = tk.Toplevel(self)
+                popup.title("Passwort ändern")
+                popup.geometry("300x200")
+                popup.grab_set() # Fokus auf das Popup-Fenster
+
+                tk.Label(popup, text="Neues Passwort:", font=("Inter", 14)).pack(pady=10)
+                new_password_entry = ctk.CTkEntry(popup, text_color="black", font=("Inter", 14), border_width=1,
+                                                        corner_radius=8, fg_color="white", width=200, show="*")
+                new_password_entry.pack(pady=10)
+
+
+
+                def set_new_password():
+                    new_password = new_password_entry.get()
+                    passwort_staerke = ist_passwort_stark(new_password)
+                    if passwort_staerke[0]:
+                        save_only_password(new_password)
+                        popup.destroy()
+                        logging.info(f"'{username_entry.get()}' hat sich erfolgreich angemeldet.")
+                        username_entry.delete(0, 'end')
+                        password_entry.delete(0, 'end')
+                        messagebox.showinfo("Erfolg", passwort_staerke[1]) # zeigt erfolgreiches Ändern des Passworts
+                    else:
+                        messagebox.showinfo("Fehler", passwort_staerke[1]) # zeigt die jeweilige Fehlermeldung
+                
+                new_own_password = ctk.CTkButton(popup, text="Passwort ändern", fg_color=ThemeManager.SRH_Orange, text_color='white', 
+                                                 font=("Inter", 14, 'bold'), corner_radius=8, command=set_new_password, width=200, height=30, hover_color=ThemeManager.SRH_Orange)
+                new_own_password.pack(pady=10)
+
+            user_login = login_lookup(username_entry.get(), password_entry.get())
+            if user_login == "change_password":
+                show_password_change_popup(self)
+                pass
+            elif user_login == "keep_going":
                 controller.show_frame(MainPage)
                 username_entry.delete(0, 'end')
                 password_entry.delete(0, 'end')

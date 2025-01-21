@@ -1,6 +1,7 @@
 import sqlite3
 import os
 import hashlib
+import re
 
 username_global = "Benutzername Ungültig"
 
@@ -21,8 +22,12 @@ def login_lookup(username: str, password: str): # überprüfung eingehendes Pass
 
         username_global = username  # Globaler Benutzername auf die Benutzername Eingabe Gesetzt
         hash_password = hashlib.sha512(password.encode()).hexdigest() # Das eingegebene Passwort hashen
-        if hash_password == back_password[0]: # überprüfung ob das gehashte passwort von der Eingabe, mit dem aus der DB übereinstimmt 
-            return True
+        start_password = hashlib.sha512("StartNow!".encode()).hexdigest() # StartNow! (Standartpasswort)
+        if hash_password == back_password[0]: # überprüfung ob das gehashte passwort von der Eingabe, mit dem aus der DB übereinstimmt
+            if hash_password == start_password: 
+                return "change_password" # Wenn das Passwort das Standartpasswort ist, wird der Benutzer aufgefordert, es zu ändern
+            else:
+                return "keep_going"
         else:
             username_global = ""  # Globalen Benutzernamen leeren
     except:
@@ -32,6 +37,34 @@ def login_lookup(username: str, password: str): # überprüfung eingehendes Pass
         if my_db:
             my_db.close()
 
+def ist_passwort_stark(passwort):
+    """Prüft, ob das Passwort stark genug ist."""
+    if len(passwort) < 8:
+        return False, "Das Passwort muss mindestens 8 Zeichen lang sein."
+    if not re.search(r'[A-Z]', passwort):
+        return False, "Das Passwort muss mindestens einen Großbuchstaben enthalten."
+    if not re.search(r'[a-z]', passwort):
+        return False, "Das Passwort muss mindestens einen Kleinbuchstaben enthalten."
+    if not re.search(r'\d', passwort):
+        return False, "Das Passwort muss mindestens eine Zahl enthalten."
+    if not re.search(r'[!@#$%^&*(),.?":{}|<>]', passwort):
+        return False, "Das Passwort muss mindestens ein Sonderzeichen enthalten."
+    return True, "Passwort erfolgreich geändert! Melden Sie sich erneut an."
+
+def save_only_password(password):
+    try:
+        my_db = init_connection()
+        cur = my_db.cursor()
+        hash_password = hashlib.sha512(password.encode()).hexdigest()
+        print(username_global)
+        cur.execute(f"UPDATE benutzer SET Passwort = '{hash_password}' WHERE Benutzername = '{username_global}'")
+        my_db.commit()
+        pass
+    except:
+        pass
+    finally:
+        if my_db:
+            my_db.close()
 
 
 def lookup_user_stuff(): # Gibt die Nutzerinformationen
