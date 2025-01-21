@@ -29,39 +29,6 @@ spec = importlib.util.spec_from_file_location("login_DB", login_DB_path)
 '''
 
 
-# TreeLogger
-class TreeLogFormatter(logging.Formatter):
-    grey = "\33[38;20m"
-    yellow = "\33[33;20m"
-    red = "\33[31;20m"
-    bold_red = "\33[31;1m"
-    reset = "\33[0m"
-    format = "%(name)s %(filename)s:%(lineno)d:\n%(message)s"
-
-    FORMATS = {
-        logging.DEBUG: grey + format + reset,
-        logging.INFO: grey + format + reset,
-        logging.WARNING: yellow + format + reset,
-        logging.ERROR: red + format + reset,
-        logging.CRITICAL: bold_red + format + reset
-    }
-
-    def format(self, record):
-        log_fmt = self.FORMATS.get(record.levelno)
-        formatter = logging.Formatter(log_fmt)
-        return formatter.format(record)
-
-
-TreeLogger = logging.getLogger("Tree")
-TreeLogger.setLevel(logging.INFO)  # <- auf "DEBUG" setzten, um die Log-Ausgaben des Trees einzublenden
-
-TreeLoggerch = logging.StreamHandler()
-TreeLoggerch.setFormatter(TreeLogFormatter())
-
-TreeLogger.addHandler(TreeLoggerch)
-TreeLogger.propagate = False
-
-
 ###################################
 # ୧‿̩͙ ˖︵ ꕀ⠀ ♱ Main ♱⠀ ꕀ ︵˖ ‿̩͙୨#R
 ###################################
@@ -366,7 +333,7 @@ class MainPage(tk.Frame):
 
         all = ctk.CTkButton(self, text="Alle Anzeigen", fg_color='white', text_color=ThemeManager.SRH_Blau,
                             font=("Inter", 20), corner_radius=8, hover=False,
-                            command=lambda: controller.show_frame(Ubersicht))
+                            command=lambda: handle_group_click(controller, ""))
 
         # global current_group
         # current_group = group
@@ -374,8 +341,8 @@ class MainPage(tk.Frame):
         def handle_group_click(controller, group):
             global current_group
             current_group = group
-            logging.info(f"Gruppe {group} wurde angeklickt!")
-            obj1 = Ubersicht(parent, controller)
+            logging.info(f"Gruppe '{group}' wurde angeklickt!")
+            Ubersicht.update_table_contents(2, str(group), "")
 
             controller.show_frame(Ubersicht)
 
@@ -426,11 +393,6 @@ class MainPage(tk.Frame):
         seitevor.place(relx=0.51, rely=0.80, anchor='n')
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
         bottom.place(relx=0, rely=0.85, relwidth=1, relheight=0.13)
-
-    def get_current_group(self):  # gibt die aktuelle Gruppe zurück
-        logging.debug(
-            f"{loggerStyleAnsiEscSgr.foregroundColor.brightYellow}get_current_group{loggerStyleAnsiEscSgr.foregroundColor.yellow}(){loggerStyleAnsiEscSgr.foregroundColor.reset} returned '{current_group}' (type: '{type(current_group)}')")
-        return current_group
 
 
 ##########################################
@@ -702,14 +664,48 @@ class Ubersicht(tk.Frame):
     :ivar tree: Baumstruktur für die tabellarische Darstellung von Daten.
     """
 
+    def update_table_contents(searchColumn: int, searchGroup: str, searchQuery: str):
+        # searchColumn benötigt Zahl, für den gesuchten Ort
+        # Spaltennamen aus der Datenbank holen
+        items_uberschrift = fetch_headers("items", ["image"])
+
+        # Überschriften konfigurieren
+
+        overview_table_tree["columns"] = items_uberschrift
+        for up in items_uberschrift:
+            overview_table_tree.column(up, anchor=CENTER, width=100)
+            overview_table_tree.heading(up, text=up)
+
+        items_data = fetch_tables("items", ["image"])
+        overview_table_tree.delete(*overview_table_tree.get_children())
+
+        type_sort = ["Hardwawre", "Software", "Peripherie"]
+
+        # Daten aus DB einfügen
+        i = 0
+        if searchGroup != "":
+            for item in items_data:
+                if (item[2] and str(item[2]) == searchGroup) and searchQuery == "ANDERE" and not str(item[searchColumn]) in type_sort:
+                    formatted_row = [value if value is not None else "-" for value in item]  # Leere Felder durch "-" ersetzen
+                    overview_table_tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
+                    i += 1
+
+                elif (item[2] and str(item[2]) == searchGroup) and (not searchQuery or str(item[searchColumn]) == searchQuery):
+                    formatted_row = [value if value is not None else "-" for value in item]  # Leere Felder durch "-" ersetzen
+                    overview_table_tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
+                    i += 1
+        else:
+            for i, row in enumerate(items_data):
+                formatted_row = [value if value is not None else "-" for value in
+                                 row]  # Leere Felder durch "-" ersetzen
+                overview_table_tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
+
+
     def __init__(self, parent, controller):
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         tk.Frame.__init__(self, parent)
 
         self.configure(bg='white')
-
-        logging.debug(
-            f"Initialisiere Instanz von {loggerStyleAnsiEscSgr.foregroundColor.green}Ubersicht{loggerStyleAnsiEscSgr.foregroundColor.reset}...")
 
         # Stilkonfiguration für Header und Footer, Erstellung vom Header und des Überschriftbereiches.
         style = ttk.Style()
@@ -765,88 +761,29 @@ class Ubersicht(tk.Frame):
         all_button = ctk.CTkButton(verzeichniss, text="Alle Anzeigen", fg_color=ThemeManager.SRH_Grey,
                                    text_color='black',
                                    font=("Inter", 20), corner_radius=8, hover=False,
-                                   command=lambda: starting_table())  # controller.show_frame(Ubersicht))
+                                   command=lambda: Ubersicht.update_table_contents(2, "", ""))  # controller.show_frame(Ubersicht))
 
         all_button.pack(pady=10, anchor='w')
 
+        global overview_table_tree
         overview_table_tree = ttk.Treeview(self.tabelle_frame, columns=("c1", "c2", "c3", "c4", "c5"), show="headings",
                                            height=5)
         overview_table_tree.place(x=120, y=0, width=1280, height=650)
-        TreeLogger.debug(f"'{overview_table_tree.get_children()}' - wurde gerade definiert")
-
-        def show_right_table(item_position: int, suchgruppe, search_word):
-            # item_position benötigt Zahl, für den gesuchten Ort
-            # Spaltennamen aus der Datenbank holen
-            logging.debug(
-                f"{loggerStyleAnsiEscSgr.foregroundColor.brightYellow}show_right_table{loggerStyleAnsiEscSgr.foregroundColor.yellow}({loggerStyleAnsiEscSgr.foregroundColor.reset}item_position='{item_position}' (type: '{type(item_position)}'), suchgruppe='{suchgruppe}' (type: '{type(suchgruppe)}'), search_word='{search_word}' (type: '{type(search_word)}'){loggerStyleAnsiEscSgr.foregroundColor.yellow}){loggerStyleAnsiEscSgr.foregroundColor.reset}")
-
-            items_uberschrift = fetch_headers("items", ["image"])
-
-            # Überschriften konfigurieren
-
-            overview_table_tree["columns"] = items_uberschrift
-            for up in items_uberschrift:
-                overview_table_tree.column(up, anchor=CENTER, width=100)
-                overview_table_tree.heading(up, text=up)
-            TreeLogger.debug(f"'{overview_table_tree.get_children()}'")
-
-            items_data = fetch_tables("items", ["image"])
-            overview_table_tree.delete(*overview_table_tree.get_children())
-            TreeLogger.debug(f"'{overview_table_tree.get_children()}'")
-
-            type_sort = ["Hardwawre", "Software", "Peripherie"]
-
-            # Daten aus DB einfügen
-            i = 0
-            for item in items_data:
-                if (item[2] and str(item[2]) == suchgruppe) and search_word == "ANDERE" and not str(
-                        item[item_position]) in type_sort:
-                    formatted_row = [value if value is not None else "-" for value in
-                                     item]  # Leere Felder durch "-" ersetzen
-                    overview_table_tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
-                    TreeLogger.debug(f"'{overview_table_tree.get_children()}'")
-                    i += 1
-
-                elif (item[2] and str(item[2]) == suchgruppe) and (
-                        not search_word or str(item[item_position]) == search_word):
-                    formatted_row = [value if value is not None else "-" for value in
-                                     item]  # Leere Felder durch "-" ersetzen
-                    overview_table_tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
-                    TreeLogger.debug(f"'{overview_table_tree.get_children()}'")
-                    i += 1
-            TreeLogger.debug(f"'{overview_table_tree.get_children()}'")
-            logging.debug(
-                f"{loggerStyleAnsiEscSgr.foregroundColor.brightYellow}show_right_table{loggerStyleAnsiEscSgr.foregroundColor.yellow}(){loggerStyleAnsiEscSgr.foregroundColor.reset} wurde ausgeführt")
-
-        # current_group = Mainpages.MainPage.get_current_group()
-
-        def show_the_active_group():
-            current_group = MainPage.get_current_group(self)
-            if current_group:
-                show_right_table(8, current_group, "")
-                logging.debug(
-                    f"{loggerStyleAnsiEscSgr.foregroundColor.brightYellow}show_the_active_group{loggerStyleAnsiEscSgr.foregroundColor.yellow}(){loggerStyleAnsiEscSgr.foregroundColor.reset} mit Wert '{current_group}' (type: '{type(current_group)}') für current_group aufgerufen")
-            else:
-                starting_table()
-                logging.debug(
-                    f"{loggerStyleAnsiEscSgr.foregroundColor.brightYellow}show_the_active_group{loggerStyleAnsiEscSgr.foregroundColor.yellow}(){loggerStyleAnsiEscSgr.foregroundColor.reset} ohne Wert für current_group aufgerufen, \
-starte {loggerStyleAnsiEscSgr.foregroundColor.brightYellow}starting_table{loggerStyleAnsiEscSgr.foregroundColor.yellow}(){loggerStyleAnsiEscSgr.foregroundColor.reset}!")
 
         # Gruppe 1
         def show_dropdown_grp1():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: show_right_table(2, "1",
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: Ubersicht.update_table_contents(2, "1",
                                                                                                  ""))  # Alle Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: show_right_table(8, "1",
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: Ubersicht.update_table_contents(8, "1",
                                                                                            "Hardwawre"))  # nur Hardware Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Software", command=lambda: show_right_table(8, "1",
+            dropdown_menu.add_command(label="→ Software", command=lambda: Ubersicht.update_table_contents(8, "1",
                                                                                            "Software"))  # nur Software Produkte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: show_right_table(8, "1",
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: Ubersicht.update_table_contents(8, "1",
 
                                                                                              "Peripherie"))  # nur Peripherie mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Andere", command=lambda: show_right_table(8, "1",
+            dropdown_menu.add_command(label="→ Andere", command=lambda: Ubersicht.update_table_contents(8, "1",
                                                                                          "ANDERE"))  # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
-            dropdown_menu.add_command(label="TEST", command=lambda: show_the_active_group())
             dropdown_menu.post(grp1_button.winfo_rootx(), grp1_button.winfo_rooty() + grp1_button.winfo_height())
 
         grp1_button = tk.Button(verzeichniss, text="Gruppe 1   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -857,15 +794,15 @@ starte {loggerStyleAnsiEscSgr.foregroundColor.brightYellow}starting_table{logger
         # Gruppe 2
         def show_dropdown_grp2():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: show_right_table(2, "2",
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: Ubersicht.update_table_contents(2, "2",
                                                                                                  ""))  # Alle Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: show_right_table(8, "2",
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: Ubersicht.update_table_contents(8, "2",
                                                                                            "Hardwawre"))  # nur Hardware Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Software", command=lambda: show_right_table(8, "2",
+            dropdown_menu.add_command(label="→ Software", command=lambda: Ubersicht.update_table_contents(8, "2",
                                                                                            "Software"))  # nur Software Produkte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: show_right_table(8, "2",
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: Ubersicht.update_table_contents(8, "2",
                                                                                              "Peripherie"))  # nur Peripherie mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Andere", command=lambda: show_right_table(8, "2",
+            dropdown_menu.add_command(label="→ Andere", command=lambda: Ubersicht.update_table_contents(8, "2",
                                                                                          "ANDERE"))  # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
             dropdown_menu.post(grp2_button.winfo_rootx(), grp2_button.winfo_rooty() + grp2_button.winfo_height())
 
@@ -877,15 +814,15 @@ starte {loggerStyleAnsiEscSgr.foregroundColor.brightYellow}starting_table{logger
         # Gruppe 3
         def show_dropdown_grp3():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: show_right_table(2, "3",
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: Ubersicht.update_table_contents(2, "3",
                                                                                                  ""))  # Alle Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: show_right_table(8, "3",
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: Ubersicht.update_table_contents(8, "3",
                                                                                            "Hardwawre"))  # nur Hardware Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Software", command=lambda: show_right_table(8, "3",
+            dropdown_menu.add_command(label="→ Software", command=lambda: Ubersicht.update_table_contents(8, "3",
                                                                                            "Software"))  # nur Software Produkte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: show_right_table(8, "3",
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: Ubersicht.update_table_contents(8, "3",
                                                                                              "Peripherie"))  # nur Peripherie mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Andere", command=lambda: show_right_table(8, "3",
+            dropdown_menu.add_command(label="→ Andere", command=lambda: Ubersicht.update_table_contents(8, "3",
                                                                                          "ANDERE"))  # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
             dropdown_menu.post(grp3_button.winfo_rootx(), grp3_button.winfo_rooty() + grp3_button.winfo_height())
 
@@ -897,15 +834,15 @@ starte {loggerStyleAnsiEscSgr.foregroundColor.brightYellow}starting_table{logger
         # Gruppe 4
         def show_dropdown_grp4():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: show_right_table(2, "4",
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: Ubersicht.update_table_contents(2, "4",
                                                                                                  ""))  # Alle Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: show_right_table(8, "4",
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: Ubersicht.update_table_contents(8, "4",
                                                                                            "Hardwawre"))  # nur Hardware Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Software", command=lambda: show_right_table(8, "4",
+            dropdown_menu.add_command(label="→ Software", command=lambda: Ubersicht.update_table_contents(8, "4",
                                                                                            "Sorftware"))  # nur Software Produkte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: show_right_table(8, "4",
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: Ubersicht.update_table_contents(8, "4",
                                                                                              "Peripherie"))  # nur Peripherie mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Andere", command=lambda: show_right_table(8, "4",
+            dropdown_menu.add_command(label="→ Andere", command=lambda: Ubersicht.update_table_contents(8, "4",
                                                                                          "ANDERE"))  # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
             dropdown_menu.post(grp4_button.winfo_rootx(), grp4_button.winfo_rooty() + grp4_button.winfo_height())
 
@@ -917,15 +854,15 @@ starte {loggerStyleAnsiEscSgr.foregroundColor.brightYellow}starting_table{logger
         # Gruppe 5
         def show_dropdown_grp5():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: show_right_table(2, "5",
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: Ubersicht.update_table_contents(2, "5",
                                                                                                  ""))  # Alle Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: show_right_table(8, "5",
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: Ubersicht.update_table_contents(8, "5",
                                                                                            "Hardwawre"))  # nur Hardware Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Software", command=lambda: show_right_table(8, "5",
+            dropdown_menu.add_command(label="→ Software", command=lambda: Ubersicht.update_table_contents(8, "5",
                                                                                            "Software"))  # nur Software Produkte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: show_right_table(8, "5",
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: Ubersicht.update_table_contents(8, "5",
                                                                                              "Peripherie"))  # nur Peripherie mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Andere", command=lambda: show_right_table(8, "5",
+            dropdown_menu.add_command(label="→ Andere", command=lambda: Ubersicht.update_table_contents(8, "5",
                                                                                          "ANDERE"))  # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
             dropdown_menu.post(grp5_button.winfo_rootx(), grp5_button.winfo_rooty() + grp5_button.winfo_height())
 
@@ -937,15 +874,15 @@ starte {loggerStyleAnsiEscSgr.foregroundColor.brightYellow}starting_table{logger
         # Gruppe 6
         def show_dropdown_grp6():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: show_right_table(2, "6",
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: Ubersicht.update_table_contents(2, "6",
                                                                                                  ""))  # Alle Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: show_right_table(8, "6",
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: Ubersicht.update_table_contents(8, "6",
                                                                                            "Hardwawre"))  # nur Hardware Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Software", command=lambda: show_right_table(8, "6",
+            dropdown_menu.add_command(label="→ Software", command=lambda: Ubersicht.update_table_contents(8, "6",
                                                                                            "Software"))  # nur Software Produkte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: show_right_table(8, "6",
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: Ubersicht.update_table_contents(8, "6",
                                                                                              "Peripherie"))  # nur Peripherie mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Andere", command=lambda: show_right_table(8, "6",
+            dropdown_menu.add_command(label="→ Andere", command=lambda: Ubersicht.update_table_contents(8, "6",
                                                                                          "ANDERE"))  # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
             dropdown_menu.post(grp6_button.winfo_rootx(), grp6_button.winfo_rooty() + grp6_button.winfo_height())
 
@@ -957,15 +894,15 @@ starte {loggerStyleAnsiEscSgr.foregroundColor.brightYellow}starting_table{logger
         # Gruppe 7
         def show_dropdown_grp7():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: show_right_table(2, "7",
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: Ubersicht.update_table_contents(2, "7",
                                                                                                  ""))  # Alle Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: show_right_table(8, "7",
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: Ubersicht.update_table_contents(8, "7",
                                                                                            "Hardwawre"))  # nur Hardware Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Software", command=lambda: show_right_table(8, "7",
+            dropdown_menu.add_command(label="→ Software", command=lambda: Ubersicht.update_table_contents(8, "7",
                                                                                            "Software"))  # nur Software Produkte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: show_right_table(8, "7",
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: Ubersicht.update_table_contents(8, "7",
                                                                                              "Peripherie"))  # nur Peripherie mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Andere", command=lambda: show_right_table(8, "7",
+            dropdown_menu.add_command(label="→ Andere", command=lambda: Ubersicht.update_table_contents(8, "7",
                                                                                          "ANDERE"))  # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
             dropdown_menu.post(grp7_button.winfo_rootx(), grp7_button.winfo_rooty() + grp7_button.winfo_height())
 
@@ -977,15 +914,15 @@ starte {loggerStyleAnsiEscSgr.foregroundColor.brightYellow}starting_table{logger
         # Gruppe 8
         def show_dropdown_grp8():
             dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: show_right_table(2, "8",
+            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: Ubersicht.update_table_contents(2, "8",
                                                                                                  ""))  # Alle Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: show_right_table(8, "8",
+            dropdown_menu.add_command(label="→ Hardware", command=lambda: Ubersicht.update_table_contents(8, "8",
                                                                                            "Hardwawre"))  # nur Hardware Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Software", command=lambda: show_right_table(8, "8",
+            dropdown_menu.add_command(label="→ Software", command=lambda: Ubersicht.update_table_contents(8, "8",
                                                                                            "Software"))  # nur Software Produkte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: show_right_table(8, "8",
+            dropdown_menu.add_command(label="→ Peripherie", command=lambda: Ubersicht.update_table_contents(8, "8",
                                                                                              "Peripherie"))  # nur Peripherie mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Andere", command=lambda: show_right_table(8, "8",
+            dropdown_menu.add_command(label="→ Andere", command=lambda: Ubersicht.update_table_contents(8, "8",
                                                                                          "ANDERE"))  # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
             dropdown_menu.post(grp8_button.winfo_rootx(), grp8_button.winfo_rooty() + grp8_button.winfo_height())
 
@@ -1016,7 +953,6 @@ starte {loggerStyleAnsiEscSgr.foregroundColor.brightYellow}starting_table{logger
             items_data = table_sort(table, where, [""], DESC_OR_ASC)
 
             overview_table_tree.delete(*overview_table_tree.get_children())
-            TreeLogger.debug(f"'{overview_table_tree.get_children()}'")
 
             # Daten aus DB einfügen
             i = 0
@@ -1024,7 +960,6 @@ starte {loggerStyleAnsiEscSgr.foregroundColor.brightYellow}starting_table{logger
                 formatted_row = [value if value is not None else "-" for value in
                                  item]  # Leere Felder durch "-" ersetzen
                 overview_table_tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
-                TreeLogger.debug(f"'{overview_table_tree.get_children()}'")
                 i += 1
 
         # Filterfunktion
@@ -1086,33 +1021,6 @@ starte {loggerStyleAnsiEscSgr.foregroundColor.brightYellow}starting_table{logger
 
         # Treeview Scrollverbindung
         overview_table_tree.configure(yscrollcommand=scroll.set)
-        TreeLogger.debug(f"'{overview_table_tree.get_children()}'")
-
-        def starting_table():
-            logging.debug(
-                f"{loggerStyleAnsiEscSgr.foregroundColor.brightYellow}starting_table{loggerStyleAnsiEscSgr.foregroundColor.yellow}(){loggerStyleAnsiEscSgr.foregroundColor.reset} wird ausgeführt")
-            # Spaltennamen aus der Datenbank holen
-            overview_table_tree.delete(*overview_table_tree.get_children())
-            TreeLogger.debug(f"'{overview_table_tree.get_children()}'")
-            items_uberschrift = fetch_headers("items", ["image"])
-
-            # Überschriften konfigurieren
-            overview_table_tree["columns"] = items_uberschrift
-            for up in items_uberschrift:
-                overview_table_tree.column(up, anchor=CENTER, width=100)
-                overview_table_tree.heading(up, text=up)
-            TreeLogger.debug(f"'{overview_table_tree.get_children()}'")
-            items_data = fetch_tables("items", ["image"])
-
-            # Daten aus DB einfügen
-
-            for i, row in enumerate(items_data):
-                formatted_row = [value if value is not None else "-" for value in
-                                 row]  # Leere Felder durch "-" ersetzen
-                overview_table_tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
-            TreeLogger.debug(f"'{overview_table_tree.get_children()}'")
-            logging.debug(
-                f"{loggerStyleAnsiEscSgr.foregroundColor.brightYellow}starting_table{loggerStyleAnsiEscSgr.foregroundColor.yellow}(){loggerStyleAnsiEscSgr.foregroundColor.reset} wurde ausgeführt")
 
         # Gerät aus Tabelle öffnen
         def on_item_select(event):
@@ -1139,10 +1047,6 @@ starte {loggerStyleAnsiEscSgr.foregroundColor.brightYellow}starting_table{logger
         header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
         verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
         self.tabelle_frame.place(relx=0.15, rely=0.3, relwidth=0.85, height=800)
-        show_the_active_group()
-
-        logging.debug(
-            f"Instanz von {loggerStyleAnsiEscSgr.foregroundColor.green}Ubersicht{loggerStyleAnsiEscSgr.foregroundColor.reset} initialisiert.")
 
 
 def showDetails(selected_Item, tree, controller):
