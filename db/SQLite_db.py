@@ -333,22 +333,45 @@ def show_history_table(item_ID, excluded_columns):
 
 
 
+def does_user_have_the_right(wich_right):
+    try:
+        if not username_global == "Benutzername Ungültig":
+            my_db = init_connection()
+            cur = my_db.cursor()
+            cur.execute(f"SELECT Rolle FROM benutzer WHERE Benutzername = '{username_global}'") 
+            role = cur.fetchone()
+
+            cur.execute(f"SELECT * FROM permissions WHERE roles = '{role[0]}'")
+            right = cur.fetchone()
+            if right[wich_right] == "True":
+                return True
+            else:
+                return False
+        else:
+            return False
+    except sqlite3.Error as e:
+        return [], "Fehler beim Abrufen der Informationen:", str(e)
+
+
+
+
+
 ##############################
 ## UNBENUTZTE DEFINITIONEN: ##
 ##############################
 
-def group_search(search_number):
-    try:
-        my_db = init_connection()
-        cur = my_db.cursor()
-        cur.execute("SELECT * FROM items WHERE Gruppe = ?", search_number)
-        gruppen_suchen_ergebnis = cur.fetchall()
-        return gruppen_suchen_ergebnis
-    except sqlite3.Error as e:
-        return [], "Fehler beim Abrufen der Gruppensuche:", str(e)
-    finally:
-        if my_db:
-            my_db.close()
+# def group_search(search_number):
+#     try:
+#         my_db = init_connection()
+#         cur = my_db.cursor()
+#         cur.execute("SELECT * FROM items WHERE Gruppe = ?", search_number)
+#         gruppen_suchen_ergebnis = cur.fetchall()
+#         return gruppen_suchen_ergebnis
+#     except sqlite3.Error as e:
+#         return [], "Fehler beim Abrufen der Gruppensuche:", str(e)
+#     finally:
+#         if my_db:
+#             my_db.close()
 
 
 

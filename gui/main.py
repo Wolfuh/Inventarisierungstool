@@ -1733,10 +1733,10 @@ class Profil(tk.Frame):
                                              fg='black',
                                              font=("Inter", 20, 'bold'),
                                              command=lambda: controller.show_frame(Einstellungen))
-
-            admin_button = tk.Button(verzeichniss, text="Administration", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                     font=("Inter", 20, 'bold'),
-                                     command=lambda: controller.show_frame(Admin))
+            if does_user_have_the_right(13):
+                admin_button = tk.Button(verzeichniss, text="Administration", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
+                                        font=("Inter", 20, 'bold'),
+                                        command=lambda: controller.show_frame(Admin))
 
             verzeichniss_help_button = tk.Button(verzeichniss, text="Hilfe", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                                  font=("Inter", 20, 'bold'),
@@ -1745,7 +1745,8 @@ class Profil(tk.Frame):
             ###### Plazierung #######
             user_button.pack(pady=10, anchor='w')
             einstellungen_button.pack(pady=10, anchor='w')
-            admin_button.pack(pady=10, anchor='w')
+            if does_user_have_the_right(13):
+                admin_button.pack(pady=10, anchor='w')
             verzeichniss_help_button.pack(pady=10, anchor='w')
 
             login.place(relx=0.95, rely=0.5, anchor="center")
@@ -2252,10 +2253,11 @@ class Einstellungen(tk.Frame):
                                          command=lambda: controller.show_frame(Einstellungen))
         einstellungen_button.pack(pady=10, anchor='w')
 
-        admin_button = tk.Button(verzeichniss, text="Administration", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                 font=("Inter", 20, 'bold'),
-                                 command=lambda: controller.show_frame(Admin))
-        admin_button.pack(pady=10, anchor='w')
+        if does_user_have_the_right(13):
+            admin_button = tk.Button(verzeichniss, text="Administration", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
+                                    font=("Inter", 20, 'bold'),
+                                    command=lambda: controller.show_frame(Admin))
+            admin_button.pack(pady=10, anchor='w')
 
         verzeichniss_help_button = tk.Button(verzeichniss, text="Hilfe", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                              font=("Inter", 20, 'bold'),
@@ -2324,7 +2326,8 @@ class Einstellungen(tk.Frame):
             self.einstellung_frame.config(bg=ThemeManager.Darkmode_Black)
             verzeichniss.config(bg=ThemeManager.Darkmode_Grey)
             user_button.config(bg=ThemeManager.Darkmode_Grey, fg="white")
-            admin_button.config(bg=ThemeManager.Darkmode_Grey, fg="white")
+            if does_user_have_the_right(13):
+                admin_button.config(bg=ThemeManager.Darkmode_Grey, fg="white")
             einstellungen_button.config(bg=ThemeManager.Darkmode_Grey, fg="white")
             verzeichniss_help_button.config(bg=ThemeManager.Darkmode_Grey, fg="white")
 
@@ -2343,7 +2346,8 @@ class Einstellungen(tk.Frame):
             self.einstellung_frame.config(bg="white")
             verzeichniss.config(bg=ThemeManager.SRH_Grey)
             user_button.config(bg=ThemeManager.SRH_Grey, fg="black")
-            admin_button.config(bg=ThemeManager.SRH_Grey, fg="black")
+            if does_user_have_the_right(13):
+                admin_button.config(bg=ThemeManager.SRH_Grey, fg="black")
             einstellungen_button.config(bg=ThemeManager.SRH_Grey, fg="black")
             verzeichniss_help_button.config(bg=ThemeManager.SRH_Grey, fg="black")
 
@@ -2647,10 +2651,11 @@ class Help(tk.Frame):
                                          command=lambda: controller.show_frame(Einstellungen))
         einstellungen_button.pack(pady=10, anchor='w')
 
-        admin_button = tk.Button(verzeichniss, text="Administration", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                 font=("Inter", 20, 'bold'),
-                                 command=lambda: controller.show_frame(Admin))
-        admin_button.pack(pady=10, anchor='w')
+        if does_user_have_the_right(13):
+            admin_button = tk.Button(verzeichniss, text="Administration", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
+                                    font=("Inter", 20, 'bold'),
+                                    command=lambda: controller.show_frame(Admin))
+            admin_button.pack(pady=10, anchor='w')
 
         verzeichniss_help_button = tk.Button(verzeichniss, text="Hilfe", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                              font=("Inter", 20, 'bold'),
