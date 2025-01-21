@@ -120,7 +120,7 @@ class GuiTest(tk.Tk):
         # Only attempt to instantiate Einstellungen if it's a class
         pages = [LogInWindow, MainPage, MainPageS2, Mainpage_empty,
                  Ubersicht, Gerateansicht, Einstellungen,
-                 Profil, Admin, Stats, Help]
+                 Profil, Admin, Help]
 
         if hasattr(Einstellungen, "Einstellungen"):
             pages.append(Einstellungen)
@@ -674,7 +674,8 @@ class Ubersicht(tk.Frame):
 
         self.configure(bg='white')
 
-        logging.debug(f"Initialisiere Instanz von {loggerStyleAnsiEscSgr.foregroundColor.green}Ubersicht{loggerStyleAnsiEscSgr.foregroundColor.reset}...")
+        logging.debug(
+            f"Initialisiere Instanz von {loggerStyleAnsiEscSgr.foregroundColor.green}Ubersicht{loggerStyleAnsiEscSgr.foregroundColor.reset}...")
 
         # Stilkonfiguration für Header und Footer, Erstellung vom Header und des Überschriftbereiches.
         style = ttk.Style()
@@ -742,7 +743,8 @@ class Ubersicht(tk.Frame):
         def show_right_table(item_position: int, suchgruppe, search_word):
             # item_position benötigt Zahl, für den gesuchten Ort
             # Spaltennamen aus der Datenbank holen
-            logging.debug(f"{loggerStyleAnsiEscSgr.foregroundColor.brightYellow}show_right_table{loggerStyleAnsiEscSgr.foregroundColor.yellow}({loggerStyleAnsiEscSgr.foregroundColor.reset}item_position='{item_position}' (type: '{type(item_position)}'), suchgruppe='{suchgruppe}' (type: '{type(suchgruppe)}'), search_word='{search_word}' (type: '{type(search_word)}'){loggerStyleAnsiEscSgr.foregroundColor.yellow}){loggerStyleAnsiEscSgr.foregroundColor.reset}")
+            logging.debug(
+                f"{loggerStyleAnsiEscSgr.foregroundColor.brightYellow}show_right_table{loggerStyleAnsiEscSgr.foregroundColor.yellow}({loggerStyleAnsiEscSgr.foregroundColor.reset}item_position='{item_position}' (type: '{type(item_position)}'), suchgruppe='{suchgruppe}' (type: '{type(suchgruppe)}'), search_word='{search_word}' (type: '{type(search_word)}'){loggerStyleAnsiEscSgr.foregroundColor.yellow}){loggerStyleAnsiEscSgr.foregroundColor.reset}")
 
             items_uberschrift = fetch_headers("items", ["image"])
 
@@ -1018,7 +1020,7 @@ starte {loggerStyleAnsiEscSgr.foregroundColor.brightYellow}starting_table{logger
             i = 0
             for item in search_results:
                 formatted_row = [value if value is not None else "-" for value in
-                                     item]
+                                 item]
                 i += 1
                 overview_table_tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
                 i += 1
@@ -1105,7 +1107,8 @@ starte {loggerStyleAnsiEscSgr.foregroundColor.brightYellow}starting_table{logger
         self.tabelle_frame.place(relx=0.15, rely=0.3, relwidth=0.85, height=800)
         show_the_active_group()
 
-        logging.debug(f"Instanz von {loggerStyleAnsiEscSgr.foregroundColor.green}Ubersicht{loggerStyleAnsiEscSgr.foregroundColor.reset} initialisiert.")
+        logging.debug(
+            f"Instanz von {loggerStyleAnsiEscSgr.foregroundColor.green}Ubersicht{loggerStyleAnsiEscSgr.foregroundColor.reset} initialisiert.")
 
 
 def showDetails(selected_Item, tree, controller):
@@ -1155,7 +1158,8 @@ class Gerateansicht(tk.Frame):
 
     def setup_styles(self):
         style = ttk.Style()
-        style.configure("Header.TLabel", foreground='white', background=ThemeManager.SRH_Orange, font=("Inter", 50, 'bold'))
+        style.configure("Header.TLabel", foreground='white', background=ThemeManager.SRH_Orange,
+                        font=("Inter", 50, 'bold'))
         style.configure("Footer.TLabel", background=ThemeManager.SRH_Grey)
 
     def create_widgets(self):
@@ -1178,12 +1182,12 @@ class Gerateansicht(tk.Frame):
                                          hover=True, hover_color='#e25a1f', text="",
                                          command=lambda: self.controller.show_frame(Help))
 
-        self.mainpage_button = ctk.CTkButton(self, text="↩", fg_color='white', text_color=ThemeManager.SRH_Grey, width=5,
+        self.mainpage_button = ctk.CTkButton(self, text="↩", fg_color='white', text_color=ThemeManager.SRH_Grey,
+                                             width=5,
                                              font=("Inter", 50, 'bold'), corner_radius=8, hover=False,
                                              command=lambda: self.controller.show_frame(Ubersicht))
 
         self.mainpage_button.place(relx=1, rely=1)
-
 
         # "Alle Anzeigen" Button in der Seitenleiste
         self.all_button = ctk.CTkButton(self.verzeichniss, text="Alle Anzeigen", fg_color=ThemeManager.SRH_Grey,
@@ -1213,14 +1217,16 @@ class Gerateansicht(tk.Frame):
         self.status_frame = self.create_entry_frame("Status", 900, 320)
         self.status_aktuell_label = ctk.CTkLabel(self.status_frame, text="", text_color='black', font=("Inter", 20))
         self.status_aktuell_label.place(x=5, y=50)
-        self.status_drop = tk.Button(self.status_frame, text="↓", bd=0, bg='white', fg='black', font=("Inter", 20, 'bold'),
+        self.status_drop = tk.Button(self.status_frame, text="↓", bd=0, bg='white', fg='black',
+                                     font=("Inter", 20, 'bold'),
                                      command=self.status_dropdown)
         self.status_drop.place(x=420, y=30)
 
         self.gruppe_frame = self.create_entry_frame("Gruppe", 900, 420)
         self.gruppe_aktuell_label = ctk.CTkLabel(self.gruppe_frame, text="", text_color='black', font=("Inter", 20))
         self.gruppe_aktuell_label.place(x=5, y=50)
-        self.gruppe_drop = tk.Button(self.gruppe_frame, text="↓", bd=0, bg='white', fg='black', font=("Inter", 20, 'bold'),
+        self.gruppe_drop = tk.Button(self.gruppe_frame, text="↓", bd=0, bg='white', fg='black',
+                                     font=("Inter", 20, 'bold'),
                                      command=self.gruppe_dropdown)
         self.gruppe_drop.place(x=420, y=30)
 
@@ -1294,24 +1300,33 @@ class Gerateansicht(tk.Frame):
 
     def typ_dropdown(self):
         dropdown_menu = tk.Menu(self.typ_frame, tearoff=0, bd=1, bg='white', fg='black')
-        Kategorienname = ["PC", "Laptop", "Bildschirm", "Raspberrypie", "Dockingstation", "Drucker", "Kabel", "Peripherie", "Software", "Sonstiges"]
+        Kategorienname = ["PC", "Laptop", "Bildschirm", "Raspberrypie", "Dockingstation", "Drucker", "Kabel",
+                          "Peripherie", "Software", "Sonstiges"]
         for value1 in Kategorienname:
-            dropdown_menu.add_command(label=f"→ {value1}", command=lambda value=value1: [self.typ_aktuell_label.configure(text=value), print(f"{value} ausgewählt")])
+            dropdown_menu.add_command(label=f"→ {value1}",
+                                      command=lambda value=value1: [self.typ_aktuell_label.configure(text=value),
+                                                                    print(f"{value} ausgewählt")])
         dropdown_menu.post(self.typ_drop.winfo_rootx() - 77, self.typ_drop.winfo_rooty() + self.typ_drop.winfo_height())
 
     def status_dropdown(self):
         dropdown_menu = tk.Menu(self.status_frame, tearoff=0, bd=1, bg='white', fg='black')
         Kategorienname = ["⛔In Wartung", "✔Verfügbar", "❌Gemietet"]
         for value1 in Kategorienname:
-            dropdown_menu.add_command(label=f"→ {value1}", command=lambda value=value1: [self.status_aktuell_label.configure(text=value), print(f"Produkt {value}")])
-        dropdown_menu.post(self.status_drop.winfo_rootx() - 62, self.status_drop.winfo_rooty() + self.status_drop.winfo_height())
+            dropdown_menu.add_command(label=f"→ {value1}",
+                                      command=lambda value=value1: [self.status_aktuell_label.configure(text=value),
+                                                                    print(f"Produkt {value}")])
+        dropdown_menu.post(self.status_drop.winfo_rootx() - 62,
+                           self.status_drop.winfo_rooty() + self.status_drop.winfo_height())
 
     def gruppe_dropdown(self):
         dropdown_menu = tk.Menu(self.gruppe_frame, tearoff=0, bd=1, bg='white', fg='black')
         Gruppenname = [i for i in range(1, 9)]
         for value2 in Gruppenname:
-            dropdown_menu.add_command(label=f"→ {value2}", command=lambda value=value2: [self.gruppe_aktuell_label.configure(text=value2), print(f"Produkt {value2}")])
-        dropdown_menu.post(self.gruppe_drop.winfo_rootx() - 62, self.gruppe_drop.winfo_rooty() + self.gruppe_drop.winfo_height())
+            dropdown_menu.add_command(label=f"→ {value2}",
+                                      command=lambda value=value2: [self.gruppe_aktuell_label.configure(text=value2),
+                                                                    print(f"Produkt {value2}")])
+        dropdown_menu.post(self.gruppe_drop.winfo_rootx() - 62,
+                           self.gruppe_drop.winfo_rooty() + self.gruppe_drop.winfo_height())
 
     def open_schaeden_page(self):
         schaeden_page = tk.Toplevel()  # root
@@ -1334,16 +1349,16 @@ class Gerateansicht(tk.Frame):
                                         fg_color='transparent', border_width=1, border_color='#B8B7B7',
                                         corner_radius=8)
         name_entry = ctk.CTkEntry(name_entry_frame, text_color='black', font=("Inter", 15), border_width=0,
-                                    fg_color='transparent', width=100)
+                                  fg_color='transparent', width=100)
         pre_filled_name = cache.selected_item[1]  # enters the name of the selected item into the field
         name_entry.insert(0, pre_filled_name)  # Insert text at position 0 (start of the field)
 
         tag_label = tk.Label(info_frame, text="Tag", bg='white', font=("Inter", 19))
         tag_entry_frame = ctk.CTkFrame(info_frame, width=150, height=40, bg_color='transparent',
-                                        fg_color='transparent', border_width=1, border_color='#B8B7B7',
-                                        corner_radius=8)
+                                       fg_color='transparent', border_width=1, border_color='#B8B7B7',
+                                       corner_radius=8)
         tag_entry = ctk.CTkEntry(tag_entry_frame, text_color='black', font=("Inter", 15), border_width=0,
-                                    fg_color='transparent', width=100)
+                                 fg_color='transparent', width=100)
         pre_filled_tag = cache.selected_item[6]  # enters the name of the selected item into the field
         tag_entry.insert(0, pre_filled_tag)  # Insert text at position 0 (start of the field)
 
@@ -1359,19 +1374,18 @@ class Gerateansicht(tk.Frame):
                                                 fg_color='transparent', border_width=1, border_color='#B8B7B7',
                                                 corner_radius=8)
         beschreibung_entry = ctk.CTkEntry(beschreibung_entry_frame, fg_color='transparent', text_color='black',
-                                            font=("Inter", 13), width=380, height=382, border_width=1,
-                                            border_color='#B8B7B7', corner_radius=8)
+                                          font=("Inter", 13), width=380, height=382, border_width=1,
+                                          border_color='#B8B7B7', corner_radius=8)
 
         # Verlauf
         verlauf_label = tk.Label(verlauf_frame, text="Verlauf", bg='white', font=("Inter", 19))
         verlauf_inh_entry = ctk.CTkEntry(verlauf_frame, fg_color='transparent', text_color='black',
-                                            font=("Inter", 13),
-                                            width=380, height=382, border_width=1, border_color='#B8B7B7',
-                                            corner_radius=8)
+                                         font=("Inter", 13),
+                                         width=380, height=382, border_width=1, border_color='#B8B7B7',
+                                         corner_radius=8)
 
         # Button-Funktion
         def process_user_input():
-            
             # Werte aus den Eingabefeldern abrufen
             name = name_entry.get()
             tag = tag_entry.get()
@@ -1391,11 +1405,11 @@ class Gerateansicht(tk.Frame):
 
         self.last_uploaded_file = None
         upload_button = tk.Button(schaeden_button_frame, image=self.upload_img, bd=0, bg='white',
-                                    command=lambda: [
-                                        self.image_to_binary(self.choose_image_popup()),
-                                        print("Bild hochgeladen")])
+                                  command=lambda: [
+                                      self.image_to_binary(self.choose_image_popup()),
+                                      print("Bild hochgeladen")])
         close_button = tk.Button(schaeden_button_frame, image=self.aktualisieren_img, bd=0, bg='white',
-                                    command=process_user_input)
+                                 command=process_user_input)
 
         # Placement
         name_label.place(x=0, y=2)
@@ -1438,23 +1452,23 @@ class Gerateansicht(tk.Frame):
         date_frame = tk.Frame(buchen_page, bg='white', bd=1)
 
         name_label = tk.Label(info_frame, text="Gerätename", bg='white',
-                                font=("Inter", 19))
+                              font=("Inter", 19))
         name_entry = ctk.CTkEntry(info_frame, fg_color='transparent', text_color='black', font=("Inter", 15),
-                                    width=150, border_width=1, border_color='#B8B7B7', corner_radius=8)
+                                  width=150, border_width=1, border_color='#B8B7B7', corner_radius=8)
         pre_filled_name = cache.selected_item[1]  # enters the name of the selected item into the field
         name_entry.insert(0, pre_filled_name)  # Insert text at position 0 (start of the field)
 
         tag_label = tk.Label(info_frame, text="Servicetag", bg='white',
-                                font=("Inter", 19))
+                             font=("Inter", 19))
         tag_entry = ctk.CTkEntry(info_frame, fg_color='transparent', text_color='black', font=("Inter", 15),
-                                    width=150, border_width=1, border_color='#B8B7B7', corner_radius=8)
+                                 width=150, border_width=1, border_color='#B8B7B7', corner_radius=8)
         pre_filled_tag = cache.selected_item[6]  # enters the name of the selected item into the field
         tag_entry.insert(0, pre_filled_tag)  # Insert text at position 0 (start of the field)
 
         verlauf_label = tk.Label(info_frame, text="Verlauf", bg='white',
-                                    font=("Inter", 19))
+                                 font=("Inter", 19))
         verlauf_entry = ctk.CTkEntry(info_frame, fg_color='transparent', text_color='black', font=("Inter", 15),
-                                        width=380, height=382, border_width=1, border_color='#B8B7B7', corner_radius=8)
+                                     width=380, height=382, border_width=1, border_color='#B8B7B7', corner_radius=8)
 
         def ask_startdate():
 
@@ -1474,9 +1488,8 @@ class Gerateansicht(tk.Frame):
                                         fg_color="#6F6C6C", text_color="white", hover_color="#081424")
         ask_date_button.place(x=0, y=0)
 
-        
         start_result_label = tk.Label(date_frame, text=datetime.now().strftime('von: %d.%m.%Y'), font=("Arial", 14),
-                                        bg='white')
+                                      bg='white')
         start_result_label.place(x=150, y=0)
 
         def ask_enddate():
@@ -1504,7 +1517,7 @@ class Gerateansicht(tk.Frame):
 
         # Button-Funktion
         def process_user_input():
-            
+
             # Werte aus den Eingabefeldern abrufen
             name = name_entry.get()
             tag = tag_entry.get()
@@ -1519,13 +1532,13 @@ class Gerateansicht(tk.Frame):
             # Hier kannst du die Daten weiterverarbeiten
             # ausgabe an die Funktion, die die Daten in die Datenbank weiterreicht
             item_update_damage(name, tag, cache.selected_item[0], "BUCHUNG", img, "BUCHUNG", eingangsdatum,
-                                enddatum)
+                               enddatum)
             self.dbupdate()
 
         # Buttons
         buchen_button_frame = tk.Frame(buchen_page, bg='white', bd=1)
         close_button = tk.Button(buchen_button_frame, image=self.aktualisieren_img, bd=0, bg='white',
-                                    command=process_user_input)
+                                 command=process_user_input)
         # Placement
         name_label.place(x=0, y=2)
         name_entry.place(x=150, y=2)
@@ -1579,7 +1592,7 @@ class Gerateansicht(tk.Frame):
             # Daten aus DB einfügen
             for i, row in enumerate(items_data):
                 formatted_row = [value if value is not None else "-" for value in
-                                 row]  # Leere Felder durch "-" ersetzen    
+                                 row]  # Leere Felder durch "-" ersetzen
                 tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
 
             tree.place(x=0, y=20, relwidth=0.40, relheight=0.5)
@@ -1773,32 +1786,28 @@ class Profil(tk.Frame):
             userrechte = tk.Label(self.profil_frame, text="Schüler", bd=0, bg='white',
                                   fg='black' if user_stuff[0][0] == 'user' else '#6F6C6C', font=("Poppins", 18))
 
-            # Seitennavigations-Buttons für Benutzer, Admin, Statistiken und Einstellungen
+            # Seitennavigations-Buttons für Benutzer, Admin und Einstellungen
             user_button = tk.Button(verzeichniss, text="User", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                     font=("Inter", 20, 'bold'),
                                     command=lambda: controller.show_frame(Profil))
-
-            admin_button = tk.Button(verzeichniss, text="Administration", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                     font=("Inter", 20, 'bold'),
-                                     command=lambda: controller.show_frame(Admin))
-
-            stats_button = tk.Button(verzeichniss, text="Statistiken", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                     font=("Inter", 20, 'bold'),
-                                     command=lambda: controller.show_frame(Stats))
 
             einstellungen_button = tk.Button(verzeichniss, text="Einstellungen", bd=0, bg=ThemeManager.SRH_Grey,
                                              fg='black',
                                              font=("Inter", 20, 'bold'),
                                              command=lambda: controller.show_frame(Einstellungen))
+
+            admin_button = tk.Button(verzeichniss, text="Administration", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
+                                     font=("Inter", 20, 'bold'),
+                                     command=lambda: controller.show_frame(Admin))
+
             verzeichniss_help_button = tk.Button(verzeichniss, text="Hilfe", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                                  font=("Inter", 20, 'bold'),
                                                  command=lambda: controller.show_frame(Help))
 
             ###### Plazierung #######
             user_button.pack(pady=10, anchor='w')
-            admin_button.pack(pady=10, anchor='w')
-            stats_button.pack(pady=10, anchor='w')
             einstellungen_button.pack(pady=10, anchor='w')
+            admin_button.pack(pady=10, anchor='w')
             verzeichniss_help_button.pack(pady=10, anchor='w')
 
             login.place(relx=0.95, rely=0.5, anchor="center")
@@ -1889,9 +1898,8 @@ class Admin(tk.Frame):
 
         buttons = [
             ("User", Profil),
-            ("Administration", Admin),
-            ("Statistiken", Stats),
             ("Einstellungen", Einstellungen),
+            ("Administration", Admin),
             ("Hilfe", Help),
         ]
 
@@ -1910,7 +1918,7 @@ class Admin(tk.Frame):
         self.imgHinzufugen = load_image(self.root_path + "/gui/assets/Adding_Icon.png")
 
         self.suche_entry = ctk.CTkEntry(self.tabelle_frame, corner_radius=8, fg_color="#D9D9D9", text_color="black",
-                                   border_width=0, font=("Inter", 12))
+                                        border_width=0, font=("Inter", 12))
 
         self.suche_entry.bind("<Return>", lambda event: self.search_bar_output_users())
 
@@ -1960,19 +1968,18 @@ class Admin(tk.Frame):
 
         self.tree.bind("<Double-1>", self.on_user_select)
 
-
     def search_bar_output_users(self):
-            suche_text_users = self.suche_entry.get()
-            search_results = search_bar_update("benutzer", ["Passwort"], suche_text_users)
-            self.tree.delete(*self.tree.get_children())
+        suche_text_users = self.suche_entry.get()
+        search_results = search_bar_update("benutzer", ["Passwort"], suche_text_users)
+        self.tree.delete(*self.tree.get_children())
 
-            # Daten aus DB einfügen
-            i = 0
-            for item in search_results:
-                formatted_row = [value if value is not None else "-" for value in
-                                     item]
-                self.tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
-                i += 1
+        # Daten aus DB einfügen
+        i = 0
+        for item in search_results:
+            formatted_row = [value if value is not None else "-" for value in
+                             item]
+            self.tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
+            i += 1
 
     def open_empty_user(self):
         """Öffnet ein Fenster zum Hinzufügen eines neuen Benutzers."""
@@ -2086,13 +2093,12 @@ class Admin(tk.Frame):
         admin_userrechte = tk.Label(self.admin_profil_frame, text="Schüler", bd=0, bg='white',
                                     fg='black' if user_stuff[0][0] == 'user' else '#6F6C6C',
                                     font=("Poppins", 18))
-        
+
         self.admin_username.bind("<Return>", lambda event: admin_button_click())
         self.admin_vorname.bind("<Return>", lambda event: admin_button_click())
         self.admin_nachname.bind("<Return>", lambda event: admin_button_click())
         self.admin_gruppen.bind("<Return>", lambda event: admin_button_click())
         self.admin_email.bind("<Return>", lambda event: admin_button_click())
-
 
         # Speicherbutton
         def admin_button_click():
@@ -2104,18 +2110,17 @@ class Admin(tk.Frame):
                 new_class = self.admin_gruppen.get()
                 new_role = "user"
                 new_email = self.admin_email.get()
-                
+
                 add_user(new_username, new_first_name, new_last_name, new_class, new_role, new_email)
 
                 admin_user_page.destroy()
-                
+
                 # Erfolgsnachricht anzeigen
                 messagebox.showinfo("Erfolgreich", "User erfolgreich gespeichert")
 
             except Exception as e:
                 # Fehlernachricht anzeigen
                 messagebox.showinfo("Fehler", "User konnte nicht gespeichert werden")
-
 
         admin_speichern_button = ctk.CTkButton(admin_user_page, text="Speichern", fg_color=ThemeManager.SRH_Orange,
                                                text_color="white", font=('Inter', 20, 'bold'),
@@ -2213,97 +2218,6 @@ class Admin(tk.Frame):
             print(f"Fehler bei der Auswahl {e}")
 
 
-##########################################
-# ୧‿̩͙ ˖︵ ꕀ⠀ ♱ Statistiken ♱⠀ ꕀ ︵˖ ‿̩͙୨#
-##########################################
-
-class Stats(tk.Frame):
-    """
-    Stellt eine GUI für Statistiken bereit.
-
-    Diese Klasse repräsentiert eine Seite innerhalb einer GUI-Anwendung, die dem Anzeigen von Statistiken
-    dient. Es wird eine Kopfzeile, eine vertikale Navigationsleiste sowie verschiedene interaktive
-    Buttons bereitgestellt. Die Navigationsleiste ermöglicht den Wechsel zwischen verschiedenen
-    Ansichten der Anwendung.
-
-    :ivar stats_frame: Hauptinhaltbereich für die Statistikseite.
-    :ivar imglogin: Bild für den Login-Button.
-    :ivar imgmainpage: Bild für den Zurück-zur-Hauptseite-Button.
-    :ivar imghelp: Bild für den Hilfe-Button.
-    """
-
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-
-        root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
-        self.configure(bg='white')
-
-        # Header-Label für die Statistikseite
-        header = ttk.Label(self, text="Statistiken", anchor="center", style="Header.TLabel")
-        header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
-
-        # Navigationsleiste auf der linken Seite
-        verzeichniss = tk.Frame(self, bg=ThemeManager.SRH_Grey)
-        self.stats_frame = tk.Frame(self, bg='white')
-
-        # Bilder für die Login- und Hauptseite-Buttons laden
-        self.imglogin = tk.PhotoImage(
-            file=root_path + "/gui/assets/Closeicon.png")
-        self.imgmainpage = tk.PhotoImage(
-            file=root_path + "/gui/assets/backtosite_icon.png")
-        self.imghelp = tk.PhotoImage(file=root_path + "/gui/assets/helpicon.png")
-
-        # Header-Navigationsbuttons (Login und Hauptseite), Platzierung der Header-Buttons
-        login = ctk.CTkButton(header, image=self.imglogin, fg_color=ThemeManager.SRH_Orange,
-                              bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
-                              hover=True, hover_color='#e25a1f', text="",
-                              command=lambda: controller.show_frame(LogInWindow))
-
-        mainpage = ctk.CTkButton(header, image=self.imgmainpage, fg_color=ThemeManager.SRH_Orange,
-                                 bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
-                                 hover=True, hover_color='#e25a1f', text="",
-                                 command=lambda: controller.show_frame(MainPage))
-
-        help = ctk.CTkButton(header, image=self.imghelp, fg_color=ThemeManager.SRH_Orange,
-                             bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
-                             hover=True, hover_color='#e25a1f', text="",
-                             command=lambda: controller.show_frame(Help))
-
-        login.place(relx=0.95, rely=0.5, anchor="center")
-        mainpage.place(relx=0.90, rely=0.5, anchor="center")
-        help.place(relx=0.85, rely=0.5, anchor="center")
-
-        # Linksseitige Navigationsbutton für verschiedene Ansichten
-        user_button = tk.Button(verzeichniss, text="User", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                font=("Inter", 20, 'bold'),
-                                command=lambda: controller.show_frame(Profil))
-        user_button.pack(pady=10, anchor='w')
-
-        admin_button = tk.Button(verzeichniss, text="Administration", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                 font=("Inter", 20, 'bold'),
-                                 command=lambda: controller.show_frame(Admin))
-        admin_button.pack(pady=10, anchor='w')
-
-        stats_button = tk.Button(verzeichniss, text="Statistiken", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                 font=("Inter", 20, 'bold'),
-                                 command=lambda: controller.show_frame(Stats))
-        stats_button.pack(pady=10, anchor='w')
-
-        einstellungen_button = tk.Button(verzeichniss, text="Einstellungen", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                         font=("Inter", 20, 'bold'),
-                                         command=lambda: controller.show_frame(Einstellungen))
-        einstellungen_button.pack(pady=10, anchor='w')
-
-        verzeichniss_help_button = tk.Button(verzeichniss, text="Hilfe", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                             font=("Inter", 20, 'bold'),
-                                             command=lambda: controller.show_frame(Help))
-        verzeichniss_help_button.pack(pady=10, anchor='w')
-
-        # Platzierung des Hauptinhaltsbereichs und der Navigationsleiste
-        self.stats_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
-        verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
-
-
 ############################################
 # ୧‿̩͙ ˖︵ ꕀ⠀ ♱ Einstellungen ♱⠀ ꕀ ︵˖ ‿̩͙୨#
 ############################################
@@ -2395,20 +2309,15 @@ class Einstellungen(tk.Frame):
                                 command=lambda: controller.show_frame(Profil))
         user_button.pack(pady=10, anchor='w')
 
-        admin_button = tk.Button(verzeichniss, text="Administration", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                 font=("Inter", 20, 'bold'),
-                                 command=lambda: controller.show_frame(Admin))
-        admin_button.pack(pady=10, anchor='w')
-
-        stats_button = tk.Button(verzeichniss, text="Statistiken", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                 font=("Inter", 20, 'bold'),
-                                 command=lambda: controller.show_frame(Stats))
-        stats_button.pack(pady=10, anchor='w')
-
         einstellungen_button = tk.Button(verzeichniss, text="Einstellungen", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                          font=("Inter", 20, 'bold'),
                                          command=lambda: controller.show_frame(Einstellungen))
         einstellungen_button.pack(pady=10, anchor='w')
+
+        admin_button = tk.Button(verzeichniss, text="Administration", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
+                                 font=("Inter", 20, 'bold'),
+                                 command=lambda: controller.show_frame(Admin))
+        admin_button.pack(pady=10, anchor='w')
 
         verzeichniss_help_button = tk.Button(verzeichniss, text="Hilfe", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                              font=("Inter", 20, 'bold'),
@@ -2478,7 +2387,6 @@ class Einstellungen(tk.Frame):
             verzeichniss.config(bg=ThemeManager.Darkmode_Grey)
             user_button.config(bg=ThemeManager.Darkmode_Grey, fg="white")
             admin_button.config(bg=ThemeManager.Darkmode_Grey, fg="white")
-            stats_button.config(bg=ThemeManager.Darkmode_Grey, fg="white")
             einstellungen_button.config(bg=ThemeManager.Darkmode_Grey, fg="white")
             verzeichniss_help_button.config(bg=ThemeManager.Darkmode_Grey, fg="white")
 
@@ -2498,7 +2406,6 @@ class Einstellungen(tk.Frame):
             verzeichniss.config(bg=ThemeManager.SRH_Grey)
             user_button.config(bg=ThemeManager.SRH_Grey, fg="black")
             admin_button.config(bg=ThemeManager.SRH_Grey, fg="black")
-            stats_button.config(bg=ThemeManager.SRH_Grey, fg="black")
             einstellungen_button.config(bg=ThemeManager.SRH_Grey, fg="black")
             verzeichniss_help_button.config(bg=ThemeManager.SRH_Grey, fg="black")
 
@@ -2691,19 +2598,6 @@ class Einstellungen(tk.Frame):
 #########################################
 
 class Help(tk.Frame):
-    """
-    Stellt eine GUI für Statistiken bereit.
-
-    Diese Klasse repräsentiert eine Seite innerhalb einer GUI-Anwendung, die dem Anzeigen von Statistiken
-    dient. Es wird eine Kopfzeile, eine vertikale Navigationsleiste sowie verschiedene interaktive
-    Buttons bereitgestellt. Die Navigationsleiste ermöglicht den Wechsel zwischen verschiedenen
-    Ansichten der Anwendung.
-
-    :ivar stats_frame: Hauptinhaltbereich für die Statistikseite.
-    :ivar imglogin: Bild für den Login-Button.
-    :ivar imgmainpage: Bild für den Zurück-zur-Hauptseite-Button.
-    :ivar imghelp: Bild für den Hilfe-Button.
-    """
 
     # from configuration import Einstellungen
     def __init__(self, parent, controller):
@@ -2810,20 +2704,15 @@ class Help(tk.Frame):
                                 command=lambda: controller.show_frame(Profil))
         user_button.pack(pady=10, anchor='w')
 
-        admin_button = tk.Button(verzeichniss, text="Administration", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                 font=("Inter", 20, 'bold'),
-                                 command=lambda: controller.show_frame(Admin))
-        admin_button.pack(pady=10, anchor='w')
-
-        stats_button = tk.Button(verzeichniss, text="Statistiken", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                 font=("Inter", 20, 'bold'),
-                                 command=lambda: controller.show_frame(Stats))
-        stats_button.pack(pady=10, anchor='w')
-
         einstellungen_button = tk.Button(verzeichniss, text="Einstellungen", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                          font=("Inter", 20, 'bold'),
                                          command=lambda: controller.show_frame(Einstellungen))
         einstellungen_button.pack(pady=10, anchor='w')
+
+        admin_button = tk.Button(verzeichniss, text="Administration", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
+                                 font=("Inter", 20, 'bold'),
+                                 command=lambda: controller.show_frame(Admin))
+        admin_button.pack(pady=10, anchor='w')
 
         verzeichniss_help_button = tk.Button(verzeichniss, text="Hilfe", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                              font=("Inter", 20, 'bold'),
