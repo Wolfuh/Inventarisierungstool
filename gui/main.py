@@ -34,77 +34,52 @@ spec = importlib.util.spec_from_file_location("login_DB", login_DB_path)
 ###################################
 
 class GuiTest(tk.Tk):
-    """
-    Eine Erweiterung der `tk.Tk`-Klasse, die als Hauptfenster für eine Tkinter-Anwendung dient.
-
-    Diese Klasse bietet eine Grundlage für die grafische Benutzeroberfläche, erweitert um
-    benutzerdefinierte Widgets und Funktionen.
-
-    **Hauptmerkmale:**
-    - Integriert Widgets und Ereignisbindungen für spezifische Anforderungen.
-    - Strukturiert und erleichtert die Wiederverwendbarkeit und Anpassung des GUI-Codes.
-
-    **Vorteile:**
-    - Ermöglicht klare Trennung der GUI-Logik.
-    - Flexibel erweiterbar für zukünftige Anforderungen.
-    """
-
     def __init__(self, *args, **kwargs):
-        """
-        Initializes an application window with specific configurations and manages
-        different application frames within this window.
-
-        The constructor sets up the window properties such as title, size, and icon,
-        and initializes a main container for managing frames. It dynamically
-        loads and stores multiple frames, which represent different pages
-        within the application. The application begins by displaying the
-        `Mainpages.MainPage` frame.
-
-        :param args: Additional unnamed arguments passed to the parent class
-            constructor.
-        :type args: tuple
-        :param kwargs: Additional keyword arguments passed to the parent class
-            constructor.
-        :type kwargs: dict
-        """
         super().__init__(*args, **kwargs)
-        root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
-        # Fensterkonfigurationen
+        # Fensterkonfiguration
         self.title("Prototyp")
-        self.resizable(True, True)
         self.geometry("1920x1080")
+        self.resizable(True, True)
+        root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         self.iconbitmap(root_path + "/gui/assets/prototyp_download.ico")
 
-        # Main container für Frames
+        # Container für alle Frames (Seiten)
         container = tk.Frame(self)
         container.pack(side="top", fill="both", expand=True)
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
 
-        self.frames = {}
+        self.frames = {}  # Dictionary zur Verwaltung aller Seiten
 
-        # Only attempt to instantiate Einstellungen if it's a class
-        pages = [LogInWindow, MainPage, MainPageS2, Mainpage_empty,
-                 Ubersicht, Gerateansicht, Einstellungen,
-                 Profil, Admin, Help]
+        # Initialisiere nur LogInWindow
+        login_frame = LogInWindow(container, self)
+        self.frames[LogInWindow] = login_frame
+        login_frame.grid(row=0, column=0, sticky="nsew")
 
-        if hasattr(Einstellungen, "Einstellungen"):
-            pages.append(Einstellungen)
+        self.show_frame(LogInWindow)  # Starte mit der Login-Seite
 
-        for Page in pages:  # Die Schleife iteriert über alle Seitenklassen, die in der Liste 'pages' enthalten sind.
-            frame = Page(container,
-                         self)  # Für jede Seite wird ein neues Frame-Objekt erstellt, das als Instanz dieser Klasse gilt.
-            self.frames[
-                Page] = frame  # Das erstellte Frame wird dem 'frames'-Dictionary des Hauptfensters hinzugefügt, wobei die Seitenklasse als Schlüssel dient.
-            frame.grid(row=0, column=0,
-                       sticky="nsew")  # Jedes Frame wird in einem übergeordneten Container platziert und mit 'grid' positioniert,
-            # wobei es den gesamten verfügbaren Platz ('nsew') einnimmt.
-        self.show_frame(LogInWindow)
+    def initialize_pages(self):
+        """
+        Erstellt andere Seiten nach einem erfolgreichen Login.
+        """
+        container = list(self.frames.values())[0].master  # Der Container aus der ersten Seite
+        pages = [MainPage, MainPageS2, Mainpage_empty, Ubersicht, 
+                 Gerateansicht, Einstellungen, Profil, Admin, Help]
+
+        for Page in pages:
+            if Page not in self.frames:
+                frame = Page(container, self)
+                self.frames[Page] = frame
+                frame.grid(row=0, column=0, sticky="nsew")
 
     def show_frame(self, cont):
+        """
+        Zeigt den angegebenen Frame (Seite) an.
+        """
         frame = self.frames[cont]
         frame.tkraise()
+
 
 
 ####################################
@@ -135,6 +110,7 @@ class LogInWindow(tk.Frame):
     def __init__(self, parent, controller):
         super().__init__(parent)
 
+        self.controller = controller
         self.configure(bg='white')
 
         # Style Konfigurationen
@@ -209,7 +185,8 @@ class LogInWindow(tk.Frame):
                 show_password_change_popup(self)
                 pass
             elif user_login == "keep_going":
-                controller.show_frame(MainPage)
+                self.controller.initialize_pages()  # Initialisiere andere Seiten
+                self.controller.show_frame(MainPage)
                 username_entry.delete(0, 'end')
                 password_entry.delete(0, 'end')
                 logging.info(f"'{username_global}' hat sich erfolgreich angemeldet.")
