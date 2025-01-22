@@ -79,8 +79,10 @@ def lookup_user_stuff(): # Gibt die Nutzerinformationen
         last_name = cur.fetchone()
         cur.execute(f"SELECT Klasse FROM benutzer WHERE Benutzername = '{username_global}'") 
         class_name = cur.fetchone()
+        cur.execute(f"SELECT Email FROM benutzer WHERE Benutzername = '{username_global}'")
+        email = cur.fetchone()
         my_db.close()    
-        return role, first_name, last_name, class_name
+        return role, first_name, last_name, class_name, email, username_global
     except sqlite3.Error as e:
         return [], "Fehler beim Abrufen der Informationen:", str(e)
 
