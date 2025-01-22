@@ -73,6 +73,19 @@ class GuiTest(tk.Tk):
                 self.frames[Page] = frame
                 frame.grid(row=0, column=0, sticky="nsew")
 
+    def reset_application(self):
+        """
+        Setzt die Anwendung in den Ursprungszustand zurück.
+        Behalte nur die Login-Seite und lösche alle anderen Frames.
+        """
+        # Lösche alle Frames außer der Login-Seite
+        for page in list(self.frames.keys()):
+            if page != LogInWindow:
+                del self.frames[page]
+
+        # Zeige die Login-Seite
+        self.show_frame(LogInWindow)
+
     def show_frame(self, cont):
         """
         Zeigt den angegebenen Frame (Seite) an.
@@ -298,7 +311,7 @@ class MainPage(tk.Frame):
         login = ctk.CTkButton(header, image=self.imglogin, fg_color=ThemeManager.SRH_Orange,
                               bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
                               hover=True, hover_color='#e25a1f', text="",
-                              command=lambda: controller.show_frame(LogInWindow))
+                              command=lambda: [controller.reset_application()])
         profil = ctk.CTkButton(header, image=self.imgprofil, fg_color=ThemeManager.SRH_Orange,
                                bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
                                hover=True, hover_color='#e25a1f', text="",
@@ -448,7 +461,7 @@ class MainPageS2(tk.Frame):
         login = ctk.CTkButton(header, image=self.imglogin, fg_color=ThemeManager.SRH_Orange,
                               bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
                               hover=True, hover_color='#e25a1f', text="",
-                              command=lambda: controller.show_frame(LogInWindow))
+                              command=lambda: [controller.reset_application()])
 
         profil = ctk.CTkButton(header, image=self.imgprofil, fg_color=ThemeManager.SRH_Orange,
                                bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
@@ -560,7 +573,7 @@ class Mainpage_empty(tk.Frame):
         login = ctk.CTkButton(header, image=self.imglogin, fg_color=ThemeManager.SRH_Orange,
                               bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
                               hover=True, hover_color='#e25a1f', text="",
-                              command=lambda: controller.show_frame(LogInWindow))
+                              command=lambda: [controller.reset_application()])
 
         profil = ctk.CTkButton(header, image=self.imgprofil, fg_color=ThemeManager.SRH_Orange,
                                bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
@@ -713,7 +726,7 @@ class Ubersicht(tk.Frame):
         login = ctk.CTkButton(header, image=self.imglogin, fg_color=ThemeManager.SRH_Orange,
                               bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
                               hover=True, hover_color='#e25a1f', text="",
-                              command=lambda: controller.show_frame(LogInWindow))
+                              command=lambda: [controller.reset_application()])
 
         profil = ctk.CTkButton(header, image=self.imgprofil, fg_color=ThemeManager.SRH_Orange,
                                bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
@@ -1500,15 +1513,8 @@ class Profil(tk.Frame):
 
             global user_stuff
             user_stuff = "", "", "", ""
-            while True:
-
-                user_stuff = lookup_user_stuff()
-                if user_stuff[0] == "" or user_stuff[0] == None:
-                    time.sleep(0.3)
-                    continue
-
-                else:
-                    break
+            user_stuff = lookup_user_stuff()
+                
 
             # Header für die Hauptseite
             header = ttk.Label(self, text="Profil", anchor="center", style="Header.TLabel")
@@ -1530,7 +1536,7 @@ class Profil(tk.Frame):
             login = ctk.CTkButton(header, image=self.imglogin, fg_color=ThemeManager.SRH_Orange,
                                   bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
                                   hover=True, hover_color='#e25a1f', text="",
-                                  command=lambda: controller.show_frame(LogInWindow))
+                                  command=lambda: [controller.reset_application()])
 
             mainpage = ctk.CTkButton(header, image=self.imgmainpage, fg_color=ThemeManager.SRH_Orange,
                                      bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
@@ -1668,7 +1674,7 @@ class Admin(tk.Frame):
         login = ctk.CTkButton(header, image=self.imglogin, fg_color=ThemeManager.SRH_Orange,
                               bg_color=ThemeManager.SRH_Orange,
                               corner_radius=40, height=10, width=10, hover=True, hover_color='#e25a1f', text="",
-                              command=lambda: self.controller.show_frame(LogInWindow))
+                              command=lambda: [self.controller.reset_application()])
         mainpage = ctk.CTkButton(header, image=self.imgmainpage, fg_color=ThemeManager.SRH_Orange,
                                  bg_color=ThemeManager.SRH_Orange,
                                  corner_radius=40, height=10, width=10, hover=True, hover_color='#e25a1f', text="",
@@ -2353,7 +2359,7 @@ class Help(tk.Frame):
         login = ctk.CTkButton(header, image=self.imglogin, fg_color=ThemeManager.SRH_Orange,
                               bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
                               hover=True, hover_color='#e25a1f', text="",
-                              command=lambda: controller.show_frame(LogInWindow))
+                              command=lambda: [controller.reset_application()])
 
         mainpage = ctk.CTkButton(header, image=self.imgmainpage, fg_color=ThemeManager.SRH_Orange,
                                  bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
