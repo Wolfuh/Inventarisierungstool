@@ -1073,7 +1073,7 @@ class Gerateansicht(tk.Frame):
         return frame
 
     def create_entry(self, frame, x, y):
-        entry = ctk.CTkEntry(frame, text_color='black', font=("Inter", 20), border_width=0, fg_color='transparent')
+        entry = ctk.CTkEntry(frame, text_color='black', font=("Inter", 20), border_width=0, fg_color='transparent', width=400)
         entry.place(x=x, y=y)
         return entry
 
@@ -1553,24 +1553,24 @@ class Profil(tk.Frame):
                                    command=lambda: controller.show_frame(MainPage))
             username = tk.Label(self.profil_frame, text="Username", bd=0, bg='white', fg='#6F6C6C',
                                 font=("Poppins", 15))
-            self.username = tk.Label(self.profil_frame, text=" ", bd=0, bg='white', fg='black', font=("Poppins", 18))
+            self.username = tk.Label(self.profil_frame, text=" ", bd=0, bg='white', fg='black', font=("Poppins", 18), width=50, anchor="w")
 
             vorname = tk.Label(self.profil_frame, text="Vorname", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 15))
             self.vorname = tk.Label(self.profil_frame, text=user_stuff[1] if user_stuff[1] else "", bd=0, bg='white',
-                                    fg='black', font=("Poppins", 18))
+                                    fg='black', font=("Poppins", 18), width=50, anchor="w")
 
             nachname = tk.Label(self.profil_frame, text="Nachname", bd=0, bg='white', fg='#6F6C6C',
                                 font=("Poppins", 15))
             self.nachname = tk.Label(self.profil_frame, text=user_stuff[2] if user_stuff[2] else "", bd=0, bg='white',
-                                     fg='black', font=("Poppins", 18))
+                                     fg='black', font=("Poppins", 18), width=50, anchor="w")
 
             gruppen = tk.Label(self.profil_frame, text="Gruppen", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 15))
             self.usergruppen = tk.Label(self.profil_frame, text=user_stuff[3] if user_stuff[3] else "", bd=0,
-                                        bg='white', fg='black', font=("Poppins", 18))
+                                        bg='white', fg='black', font=("Poppins", 18), width=50, anchor="w")
 
             email = tk.Label(self.profil_frame, text="Email", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 15))
             self.useremail = tk.Label(self.profil_frame, text="xxx@srhk.de", bd=0, bg='white', fg='black',
-                                      font=("Poppins", 18))
+                                      font=("Poppins", 18), width=50, anchor="w")
 
             rechte = tk.Label(self.profil_frame, text="Rechte", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 15))
             rechte_frame = tk.Frame(self.profil_frame, bg='#D9D9D9')
@@ -1846,7 +1846,7 @@ class Admin(tk.Frame):
                                   fg='#6F6C6C',
                                   font=("Poppins", 15))
         self.admin_username = tk.Entry(self.admin_profil_frame, text=" ", bd=0, bg='white', fg='black',
-                                       font=("Poppins", 18))
+                                       font=("Poppins", 18), width=20)
 
         admin_vorname = tk.Label(self.admin_profil_frame, text="Vorname", bd=0, bg='white',
                                  fg='#6F6C6C',
@@ -1854,7 +1854,7 @@ class Admin(tk.Frame):
         self.admin_vorname = tk.Entry(self.admin_profil_frame,
                                       text=user_stuff[1] if user_stuff[1] else "", bd=0,
                                       bg='white',
-                                      fg='black', font=("Poppins", 18))
+                                      fg='black', font=("Poppins", 18), width=20)
 
         admin_nachname = tk.Label(self.admin_profil_frame, text="Nachname", bd=0, bg='white',
                                   fg='#6F6C6C',
@@ -1862,7 +1862,7 @@ class Admin(tk.Frame):
         self.admin_nachname = tk.Entry(self.admin_profil_frame,
                                        text=user_stuff[2] if user_stuff[2] else "", bd=0,
                                        bg='white',
-                                       fg='black', font=("Poppins", 18))
+                                       fg='black', font=("Poppins", 18), width=20)
 
         admin_gruppen = tk.Label(self.admin_profil_frame, text="Gruppen", bd=0, bg='white',
                                  fg='#6F6C6C',
@@ -1875,7 +1875,7 @@ class Admin(tk.Frame):
                                font=("Poppins", 15))
         self.admin_email = tk.Entry(self.admin_profil_frame, text="@srhk.de", bd=0, bg='white',
                                     fg='black',
-                                    font=("Poppins", 18))
+                                    font=("Poppins", 18), width=50)
 
         rechte = tk.Label(self.admin_profil_frame, text="Rechte", bd=0, bg='white', fg='#6F6C6C',
                           font=("Poppins", 15))
@@ -1996,7 +1996,7 @@ class Admin(tk.Frame):
         self.admin_gruppen.insert(0, data[4])
 
         self.admin_email.delete(0, tk.END)
-        self.admin_email.insert(0, data[0])
+        self.admin_email.insert(0, data[7])
 
     def showDetails1(self, selected_User):
         data = self.tree.item(selected_User, "values")
