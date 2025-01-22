@@ -2117,74 +2117,9 @@ class Einstellungen(tk.Frame):
 
         # Seiteninhalt
 
-        # Label für die Details-Sektion
-        details_label = tk.Label(self.einstellung_frame, text="Details", bg='white', fg='#858383', font=("Inter", 19))
-        details_label.place(relx=0.0, rely=0.15)
-
-        # Dropdown für Exportformat
-        format_drop = tk.Button(self.einstellung_frame, text="Format exportieren in", bd=0, bg='white',
-                                fg=ThemeManager.SRH_Grey,
-                                font=("Inter", 20, 'bold'),
-                                command=lambda: controller.show_frame())
-
-        format_drop = tk.Button(self.einstellung_frame, text="Format exportieren in", bd=0, bg='white', fg='black',
-                                font=("Inter", 20, 'bold'),
-                                command=lambda: controller.show_frame())
-        format_drop = tk.Button(self.einstellung_frame, text="Format exportieren in ↴", bd=1, bg='white', fg='black',
-                                font=("Inter", 12),
-                                command=lambda: show_dropdown())  # Button öffnet Dropdown-Menü
-        format_drop.place(relx=0.01, rely=0.20)
-
-        # Funktion zur Anzeige des Dropdown-Menüs für Exportoptionen
-        def show_dropdown():
-            dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=1, bg='white', fg='black')
-            dropdown_menu.add_command(label="→ Excel", command=lambda: print("Excel ausgewählt"))
-            dropdown_menu.add_command(label="→ SQL", command=lambda: print("SQL ausgewählt"))
-            dropdown_menu.add_command(label="→ CSS", command=lambda: print("CSS ausgewählt"))
-            dropdown_menu.add_command(label="→ Andere", command=lambda: print("Andere ausgewählt"))
-
-            dropdown_menu.post(format_drop.winfo_rootx(), format_drop.winfo_rooty() + format_drop.winfo_height())
-
-        # Darstellung Label
-        darstellung_label = tk.Label(self.einstellung_frame, text="Darstellung", bg='white', fg='#858383',
-                                     font=("Inter", 19))
-        darstellung_label.place(relx=0.0, rely=0.32)
-
-        # Bildvariablen zur Theme-Umschaltung
-        try:
-            self.light = tk.PhotoImage(file=root_path + "/gui/assets/switchoff.png")
-            self.dark = tk.PhotoImage(file=root_path + "/gui/assets/switchon.png")
-        except tk.EXCEPTION as e:
-            print(f"Fehler beim laden der Bilder: {e}")
-            return  # Beende falls die Bilder nicht geladen werden können
-
-        def change_header_color(event):
-            # Dropdown zur Auswahl der Header-Farbe
-            selected_color = color_dropdown.get()
-            if selected_color == "Orange":
-                self.header.configure(background=ThemeManager.SRH_Orange)
-                login.config(bg=ThemeManager.SRH_Orange)
-                mainpage.config(bg=ThemeManager.SRH_Orange)
-            elif selected_color == "Blau":
-                self.header.configure(background=ThemeManager.SRH_Blau)
-                login.config(bg=ThemeManager.SRH_Blau)
-                mainpage.config(bg=ThemeManager.SRH_Blau)
-            elif selected_color == "Lila":
-                self.header.configure(background="#c7afe2")
-                login.config(bg="#c7afe2")
-                mainpage.config(bg="#c7afe2")
-
-        # Combobox zur Auswahl der Header-Farbe
-        color_options = ["Orange", "Blau", "Lila"]
-        color_dropdown = ttk.Combobox(self, values=color_options, state="readonly")
-        color_dropdown.set("Farbeschema")  # Default text
-        color_dropdown.place(relx=0.16, rely=0.5, relwidth=0.103, relheight=0.032)  # Adjust positioning as needed
-        color_dropdown.bind("<<ComboboxSelected>>", change_header_color)
-
-        # Datenbank-Sektion und Buttons zur Verwaltung der Datenbankelemente
-        datenbank_label = tk.Label(self.einstellung_frame, text="Datenbank", bg='white', fg='#858383',
-                                   font=("Inter", 19))
-        datenbank_label.place(relx=0.0, rely=0.59)
+        # Label für die data-Sektion
+        data_label = tk.Label(self.einstellung_frame, text="Datenbank", bg='white', fg='#858383', font=("Inter", 19))
+        data_label.place(relx=0.0, rely=0.15)
 
         def open_spalten_page():
             spalten_page = tk.Toplevel()  # root
@@ -2231,7 +2166,7 @@ class Einstellungen(tk.Frame):
                                       font=("Inter", 16),
                                       command=open_spalten_page)
 
-        addSpalten_button.place(relx=0.01, rely=0.64, relheight=0.032)
+        addSpalten_button.place(relx=0.01, rely=0.20, relheight=0.032)
 
         def open_typ_page():
             typ_page = tk.Toplevel()  # root
@@ -2271,7 +2206,7 @@ class Einstellungen(tk.Frame):
         addTyp_button = tk.Button(self.einstellung_frame, text="Typ\t+", bd=0, bg='white', fg='black',
                                   font=("Inter", 16),
                                   command=open_typ_page)
-        addTyp_button.place(relx=0.01, rely=0.69, relheight=0.032)
+        addTyp_button.place(relx=0.01, rely=0.25, relheight=0.032)
 
         def open_status_page():
             spalten_page = tk.Toplevel()  # root
@@ -2317,12 +2252,17 @@ class Einstellungen(tk.Frame):
         addStatus_button = tk.Button(self.einstellung_frame, text="Status\t+", bd=0, bg='white', fg='black',
                                      font=("Inter", 16),
                                      command=open_status_page)
-        addStatus_button.place(relx=0.01, rely=0.74, relheight=0.032)
+        addStatus_button.place(relx=0.01, rely=0.30, relheight=0.032)
 
         addGerat_button = tk.Button(self.einstellung_frame, text="Gerät\t+", bd=0, bg='white', fg='black',
                                     font=("Inter", 16),
                                     command=lambda: controller.show_frame(Gerateansicht))
-        addGerat_button.place(relx=0.01, rely=0.79, relheight=0.032)
+        addGerat_button.place(relx=0.01, rely=0.35, relheight=0.032)
+
+        addRole_button = tk.Button(self.einstellung_frame, text="Rolle\t+", bd=0, bg='white', fg='black',
+                                    font=("Inter", 16),
+                                    command=print("Rolle wird erstellt"))
+        addRole_button.place(relx=0.01, rely=0.40, relheight=0.032)
 
         # Platzierung der Hauptframe-Bereiche
         self.einstellung_frame.place(relx=0.15, rely=0.15, relwidth=1, relheight=0.85)
