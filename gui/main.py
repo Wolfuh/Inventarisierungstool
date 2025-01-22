@@ -7,6 +7,7 @@ from customtkinter import *
 from datetime import datetime
 from ThemeManager import ThemeManager
 import cache
+import tksvg
 
 current_group = ""
 
@@ -1509,7 +1510,7 @@ class Profil(tk.Frame):
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         self.configure(bg='white')
 
-        def update_label():
+        def update_label(self):
 
             global user_stuff
             user_stuff = "", "", "", ""
@@ -1529,7 +1530,8 @@ class Profil(tk.Frame):
                 file=root_path + "/gui/assets/Closeicon.png")
             self.imgmainpage = tk.PhotoImage(
                 file=root_path + "/gui/assets/backtosite_icon.png")
-            self.imgProfileTest = tk.PhotoImage(file=root_path + "/gui/assets/profile.png")
+            self.imgProfileTest = tksvg.SvgImage(file=root_path + "/gui/assets/profilbild.svg")
+            self.imgProfileTest.configure(scaletoheight=480) # SVG auf Höhe des ursprünglichen Bildes skalieren
             self.imghelp = tk.PhotoImage(file=root_path + "/gui/assets/helpicon.png")
 
             # Positionierung der Buttons
@@ -1549,8 +1551,7 @@ class Profil(tk.Frame):
                                  command=lambda: controller.show_frame(Help))
 
             # Seiteninhalt
-            profilbild = tk.Button(self.profil_frame, image=self.imgProfileTest, bd=0, bg='white',
-                                   command=lambda: controller.show_frame(MainPage))
+            profilbild = tk.Label(self.profil_frame, image=self.imgProfileTest, bg='white')
             username = tk.Label(self.profil_frame, text="Username", bd=0, bg='white', fg='#6F6C6C',
                                 font=("Poppins", 15))
             self.username = tk.Label(self.profil_frame, text=user_stuff[5], bd=0, bg='white', fg='black', font=("Poppins", 18))
@@ -1635,7 +1636,7 @@ class Profil(tk.Frame):
 
             self.profil_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
 
-        thread = threading.Thread(target=update_label, daemon=True)
+        thread = threading.Thread(target=update_label(self), daemon=True)
         thread.start()
 
 
@@ -1834,14 +1835,14 @@ class Admin(tk.Frame):
             file=root_path + "/gui/assets/Closeicon.png")
         self.imgmainpage = tk.PhotoImage(
             file=root_path + "/gui/assets/backtosite_icon.png")
-        self.imgProfileTest = tk.PhotoImage(file=root_path + "/gui/assets/profile.png")
+        self.imgProfileTest = tksvg.SvgImage(file=root_path + "/gui/assets/profilbild.svg")
+        self.imgProfileTest.configure(scaletoheight=480) # SVG auf Höhe des ursprünglichen Bildes skalieren
         self.imghelp = tk.PhotoImage(file=root_path + "/gui/assets/helpicon.png")
         self.aktualisieren_img = load_image(root_path + "/gui/assets/Button_Aktualisieren.png")
 
         # Seiteninhalt
 
-        profilbild = tk.Button(self.admin_profil_frame, image=self.imgProfileTest, bd=0, bg='white',
-                               command=lambda: self.controller.show_frame(MainPage))
+        profilbild = tk.Label(self.admin_profil_frame, image=self.imgProfileTest, bg='white')
         admin_username = tk.Label(self.admin_profil_frame, text="Username", bd=0, bg='white',
                                   fg='#6F6C6C',
                                   font=("Poppins", 15))
