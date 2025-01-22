@@ -1553,24 +1553,24 @@ class Profil(tk.Frame):
                                    command=lambda: controller.show_frame(MainPage))
             username = tk.Label(self.profil_frame, text="Username", bd=0, bg='white', fg='#6F6C6C',
                                 font=("Poppins", 15))
-            self.username = tk.Label(self.profil_frame, text=" ", bd=0, bg='white', fg='black', font=("Poppins", 18), width=50, anchor="w")
+            self.username = tk.Label(self.profil_frame, text=user_stuff[5], bd=0, bg='white', fg='black', font=("Poppins", 18))
 
             vorname = tk.Label(self.profil_frame, text="Vorname", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 15))
             self.vorname = tk.Label(self.profil_frame, text=user_stuff[1] if user_stuff[1] else "", bd=0, bg='white',
-                                    fg='black', font=("Poppins", 18), width=50, anchor="w")
+                                    fg='black', font=("Poppins", 18))
 
             nachname = tk.Label(self.profil_frame, text="Nachname", bd=0, bg='white', fg='#6F6C6C',
                                 font=("Poppins", 15))
             self.nachname = tk.Label(self.profil_frame, text=user_stuff[2] if user_stuff[2] else "", bd=0, bg='white',
-                                     fg='black', font=("Poppins", 18), width=50, anchor="w")
+                                    fg='black', font=("Poppins", 18))
 
             gruppen = tk.Label(self.profil_frame, text="Gruppen", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 15))
             self.usergruppen = tk.Label(self.profil_frame, text=user_stuff[3] if user_stuff[3] else "", bd=0,
-                                        bg='white', fg='black', font=("Poppins", 18), width=50, anchor="w")
+                                    bg='white', fg='black', font=("Poppins", 18))
 
             email = tk.Label(self.profil_frame, text="Email", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 15))
-            self.useremail = tk.Label(self.profil_frame, text="xxx@srhk.de", bd=0, bg='white', fg='black',
-                                      font=("Poppins", 18), width=50, anchor="w")
+            self.useremail = tk.Label(self.profil_frame, text=user_stuff[4], bd=0, bg='white', fg='black',
+                                    font=("Poppins", 18))
 
             rechte = tk.Label(self.profil_frame, text="Rechte", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 15))
             rechte_frame = tk.Frame(self.profil_frame, bg='#D9D9D9')
