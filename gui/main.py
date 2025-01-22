@@ -770,166 +770,40 @@ class Ubersicht(tk.Frame):
                                            height=5)
         overview_table_tree.place(x=120, y=0, width=1280, height=650)
 
-        # Gruppe 1
-        def show_dropdown_grp1():
-            dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: Ubersicht.update_table_contents(2, "1",
-                                                                                                 ""))  # Alle Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: Ubersicht.update_table_contents(8, "1",
-                                                                                           "Hardwawre"))  # nur Hardware Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Software", command=lambda: Ubersicht.update_table_contents(8, "1",
-                                                                                           "Software"))  # nur Software Produkte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: Ubersicht.update_table_contents(8, "1",
+        # Scrollable Frame für die Gruppen erstellen
+        scrollable_frame = ctk.CTkScrollableFrame(verzeichniss, width=200, height=600)  # Breite und Höhe anpassen
+        scrollable_frame.pack(side="left", fill="y", padx=10, pady=10)
 
-                                                                                             "Peripherie"))  # nur Peripherie mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Andere", command=lambda: Ubersicht.update_table_contents(8, "1",
-                                                                                         "ANDERE"))  # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
-            dropdown_menu.post(grp1_button.winfo_rootx(), grp1_button.winfo_rooty() + grp1_button.winfo_height())
+        # Dynamische Gruppenbuttons mit Dropdown-Menü
+        group_number = 0
+        for i in range(1, 30):  # Gruppen-Buttons erstellen
+            group_number += 1
 
-        grp1_button = tk.Button(verzeichniss, text="Gruppe 1   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                font=("Inter", 20, 'bold'),
-                                command=show_dropdown_grp1)
-        grp1_button.pack(pady=10, anchor='w')
+            def create_group_button(group):
 
-        # Gruppe 2
-        def show_dropdown_grp2():
-            dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: Ubersicht.update_table_contents(2, "2",
-                                                                                                 ""))  # Alle Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: Ubersicht.update_table_contents(8, "2",
-                                                                                           "Hardwawre"))  # nur Hardware Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Software", command=lambda: Ubersicht.update_table_contents(8, "2",
-                                                                                           "Software"))  # nur Software Produkte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: Ubersicht.update_table_contents(8, "2",
-                                                                                             "Peripherie"))  # nur Peripherie mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Andere", command=lambda: Ubersicht.update_table_contents(8, "2",
-                                                                                         "ANDERE"))  # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
-            dropdown_menu.post(grp2_button.winfo_rootx(), grp2_button.winfo_rooty() + grp2_button.winfo_height())
+                def show_group_dropdown():
+                    dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
+                    dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: Ubersicht.update_table_contents(2, str(group), ""))
 
-        grp2_button = tk.Button(verzeichniss, text="Gruppe 2   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                font=("Inter", 20, 'bold'),
-                                command=show_dropdown_grp2)
-        grp2_button.pack(pady=10, anchor='w')
+                    dropdown_menu.add_command(label="→ Hardwawre", command=lambda: Ubersicht.update_table_contents(8, str(group),
+                                                                                              "Hardwawre"))
+                    dropdown_menu.add_command(label="→ Software", command=lambda: Ubersicht.update_table_contents(8, str(group),
+                                                                                              "Software"))
+                    dropdown_menu.add_command(label="→ Peripherie", command=lambda: Ubersicht.update_table_contents(8, str(group),
+                                                                                              "Peripherie"))
+                    dropdown_menu.add_command(label="→ Andere", command=lambda: Ubersicht.update_table_contents(8, str(group), "ANDERE"))
 
-        # Gruppe 3
-        def show_dropdown_grp3():
-            dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: Ubersicht.update_table_contents(2, "3",
-                                                                                                 ""))  # Alle Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: Ubersicht.update_table_contents(8, "3",
-                                                                                           "Hardwawre"))  # nur Hardware Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Software", command=lambda: Ubersicht.update_table_contents(8, "3",
-                                                                                           "Software"))  # nur Software Produkte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: Ubersicht.update_table_contents(8, "3",
-                                                                                             "Peripherie"))  # nur Peripherie mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Andere", command=lambda: Ubersicht.update_table_contents(8, "3",
-                                                                                         "ANDERE"))  # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
-            dropdown_menu.post(grp3_button.winfo_rootx(), grp3_button.winfo_rooty() + grp3_button.winfo_height())
+                    dropdown_menu.post(group_button.winfo_rootx(), group_button.winfo_rooty() + group_button.winfo_height())
 
-        grp3_button = tk.Button(verzeichniss, text="Gruppe 3   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                font=("Inter", 20, 'bold'),
-                                command=show_dropdown_grp3)
-        grp3_button.pack(pady=10, anchor='w')
+                # CTkButton erstellen
+                group_button = ctk.CTkButton(scrollable_frame, text=f"Gruppe {group}",
+                                       fg_color=ThemeManager.SRH_Grey,
+                                       text_color="black",
+                                       font=("Inter", 16, 'bold'),
+                                       command=show_group_dropdown)
+                group_button.pack(pady=5, padx=5, fill="x")  # Buttons scrollable machen
 
-        # Gruppe 4
-        def show_dropdown_grp4():
-            dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: Ubersicht.update_table_contents(2, "4",
-                                                                                                 ""))  # Alle Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: Ubersicht.update_table_contents(8, "4",
-                                                                                           "Hardwawre"))  # nur Hardware Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Software", command=lambda: Ubersicht.update_table_contents(8, "4",
-                                                                                           "Sorftware"))  # nur Software Produkte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: Ubersicht.update_table_contents(8, "4",
-                                                                                             "Peripherie"))  # nur Peripherie mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Andere", command=lambda: Ubersicht.update_table_contents(8, "4",
-                                                                                         "ANDERE"))  # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
-            dropdown_menu.post(grp4_button.winfo_rootx(), grp4_button.winfo_rooty() + grp4_button.winfo_height())
-
-        grp4_button = tk.Button(verzeichniss, text="Gruppe 4   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                font=("Inter", 20, 'bold'),
-                                command=show_dropdown_grp4)
-        grp4_button.pack(pady=10, anchor='w')
-
-        # Gruppe 5
-        def show_dropdown_grp5():
-            dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: Ubersicht.update_table_contents(2, "5",
-                                                                                                 ""))  # Alle Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: Ubersicht.update_table_contents(8, "5",
-                                                                                           "Hardwawre"))  # nur Hardware Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Software", command=lambda: Ubersicht.update_table_contents(8, "5",
-                                                                                           "Software"))  # nur Software Produkte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: Ubersicht.update_table_contents(8, "5",
-                                                                                             "Peripherie"))  # nur Peripherie mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Andere", command=lambda: Ubersicht.update_table_contents(8, "5",
-                                                                                         "ANDERE"))  # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
-            dropdown_menu.post(grp5_button.winfo_rootx(), grp5_button.winfo_rooty() + grp5_button.winfo_height())
-
-        grp5_button = tk.Button(verzeichniss, text="Gruppe 5   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                font=("Inter", 20, 'bold'),
-                                command=show_dropdown_grp5)
-        grp5_button.pack(pady=10, anchor='w')
-
-        # Gruppe 6
-        def show_dropdown_grp6():
-            dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: Ubersicht.update_table_contents(2, "6",
-                                                                                                 ""))  # Alle Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: Ubersicht.update_table_contents(8, "6",
-                                                                                           "Hardwawre"))  # nur Hardware Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Software", command=lambda: Ubersicht.update_table_contents(8, "6",
-                                                                                           "Software"))  # nur Software Produkte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: Ubersicht.update_table_contents(8, "6",
-                                                                                             "Peripherie"))  # nur Peripherie mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Andere", command=lambda: Ubersicht.update_table_contents(8, "6",
-                                                                                         "ANDERE"))  # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
-            dropdown_menu.post(grp6_button.winfo_rootx(), grp6_button.winfo_rooty() + grp6_button.winfo_height())
-
-        grp6_button = tk.Button(verzeichniss, text="Gruppe 6   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                font=("Inter", 20, 'bold'),
-                                command=show_dropdown_grp6)
-        grp6_button.pack(pady=10, anchor='w')
-
-        # Gruppe 7
-        def show_dropdown_grp7():
-            dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: Ubersicht.update_table_contents(2, "7",
-                                                                                                 ""))  # Alle Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: Ubersicht.update_table_contents(8, "7",
-                                                                                           "Hardwawre"))  # nur Hardware Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Software", command=lambda: Ubersicht.update_table_contents(8, "7",
-                                                                                           "Software"))  # nur Software Produkte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: Ubersicht.update_table_contents(8, "7",
-                                                                                             "Peripherie"))  # nur Peripherie mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Andere", command=lambda: Ubersicht.update_table_contents(8, "7",
-                                                                                         "ANDERE"))  # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
-            dropdown_menu.post(grp7_button.winfo_rootx(), grp7_button.winfo_rooty() + grp7_button.winfo_height())
-
-        grp7_button = tk.Button(verzeichniss, text="Gruppe 7   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                font=("Inter", 20, 'bold'),
-                                command=show_dropdown_grp7)
-        grp7_button.pack(pady=10, anchor='w')
-
-        # Gruppe 8
-        def show_dropdown_grp8():
-            dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-            dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: Ubersicht.update_table_contents(2, "8",
-                                                                                                 ""))  # Alle Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Hardware", command=lambda: Ubersicht.update_table_contents(8, "8",
-                                                                                           "Hardwawre"))  # nur Hardware Objekte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Software", command=lambda: Ubersicht.update_table_contents(8, "8",
-                                                                                           "Software"))  # nur Software Produkte mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Peripherie", command=lambda: Ubersicht.update_table_contents(8, "8",
-                                                                                             "Peripherie"))  # nur Peripherie mit der Gruppe x werden angezeigt
-            dropdown_menu.add_command(label="→ Andere", command=lambda: Ubersicht.update_table_contents(8, "8",
-                                                                                         "ANDERE"))  # Andere Objekte mit der Gruppe x werden angezeigt (z.B.: Bücher)
-            dropdown_menu.post(grp8_button.winfo_rootx(), grp8_button.winfo_rooty() + grp8_button.winfo_height())
-
-        grp8_button = tk.Button(verzeichniss, text="Gruppe 8   ", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                font=("Inter", 20, 'bold'),
-                                command=show_dropdown_grp8)
-        grp8_button.pack(pady=10, anchor='w')
+            create_group_button(group_number)
 
         # Seiteninhalt
         # switch_button = tk.Button(self, text="switch", bg='#081424', fg='white',

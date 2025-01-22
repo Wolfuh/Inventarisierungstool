@@ -116,7 +116,7 @@ def add_user(new_username, new_first_name, new_last_name, new_class, new_role, e
         my_db = init_connection()
         cur = my_db.cursor()
 
-        hash_password = hashlib.sha512("Startnow!".encode()).hexdigest() # StartNow! als Standartpasswort festgelegt
+        hash_password = hashlib.sha512("StartNow!".encode()).hexdigest() # StartNow! als Standartpasswort festgelegt
 
         cur.execute("INSERT INTO benutzer (Benutzername, Vorname, Nachname, Klasse, Passwort, Rolle, Email) VALUES (?,?,?,?,?,?,?)", 
                                 (new_username, new_first_name, new_last_name, new_class, hash_password, new_role, email))
