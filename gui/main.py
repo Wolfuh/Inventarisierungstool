@@ -1242,11 +1242,12 @@ class Gerateansicht(tk.Frame):
 
     def gruppe_dropdown(self):
         dropdown_menu = tk.Menu(self.gruppe_frame, tearoff=0, bd=1, bg='white', fg='black')
-        Gruppenname = [i for i in range(1, 9)]
+        
+        Gruppenname = [i for i in range(1, 22)]
         for value2 in Gruppenname:
             dropdown_menu.add_command(label=f"→ {value2}",
-                                      command=lambda value=value2: [self.gruppe_aktuell_label.configure(text=value2),
-                                                                    print(f"Produkt {value2}")])
+                                      command=lambda value=value2: [self.gruppe_aktuell_label.configure(text=value),
+                                                                    print(f"Produkt {value}")])
         dropdown_menu.post(self.gruppe_drop.winfo_rootx() - 62,
                            self.gruppe_drop.winfo_rooty() + self.gruppe_drop.winfo_height())
 
