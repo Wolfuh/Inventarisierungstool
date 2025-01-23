@@ -241,27 +241,41 @@ def update_item(item_data):
                       'Details', 'service_tag', 'added_by_user',
                       'Typ', 'Status'
     """
-    query = """
-    UPDATE items
-    SET Name = :Name,
-        Gruppe = :Gruppe,
-        Raum = :Raum,
-        amount = :amount,
-        Details = :Details,
-        service_tag = :service_tag,
-        added_by_user = :added_by_user,
-        Typ = :Typ,
-        Status = :Status
-    WHERE ID = :ID;
-    """
 
     try:
         # Verbindung zur Datenbank herstellen
         connection = init_connection()
         cursor = connection.cursor()
 
-        # SQL-Query ausführen
-        cursor.execute(query, item_data)
+
+
+        query = """
+            UPDATE items
+            SET Name = ?, 
+                Gruppe = ?, 
+                Raum = ?, 
+                amount = ?, 
+                Details = ?, 
+                service_tag = ?, 
+                added_by_user = ?, 
+                Typ = ?, 
+                Status = ?
+            WHERE ID = ?;
+        """
+
+        # Beispiel: item_data enthält die Werte für die Abfrage
+        cursor.execute(query, (
+            item_data[1],  # Name
+            item_data[2],  # Gruppe
+            item_data[3],  # Raum
+            item_data[4],  # amount
+            item_data[5],  # Details
+            item_data[6],  # service_tag
+            item_data[9],  # added_by_user
+            item_data[7],  # Typ
+            item_data[8],  # Status
+            item_data[0]   # ID (WHERE-Bedingung)
+))
 
         # Änderungen speichern
         connection.commit()
@@ -271,7 +285,7 @@ def update_item(item_data):
             print("Kein Eintrag mit der angegebenen ID gefunden.")
 
     except sqlite3.Error as e:
-        print(f"Fehler beim Aktualisieren der Daten: {e}")
+        return [], "Fehler beim Abrufen der Informationen:", str(e)
 
     finally:
         # Verbindung schließen
