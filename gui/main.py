@@ -7,6 +7,7 @@ from customtkinter import *
 from datetime import datetime
 from ThemeManager import ThemeManager
 import cache
+from loggerStyleAnsiEscSgr import backgroundColor
 import tksvg
 
 current_group = ""
@@ -948,7 +949,7 @@ class Gerateansicht(tk.Frame):
         source = controller.get_navigation_source() # von was die Geräteansicht aufgerufen wurde (Hinzufügen, Verändern)
         self.source = source
 
-        
+
         self.configure(bg='white')
         self.setup_grid()
         self.load_images()
@@ -956,7 +957,7 @@ class Gerateansicht(tk.Frame):
         self.create_widgets()
         self.place_widgets()
         self.dbupdate()
-        
+
 
     def reset_fields(self):
         self.name_entry.delete(0, tk.END)
@@ -994,7 +995,7 @@ class Gerateansicht(tk.Frame):
         tree.place(x=0, y=20, relwidth=0.40, relheight=0.5)
         scroll.place(x=770, y=20, relheight=0.5)
 
-        
+
 
     def setup_grid(self):
         self.columnconfigure(0, weight=1)
@@ -1136,7 +1137,7 @@ class Gerateansicht(tk.Frame):
         return entry
 
     def dbupdate(self):
-        
+
         self.tree.configure(yscrollcommand=self.scroll.set)
         self.tree.delete(*self.tree.get_children())
         items_uberschrift = fetch_headers("history", ["foreign_item_num", "image", "name", "tag"])
@@ -1148,7 +1149,7 @@ class Gerateansicht(tk.Frame):
         for i, row in enumerate(items_data):
             formatted_row = [value if value is not None else "-" for value in row]
             self.tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
-    
+
         self.tree.place(x=0, y=20, relwidth=0.40, relheight=0.5)
         self.scroll.place(x=770, y=20, relheight=0.5)
         self.tree.bind("<<TreeviewSelect>>", self.on_row_click)
@@ -1422,7 +1423,7 @@ class Gerateansicht(tk.Frame):
         messagebox.showinfo("Erfolgreich", "Änderungen erfolgreich gespeichert")
 
     def update_history_table(self, controller, data):
-        
+
         tree = ttk.Treeview(self.gerateansicht_frame, columns=("c1", "c2", "c3"), show="headings",
                             height=5)
         scroll = ctk.CTkScrollbar(
@@ -1508,7 +1509,7 @@ class Gerateansicht(tk.Frame):
             "Typ": self.typ_aktuell_label.cget("text"),
             "Status": self.status_aktuell_label.cget("text")
         }
-        
+
         self.reset_fields()
         return updated_items
 
@@ -2324,9 +2325,113 @@ class Einstellungen(tk.Frame):
                                     command=lambda: [controller.set_navigation_source("change"), controller.show_frame(Gerateansicht)])
         addGerat_button.place(relx=0.01, rely=0.35, relheight=0.032)
 
+        def open_role_select_page():
+            """ """
+            root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
+            role_select_page = tk.Toplevel()
+            role_select_page.title("Rolle hinzufügen")
+
+            # Fenstergröße
+            window_width = 700
+            window_height = 850
+
+            # Bildschirmgröße abrufen
+            screen_width = role_select_page.winfo_screenwidth()
+            screen_height = role_select_page.winfo_screenheight()
+
+            # Position berechnen
+            position_x = int((screen_width / 2) - (window_width / 2))
+            position_y = int((screen_height / 2) - (window_height / 2))
+
+            # Fenster positionieren
+            role_select_page.geometry(f"{window_width}x{window_height}+{position_x}+{position_y}")
+            role_select_page.configure(bg='white')
+
+            info_frame = tk.Frame(role_select_page, bg='white', bd=1)
+            info_frame.place(x=0, y=0, width=1200, height=850)
+
+            role_name_frame = ctk.CTkFrame(info_frame, width=480, height=88, bg_color='transparent',
+                                 fg_color='transparent', border_width=1, border_color='#B8B7B7', corner_radius=8)
+            role_name_label = ctk.CTkLabel(role_name_frame, text="Rollenname", text_color='#858383', font=("Inter", 25, 'bold'))
+            role_name_entry = ctk.CTkEntry(role_name_frame, text_color='black', font=("Inter", 20), border_width=0, fg_color='transparent',
+                             width=400)
+
+            role_name_label.place(x=5, y=5)
+            role_name_entry.place(x=5, y=40)
+            role_name_frame.place(x=5, y=750)
+            # Liste der Berechtigungen
+            permissions = {
+                "Item-Verwaltung": {
+                    "can_see": "Items standardmäßig anschauen",
+                    "can_book": "Items buchen/ausleihen",
+                    "can_add_item": "Neue Items hinzufügen",
+                    "can_edit_item": "Items bearbeiten",
+                    "can_delete_item": "Items löschen",
+                },
+                "Datenbank-Verwaltung": {
+                    "can_add_categories": "Neue Kategorien hinzufügen",
+                    "can_edit_categories": "Kategorien bearbeiten",
+                    "can_delete_categories": "Kategorien löschen",
+                },
+                "Rollen-Verwaltung": {
+                    "can_add_roles": "Neue Rollen hinzufügen",
+                    "can_edit_roles": "Rollen bearbeiten",
+                    "can_delete_roles": "Rollen löschen",
+                },
+                "Benutzer-Verwaltung": {
+                    "can_add_user": "Benutzer hinzufügen",
+                    "can_edit_user": "Benutzer bearbeiten",
+                    "can_delete_user": "Benutzer löschen",
+                },
+            }
+
+            # Dictionary, um den Status der Checkboxes zu speichern
+            checkbox_vars = {}
+
+            # Erstelle die Header und die Checkboxes
+            def create_permission_sections():
+                for section, perms in permissions.items():
+                    # Header erstellen
+                    header = ctk.CTkLabel(
+                        info_frame,
+                        text=section,
+                        text_color='#858383',
+                        font=("Inter", 25, 'bold')
+                    )
+                    header.pack(anchor="w", padx=10, pady=(20, 10))  # Abstand oben und unten
+
+                    # Checkboxes für die Berechtigungen in der Sektion erstellen
+                    for perm, description in perms.items():
+                        var = ctk.BooleanVar()  # Variable für den Status der Checkbox
+                        checkbox = ctk.CTkCheckBox(
+                            info_frame, text=description, variable=var, text_color="black", fg_color=ThemeManager.SRH_Orange,
+                            border_width=1, hover_color=ThemeManager.SRH_Grey, checkmark_color="white"
+                        )
+                        checkbox.pack(anchor="w", padx=20, pady=5)  # Ausrichtung und Abstand
+                        checkbox_vars[perm] = var  # Speichere die Variable im Dictionary
+
+            # Callback-Funktion, um die ausgewählten Berechtigungen anzuzeigen
+            def show_selected_permissions():
+                selected_permissions = [perm for perm, var in checkbox_vars.items() if var.get()]
+                print("Ausgewählte Berechtigungen:", selected_permissions)
+                role_select_page.destroy()
+
+            # Erstelle die Berechtigungsbereiche mit Headern und Checkboxes
+            create_permission_sections()
+
+            # Button zum Anzeigen der ausgewählten Berechtigungen
+            speicher_button = ctk.CTkButton(info_frame, text="Speichern", fg_color=ThemeManager.SRH_Orange,
+                                               text_color="white", font=('Inter', 20, 'bold'),
+                                               corner_radius=8, hover=True,
+                                               hover_color=ThemeManager.SRH_DarkBlau,
+                                               command=show_selected_permissions, width=137, height=44)
+            speicher_button.place(x=520, y=790)
+
+
+
         addRole_button = tk.Button(self.einstellung_frame, text="Rolle\t+", bd=0, bg='white', fg='black',
                                     font=("Inter", 16),
-                                    command=print("Rolle wird erstellt"))
+                                    command=lambda:open_role_select_page())
         addRole_button.place(relx=0.01, rely=0.40, relheight=0.032)
 
         # Platzierung der Hauptframe-Bereiche
