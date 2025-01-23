@@ -8,6 +8,7 @@ from datetime import datetime
 from ThemeManager import ThemeManager
 import cache
 from loggerStyleAnsiEscSgr import backgroundColor
+import tksvg
 
 current_group = ""
 
@@ -38,6 +39,8 @@ class GuiTest(tk.Tk):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+        self.navigation_source = None  # Speichert, welcher Weg gewählt wurde
+
         # Fensterkonfiguration
         self.title("Prototyp")
         self.geometry("1920x1080")
@@ -59,6 +62,19 @@ class GuiTest(tk.Tk):
         login_frame.grid(row=0, column=0, sticky="nsew")
 
         self.show_frame(LogInWindow)  # Starte mit der Login-Seite
+
+    def set_navigation_source(self, source):
+        """
+        Speichert die Quelle der Navigation.
+        :param source: Name oder Beschreibung des Navigationspfads
+        """
+        self.navigation_source = source
+
+    def get_navigation_source(self):
+        """
+        Gibt die aktuelle Quelle der Navigation zurück.
+        """
+        return self.navigation_source
 
     def initialize_pages(self):
         """
@@ -796,12 +812,6 @@ class Ubersicht(tk.Frame):
 
             create_group_button(group_number)
 
-        # Seiteninhalt
-        # switch_button = tk.Button(self, text="switch", bg='#081424', fg='white',
-        # font=("Inter", 20, 'bold'),
-        # command=lambda: controller.show_frame(Gerateansicht))
-        # switch_button.grid(row=4, column=0, pady=20)
-        # Bilder
         self.imgFilter = load_image(root_path + "/gui/assets/Filter_Button.png")
         self.imgSuche = load_image(root_path + "/gui/assets/Search.png")
         self.imgHinzufugen = load_image(root_path + "/gui/assets/Adding_Icon.png")
@@ -873,7 +883,7 @@ class Ubersicht(tk.Frame):
 
         # Hinzufügen
         Hinzufugen_button = tk.Button(self.ubersicht_frame, image=self.imgHinzufugen, bd=0, bg='white',
-                                      command=lambda: controller.show_frame(Gerateansicht))
+                                      command=lambda: [controller.set_navigation_source("add"), controller.show_frame(Gerateansicht)])
         Hinzufugen_button.place(relx=0.6, rely=0.1)
 
         scroll = ctk.CTkScrollbar(
@@ -921,7 +931,7 @@ def showDetails(selected_Item, tree, controller):
     details = controller.frames[Gerateansicht]
     details.update_data(data)
     details.update_history_table(controller, data)
-    controller.show_frame(Gerateansicht)
+    [controller.set_navigation_source("change"), controller.show_frame(Gerateansicht)]
     return data
 
 
@@ -936,6 +946,10 @@ class Gerateansicht(tk.Frame):
         self.controller = controller
         self.root_path = root_path
 
+        source = controller.get_navigation_source() # von was die Geräteansicht aufgerufen wurde (Hinzufügen, Verändern)
+        self.source = source
+
+
         self.configure(bg='white')
         self.setup_grid()
         self.load_images()
@@ -943,6 +957,45 @@ class Gerateansicht(tk.Frame):
         self.create_widgets()
         self.place_widgets()
         self.dbupdate()
+
+
+    def reset_fields(self):
+        self.name_entry.delete(0, tk.END)
+        self.name_entry.insert(0, " ")
+        self.tag_entry.delete(0, tk.END)
+        self.tag_entry.insert(0, " ")
+        self.typ_aktuell_label.configure(text="Hardware")
+        self.status_aktuell_label.configure(text="✔Verfügbar")
+        self.gruppe_aktuell_label.configure(text="Gruppe 1")
+        self.details_entry.delete(0, tk.END)
+        self.details_entry.insert(0, " ")
+        self.anzahl_entry.delete(0, tk.END)
+        self.anzahl_entry.insert(0, " ")
+        self.standort_entry.delete(0, tk.END)
+        self.standort_entry.insert(0, " ")
+
+        tree = ttk.Treeview(self.gerateansicht_frame, columns=("c1", "c2", "c3"), show="headings",
+                            height=5)
+        scroll = ctk.CTkScrollbar(
+            self.gerateansicht_frame,
+            button_color=ThemeManager.SRH_Grey,
+            orientation="vertical",
+            command=tree.yview,
+            height=650
+        )
+        tree.configure(yscrollcommand=scroll.set)
+        self.tree.delete(*self.tree.get_children())
+        items_uberschrift = fetch_headers("history", ["foreign_item_num", "image", "name", "tag"])
+
+        # Überschriften konfigurieren
+        tree["columns"] = items_uberschrift
+        for up in items_uberschrift:
+            tree.column(up, anchor=CENTER, width=100)
+            tree.heading(up, text=up)
+        tree.place(x=0, y=20, relwidth=0.40, relheight=0.5)
+        scroll.place(x=770, y=20, relheight=0.5)
+
+
 
     def setup_grid(self):
         self.columnconfigure(0, weight=1)
@@ -973,22 +1026,22 @@ class Gerateansicht(tk.Frame):
         self.login_button = ctk.CTkButton(self.header, image=self.imglogin, fg_color=ThemeManager.SRH_Orange,
                                           bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
                                           hover=True, hover_color='#e25a1f', text="",
-                                          command=lambda: self.controller.show_frame(LogInWindow))
+                                          command=lambda: [self.reset_fields(),self.controller.show_frame(LogInWindow)])
 
         self.profil_button = ctk.CTkButton(self.header, image=self.imgprofil, fg_color=ThemeManager.SRH_Orange,
                                            bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
                                            hover=True, hover_color='#e25a1f', text="",
-                                           command=lambda: self.controller.show_frame(Profil))
+                                           command=lambda: [self.reset_fields(), self.controller.show_frame(Profil)])
 
         self.help_button = ctk.CTkButton(self.header, image=self.imghelp, fg_color=ThemeManager.SRH_Orange,
                                          bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
                                          hover=True, hover_color='#e25a1f', text="",
-                                         command=lambda: self.controller.show_frame(Help))
+                                         command=lambda: [self.reset_fields(), self.controller.show_frame(Help)])
 
         self.mainpage_button = ctk.CTkButton(self, text="↩", fg_color='white', text_color=ThemeManager.SRH_Grey,
                                              width=5,
                                              font=("Inter", 50, 'bold'), corner_radius=8, hover=False,
-                                             command=lambda: self.controller.show_frame(Ubersicht))
+                                             command=lambda: [self.reset_fields(), self.controller.show_frame(Ubersicht)])
 
         self.mainpage_button.place(relx=1, rely=1)
 
@@ -996,7 +1049,7 @@ class Gerateansicht(tk.Frame):
         self.all_button = ctk.CTkButton(self.verzeichniss, text="Alle Anzeigen", fg_color=ThemeManager.SRH_Grey,
                                         bg_color=ThemeManager.SRH_Grey, text_color='black',
                                         font=("Inter", 20), corner_radius=8, hover=False,
-                                        command=lambda: self.controller.show_frame(Ubersicht))
+                                        command=lambda: [self.reset_fields(), self.controller.show_frame(Ubersicht)])
 
         self.all_button.pack(pady=10, anchor='w')
 
@@ -1055,6 +1108,11 @@ class Gerateansicht(tk.Frame):
                                           command=self.button_click)
         self.speichern_button.place(x=330, y=10)
 
+        # if self.source:
+        #     self.schaeden_button.config(state="disabled")
+        #     self.buchung_button.config(state="disabled")
+        self.reset_fields()
+
     def place_widgets(self):
         self.header.place(relx=0, rely=0, relwidth=1, relheight=0.15)
         self.verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
@@ -1079,6 +1137,7 @@ class Gerateansicht(tk.Frame):
         return entry
 
     def dbupdate(self):
+
         self.tree.configure(yscrollcommand=self.scroll.set)
         self.tree.delete(*self.tree.get_children())
         items_uberschrift = fetch_headers("history", ["foreign_item_num", "image", "name", "tag"])
@@ -1090,6 +1149,7 @@ class Gerateansicht(tk.Frame):
         for i, row in enumerate(items_data):
             formatted_row = [value if value is not None else "-" for value in row]
             self.tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
+
         self.tree.place(x=0, y=20, relwidth=0.40, relheight=0.5)
         self.scroll.place(x=770, y=20, relheight=0.5)
         self.tree.bind("<<TreeviewSelect>>", self.on_row_click)
@@ -1363,6 +1423,7 @@ class Gerateansicht(tk.Frame):
         messagebox.showinfo("Erfolgreich", "Änderungen erfolgreich gespeichert")
 
     def update_history_table(self, controller, data):
+
         tree = ttk.Treeview(self.gerateansicht_frame, columns=("c1", "c2", "c3"), show="headings",
                             height=5)
         scroll = ctk.CTkScrollbar(
@@ -1395,7 +1456,7 @@ class Gerateansicht(tk.Frame):
             # Daten aus DB einfügen
             for i, row in enumerate(items_data):
                 formatted_row = [value if value is not None else "-" for value in
-                                 row]  # Leere Felder durch "-" ersetzen
+                                row]  # Leere Felder durch "-" ersetzen
                 tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
 
             tree.place(x=0, y=20, relwidth=0.40, relheight=0.5)
@@ -1417,6 +1478,8 @@ class Gerateansicht(tk.Frame):
                     show_image_from_db(indexnum)
 
         dbupdate(item_ID)
+        if self.source == "add":
+            self.reset_fields()
 
     def update_data(self, data):
         self.name_entry.delete(0, tk.END)
@@ -1446,6 +1509,8 @@ class Gerateansicht(tk.Frame):
             "Typ": self.typ_aktuell_label.cget("text"),
             "Status": self.status_aktuell_label.cget("text")
         }
+
+        self.reset_fields()
         return updated_items
 
     def choose_image_popup(self):
@@ -1510,7 +1575,7 @@ class Profil(tk.Frame):
         root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
         self.configure(bg='white')
 
-        def update_label():
+        def update_label(self):
 
             global user_stuff
             user_stuff = "", "", "", ""
@@ -1530,7 +1595,8 @@ class Profil(tk.Frame):
                 file=root_path + "/gui/assets/Closeicon.png")
             self.imgmainpage = tk.PhotoImage(
                 file=root_path + "/gui/assets/backtosite_icon.png")
-            self.imgProfileTest = tk.PhotoImage(file=root_path + "/gui/assets/profile.png")
+            self.imgProfileTest = tksvg.SvgImage(file=root_path + "/gui/assets/profilbild.svg")
+            self.imgProfileTest.configure(scaletoheight=480) # SVG auf Höhe des ursprünglichen Bildes skalieren
             self.imghelp = tk.PhotoImage(file=root_path + "/gui/assets/helpicon.png")
 
             # Positionierung der Buttons
@@ -1550,8 +1616,7 @@ class Profil(tk.Frame):
                                  command=lambda: controller.show_frame(Help))
 
             # Seiteninhalt
-            profilbild = tk.Button(self.profil_frame, image=self.imgProfileTest, bd=0, bg='white',
-                                   command=lambda: controller.show_frame(MainPage))
+            profilbild = tk.Label(self.profil_frame, image=self.imgProfileTest, bg='white')
             username = tk.Label(self.profil_frame, text="Username", bd=0, bg='white', fg='#6F6C6C',
                                 font=("Poppins", 15))
             self.username = tk.Label(self.profil_frame, text=user_stuff[5], bd=0, bg='white', fg='black', font=("Poppins", 18))
@@ -1636,7 +1701,7 @@ class Profil(tk.Frame):
 
             self.profil_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
 
-        thread = threading.Thread(target=update_label, daemon=True)
+        thread = threading.Thread(target=update_label(self), daemon=True)
         thread.start()
 
 
@@ -1835,14 +1900,14 @@ class Admin(tk.Frame):
             file=root_path + "/gui/assets/Closeicon.png")
         self.imgmainpage = tk.PhotoImage(
             file=root_path + "/gui/assets/backtosite_icon.png")
-        self.imgProfileTest = tk.PhotoImage(file=root_path + "/gui/assets/profile.png")
+        self.imgProfileTest = tksvg.SvgImage(file=root_path + "/gui/assets/profilbild.svg")
+        self.imgProfileTest.configure(scaletoheight=480) # SVG auf Höhe des ursprünglichen Bildes skalieren
         self.imghelp = tk.PhotoImage(file=root_path + "/gui/assets/helpicon.png")
         self.aktualisieren_img = load_image(root_path + "/gui/assets/Button_Aktualisieren.png")
 
         # Seiteninhalt
 
-        profilbild = tk.Button(self.admin_profil_frame, image=self.imgProfileTest, bd=0, bg='white',
-                               command=lambda: self.controller.show_frame(MainPage))
+        profilbild = tk.Label(self.admin_profil_frame, image=self.imgProfileTest, bg='white')
         admin_username = tk.Label(self.admin_profil_frame, text="Username", bd=0, bg='white',
                                   fg='#6F6C6C',
                                   font=("Poppins", 15))
@@ -2257,7 +2322,7 @@ class Einstellungen(tk.Frame):
 
         addGerat_button = tk.Button(self.einstellung_frame, text="Gerät\t+", bd=0, bg='white', fg='black',
                                     font=("Inter", 16),
-                                    command=lambda: controller.show_frame(Gerateansicht))
+                                    command=lambda: [controller.set_navigation_source("change"), controller.show_frame(Gerateansicht)])
         addGerat_button.place(relx=0.01, rely=0.35, relheight=0.032)
 
         def open_role_select_page():
