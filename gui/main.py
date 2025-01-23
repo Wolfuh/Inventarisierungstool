@@ -7,7 +7,6 @@ from customtkinter import *
 from datetime import datetime
 from ThemeManager import ThemeManager
 import cache
-from loggerStyleAnsiEscSgr import backgroundColor
 import tksvg
 
 current_group = ""
