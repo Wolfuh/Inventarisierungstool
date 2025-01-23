@@ -798,7 +798,7 @@ class Ubersicht(tk.Frame):
         def open_add_group_popup():
             group_popup = tk.Toplevel()
             group_popup.title("Neue Gruppe erstellen")
-            group_popup.geometry("300x200")
+            group_popup.geometry("300x250")
             group_popup.config(bg="white")
             group_popup.grab_set()  # Fokus auf das Popup-Fenster
 
@@ -817,6 +817,24 @@ class Ubersicht(tk.Frame):
                     group_popup.destroy()  # Popup schließen, wenn die Gruppe hinzugefügt wurde
 
             # Button zum Hinzufügen der Gruppe
+
+                # Funktion zum Öffnen eines Ordners
+            def open_order():
+                # Beispiel: Ein spezifischer Pfad zu einem Order
+                order_path = os.path.expanduser("~/pictures")  # Hier kannst du den gewünschten Pfad anpassen
+                if os.path.exists(order_path):
+                    os.startfile(order_path)  # Windows
+                else:
+                    print(f"Pfad existiert nicht: {order_path}")
+
+            # Button zum Öffnen des Ordners
+            tk.Label(group_popup, text="Bild auswählen (.png):", bg='white', font=("Inter", 11)).pack(pady=3)
+            open_order_button = ctk.CTkButton(group_popup, text="Ordner Öffnen", command=open_order,
+                                              fg_color="#C0C0C0", text_color='white',
+                                              font=("Inter", 14, 'bold'), corner_radius=8, width=200, height=30,
+                                              hover_color=ThemeManager.SRH_Grey)
+            open_order_button.pack(pady=10)
+
             add_group_button = ctk.CTkButton(group_popup, text="Neue Gruppe Speichern", command=add_group,
                                              fg_color=ThemeManager.SRH_Orange, text_color='white',
                                              font=("Inter", 14, 'bold'), corner_radius=8, width=200, height=30,
