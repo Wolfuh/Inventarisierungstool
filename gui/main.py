@@ -7,7 +7,6 @@ from customtkinter import *
 from datetime import datetime
 from ThemeManager import ThemeManager
 import cache
-from loggerStyleAnsiEscSgr import backgroundColor
 import tksvg
 
 current_group = ""
@@ -81,7 +80,7 @@ class GuiTest(tk.Tk):
         Erstellt andere Seiten nach einem erfolgreichen Login.
         """
         container = list(self.frames.values())[0].master  # Der Container aus der ersten Seite
-        pages = [MainPage, MainPageS2, Mainpage_empty, Ubersicht, 
+        pages = [MainPage, MainPageS2, Mainpage_empty, Ubersicht,
                  Gerateansicht, Einstellungen, Profil, Admin, Help]
 
         for Page in pages:
@@ -181,13 +180,14 @@ class LogInWindow(tk.Frame):
             """
 
             def show_password_change_popup(self):
-                popup = tk.Toplevel(self)
-                popup.title("Passwort ändern")
-                popup.geometry("300x200")
-                popup.grab_set()  # Fokus auf das Popup-Fenster
+                password_popup = tk.Toplevel(self)
+                password_popup.title("Passwort ändern")
+                password_popup.geometry("300x200")
+                password_popup.grab_set()  # Fokus auf das Popup-Fenster
+                password_popup.config(bg="white")
 
-                tk.Label(popup, text="Neues Passwort:", font=("Inter", 14)).pack(pady=10)
-                new_password_entry = ctk.CTkEntry(popup, text_color="black", font=("Inter", 14), border_width=1,
+                tk.Label(password_popup, text="Neues Passwort:", font=("Inter", 14)).pack(pady=10)
+                new_password_entry = ctk.CTkEntry(password_popup, text_color="black", font=("Inter", 14), border_width=1,
                                                   corner_radius=8, fg_color="white", width=200, show="*")
                 new_password_entry.pack(pady=10)
 
@@ -196,7 +196,7 @@ class LogInWindow(tk.Frame):
                     passwort_staerke = ist_passwort_stark(new_password)
                     if passwort_staerke[0]:
                         save_only_password(new_password)
-                        popup.destroy()
+                        password_popup.destroy()
                         logging.info(f"'{username_entry.get()}' hat sich erfolgreich angemeldet.")
                         username_entry.delete(0, 'end')
                         password_entry.delete(0, 'end')
@@ -204,7 +204,7 @@ class LogInWindow(tk.Frame):
                     else:
                         messagebox.showinfo("Fehler", passwort_staerke[1])  # zeigt die jeweilige Fehlermeldung
 
-                new_own_password = ctk.CTkButton(popup, text="Passwort ändern", fg_color=ThemeManager.SRH_Orange,
+                new_own_password = ctk.CTkButton(password_popup, text="Passwort ändern", fg_color=ThemeManager.SRH_Orange,
                                                  text_color='white',
                                                  font=("Inter", 14, 'bold'), corner_radius=8, command=set_new_password,
                                                  width=200, height=30, hover_color=ThemeManager.SRH_Orange)
@@ -692,13 +692,17 @@ class Ubersicht(tk.Frame):
         i = 0
         if searchGroup != "":
             for item in items_data:
-                if (item[2] and str(item[2]) == searchGroup) and searchQuery == "ANDERE" and not str(item[searchColumn]) in type_sort:
-                    formatted_row = [value if value is not None else "-" for value in item]  # Leere Felder durch "-" ersetzen
+                if (item[2] and str(item[2]) == searchGroup) and searchQuery == "ANDERE" and not str(
+                        item[searchColumn]) in type_sort:
+                    formatted_row = [value if value is not None else "-" for value in
+                                     item]  # Leere Felder durch "-" ersetzen
                     overview_table_tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
                     i += 1
 
-                elif (item[2] and str(item[2]) == searchGroup) and (not searchQuery or str(item[searchColumn]) == searchQuery):
-                    formatted_row = [value if value is not None else "-" for value in item]  # Leere Felder durch "-" ersetzen
+                elif (item[2] and str(item[2]) == searchGroup) and (
+                        not searchQuery or str(item[searchColumn]) == searchQuery):
+                    formatted_row = [value if value is not None else "-" for value in
+                                     item]  # Leere Felder durch "-" ersetzen
                     overview_table_tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
                     i += 1
         else:
@@ -777,40 +781,94 @@ class Ubersicht(tk.Frame):
                                            height=5)
         overview_table_tree.place(x=120, y=0, width=1280, height=650)
 
-        # Scrollable Frame für die Gruppen erstellen
-        scrollable_frame = ctk.CTkScrollableFrame(verzeichniss, width=200, height=600)  # Breite und Höhe anpassen
-        scrollable_frame.pack(side="left", fill="y", padx=10, pady=10)
+        # Steuerungs-Frame für Navigation erstellen
+        # control_frame = ctk.CTkFrame(verzeichniss, fg_color=ThemeManager.SRH_Grey, height=50, width=200)
+        # control_frame.pack(side="top", fill="x", padx=10, pady=(10, 0))
 
-        # Dynamische Gruppenbuttons mit Dropdown-Menü
+        # Funktion, um das Popup zum Hinzufügen einer Gruppe zu öffnen
+        def open_add_group_popup():
+            group_popup = tk.Toplevel()
+            group_popup.title("Neue Gruppe erstellen")
+            group_popup.geometry("300x200")
+            group_popup.config(bg="white")
+            group_popup.grab_set()  # Fokus auf das Popup-Fenster
+
+            # Eingabefeld für den Gruppennamen
+            tk.Label(group_popup, text="Neue Gruppe erstellen:", bg='white',font=("Inter", 14)).pack(pady=10)
+            group_name_entry = ctk.CTkEntry(group_popup, text_color="black", font=("Inter", 14), border_width=1,
+                                              corner_radius=8, fg_color="white", width=200, show="*")
+            group_name_entry.pack(pady=10)
+
+            # Funktion zum Hinzufügen der Gruppe
+            def add_group():
+                group_name = group_name_entry.get()
+                if group_name:  # Überprüfen, ob ein Name eingegeben wurde
+                    # Hier kannst du die Logik hinzufügen, um die Gruppe hinzuzufügen (z. B. eine Liste oder Datenbank)
+                    print(f"Neue Gruppe hinzugefügt: {group_name}")
+                    group_popup.destroy()  # Popup schließen, wenn die Gruppe hinzugefügt wurde
+
+            # Button zum Hinzufügen der Gruppe
+            add_group_button = ctk.CTkButton(group_popup, text="Neue Gruppe Speichern", command=add_group,
+                                             fg_color=ThemeManager.SRH_Orange, text_color='white',
+                                             font=("Inter", 14, 'bold'), corner_radius=8, width=200, height=30,
+                                             hover_color=ThemeManager.SRH_Orange)
+            add_group_button.pack(pady=10)
+
+        # Scrollbare Frame
+        scrollable_frame = ctk.CTkScrollableFrame(verzeichniss, fg_color=ThemeManager.SRH_Grey,
+                                                  scrollbar_fg_color=ThemeManager.SRH_Grey,
+                                                  scrollbar_button_hover_color=ThemeManager.SRH_Orange,
+                                                  scrollbar_button_color="#C0C0C0", width=200,
+                                                  height=450)
+        scrollable_frame.pack(side="left", fill="x", padx=0, pady=(40, 80), anchor="n")
+
+        # Dynamische Gruppenbuttons erstellen
         group_number = 0
-        for i in range(1, 30):  # Gruppen-Buttons erstellen
+        for i in range(1, 31):  # Bis Gruppe 30
             group_number += 1
 
             def create_group_button(group):
-
                 def show_group_dropdown():
                     dropdown_menu = tk.Menu(verzeichniss, tearoff=0, bd=0, bg=ThemeManager.SRH_Grey, fg='black')
-                    dropdown_menu.add_command(label="→ Alles Anzeigen", command=lambda: Ubersicht.update_table_contents(2, str(group), ""))
-
-                    dropdown_menu.add_command(label="→ Hardwawre", command=lambda: Ubersicht.update_table_contents(8, str(group),
-                                                                                              "Hardwawre"))
-                    dropdown_menu.add_command(label="→ Software", command=lambda: Ubersicht.update_table_contents(8, str(group),
+                    dropdown_menu.add_command(label="→ Alles Anzeigen",
+                                              command=lambda: Ubersicht.update_table_contents(2, str(group), ""))
+                    dropdown_menu.add_command(label="→ Hardware",
+                                              command=lambda: Ubersicht.update_table_contents(8, str(group),
+                                                                                              "Hardware"))
+                    dropdown_menu.add_command(label="→ Software",
+                                              command=lambda: Ubersicht.update_table_contents(8, str(group),
                                                                                               "Software"))
-                    dropdown_menu.add_command(label="→ Peripherie", command=lambda: Ubersicht.update_table_contents(8, str(group),
+                    dropdown_menu.add_command(label="→ Peripherie",
+                                              command=lambda: Ubersicht.update_table_contents(8, str(group),
                                                                                               "Peripherie"))
-                    dropdown_menu.add_command(label="→ Andere", command=lambda: Ubersicht.update_table_contents(8, str(group), "ANDERE"))
+                    dropdown_menu.add_command(label="→ Andere",
+                                              command=lambda: Ubersicht.update_table_contents(8, str(group), "ANDERE"))
+                    dropdown_menu.post(group_button.winfo_rootx(),
+                                       group_button.winfo_rooty() + group_button.winfo_height())
 
-                    dropdown_menu.post(group_button.winfo_rootx(), group_button.winfo_rooty() + group_button.winfo_height())
-
-                # CTkButton erstellen
-                group_button = ctk.CTkButton(scrollable_frame, text=f"Gruppe {group}",
-                                       fg_color=ThemeManager.SRH_Grey,
-                                       text_color="black",
-                                       font=("Inter", 16, 'bold'),
-                                       command=show_group_dropdown)
-                group_button.pack(pady=5, padx=5, fill="x")  # Buttons scrollable machen
+                # CTkButton für Gruppen erstellen
+                group_button = ctk.CTkButton(scrollable_frame, text=f"Gruppe {group}", fg_color=ThemeManager.SRH_Grey,
+                                             text_color="black", font=("Inter", 25, 'bold'),
+                                             command=show_group_dropdown, hover_color="#C0C0C0", anchor="w", width=500,
+                                             height=45)
+                group_button.pack(pady=5, padx=5, fill="y")
 
             create_group_button(group_number)
+
+        # Button zum Öffnen des Popup-Fensters für neue Gruppe
+        add_group_button = ctk.CTkButton(verzeichniss, text="Gruppe Hinzufügen", fg_color=ThemeManager.SRH_Grey,
+                                         text_color="black", font=("Inter", 20, 'bold'), command=open_add_group_popup,
+                                         hover_color="#C0C0C0")
+
+        # Positioniere den Button unterhalb des scrollable_frame
+        add_group_button.place(x=0, y=scrollable_frame.winfo_height() + 550)  # Adjustiere die Y-Position nach Bedarf
+
+        # Seiteninhalt
+        # switch_button = tk.Button(self, text="switch", bg='#081424', fg='white',
+        # font=("Inter", 20, 'bold'),
+        # command=lambda: controller.show_frame(Gerateansicht))
+        # switch_button.grid(row=4, column=0, pady=20)
+        # Bilder
 
         self.imgFilter = load_image(root_path + "/gui/assets/Filter_Button.png")
         self.imgSuche = load_image(root_path + "/gui/assets/Search.png")
@@ -1132,7 +1190,8 @@ class Gerateansicht(tk.Frame):
         return frame
 
     def create_entry(self, frame, x, y):
-        entry = ctk.CTkEntry(frame, text_color='black', font=("Inter", 20), border_width=0, fg_color='transparent', width=400)
+        entry = ctk.CTkEntry(frame, text_color='black', font=("Inter", 20), border_width=0, fg_color='transparent',
+                             width=400)
         entry.place(x=x, y=y)
         return entry
 
@@ -1580,7 +1639,6 @@ class Profil(tk.Frame):
             global user_stuff
             user_stuff = "", "", "", ""
             user_stuff = lookup_user_stuff()
-                
 
             # Header für die Hauptseite
             header = ttk.Label(self, text="Profil", anchor="center", style="Header.TLabel")
@@ -1596,7 +1654,7 @@ class Profil(tk.Frame):
             self.imgmainpage = tk.PhotoImage(
                 file=root_path + "/gui/assets/backtosite_icon.png")
             self.imgProfileTest = tksvg.SvgImage(file=root_path + "/gui/assets/profilbild.svg")
-            self.imgProfileTest.configure(scaletoheight=480) # SVG auf Höhe des ursprünglichen Bildes skalieren
+            self.imgProfileTest.configure(scaletoheight=240)  # SVG auf Höhe des ursprünglichen Bildes skalieren
             self.imghelp = tk.PhotoImage(file=root_path + "/gui/assets/helpicon.png")
 
             # Positionierung der Buttons
@@ -1619,7 +1677,8 @@ class Profil(tk.Frame):
             profilbild = tk.Label(self.profil_frame, image=self.imgProfileTest, bg='white')
             username = tk.Label(self.profil_frame, text="Username", bd=0, bg='white', fg='#6F6C6C',
                                 font=("Poppins", 15))
-            self.username = tk.Label(self.profil_frame, text=user_stuff[5], bd=0, bg='white', fg='black', font=("Poppins", 18))
+            self.username = tk.Label(self.profil_frame, text=user_stuff[5], bd=0, bg='white', fg='black',
+                                     font=("Poppins", 18))
 
             vorname = tk.Label(self.profil_frame, text="Vorname", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 15))
             self.vorname = tk.Label(self.profil_frame, text=user_stuff[1] if user_stuff[1] else "", bd=0, bg='white',
@@ -1628,15 +1687,15 @@ class Profil(tk.Frame):
             nachname = tk.Label(self.profil_frame, text="Nachname", bd=0, bg='white', fg='#6F6C6C',
                                 font=("Poppins", 15))
             self.nachname = tk.Label(self.profil_frame, text=user_stuff[2] if user_stuff[2] else "", bd=0, bg='white',
-                                    fg='black', font=("Poppins", 18))
+                                     fg='black', font=("Poppins", 18))
 
             gruppen = tk.Label(self.profil_frame, text="Gruppen", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 15))
             self.usergruppen = tk.Label(self.profil_frame, text=user_stuff[3] if user_stuff[3] else "", bd=0,
-                                    bg='white', fg='black', font=("Poppins", 18))
+                                        bg='white', fg='black', font=("Poppins", 18))
 
             email = tk.Label(self.profil_frame, text="Email", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 15))
             self.useremail = tk.Label(self.profil_frame, text=user_stuff[4], bd=0, bg='white', fg='black',
-                                    font=("Poppins", 18))
+                                      font=("Poppins", 18))
 
             rechte = tk.Label(self.profil_frame, text="Rechte", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 15))
             rechte_frame = tk.Frame(self.profil_frame, bg='#D9D9D9')
@@ -1657,9 +1716,10 @@ class Profil(tk.Frame):
                                              font=("Inter", 20, 'bold'),
                                              command=lambda: controller.show_frame(Einstellungen))
             if does_user_have_the_right(13):
-                admin_button = tk.Button(verzeichniss, text="Administration", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                        font=("Inter", 20, 'bold'),
-                                        command=lambda: controller.show_frame(Admin))
+                admin_button = tk.Button(verzeichniss, text="Administration", bd=0, bg=ThemeManager.SRH_Grey,
+                                         fg='black',
+                                         font=("Inter", 20, 'bold'),
+                                         command=lambda: controller.show_frame(Admin))
 
             verzeichniss_help_button = tk.Button(verzeichniss, text="Hilfe", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
                                                  font=("Inter", 20, 'bold'),
@@ -1727,7 +1787,7 @@ class Admin(tk.Frame):
         self.initialize_header()
         self.initialize_navigation()
         self.initialize_table_frame()
-
+# Pippilotta Viktualia Rullgardina Krusmynta Efraimsdotter Långstrump
     def initialize_header(self):
         """Erstellt und positioniert den Header-Bereich der Seite."""
         header = ttk.Label(self, text="Administration", anchor="center", style="Header.TLabel")
@@ -1901,7 +1961,7 @@ class Admin(tk.Frame):
         self.imgmainpage = tk.PhotoImage(
             file=root_path + "/gui/assets/backtosite_icon.png")
         self.imgProfileTest = tksvg.SvgImage(file=root_path + "/gui/assets/profilbild.svg")
-        self.imgProfileTest.configure(scaletoheight=480) # SVG auf Höhe des ursprünglichen Bildes skalieren
+        self.imgProfileTest.configure(scaletoheight=240)  # SVG auf Höhe des ursprünglichen Bildes skalieren
         self.imghelp = tk.PhotoImage(file=root_path + "/gui/assets/helpicon.png")
         self.aktualisieren_img = load_image(root_path + "/gui/assets/Button_Aktualisieren.png")
 
@@ -2169,8 +2229,8 @@ class Einstellungen(tk.Frame):
 
         if does_user_have_the_right(13):
             admin_button = tk.Button(verzeichniss, text="Administration", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                    font=("Inter", 20, 'bold'),
-                                    command=lambda: controller.show_frame(Admin))
+                                     font=("Inter", 20, 'bold'),
+                                     command=lambda: controller.show_frame(Admin))
             admin_button.pack(pady=10, anchor='w')
 
         verzeichniss_help_button = tk.Button(verzeichniss, text="Hilfe", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
@@ -2557,8 +2617,8 @@ class Help(tk.Frame):
 
         if does_user_have_the_right(13):
             admin_button = tk.Button(verzeichniss, text="Administration", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
-                                    font=("Inter", 20, 'bold'),
-                                    command=lambda: controller.show_frame(Admin))
+                                     font=("Inter", 20, 'bold'),
+                                     command=lambda: controller.show_frame(Admin))
             admin_button.pack(pady=10, anchor='w')
 
         verzeichniss_help_button = tk.Button(verzeichniss, text="Hilfe", bd=0, bg=ThemeManager.SRH_Grey, fg='black',
