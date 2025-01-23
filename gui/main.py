@@ -1407,7 +1407,7 @@ class Gerateansicht(tk.Frame):
                 # Datum validieren
                 datetime.strptime(entered_date, "%d.%m.%Y")
                 start_result_label.config(text=f"von: {entered_date}")
-                global global_input_date
+                global global_input_date 
                 global_input_date = entered_date
             except (ValueError, TypeError):
                 start_result_label.config(text="Ungültiges Datum!")
@@ -1450,10 +1450,14 @@ class Gerateansicht(tk.Frame):
             # Werte aus den Eingabefeldern abrufen
             name = name_entry.get()
             tag = tag_entry.get()
-            global global_input_date
-            eingangsdatum = global_input_date
-            global global_input_enddate
-            enddatum = global_input_enddate
+            try:
+                eingangsdatum = global_input_date
+            except:
+                eingangsdatum = "noDate"
+            try:    
+                enddatum = global_input_enddate
+            except:
+                enddatum = "noDate"
             img = None  # der upload img button hat noch keine funktion
 
             buchen_page.destroy()
