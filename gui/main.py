@@ -2405,7 +2405,7 @@ class Einstellungen(tk.Frame):
                         var = ctk.BooleanVar()  # Variable für den Status der Checkbox
                         checkbox = ctk.CTkCheckBox(
                             info_frame, text=description, variable=var, text_color="black", fg_color=ThemeManager.SRH_Orange,
-                            border_width=1, hover_color='white', checkmark_color="white"
+                            border_width=1, hover_color=ThemeManager.SRH_Grey, checkmark_color="white"
                         )
                         checkbox.pack(anchor="w", padx=20, pady=5)  # Ausrichtung und Abstand
                         checkbox_vars[perm] = var  # Speichere die Variable im Dictionary
