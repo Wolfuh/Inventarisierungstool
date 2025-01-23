@@ -8,8 +8,8 @@ from datetime import datetime
 from ThemeManager import ThemeManager
 import cache
 import tksvg
-
-current_group = ""
+import io
+from PIL import Image, ImageTk
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
@@ -17,6 +17,8 @@ from db.SQLite_db import *
 import logging, loggerStyleAnsiEscSgr
 
 loggerStyleAnsiEscSgr.logger
+
+current_group = ""
 
 '''
 root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
@@ -365,28 +367,29 @@ class MainPage(tk.Frame):
 
         while i < 9:
             # Bild für den Button laden
-            img = tk.PhotoImage(file=root_path + f"/gui/assets/Gruppe{i}.png")
+            img = ImageTk.PhotoImage(Image.open(io.BytesIO(get_group_icon(i))))
             self.images.append(img)  # Bildreferenz speichern, damit es nicht gelöscht wird
 
             # Button erstellen
-            bildgr = tk.Button(self, image=img, bd=0, bg='white',
-                               command=lambda group=i: handle_group_click(controller, group))
+            bildgr = ctk.CTkButton(self, text=f"Gruppe {i}", image=img, fg_color='transparent',
+                                   font=("Inter", 20, 'bold'), text_color='black', compound="bottom", hover=False,
+                                   command=lambda group=i: handle_group_click(controller, group))
 
             # Position bestimmen
             if i > 4:
-                hight = 0.55
+                hight = 0.5
                 if i == 5:
                     place = 0  # Zurücksetzen der horizontalen Position
             else:
-                hight = 0.25
+                hight = 0.2
 
             place = place + 0.2
             bildgr.place(relx=place, rely=hight, anchor='n')
 
             i += 1
 
-        seitevor = ctk.CTkButton(self, image=self.imgseitevor, text="", fg_color='white', text_color='black',
-                                 font=("Inter", 20, 'bold'),
+        seitevor = ctk.CTkButton(self, image=self.imgseitevor, text="nächste Seite", fg_color='transparent', bg_color='transparent', text_color='black',
+                                 font=("Inter", 20),
                                  corner_radius=8, hover=False,
                                  command=lambda: controller.show_frame(MainPageS2), width=200, height=30,
                                  hover_color=ThemeManager.SRH_Orange)
@@ -795,7 +798,7 @@ class Ubersicht(tk.Frame):
         def open_add_group_popup():
             group_popup = tk.Toplevel()
             group_popup.title("Neue Gruppe erstellen")
-            group_popup.geometry("300x200")
+            group_popup.geometry("300x250")
             group_popup.config(bg="white")
             group_popup.grab_set()  # Fokus auf das Popup-Fenster
 
@@ -814,6 +817,24 @@ class Ubersicht(tk.Frame):
                     group_popup.destroy()  # Popup schließen, wenn die Gruppe hinzugefügt wurde
 
             # Button zum Hinzufügen der Gruppe
+
+                # Funktion zum Öffnen eines Ordners
+            def open_order():
+                # Beispiel: Ein spezifischer Pfad zu einem Order
+                order_path = os.path.expanduser("~/pictures")  # Hier kannst du den gewünschten Pfad anpassen
+                if os.path.exists(order_path):
+                    os.startfile(order_path)  # Windows
+                else:
+                    print(f"Pfad existiert nicht: {order_path}")
+
+            # Button zum Öffnen des Ordners
+            tk.Label(group_popup, text="Bild auswählen (.png):", bg='white', font=("Inter", 11)).pack(pady=3)
+            open_order_button = ctk.CTkButton(group_popup, text="Ordner Öffnen", command=open_order,
+                                              fg_color="#C0C0C0", text_color='white',
+                                              font=("Inter", 14, 'bold'), corner_radius=8, width=200, height=30,
+                                              hover_color=ThemeManager.SRH_Grey)
+            open_order_button.pack(pady=10)
+
             add_group_button = ctk.CTkButton(group_popup, text="Neue Gruppe Speichern", command=add_group,
                                              fg_color=ThemeManager.SRH_Orange, text_color='white',
                                              font=("Inter", 14, 'bold'), corner_radius=8, width=200, height=30,
