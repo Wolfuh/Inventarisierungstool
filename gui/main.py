@@ -182,12 +182,18 @@ class LogInWindow(tk.Frame):
             def show_password_change_popup(self):
                 password_popup = tk.Toplevel(self)
                 password_popup.title("Passwort ändern")
-                password_popup.geometry("300x200")
+                password_popup.geometry("300x250")
                 password_popup.grab_set()  # Fokus auf das Popup-Fenster
                 password_popup.config(bg="white")
 
-                tk.Label(password_popup, text="Neues Passwort:", font=("Inter", 14)).pack(pady=10)
+                tk.Label(password_popup, text="Neues Passwort:", font=("Inter", 14), bg="white").pack(pady=10)
                 new_password_entry = ctk.CTkEntry(password_popup, text_color="black", font=("Inter", 14), border_width=1,
+                                                  corner_radius=8, fg_color="white", width=200, show="*")
+                new_password_entry.pack(pady=10)
+
+                tk.Label(password_popup, text="Neues Passwort Bestätigen:", font=("Inter", 14), bg="white").pack(pady=10)
+                new_password_entry = ctk.CTkEntry(password_popup, text_color="black", font=("Inter", 14),
+                                                  border_width=1,
                                                   corner_radius=8, fg_color="white", width=200, show="*")
                 new_password_entry.pack(pady=10)
 
@@ -796,7 +802,7 @@ class Ubersicht(tk.Frame):
             # Eingabefeld für den Gruppennamen
             tk.Label(group_popup, text="Neue Gruppe erstellen:", bg='white',font=("Inter", 14)).pack(pady=10)
             group_name_entry = ctk.CTkEntry(group_popup, text_color="black", font=("Inter", 14), border_width=1,
-                                              corner_radius=8, fg_color="white", width=200, show="*")
+                                              corner_radius=8, fg_color="white", width=200)
             group_name_entry.pack(pady=10)
 
             # Funktion zum Hinzufügen der Gruppe
@@ -857,7 +863,7 @@ class Ubersicht(tk.Frame):
 
         # Button zum Öffnen des Popup-Fensters für neue Gruppe
         add_group_button = ctk.CTkButton(verzeichniss, text="Gruppe Hinzufügen", fg_color=ThemeManager.SRH_Grey,
-                                         text_color="black", font=("Inter", 20, 'bold'), command=open_add_group_popup,
+                                         text_color="black", font=("Inter", 25, 'bold'), command=open_add_group_popup,
                                          hover_color="#C0C0C0")
 
         # Positioniere den Button unterhalb des scrollable_frame
