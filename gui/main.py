@@ -1556,19 +1556,18 @@ class Gerateansicht(tk.Frame):
         self.standort_entry.insert(0, data[3])
 
     def update_items_on_save(self):
-        updated_items = {
-            "ID": cache.selected_item[0],
-            "Name": self.name_entry.get(),
-            "Gruppe": self.gruppe_aktuell_label.cget("text"),
-            "Raum": self.standort_entry.get(),
-            "amount": self.anzahl_entry.get(),
-            "Details": self.details_entry.get(),
-            "service_tag": self.tag_entry.get(),
-            "added_by_user": cache.selected_item[7],
-            "Typ": self.typ_aktuell_label.cget("text"),
-            "Status": self.status_aktuell_label.cget("text")
-        }
-
+        updated_items = [
+            cache.selected_item[0],
+            self.name_entry.get(),
+            self.gruppe_aktuell_label.cget("text"),
+            self.standort_entry.get(),
+            self.anzahl_entry.get(),
+            self.details_entry.get(),
+            self.tag_entry.get(),
+            self.typ_aktuell_label.cget("text"),
+            self.status_aktuell_label.cget("text"),
+            cache.selected_item[7]
+        ]
         self.reset_fields()
         return updated_items
 
