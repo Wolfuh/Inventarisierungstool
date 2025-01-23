@@ -8,8 +8,8 @@ from datetime import datetime
 from ThemeManager import ThemeManager
 import cache
 import tksvg
-
-current_group = ""
+import io
+from PIL import Image, ImageTk
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
@@ -17,6 +17,8 @@ from db.SQLite_db import *
 import logging, loggerStyleAnsiEscSgr
 
 loggerStyleAnsiEscSgr.logger
+
+current_group = ""
 
 '''
 root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
@@ -365,28 +367,29 @@ class MainPage(tk.Frame):
 
         while i < 9:
             # Bild für den Button laden
-            img = tk.PhotoImage(file=root_path + f"/gui/assets/Gruppe{i}.png")
+            img = ImageTk.PhotoImage(Image.open(io.BytesIO(get_group_icon(i))))
             self.images.append(img)  # Bildreferenz speichern, damit es nicht gelöscht wird
 
             # Button erstellen
-            bildgr = tk.Button(self, image=img, bd=0, bg='white',
-                               command=lambda group=i: handle_group_click(controller, group))
+            bildgr = ctk.CTkButton(self, text=f"Gruppe {i}", image=img, fg_color='transparent',
+                                   font=("Inter", 20, 'bold'), text_color='black', compound="bottom", hover=False,
+                                   command=lambda group=i: handle_group_click(controller, group))
 
             # Position bestimmen
             if i > 4:
-                hight = 0.55
+                hight = 0.5
                 if i == 5:
                     place = 0  # Zurücksetzen der horizontalen Position
             else:
-                hight = 0.25
+                hight = 0.2
 
             place = place + 0.2
             bildgr.place(relx=place, rely=hight, anchor='n')
 
             i += 1
 
-        seitevor = ctk.CTkButton(self, image=self.imgseitevor, text="", fg_color='white', text_color='black',
-                                 font=("Inter", 20, 'bold'),
+        seitevor = ctk.CTkButton(self, image=self.imgseitevor, text="nächste Seite", fg_color='transparent', bg_color='transparent', text_color='black',
+                                 font=("Inter", 20),
                                  corner_radius=8, hover=False,
                                  command=lambda: controller.show_frame(MainPageS2), width=200, height=30,
                                  hover_color=ThemeManager.SRH_Orange)

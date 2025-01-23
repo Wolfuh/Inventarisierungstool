@@ -384,7 +384,13 @@ def does_user_have_the_right(which_right):
         print("Fehler beim Abrufen der Informationen:", e)
         return False
 
-
+def get_group_icon(groupId):
+    conn = init_connection()
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT Gruppen_Bild FROM Gruppen WHERE ID = {groupId}")
+    result = cursor.fetchone()[0]
+    conn.close()
+    return result
 
 
 
