@@ -9,6 +9,7 @@ from ThemeManager import ThemeManager
 import cache
 from loggerStyleAnsiEscSgr import backgroundColor
 import tksvg
+from CTkScrollableDropdown import *
 
 current_group = ""
 
@@ -966,7 +967,7 @@ class Gerateansicht(tk.Frame):
         self.tag_entry.insert(0, " ")
         self.typ_aktuell_label.configure(text="Hardware")
         self.status_aktuell_label.configure(text="✔Verfügbar")
-        self.gruppe_aktuell_label.configure(text="Gruppe 1")
+       # self.gruppe_aktuell_label.configure(text="Gruppe 1")
         self.details_entry.delete(0, tk.END)
         self.details_entry.insert(0, " ")
         self.anzahl_entry.delete(0, tk.END)
@@ -1079,12 +1080,28 @@ class Gerateansicht(tk.Frame):
         self.status_drop.place(x=420, y=30)
 
         self.gruppe_frame = self.create_entry_frame("Gruppe", 900, 420)
-        self.gruppe_aktuell_label = ctk.CTkLabel(self.gruppe_frame, text="", text_color='black', font=("Inter", 20))
-        self.gruppe_aktuell_label.place(x=5, y=50)
-        self.gruppe_drop = tk.Button(self.gruppe_frame, text="↓", bd=0, bg='white', fg='black',
-                                     font=("Inter", 20, 'bold'),
-                                     command=self.gruppe_dropdown)
-        self.gruppe_drop.place(x=420, y=30)
+
+
+        # self.gruppe_aktuell_label = ctk.CTkLabel(self.gruppe_frame, text="", text_color='black', font=("Inter", 20))
+        # self.gruppe_aktuell_label.place(x=5, y=50)
+
+        # self.gruppe_drop = tk.Button(self.gruppe_frame, text="↓", bd=0, bg='white', fg='black',
+        #                              font=("Inter", 20, 'bold'),
+        #                              command=self.gruppe_dropdown)
+        # self.gruppe_drop.place(x=420, y=30)
+
+        drop_down_content = []
+        for i in range(1,9):
+            drop_down_content.append(f"Gruppe {i}")
+
+        self.gruppe_drop = ctk.CTkOptionMenu(self.gruppe_frame,
+                                             fg_color="white",
+                                             text_color="black",
+                                             font=("Inter", 20, 'bold'),
+                                             dropdown_fg_color='white')
+        CTkScrollableDropdownFrame(self.gruppe_drop,values=drop_down_content)
+
+        self.gruppe_drop.place(x=5, y=50)
 
         self.anzahl_frame = self.create_entry_frame("Stückzahl", 900, 520)
         self.anzahl_entry = self.create_entry(self.anzahl_frame, 5, 50)
@@ -1181,8 +1198,10 @@ class Gerateansicht(tk.Frame):
         dropdown_menu.post(self.status_drop.winfo_rootx() - 62,
                            self.status_drop.winfo_rooty() + self.status_drop.winfo_height())
 
+
+
     def gruppe_dropdown(self):
-        dropdown_menu = tk.Menu(self.gruppe_frame, tearoff=0, bd=1, bg='white', fg='black')
+        dropdown_menu = tk.Menu(self.gruppe_frame,tearoff=0,bd=1, bg='white', fg='black')
         Gruppenname = [i for i in range(1, 9)]
         for value2 in Gruppenname:
             dropdown_menu.add_command(label=f"→ {value2}",
@@ -1488,7 +1507,7 @@ class Gerateansicht(tk.Frame):
         self.tag_entry.insert(0, data[6])
         self.typ_aktuell_label.configure(text=data[8])
         self.status_aktuell_label.configure(text=data[9])
-        self.gruppe_aktuell_label.configure(text=data[2])
+       # self.gruppe_aktuell_label.configure(text=data[2])
         self.details_entry.delete(0, tk.END)
         self.details_entry.insert(0, data[5])
         self.anzahl_entry.delete(0, tk.END)
@@ -1596,7 +1615,7 @@ class Profil(tk.Frame):
             self.imgmainpage = tk.PhotoImage(
                 file=root_path + "/gui/assets/backtosite_icon.png")
             self.imgProfileTest = tksvg.SvgImage(file=root_path + "/gui/assets/profilbild.svg")
-            self.imgProfileTest.configure(scaletoheight=480) # SVG auf Höhe des ursprünglichen Bildes skalieren
+            self.imgProfileTest.configure(scaletoheight=240)
             self.imghelp = tk.PhotoImage(file=root_path + "/gui/assets/helpicon.png")
 
             # Positionierung der Buttons
@@ -1676,7 +1695,7 @@ class Profil(tk.Frame):
             mainpage.place(relx=0.90, rely=0.5, anchor="center")
             help.place(relx=0.85, rely=0.5, anchor="center")
 
-            profilbild.place(x=0, y=0)
+            profilbild.place(x=70, y=100)
 
             username.place(x=499, y=10)
             self.username.place(x=502, y=40)
