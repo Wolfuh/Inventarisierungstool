@@ -427,3 +427,60 @@ def get_group_icon(groupId):
 
 
 
+
+def get_group_table_lenght():
+    try:
+        my_db = init_connection()
+        cur = my_db.cursor()
+
+        # Query to fetch the maximum index
+        query = "SELECT MAX(`ID`) AS max_index FROM Gruppen;"
+        
+        # Execute the query
+        cur.execute(query)
+        result = cur.fetchone()
+
+        # Extract the maximum index value
+        max_index = result[0] if result else None
+
+        return max_index
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return None
+
+    finally:
+        # Always close the cursor and connection
+        cur.close()
+        my_db.close()
+
+def get_group_information_from_db(groupindex):
+    try:
+        # Initialize the database connection
+        my_db = init_connection()
+        cur = my_db.cursor()
+
+        # Query to fetch groupname and image based on groupindex
+        query = """
+            SELECT Gruppen_name, Gruppen_Bild 
+            FROM Gruppen 
+            WHERE `ID` = ?;
+        """
+
+        # Execute the query with the provided groupindex
+        cur.execute(query, (groupindex,))
+        result = cur.fetchone()
+
+        if result:
+            groupname, image = result
+            return {"groupname": groupname, "image": image}
+        else:
+            return None  # No matching row found
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return None
+
+    finally:
+        cur.close()
+        my_db.close()
