@@ -10,9 +10,6 @@ import cache
 import tksvg
 import io
 from PIL import Image, ImageTk
-from CTkScrollableDropdown import *
-
-current_group = ""
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
@@ -22,17 +19,6 @@ import logging, loggerStyleAnsiEscSgr
 loggerStyleAnsiEscSgr.logger
 
 current_group = ""
-
-'''
-root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
-# login_DB
-login_DB_path = root_path+"/gui/assets/+'db/login_DB.py'"
-
-# Load and import module dynamically
-spec = importlib.util.spec_from_file_location("login_DB", login_DB_path)
-# login_DB = importlib.util.module_from_spec(spec)
-# spec.loader.exec_module(login_DB)
-'''
 
 
 ###################################
@@ -85,7 +71,7 @@ class GuiTest(tk.Tk):
         Erstellt andere Seiten nach einem erfolgreichen Login.
         """
         container = list(self.frames.values())[0].master  # Der Container aus der ersten Seite
-        pages = [MainPage, MainPageS2, Mainpage_empty, Ubersicht, 
+        pages = [MainPage, MainPageS2, Mainpage_empty, Ubersicht,
                  Gerateansicht, Einstellungen, Profil, Admin, Help]
 
         for Page in pages:
@@ -185,13 +171,20 @@ class LogInWindow(tk.Frame):
             """
 
             def show_password_change_popup(self):
-                popup = tk.Toplevel(self)
-                popup.title("Passwort ändern")
-                popup.geometry("300x200")
-                popup.grab_set()  # Fokus auf das Popup-Fenster
+                password_popup = tk.Toplevel(self)
+                password_popup.title("Passwort ändern")
+                password_popup.geometry("300x250")
+                password_popup.grab_set()  # Fokus auf das Popup-Fenster
+                password_popup.config(bg="white")
 
-                tk.Label(popup, text="Neues Passwort:", font=("Inter", 14)).pack(pady=10)
-                new_password_entry = ctk.CTkEntry(popup, text_color="black", font=("Inter", 14), border_width=1,
+                tk.Label(password_popup, text="Neues Passwort:", font=("Inter", 14), bg="white").pack(pady=10)
+                new_password_entry = ctk.CTkEntry(password_popup, text_color="black", font=("Inter", 14), border_width=1,
+                                                  corner_radius=8, fg_color="white", width=200, show="*")
+                new_password_entry.pack(pady=10)
+
+                tk.Label(password_popup, text="Neues Passwort Bestätigen:", font=("Inter", 14), bg="white").pack(pady=10)
+                new_password_entry = ctk.CTkEntry(password_popup, text_color="black", font=("Inter", 14),
+                                                  border_width=1,
                                                   corner_radius=8, fg_color="white", width=200, show="*")
                 new_password_entry.pack(pady=10)
 
@@ -200,7 +193,7 @@ class LogInWindow(tk.Frame):
                     passwort_staerke = ist_passwort_stark(new_password)
                     if passwort_staerke[0]:
                         save_only_password(new_password)
-                        popup.destroy()
+                        password_popup.destroy()
                         logging.info(f"'{username_entry.get()}' hat sich erfolgreich angemeldet.")
                         username_entry.delete(0, 'end')
                         password_entry.delete(0, 'end')
@@ -208,7 +201,7 @@ class LogInWindow(tk.Frame):
                     else:
                         messagebox.showinfo("Fehler", passwort_staerke[1])  # zeigt die jeweilige Fehlermeldung
 
-                new_own_password = ctk.CTkButton(popup, text="Passwort ändern", fg_color=ThemeManager.SRH_Orange,
+                new_own_password = ctk.CTkButton(password_popup, text="Passwort ändern", fg_color=ThemeManager.SRH_Orange,
                                                  text_color='white',
                                                  font=("Inter", 14, 'bold'), corner_radius=8, command=set_new_password,
                                                  width=200, height=30, hover_color=ThemeManager.SRH_Orange)
@@ -363,28 +356,29 @@ class MainPage(tk.Frame):
 
         while i < 9:
             # Bild für den Button laden
-            img = tk.PhotoImage(file=root_path + f"/gui/assets/Gruppe{i}.png")
+            img = ImageTk.PhotoImage(Image.open(io.BytesIO(get_group_icon(i))))
             self.images.append(img)  # Bildreferenz speichern, damit es nicht gelöscht wird
 
             # Button erstellen
-            bildgr = tk.Button(self, image=img, bd=0, bg='white',
-                               command=lambda group=i: handle_group_click(controller, group))
+            bildgr = ctk.CTkButton(self, text=f"Gruppe {i}", image=img, fg_color='transparent',
+                                   font=("Inter", 20, 'bold'), text_color='black', compound="bottom", hover=False,
+                                   command=lambda group=i: handle_group_click(controller, group))
 
             # Position bestimmen
             if i > 4:
-                hight = 0.55
+                hight = 0.5
                 if i == 5:
                     place = 0  # Zurücksetzen der horizontalen Position
             else:
-                hight = 0.25
+                hight = 0.2
 
             place = place + 0.2
             bildgr.place(relx=place, rely=hight, anchor='n')
 
             i += 1
 
-        seitevor = ctk.CTkButton(self, image=self.imgseitevor, text="", fg_color='white', text_color='black',
-                                 font=("Inter", 20, 'bold'),
+        seitevor = ctk.CTkButton(self, image=self.imgseitevor, text="nächste Seite", fg_color='transparent', bg_color='transparent', text_color='black',
+                                 font=("Inter", 20),
                                  corner_radius=8, hover=False,
                                  command=lambda: controller.show_frame(MainPageS2), width=200, height=30,
                                  hover_color=ThemeManager.SRH_Orange)
@@ -1046,7 +1040,7 @@ class Gerateansicht(tk.Frame):
         self.tag_entry.insert(0, " ")
         self.typ_aktuell_label.configure(text="Hardware")
         self.status_aktuell_label.configure(text="✔Verfügbar")
-       # self.gruppe_aktuell_label.configure(text="Gruppe 1")
+        self.gruppe_aktuell_label.configure(text="Gruppe 1")
         self.details_entry.delete(0, tk.END)
         self.details_entry.insert(0, " ")
         self.anzahl_entry.delete(0, tk.END)
@@ -1159,28 +1153,12 @@ class Gerateansicht(tk.Frame):
         self.status_drop.place(x=420, y=30)
 
         self.gruppe_frame = self.create_entry_frame("Gruppe", 900, 420)
-
-
-        # self.gruppe_aktuell_label = ctk.CTkLabel(self.gruppe_frame, text="", text_color='black', font=("Inter", 20))
-        # self.gruppe_aktuell_label.place(x=5, y=50)
-
-        # self.gruppe_drop = tk.Button(self.gruppe_frame, text="↓", bd=0, bg='white', fg='black',
-        #                              font=("Inter", 20, 'bold'),
-        #                              command=self.gruppe_dropdown)
-        # self.gruppe_drop.place(x=420, y=30)
-
-        drop_down_content = []
-        for i in range(1,9):
-            drop_down_content.append(f"Gruppe {i}")
-
-        self.gruppe_drop = ctk.CTkOptionMenu(self.gruppe_frame,
-                                             fg_color="white",
-                                             text_color="black",
-                                             font=("Inter", 20, 'bold'),
-                                             dropdown_fg_color='white')
-        CTkScrollableDropdownFrame(self.gruppe_drop,values=drop_down_content)
-
-        self.gruppe_drop.place(x=5, y=50)
+        self.gruppe_aktuell_label = ctk.CTkLabel(self.gruppe_frame, text="", text_color='black', font=("Inter", 20))
+        self.gruppe_aktuell_label.place(x=5, y=50)
+        self.gruppe_drop = tk.Button(self.gruppe_frame, text="↓", bd=0, bg='white', fg='black',
+                                     font=("Inter", 20, 'bold'),
+                                     command=self.gruppe_dropdown)
+        self.gruppe_drop.place(x=420, y=30)
 
         self.anzahl_frame = self.create_entry_frame("Stückzahl", 900, 520)
         self.anzahl_entry = self.create_entry(self.anzahl_frame, 5, 50)
@@ -1278,15 +1256,14 @@ class Gerateansicht(tk.Frame):
         dropdown_menu.post(self.status_drop.winfo_rootx() - 62,
                            self.status_drop.winfo_rooty() + self.status_drop.winfo_height())
 
-
-
     def gruppe_dropdown(self):
-        dropdown_menu = tk.Menu(self.gruppe_frame,tearoff=0,bd=1, bg='white', fg='black')
-        Gruppenname = [i for i in range(1, 9)]
+        dropdown_menu = tk.Menu(self.gruppe_frame, tearoff=0, bd=1, bg='white', fg='black')
+        
+        Gruppenname = [i for i in range(1, 22)]
         for value2 in Gruppenname:
             dropdown_menu.add_command(label=f"→ {value2}",
-                                      command=lambda value=value2: [self.gruppe_aktuell_label.configure(text=value2),
-                                                                    print(f"Produkt {value2}")])
+                                      command=lambda value=value2: [self.gruppe_aktuell_label.configure(text=value),
+                                                                    print(f"Produkt {value}")])
         dropdown_menu.post(self.gruppe_drop.winfo_rootx() - 62,
                            self.gruppe_drop.winfo_rooty() + self.gruppe_drop.winfo_height())
 
@@ -1440,7 +1417,7 @@ class Gerateansicht(tk.Frame):
                 # Datum validieren
                 datetime.strptime(entered_date, "%d.%m.%Y")
                 start_result_label.config(text=f"von: {entered_date}")
-                global global_input_date
+                global global_input_date 
                 global_input_date = entered_date
             except (ValueError, TypeError):
                 start_result_label.config(text="Ungültiges Datum!")
@@ -1487,7 +1464,7 @@ class Gerateansicht(tk.Frame):
                 eingangsdatum = global_input_date
             except:
                 eingangsdatum = "noDate"
-            try:
+            try:    
                 enddatum = global_input_enddate
             except:
                 enddatum = "noDate"
@@ -1591,7 +1568,7 @@ class Gerateansicht(tk.Frame):
         self.tag_entry.insert(0, data[6])
         self.typ_aktuell_label.configure(text=data[8])
         self.status_aktuell_label.configure(text=data[9])
-       # self.gruppe_aktuell_label.configure(text=data[2])
+        self.gruppe_aktuell_label.configure(text=data[2])
         self.details_entry.delete(0, tk.END)
         self.details_entry.insert(0, data[5])
         self.anzahl_entry.delete(0, tk.END)
@@ -1697,7 +1674,7 @@ class Profil(tk.Frame):
             self.imgmainpage = tk.PhotoImage(
                 file=root_path + "/gui/assets/backtosite_icon.png")
             self.imgProfileTest = tksvg.SvgImage(file=root_path + "/gui/assets/profilbild.svg")
-            self.imgProfileTest.configure(scaletoheight=240)
+            self.imgProfileTest.configure(scaletoheight=240)  # SVG auf Höhe des ursprünglichen Bildes skalieren
             self.imghelp = tk.PhotoImage(file=root_path + "/gui/assets/helpicon.png")
 
             # Positionierung der Buttons
@@ -1779,7 +1756,7 @@ class Profil(tk.Frame):
             mainpage.place(relx=0.90, rely=0.5, anchor="center")
             help.place(relx=0.85, rely=0.5, anchor="center")
 
-            profilbild.place(x=70, y=100)
+            profilbild.place(x=0, y=0)
 
             username.place(x=499, y=10)
             self.username.place(x=502, y=40)
