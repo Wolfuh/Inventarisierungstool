@@ -336,7 +336,7 @@ class MainPage(tk.Frame):
                              command=lambda: controller.show_frame(Help))
 
         all = ctk.CTkButton(self, text="Alle Anzeigen", fg_color='white', text_color=ThemeManager.SRH_Blau,
-                            font=("Inter", 20), corner_radius=8, hover=False,
+                            font=("Inter", 20), corner_radius=8, hover_color="#C0C0C0",
                             command=lambda: handle_group_click(controller, ""))
 
         # global current_group
@@ -377,7 +377,7 @@ class MainPage(tk.Frame):
 
             i += 1
 
-        seitevor = ctk.CTkButton(self, image=self.imgseitevor, text="nächste Seite", fg_color='transparent', bg_color='transparent', text_color='black',
+        seitevor = ctk.CTkButton(self, image=self.imgseitevor, text="", fg_color='transparent', bg_color='transparent', text_color='black',
                                  font=("Inter", 20),
                                  corner_radius=8, hover=False,
                                  command=lambda: controller.show_frame(MainPageS2), width=200, height=30,
@@ -489,7 +489,7 @@ class MainPageS2(tk.Frame):
 
         # Buttons zum Wechseln zwischen den Hauptseiten und "Alle anzeigen" Button für die Übersichtsseite
         all = ctk.CTkButton(self, text="Alle Anzeigen", fg_color='white', text_color=ThemeManager.SRH_Blau,
-                            font=("Inter", 20), corner_radius=8, hover=False,
+                            font=("Inter", 20), corner_radius=8, hover_color="#C0C0C0",
                             command=lambda: controller.show_frame(Ubersicht))
 
         bildgr1 = tk.Button(self, image=self.imgbildgr1, bd=0, bg='white',
@@ -601,7 +601,7 @@ class Mainpage_empty(tk.Frame):
 
         # Buttons zum Wechseln zwischen den Hauptseiten und "Alle anzeigen" Button für die Übersichtsseite
         all = ctk.CTkButton(self, text="Alle Anzeigen", fg_color='white', text_color=ThemeManager.SRH_Blau,
-                            font=("Inter", 20), corner_radius=8, hover=False,
+                            font=("Inter", 20), corner_radius=8, hover_color="#C0C0C0",
                             command=lambda: controller.show_frame(Ubersicht))
 
         seitevor = ctk.CTkButton(self, image=self.imgseitevor, text="", fg_color='white', text_color='black',
@@ -762,14 +762,14 @@ class Ubersicht(tk.Frame):
 
         mainpage = ctk.CTkButton(self.mainpage_frame, text="↩", fg_color='white', text_color=ThemeManager.SRH_Grey,
                                  width=5,
-                                 font=("Inter", 50, 'bold'), corner_radius=8, hover=False,
+                                 font=("Inter", 50, 'bold'), corner_radius=8, hover_color="#eaeaea",
                                  command=lambda: controller.show_frame(MainPage))
         mainpage.place(relx=0, rely=0)
 
         # "Alle Anzeigen" Button in der Seitenleiste
         all_button = ctk.CTkButton(verzeichniss, text="Alle Anzeigen", fg_color=ThemeManager.SRH_Grey,
-                                   text_color='black',
-                                   font=("Inter", 20), corner_radius=8, hover=False,
+                                   text_color='black', hover_color="#C0C0C0",
+                                   font=("Inter", 20), corner_radius=8,
                                    command=lambda: Ubersicht.update_table_contents(2, "", ""))  # controller.show_frame(Ubersicht))
 
         all_button.pack(pady=10, anchor='w')
@@ -818,7 +818,7 @@ class Ubersicht(tk.Frame):
 
             # Button zum Öffnen des Ordners
             tk.Label(group_popup, text="Bild auswählen (.png):", bg='white', font=("Inter", 11)).pack(pady=3)
-            open_order_button = ctk.CTkButton(group_popup, text="Ordner Öffnen", command=open_order,
+            open_order_button = ctk.CTkButton(group_popup, text="Bild auswählen", command=open_order,
                                               fg_color="#C0C0C0", text_color='white',
                                               font=("Inter", 14, 'bold'), corner_radius=8, width=200, height=30,
                                               hover_color=ThemeManager.SRH_Grey)
@@ -922,8 +922,7 @@ class Ubersicht(tk.Frame):
             dropdown_menu.post(Filter_button.winfo_rootx(), Filter_button.winfo_rooty() + Filter_button.winfo_height())
 
         Filter_button = tk.Button(self.ubersicht_frame, image=self.imgFilter, bd=0, bg='white', fg='black',
-                                  font=("Inter", 20, 'bold'),
-                                  command=show_dropdown_Filter)
+                                  font=("Inter", 20, 'bold'), command=show_dropdown_Filter)
         Filter_button.place(relx=0, rely=0.1)
 
         # Suche
@@ -1114,7 +1113,7 @@ class Gerateansicht(tk.Frame):
 
         self.mainpage_button = ctk.CTkButton(self, text="↩", fg_color='white', text_color=ThemeManager.SRH_Grey,
                                              width=5,
-                                             font=("Inter", 50, 'bold'), corner_radius=8, hover=False,
+                                             font=("Inter", 50, 'bold'), corner_radius=8, hover_color="#eaeaea",
                                              command=lambda: [self.reset_fields(), self.controller.show_frame(Ubersicht)])
 
         self.mainpage_button.place(relx=1, rely=1)
@@ -1122,7 +1121,7 @@ class Gerateansicht(tk.Frame):
         # "Alle Anzeigen" Button in der Seitenleiste
         self.all_button = ctk.CTkButton(self.verzeichniss, text="Alle Anzeigen", fg_color=ThemeManager.SRH_Grey,
                                         bg_color=ThemeManager.SRH_Grey, text_color='black',
-                                        font=("Inter", 20), corner_radius=8, hover=False,
+                                        font=("Inter", 20), corner_radius=8, hover_color="#C0C0C0",
                                         command=lambda: [self.reset_fields(), self.controller.show_frame(Ubersicht)])
 
         self.all_button.pack(pady=10, anchor='w')
@@ -2090,7 +2089,7 @@ class Admin(tk.Frame):
 
         adminpage = ctk.CTkButton(admin_user_page, text="↩", fg_color='white', text_color=ThemeManager.SRH_Grey,
                                   width=5,
-                                  font=("Inter", 50, 'bold'), corner_radius=8, hover=False,
+                                  font=("Inter", 50, 'bold'), corner_radius=8, hover_color="#eaeaea",
                                   command=admin_user_page.destroy)
         adminpage.place(relx=0.05, rely=0.16, anchor='nw')
 
