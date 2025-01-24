@@ -17,7 +17,8 @@ from db.SQLite_db import *
 import logging, loggerStyleAnsiEscSgr
 
 loggerStyleAnsiEscSgr.logger
-
+pil_logger = logging.getLogger('PIL')
+pil_logger.setLevel(logging.INFO)
 current_group = ""
 
 
