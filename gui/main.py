@@ -330,7 +330,7 @@ class MainPage(tk.Frame):
 
         all = ctk.CTkButton(self, text="Alle Anzeigen", fg_color='white', text_color=ThemeManager.SRH_Blau,
                             font=("Inter", 20), corner_radius=8, hover=False,
-                            command=lambda: self.handle_group_click(controller, ""))
+                            command=lambda: self.handle_group_click(""))
 
 
         ###### Plazierung #######
