@@ -2119,7 +2119,7 @@ class Admin(tk.Frame):
 
         ###### Plazierung #######
 
-        profilbild.place(x=0, y=0)
+        profilbild.place(x=70, y=100)
 
         admin_username.place(x=499, y=10)
         self.admin_username.place(x=502, y=40)
