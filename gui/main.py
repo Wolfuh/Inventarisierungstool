@@ -10,6 +10,7 @@ import cache
 import tksvg
 import io
 from PIL import Image, ImageTk
+from CTkScrollableDropdown import *
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
@@ -17,19 +18,10 @@ from db.SQLite_db import *
 import logging, loggerStyleAnsiEscSgr
 
 loggerStyleAnsiEscSgr.logger
+pil_logger = logging.getLogger('PIL')
+pil_logger.setLevel(logging.INFO)
 
 current_group = ""
-
-'''
-root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
-# login_DB
-login_DB_path = root_path+"/gui/assets/+'db/login_DB.py'"
-
-# Load and import module dynamically
-spec = importlib.util.spec_from_file_location("login_DB", login_DB_path)
-# login_DB = importlib.util.module_from_spec(spec)
-# spec.loader.exec_module(login_DB)
-'''
 
 
 ###################################
@@ -956,14 +948,14 @@ class Ubersicht(tk.Frame):
 
         mainpage = ctk.CTkButton(self.mainpage_frame, text="↩", fg_color='white', text_color=ThemeManager.SRH_Grey,
                                  width=5,
-                                 font=("Inter", 50, 'bold'), corner_radius=8, hover=False,
+                                 font=("Inter", 50, 'bold'), corner_radius=8, hover_color="#eaeaea",
                                  command=lambda: controller.show_frame(MainPage))
         mainpage.place(relx=0, rely=0)
 
         # "Alle Anzeigen" Button in der Seitenleiste
         all_button = ctk.CTkButton(verzeichniss, text="Alle Anzeigen", fg_color=ThemeManager.SRH_Grey,
-                                   text_color='black',
-                                   font=("Inter", 20), corner_radius=8, hover=False,
+                                   text_color='black', hover_color="#C0C0C0",
+                                   font=("Inter", 20), corner_radius=8,
                                    command=lambda: Ubersicht.update_table_contents(2, "", ""))  # controller.show_frame(Ubersicht))
 
         all_button.pack(pady=10, anchor='w')
@@ -1012,7 +1004,7 @@ class Ubersicht(tk.Frame):
 
             # Button zum Öffnen des Ordners
             tk.Label(group_popup, text="Bild auswählen (.png):", bg='white', font=("Inter", 11)).pack(pady=3)
-            open_order_button = ctk.CTkButton(group_popup, text="Ordner Öffnen", command=open_order,
+            open_order_button = ctk.CTkButton(group_popup, text="Bild auswählen", command=open_order,
                                               fg_color="#C0C0C0", text_color='white',
                                               font=("Inter", 14, 'bold'), corner_radius=8, width=200, height=30,
                                               hover_color=ThemeManager.SRH_Grey)
@@ -1234,7 +1226,7 @@ class Gerateansicht(tk.Frame):
         self.tag_entry.insert(0, " ")
         self.typ_aktuell_label.configure(text="Hardware")
         self.status_aktuell_label.configure(text="✔Verfügbar")
-        self.gruppe_aktuell_label.configure(text="Gruppe 1")
+       # self.gruppe_aktuell_label.configure(text="Gruppe 1")
         self.details_entry.delete(0, tk.END)
         self.details_entry.insert(0, " ")
         self.anzahl_entry.delete(0, tk.END)
@@ -1308,7 +1300,7 @@ class Gerateansicht(tk.Frame):
 
         self.mainpage_button = ctk.CTkButton(self, text="↩", fg_color='white', text_color=ThemeManager.SRH_Grey,
                                              width=5,
-                                             font=("Inter", 50, 'bold'), corner_radius=8, hover=False,
+                                             font=("Inter", 50, 'bold'), corner_radius=8, hover_color="#eaeaea",
                                              command=lambda: [self.reset_fields(), self.controller.show_frame(Ubersicht)])
 
         self.mainpage_button.place(relx=1, rely=1)
@@ -1316,7 +1308,7 @@ class Gerateansicht(tk.Frame):
         # "Alle Anzeigen" Button in der Seitenleiste
         self.all_button = ctk.CTkButton(self.verzeichniss, text="Alle Anzeigen", fg_color=ThemeManager.SRH_Grey,
                                         bg_color=ThemeManager.SRH_Grey, text_color='black',
-                                        font=("Inter", 20), corner_radius=8, hover=False,
+                                        font=("Inter", 20), corner_radius=8, hover_color="#C0C0C0",
                                         command=lambda: [self.reset_fields(), self.controller.show_frame(Ubersicht)])
 
         self.all_button.pack(pady=10, anchor='w')
@@ -1347,12 +1339,28 @@ class Gerateansicht(tk.Frame):
         self.status_drop.place(x=420, y=30)
 
         self.gruppe_frame = self.create_entry_frame("Gruppe", 900, 420)
+
+
         self.gruppe_aktuell_label = ctk.CTkLabel(self.gruppe_frame, text="", text_color='black', font=("Inter", 20))
         self.gruppe_aktuell_label.place(x=5, y=50)
-        self.gruppe_drop = tk.Button(self.gruppe_frame, text="↓", bd=0, bg='white', fg='black',
-                                     font=("Inter", 20, 'bold'),
-                                     command=self.gruppe_dropdown)
-        self.gruppe_drop.place(x=420, y=30)
+
+        # self.gruppe_drop = tk.Button(self.gruppe_frame, text="↓", bd=0, bg='white', fg='black',
+        #                              font=("Inter", 20, 'bold'),
+        #                              command=self.gruppe_dropdown)
+        # self.gruppe_drop.place(x=420, y=30)
+
+        drop_down_content = []
+        for i in range(1,9):
+            drop_down_content.append(f"Gruppe {i}")
+
+        self.gruppe_drop = ctk.CTkOptionMenu(self.gruppe_frame,
+                                             fg_color="white",
+                                             text_color="black",
+                                             font=("Inter", 20, 'bold'),
+                                             dropdown_fg_color='white')
+        CTkScrollableDropdownFrame(self.gruppe_drop,values=drop_down_content)
+
+        self.gruppe_drop.place(x=5, y=50)
 
         self.anzahl_frame = self.create_entry_frame("Stückzahl", 900, 520)
         self.anzahl_entry = self.create_entry(self.anzahl_frame, 5, 50)
@@ -1452,12 +1460,11 @@ class Gerateansicht(tk.Frame):
 
     def gruppe_dropdown(self):
         dropdown_menu = tk.Menu(self.gruppe_frame, tearoff=0, bd=1, bg='white', fg='black')
-        
         Gruppenname = [i for i in range(1, 22)]
         for value2 in Gruppenname:
             dropdown_menu.add_command(label=f"→ {value2}",
                                       command=lambda value=value2: [self.gruppe_aktuell_label.configure(text=value),
-                                                                    print(f"Produkt {value}")])
+                                                                    print(f"Produkt {value2}")])
         dropdown_menu.post(self.gruppe_drop.winfo_rootx() - 62,
                            self.gruppe_drop.winfo_rooty() + self.gruppe_drop.winfo_height())
 
@@ -1611,7 +1618,7 @@ class Gerateansicht(tk.Frame):
                 # Datum validieren
                 datetime.strptime(entered_date, "%d.%m.%Y")
                 start_result_label.config(text=f"von: {entered_date}")
-                global global_input_date 
+                global global_input_date
                 global_input_date = entered_date
             except (ValueError, TypeError):
                 start_result_label.config(text="Ungültiges Datum!")
@@ -1658,7 +1665,7 @@ class Gerateansicht(tk.Frame):
                 eingangsdatum = global_input_date
             except:
                 eingangsdatum = "noDate"
-            try:    
+            try:
                 enddatum = global_input_enddate
             except:
                 enddatum = "noDate"
@@ -1868,7 +1875,7 @@ class Profil(tk.Frame):
             self.imgmainpage = tk.PhotoImage(
                 file=root_path + "/gui/assets/backtosite_icon.png")
             self.imgProfileTest = tksvg.SvgImage(file=root_path + "/gui/assets/profilbild.svg")
-            self.imgProfileTest.configure(scaletoheight=240)  # SVG auf Höhe des ursprünglichen Bildes skalieren
+            self.imgProfileTest.configure(scaletoheight=240)
             self.imghelp = tk.PhotoImage(file=root_path + "/gui/assets/helpicon.png")
 
             # Positionierung der Buttons
@@ -1950,7 +1957,7 @@ class Profil(tk.Frame):
             mainpage.place(relx=0.90, rely=0.5, anchor="center")
             help.place(relx=0.85, rely=0.5, anchor="center")
 
-            profilbild.place(x=0, y=0)
+            profilbild.place(x=70, y=100)
 
             username.place(x=499, y=10)
             self.username.place(x=502, y=40)
@@ -2284,13 +2291,13 @@ class Admin(tk.Frame):
 
         adminpage = ctk.CTkButton(admin_user_page, text="↩", fg_color='white', text_color=ThemeManager.SRH_Grey,
                                   width=5,
-                                  font=("Inter", 50, 'bold'), corner_radius=8, hover=False,
+                                  font=("Inter", 50, 'bold'), corner_radius=8, hover_color="#eaeaea",
                                   command=admin_user_page.destroy)
         adminpage.place(relx=0.05, rely=0.16, anchor='nw')
 
         ###### Plazierung #######
 
-        profilbild.place(x=0, y=0)
+        profilbild.place(x=70, y=100)
 
         admin_username.place(x=499, y=10)
         self.admin_username.place(x=502, y=40)
