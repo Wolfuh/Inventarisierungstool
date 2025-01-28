@@ -800,24 +800,45 @@ class Ubersicht(tk.Frame):
                                               corner_radius=8, fg_color="white", width=200)
             group_name_entry.pack(pady=10)
 
-            # Funktion zum Hinzufügen der Gruppe
-            def add_group():
-                group_name = group_name_entry.get()
-                if group_name:  # Überprüfen, ob ein Name eingegeben wurde
-                    # Hier kannst du die Logik hinzufügen, um die Gruppe hinzuzufügen (z. B. eine Liste oder Datenbank)
-                    print(f"Neue Gruppe hinzugefügt: {group_name}")
-                    group_popup.destroy()  # Popup schließen, wenn die Gruppe hinzugefügt wurde
-
-            # Button zum Hinzufügen der Gruppe
 
                 # Funktion zum Öffnen eines Ordners
             def open_order():
-                # Beispiel: Ein spezifischer Pfad zu einem Order
-                order_path = os.path.expanduser("~/pictures")  # Hier kannst du den gewünschten Pfad anpassen
-                if os.path.exists(order_path):
-                    os.startfile(order_path)  # Windows
+                # Öffnet einen Dialog, um eine Bilddatei auszuwählen
+                file_path = filedialog.askopenfilename(
+                    title="Bild auswählen",
+                    filetypes=[("PNG Dateien", "*.png"), ("Alle Dateien", "*.*")]
+                )
+                
+                if file_path:  # Wenn eine Datei ausgewählt wurde
+                    print(f"Ausgewähltes Bild: {file_path}")
+                    
+                    # Bild öffnen und in eine Pixelgrafik umwandeln
+                    try:
+                        with open(file_path, 'rb') as image_file:
+                            global pixel_grafik
+                            pixel_grafik = image_file.read()
+                                                
+                    except Exception as e:
+                        print(f"Fehler beim Laden des Bildes: {e}")
+                        return None, None
                 else:
-                    print(f"Pfad existiert nicht: {order_path}")
+                    print("Kein Bild ausgewählt.")
+                    return None, None
+                
+            
+
+            # Funktion zum Hinzufügen der Gruppe
+            def add_group():
+                group_name = group_name_entry.get()
+                global pixel_grafik
+                group_picture = pixel_grafik  # Hier kannst du das Bild speichern
+                
+                pixel_grafik = None
+                if group_name and group_picture:  # Überprüfen, ob ein Name eingegeben wurde
+                    add_group_in_DB(group_name, group_picture)
+                    # Hier kannst du die Logik hinzufügen, um die Gruppe hinzuzufügen (z. B. eine Liste oder Datenbank)
+                    print(f"Neue Gruppe hinzugefügt: {group_name}")
+                    group_popup.destroy()  # Popup schließen, wenn die Gruppe hinzugefügt wurde
 
             # Button zum Öffnen des Ordners
             tk.Label(group_popup, text="Bild auswählen (.png):", bg='white', font=("Inter", 11)).pack(pady=3)

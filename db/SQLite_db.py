@@ -349,8 +349,6 @@ def show_history_table(item_ID, excluded_columns):
 
 
 
-import sqlite3
-
 def does_user_have_the_right(which_right):
     try:
         # Überprüfen, ob der Benutzername gültig ist
@@ -393,6 +391,18 @@ def get_group_icon(groupId):
     return result
 
 
+def add_group_in_DB(group_name, group_icon):
+    try:
+        conn = init_connection()
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO Gruppen (Gruppen_name, Gruppen_Bild) VALUES (?, ?)", (group_name, group_icon))
+        conn.commit()
+        conn.close()
+    except sqlite3.Error as e:
+        print(f"Database error: {e}")
+    finally:
+        if conn:
+            conn.close()
 
 
 ##############################
