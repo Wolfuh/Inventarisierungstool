@@ -348,6 +348,27 @@ def show_history_table(item_ID, excluded_columns):
             my_db.close()
 
 
+def delete_item(item_ID):
+
+    try:
+        # Verbindung zur Datenbank herstellen
+        connection = init_connection()
+        cursor = connection.cursor()
+
+        # SQL-Abfrage zum Löschen eines Eintrags
+        cursor.execute("DELETE FROM items WHERE ID = ?", (item_ID,))
+
+        # Änderungen speichern
+        connection.commit()
+
+    except sqlite3.Error as e:
+        return [], "Fehler beim Löschen des Eintrags:", str(e)
+
+    finally:
+        # Verbindung schließen
+        if connection:
+            connection.close()
+
 
 def does_user_have_the_right(which_right):
     try:
