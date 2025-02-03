@@ -4,6 +4,7 @@ import hashlib
 import re
 
 username_global = "Benutzername Ungültig"
+item_ID_set = ""
 
 def init_connection():      # verbindung mit DB erstellen und Variable der Verbindung geben
     path:str = os.path.join(os.path.dirname(__file__), 'Inventarisierungs_DB.sqlite3')    # DB weg, der mit VS Code und PyCharm erreichbar ist
@@ -333,6 +334,8 @@ def show_image_from_db(indexnum):
 
 def show_history_table(item_ID, excluded_columns):
     try:
+        global item_ID_set
+        item_ID_set = item_ID
         my_db = init_connection()
         cur = my_db.cursor()
         columns = fetch_headers("history", excluded_columns)
@@ -348,18 +351,20 @@ def show_history_table(item_ID, excluded_columns):
             my_db.close()
 
 
-def delete_item(item_ID):
-
+def delete_item():
     try:
-        # Verbindung zur Datenbank herstellen
-        connection = init_connection()
-        cursor = connection.cursor()
+        if item_ID_set:
+            # Verbindung zur Datenbank herstellen
+            connection = init_connection()
+            cursor = connection.cursor()
 
-        # SQL-Abfrage zum Löschen eines Eintrags
-        cursor.execute("DELETE FROM items WHERE ID = ?", (item_ID,))
+            # SQL-Abfrage zum Löschen eines Eintrags
+            cursor.execute("DELETE FROM items WHERE ID = ?", (item_ID_set,))
 
-        # Änderungen speichern
-        connection.commit()
+            # Änderungen speichern
+            connection.commit()
+        else:
+            pass
 
     except sqlite3.Error as e:
         return [], "Fehler beim Löschen des Eintrags:", str(e)

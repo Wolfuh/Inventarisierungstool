@@ -204,16 +204,17 @@ class LogInWindow(tk.Frame):
                     else:
                         messagebox.showinfo("Fehler", passwort_staerke[1])  # zeigt die jeweilige Fehlermeldung
 
-                new_own_password = ctk.CTkButton(password_popup, text="Passwort ändern", fg_color=ThemeManager.SRH_Orange,
+                new_own_password = ctk.CTkButton(password_popup, text="Neues Passwort speichern", fg_color=ThemeManager.SRH_Orange,
                                                  text_color='white',
                                                  font=("Inter", 14, 'bold'), corner_radius=8, command=set_new_password,
-                                                 width=200, height=30, hover_color=ThemeManager.SRH_Orange)
+                                                 width=200, height=30, hover_color='black')
                 new_own_password.pack(pady=10)
 
             user_login = login_lookup(username_entry.get(), password_entry.get())
             if user_login == "change_password":
                 show_password_change_popup(self)
                 pass
+
             elif user_login == "keep_going":
                 self.controller.initialize_pages()  # Initialisiere andere Seiten
                 self.controller.show_frame(MainPage)
@@ -221,6 +222,7 @@ class LogInWindow(tk.Frame):
                 password_entry.delete(0, 'end')
                 logging.info(f"'{username_global}' hat sich erfolgreich angemeldet.")
             else:
+
                 messagebox.showinfo(title="Fehler", message="Passwort oder Benutzername falsch")
                 password_entry.delete(0, 'end')
 
@@ -238,6 +240,7 @@ class LogInWindow(tk.Frame):
         password_entry = ctk.CTkEntry(login_frame, text_color='black', font=("Inter", 20), border_width=1,
                                       corner_radius=8,
                                       fg_color='white', width=200, show="*")  # Zeig Passwort mit ******
+
         login_button = ctk.CTkButton(login_frame, text="Login", fg_color='#081424', text_color='white',
                                      font=("Inter", 20, 'bold'), corner_radius=8,
                                      command=login, width=200, height=30, hover_color=ThemeManager.SRH_Orange)
@@ -364,7 +367,7 @@ class MainPage(tk.Frame):
 
             # Button erstellen
             bildgr = ctk.CTkButton(self, text=f"Gruppe {i}", image=img, fg_color='transparent',
-                                   font=("Inter", 20, 'bold'), text_color='black', compound="bottom", hover=False,
+                                   font=("Inter", 20, 'bold'), text_color='black', compound="bottom", hover_color="#FAFAFA",
                                    command=lambda group=i: handle_group_click(controller, group))
 
             # Position bestimmen
@@ -383,8 +386,7 @@ class MainPage(tk.Frame):
         seitevor = ctk.CTkButton(self, image=self.imgseitevor, text="", fg_color='transparent', bg_color='transparent', text_color='black',
                                  font=("Inter", 20),
                                  corner_radius=8, hover=False,
-                                 command=lambda: controller.show_frame(MainPageS2), width=200, height=30,
-                                 hover_color=ThemeManager.SRH_Orange)
+                                 command=lambda: controller.show_frame(MainPageS2), width=200, height=30)
 
         # Festlegung des Styles für Header- und Footer Labels, Positionierung der Navigationsbuttons im Header, die
         # Anordnung der Bildgruppen-Buttons in einem Rasterlayout, sowie Platzierungen.
@@ -495,20 +497,20 @@ class MainPageS2(tk.Frame):
                             font=("Inter", 20), corner_radius=8, hover_color="#C0C0C0",
                             command=lambda: controller.show_frame(Ubersicht))
 
-        bildgr1 = tk.Button(self, image=self.imgbildgr1, bd=0, bg='white',
-                            command=lambda: controller.show_frame(Ubersicht))
-        bildgr2 = tk.Button(self, image=self.imgbildgr2, bd=0, bg='white',
-                            command=lambda: controller.show_frame(Ubersicht))
-        bildgr3 = tk.Button(self, image=self.imgbildgr3, bd=0, bg='white',
-                            command=lambda: controller.show_frame(Ubersicht))
-        bildgr4 = tk.Button(self, image=self.imgbildgr4, bd=0, bg='white',
-                            command=lambda: controller.show_frame(Ubersicht))
-        bildgr5 = tk.Button(self, image=self.imgbildgr5, bd=0, bg='white',
-                            command=lambda: controller.show_frame(Ubersicht))
-        bildgr6 = tk.Button(self, image=self.imgbildgr6, bd=0, bg='white',
-                            command=lambda: controller.show_frame(Ubersicht))
-        bildgr7 = tk.Button(self, image=self.imgbildgr7, bd=0, bg='white',
-                            command=lambda: controller.show_frame(Ubersicht))
+        bildgr1 = ctk.CTkButton(self, image=self.imgbildgr1, text="", fg_color="white",
+                                hover_color="lightgray", command=lambda: controller.show_frame(Ubersicht))
+        bildgr2 = ctk.CTkButton(self, image=self.imgbildgr2, text="", fg_color="white",
+                                hover_color="lightgray", command=lambda: controller.show_frame(Ubersicht))
+        bildgr3 = ctk.CTkButton(self, image=self.imgbildgr3, text="", fg_color="white",
+                                hover_color="lightgray", command=lambda: controller.show_frame(Ubersicht))
+        bildgr4 = ctk.CTkButton(self, image=self.imgbildgr4, text="", fg_color="white",
+                                hover_color="lightgray", command=lambda: controller.show_frame(Ubersicht))
+        bildgr5 = ctk.CTkButton(self, image=self.imgbildgr5, text="", fg_color="white",
+                                hover_color="lightgray", command=lambda: controller.show_frame(Ubersicht))
+        bildgr6 = ctk.CTkButton(self, image=self.imgbildgr6, text="", fg_color="white",
+                                hover_color="lightgray", command=lambda: controller.show_frame(Ubersicht))
+        bildgr7 = ctk.CTkButton(self, image=self.imgbildgr7, text="", fg_color="white",
+                                hover_color="lightgray", command=lambda: controller.show_frame(Ubersicht))
         # bildgr8 = tk.Button(self, image=self.imgbildgr8, bd=0, bg='white',
         # command=lambda: controller.show_frame(Ubersicht))
 
@@ -843,15 +845,15 @@ class Ubersicht(tk.Frame):
             # Button zum Öffnen des Ordners
             tk.Label(group_popup, text="Bild auswählen (.png):", bg='white', font=("Inter", 11)).pack(pady=3)
             open_order_button = ctk.CTkButton(group_popup, text="Bild auswählen", command=open_order,
-                                              fg_color="#C0C0C0", text_color='white',
+                                              fg_color=ThemeManager.SRH_Grey, text_color='white',
                                               font=("Inter", 14, 'bold'), corner_radius=8, width=200, height=30,
-                                              hover_color=ThemeManager.SRH_Grey)
+                                              hover_color="#C0C0C0")
             open_order_button.pack(pady=10)
 
             add_group_button = ctk.CTkButton(group_popup, text="Neue Gruppe Speichern", command=add_group,
                                              fg_color=ThemeManager.SRH_Orange, text_color='white',
                                              font=("Inter", 14, 'bold'), corner_radius=8, width=200, height=30,
-                                             hover_color=ThemeManager.SRH_Orange)
+                                             hover_color='black')
             add_group_button.pack(pady=10)
 
         # Scrollbare Frame
@@ -1210,17 +1212,26 @@ class Gerateansicht(tk.Frame):
         self.standort_entry = self.create_entry(self.standort_frame, 5, 50)
 
         self.buttons_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=0, relief="solid")
+
         self.schaeden_button = tk.Button(self.buttons_frame, image=self.schaeden_img, bd=0, bg='white',
                                          command=self.open_schaeden_page)
-        self.schaeden_button.place(x=5, y=10)
+        self.schaeden_button.place(x=0, y=10)
 
         self.buchung_button = tk.Button(self.buttons_frame, image=self.buchung_img, bd=0, bg='white',
                                         command=self.open_buchen_page)
-        self.buchung_button.place(x=165, y=10)
+        self.buchung_button.place(x=150, y=10)
 
         self.speichern_button = tk.Button(self.buttons_frame, image=self.speichern_img, bd=0, bg='white',
                                           command=self.button_click)
-        self.speichern_button.place(x=330, y=10)
+        self.speichern_button.place(x=300, y=10)
+
+        self.loeschen_button = ctk.CTkButton(self.buttons_frame, text="Löschen", fg_color='#9b9b9b',
+                                            text_color="white", font=('Inter', 20, 'bold'),
+                                            corner_radius=8, hover=True,
+                                            hover_color=ThemeManager.SRH_Orange,
+                                            command=self.delete_current_item, width=137, height=44)
+        self.loeschen_button.place(x=450, y=10)
+
 
         # if self.source:
         #     self.schaeden_button.config(state="disabled")
@@ -1235,7 +1246,7 @@ class Gerateansicht(tk.Frame):
         self.help_button.place(relx=0.85, rely=0.5, anchor="center")
         self.mainpage_button.place(relx=0.16, rely=0.16, anchor='nw')
         self.gerateansicht_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
-        self.buttons_frame.place(x=150, y=710, width=480, height=74)
+        self.buttons_frame.place(x=150, y=710, width=750, height=74)
 
     def create_entry_frame(self, label_text, x, y):
         frame = ctk.CTkFrame(self.gerateansicht_frame, width=480, height=88, bg_color='transparent',
@@ -1257,10 +1268,12 @@ class Gerateansicht(tk.Frame):
         self.tree.delete(*self.tree.get_children())
         items_uberschrift = fetch_headers("history", ["foreign_item_num", "image", "name", "tag"])
         self.tree["columns"] = items_uberschrift
+
         for up in items_uberschrift:
             self.tree.column(up, anchor=CENTER, width=100)
             self.tree.heading(up, text=up)
         items_data = fetch_tables("history", ["foreign_item_num", "image", "name", "tag"])
+
         for i, row in enumerate(items_data):
             formatted_row = [value if value is not None else "-" for value in row]
             self.tree.insert("", "end", values=formatted_row, tags=("even" if i % 2 == 0 else "odd"))
@@ -1305,6 +1318,19 @@ class Gerateansicht(tk.Frame):
                                                                     print(f"Produkt {value2}")])
         dropdown_menu.post(self.gruppe_drop.winfo_rootx() - 62,
                            self.gruppe_drop.winfo_rooty() + self.gruppe_drop.winfo_height())
+
+
+    def delete_current_item(self):
+        global current_group
+        # Bestätigungsabfrage
+        confirm = messagebox.askyesno("Bestätigung", "Möchtest du das Item wirklich löschen?")
+
+        if confirm:  # Wenn der Nutzer "Ja" klickt
+            delete_item()
+            self.controller.show_frame(Ubersicht)
+
+
+
 
     def open_schaeden_page(self):
         schaeden_page = tk.Toplevel()  # root
@@ -1642,9 +1668,11 @@ class Gerateansicht(tk.Frame):
                 binary_data = image_file.read()
                 self.last_uploaded_file = binary_data
             return binary_data
+
         except FileNotFoundError:
             print("Error: Image file not found.")
             return None
+
         except Exception as e:
             print(f"An error occurred: {e}")
             return None
@@ -1706,12 +1734,14 @@ class Profil(tk.Frame):
             # Seitennavigation und laden der Bilder für Buttons
             verzeichniss = tk.Frame(self, bg=ThemeManager.SRH_Grey)
             verzeichniss.place(relx=0, rely=0.15, relwidth=0.15, relheight=0.85)
-            self.profil_frame = tk.Frame(self, bg='white')
 
+            self.profil_frame = tk.Frame(self, bg='white')
             self.imglogin = tk.PhotoImage(
                 file=root_path + "/gui/assets/Closeicon.png")
+
             self.imgmainpage = tk.PhotoImage(
                 file=root_path + "/gui/assets/backtosite_icon.png")
+
             self.imgProfileTest = tksvg.SvgImage(file=root_path + "/gui/assets/profilbild.svg")
             self.imgProfileTest.configure(scaletoheight=240)
             self.imghelp = tk.PhotoImage(file=root_path + "/gui/assets/helpicon.png")
@@ -1734,12 +1764,14 @@ class Profil(tk.Frame):
 
             # Seiteninhalt
             profilbild = tk.Label(self.profil_frame, image=self.imgProfileTest, bg='white')
+
             username = tk.Label(self.profil_frame, text="Username", bd=0, bg='white', fg='#6F6C6C',
                                 font=("Poppins", 15))
             self.username = tk.Label(self.profil_frame, text=user_stuff[5], bd=0, bg='white', fg='black',
                                      font=("Poppins", 18))
 
             vorname = tk.Label(self.profil_frame, text="Vorname", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 15))
+
             self.vorname = tk.Label(self.profil_frame, text=user_stuff[1] if user_stuff[1] else "", bd=0, bg='white',
                                     fg='black', font=("Poppins", 18))
 
@@ -1749,17 +1781,22 @@ class Profil(tk.Frame):
                                      fg='black', font=("Poppins", 18))
 
             gruppen = tk.Label(self.profil_frame, text="Gruppen", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 15))
+
             self.usergruppen = tk.Label(self.profil_frame, text=user_stuff[3] if user_stuff[3] else "", bd=0,
                                         bg='white', fg='black', font=("Poppins", 18))
 
             email = tk.Label(self.profil_frame, text="Email", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 15))
+
             self.useremail = tk.Label(self.profil_frame, text=user_stuff[4], bd=0, bg='white', fg='black',
                                       font=("Poppins", 18))
 
             rechte = tk.Label(self.profil_frame, text="Rechte", bd=0, bg='white', fg='#6F6C6C', font=("Poppins", 15))
+
             rechte_frame = tk.Frame(self.profil_frame, bg='#D9D9D9')
+
             adminrechte = tk.Label(self.profil_frame, text="Admin", bd=0, bg='white',
                                    fg='black' if user_stuff[0][0] == "admin" else '#6F6C6C', font=("Poppins", 18))
+
             ausbilderrechte = tk.Label(self.profil_frame, text="Ausbilder", bd=0, bg='white',
                                        fg='black' if user_stuff[0][0] == "admin" else '#6F6C6C', font=("Poppins", 18))
             userrechte = tk.Label(self.profil_frame, text="Schüler", bd=0, bg='white',
@@ -1814,8 +1851,10 @@ class Profil(tk.Frame):
 
             rechte.place(x=0, y=570)
             rechte_frame.place(x=3, y=605, width=1, height=80)
+
             adminrechte.place(x=13, y=590)
             ausbilderrechte.place(x=13, y=630)
+
             userrechte.place(x=13, y=670)
 
             self.profil_frame.place(relx=0.21, rely=0.15, relwidth=1, relheight=0.85)
