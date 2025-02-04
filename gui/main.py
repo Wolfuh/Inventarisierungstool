@@ -38,8 +38,7 @@ class GuiTest(tk.Tk):
         self.title("Prototyp")
         self.geometry("1920x1080")
         self.resizable(True, True)
-        root_path = os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
-        self.iconbitmap(root_path + "/gui/assets/prototyp_download.ico")
+        root_path = ""  #os.path.dirname(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
         # Container für alle Frames (Seiten)
         container = tk.Frame(self)
@@ -1108,9 +1107,6 @@ class Gerateansicht(tk.Frame):
         self.imgmainpage = tk.PhotoImage(file=self.root_path + "/gui/assets/backtosite_grey_icon.png")
         self.imgprofil = load_image(self.root_path + "/gui/assets/profileicon.png")
         self.imghelp = tk.PhotoImage(file=self.root_path + "/gui/assets/helpicon.png")
-        self.schaeden_img = load_image(self.root_path + "/gui/assets/Button_Schaeden.png")
-        self.buchung_img = load_image(self.root_path + "/gui/assets/Button_Buchung.png")
-        self.speichern_img = load_image(self.root_path + "/gui/assets/Button_Speichern.png")
 
     def setup_styles(self):
         style = ttk.Style()
@@ -1213,24 +1209,33 @@ class Gerateansicht(tk.Frame):
 
         self.buttons_frame = tk.Frame(self.gerateansicht_frame, bg='white', bd=0, relief="solid")
 
-        self.schaeden_button = tk.Button(self.buttons_frame, image=self.schaeden_img, bd=0, bg='white',
-                                         command=self.open_schaeden_page)
+        self.schaeden_button = ctk.CTkButton(self.buttons_frame, text="Schäden", fg_color=ThemeManager.SRH_Orange,
+                                             text_color="white", font=('Inter', 20, 'bold'),
+                                             corner_radius=8, hover=True,
+                                             hover_color=ThemeManager.SRH_DarkBlau,
+                                             command=self.open_schaeden_page, width=137, height=44)
         self.schaeden_button.place(x=0, y=10)
 
-        self.buchung_button = tk.Button(self.buttons_frame, image=self.buchung_img, bd=0, bg='white',
-                                        command=self.open_buchen_page)
-        self.buchung_button.place(x=150, y=10)
-
-        self.speichern_button = tk.Button(self.buttons_frame, image=self.speichern_img, bd=0, bg='white',
-                                          command=self.button_click)
-        self.speichern_button.place(x=300, y=10)
-
-        self.loeschen_button = ctk.CTkButton(self.buttons_frame, text="Löschen", fg_color='#9b9b9b',
+        self.buchung_button = ctk.CTkButton(self.buttons_frame, text="Buchung", fg_color=ThemeManager.SRH_Orange,
                                             text_color="white", font=('Inter', 20, 'bold'),
                                             corner_radius=8, hover=True,
-                                            hover_color=ThemeManager.SRH_Orange,
+                                            hover_color=ThemeManager.SRH_DarkBlau,
+                                            command=self.open_buchen_page, width=137, height=44)
+        self.buchung_button.place(x=150, y=10)
+
+        self.loeschen_button = ctk.CTkButton(self.buttons_frame, text="Löschen", fg_color=ThemeManager.loeschen_Rot,
+                                            text_color="white", font=('Inter', 20, 'bold'),
+                                            corner_radius=8, hover=True,
+                                            hover_color=ThemeManager.SRH_DarkBlau,
                                             command=self.delete_current_item, width=137, height=44)
-        self.loeschen_button.place(x=450, y=10)
+        self.loeschen_button.place(x=300, y=10)
+
+        self.speichern_button = ctk.CTkButton(self.buttons_frame, text="Speichern", fg_color='#9b9b9b',
+                                              text_color="white", font=('Inter', 20, 'bold'),
+                                              corner_radius=8, hover=True,
+                                              hover_color=ThemeManager.SRH_DarkBlau,
+                                              command=self.save_button_click, width=137, height=44)
+        self.speichern_button.place(x=450, y=10)
 
 
         # if self.source:
@@ -1562,7 +1567,7 @@ class Gerateansicht(tk.Frame):
         date_frame.place(x=409, y=0, width=409, height=444)
         buchen_button_frame.place(x=409, y=444, width=409, height=150)
 
-    def button_click(self):
+    def save_button_click(self):
         update_item(self.update_items_on_save())
         self.controller.show_frame(Ubersicht)
         messagebox.showinfo("Erfolgreich", "Änderungen erfolgreich gespeichert")
@@ -2764,7 +2769,6 @@ def load_image(image_path):
     else:
         print(f"Warnung: Bild '{image_path}' nicht gefunden.")
         return None
-
 
 # try:
 #     app = GuiTest()

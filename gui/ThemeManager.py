@@ -41,3 +41,7 @@ class ThemeManager(tk.Frame):
     # Darkmode Farben
     Darkmode_Black = "#121212"
     Darkmode_Grey = "#2d2d2d"
+
+    # andere Farben
+
+    loeschen_Rot = "#B50E33"
