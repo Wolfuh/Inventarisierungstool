@@ -38,10 +38,14 @@ class ThemeManager(tk.Frame):
     SRH_Grey = "#d9d9d9"
     SRH_Blau = "#10749c"
     SRH_DarkBlau = "#081424"
+
     # Darkmode Farben
     Darkmode_Black = "#121212"
     Darkmode_Grey = "#2d2d2d"
 
-    # andere Farben
+    # andere Button Farben und Hover Color Farben
 
-    loeschen_Rot = "#B50E33"
+    hover_Orange = "#e25a1f" # Hover Color für Help, Profile, Abmelde Buttons
+    loeschen_Rot = "#B50E33" # Color für für die "Löschen" Buttons
+    hover_Hellgrau = "#f4f4f4" # Hover Color für den Filter Button, Geräteübersicht und Geräteansicht (zurück Button)
+    hover_Hellgrau_Gruppen = "#FAFAFA" # Hover Color für die einzelenen Gruppen
