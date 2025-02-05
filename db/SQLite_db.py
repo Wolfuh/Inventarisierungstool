@@ -4,6 +4,7 @@ import hashlib
 import re
 
 username_global = "Benutzername Ungültig"
+item_ID_set = ""
 
 def init_connection():      # verbindung mit DB erstellen und Variable der Verbindung geben
     path:str = os.path.join(os.path.dirname(__file__), 'Inventarisierungs_DB.sqlite3')    # DB weg, der mit VS Code und PyCharm erreichbar ist
@@ -333,6 +334,8 @@ def show_image_from_db(indexnum):
 
 def show_history_table(item_ID, excluded_columns):
     try:
+        global item_ID_set
+        item_ID_set = item_ID
         my_db = init_connection()
         cur = my_db.cursor()
         columns = fetch_headers("history", excluded_columns)
@@ -348,8 +351,29 @@ def show_history_table(item_ID, excluded_columns):
             my_db.close()
 
 
+def delete_item():
+    try:
+        if item_ID_set:
+            # Verbindung zur Datenbank herstellen
+            connection = init_connection()
+            cursor = connection.cursor()
 
-import sqlite3
+            # SQL-Abfrage zum Löschen eines Eintrags
+            cursor.execute("DELETE FROM items WHERE ID = ?", (item_ID_set,))
+
+            # Änderungen speichern
+            connection.commit()
+        else:
+            pass
+
+    except sqlite3.Error as e:
+        return [], "Fehler beim Löschen des Eintrags:", str(e)
+
+    finally:
+        # Verbindung schließen
+        if connection:
+            connection.close()
+
 
 def does_user_have_the_right(which_right):
     try:
@@ -393,6 +417,18 @@ def get_group_icon(groupId):
     return result
 
 
+def add_group_in_DB(group_name, group_icon):
+    try:
+        conn = init_connection()
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO Gruppen (Gruppen_name, Gruppen_Bild) VALUES (?, ?)", (group_name, group_icon))
+        conn.commit()
+        conn.close()
+    except sqlite3.Error as e:
+        print(f"Database error: {e}")
+    finally:
+        if conn:
+            conn.close()
 
 
 ##############################
