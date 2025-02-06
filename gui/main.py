@@ -341,12 +341,7 @@ class MainPage(tk.Frame):
         # Holen der Anzahl der Gruppen aus der Datenbank
         self.groupAmount = get_group_table_lenght()
         
-        # Holen der Gruppendaten
-        self.groupInfo = []
-        for i in range(1, self.groupAmount + 1):  # Beachte, dass wir hier mit 1 statt 0 anfangen, falls die IDs in der DB bei 1 beginnen
-            group_data = get_group_information_from_db(i)
-            if group_data:  # Überprüfen, ob die Daten korrekt geladen wurden
-                self.groupInfo.append(group_data)
+        
 
         # Gruppendaten (alle Gruppen)
         self.groups_per_page = 8  # Anzahl der Gruppen pro Seite
@@ -374,6 +369,17 @@ class MainPage(tk.Frame):
         self.render_page()
 
     def render_page(self):
+
+        # Holen der Anzahl der Gruppen aus der Datenbank
+        self.groupAmount = get_group_table_lenght()
+        
+        # Holen der Gruppendaten
+        self.groupInfo = []
+        for i in range(1, self.groupAmount + 1):  # Beachte, dass wir hier mit 1 statt 0 anfangen, falls die IDs in der DB bei 1 beginnen
+            group_data = get_group_information_from_db(i)
+            if group_data:  # Überprüfen, ob die Daten korrekt geladen wurden
+                self.groupInfo.append(group_data)
+
         """Rendert die aktuelle Seite mit den Gruppen-Buttons."""
         # Löschen der vorherigen Buttons
         for widget in self.main_frame.winfo_children():
@@ -383,6 +389,7 @@ class MainPage(tk.Frame):
         start_index = self.current_page * self.groups_per_page
         end_index = start_index + self.groups_per_page
         current_groups = self.groupInfo[start_index:end_index]
+
 
         # Buttons für die aktuellen Gruppen hinzufügen
         for i, group_data in enumerate(current_groups):
@@ -1038,6 +1045,7 @@ class Ubersicht(tk.Frame):
                                              font=("Inter", 14, 'bold'), corner_radius=8, width=200, height=30,
                                              hover_color='black')
             add_group_button.pack(pady=10)
+            MainPage.render_page()
 
         # Scrollbare Frame
         scrollable_frame = ctk.CTkScrollableFrame(verzeichniss, fg_color=ThemeManager.SRH_Grey,
