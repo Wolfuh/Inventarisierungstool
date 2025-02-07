@@ -431,6 +431,38 @@ def add_group_in_DB(group_name, group_icon):
             conn.close()
 
 
+def get_group_number():
+    try:
+        conn = init_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT COUNT(*) FROM Gruppen")
+        total_number = cursor.fetchone() 
+        print(total_number)       
+        conn.close()
+        return total_number[0]
+    except sqlite3.Error as e:
+        print(f"Database error: {e}")
+        return False
+    
+def get_group_info(id):
+    try:
+        conn = init_connection()
+        cursor = conn.cursor()
+        print("id: ", id)
+        cursor.execute("SELECT * FROM Gruppen WHERE ID = ?", (id,))
+        group_info = cursor.fetchall()
+        print(group_info)
+        #print("00: ", group_info[0][0], "01: ", group_info[0][1])
+        conn.close()
+        if not group_info[0] == None:
+            return group_info[0]
+        else:
+            return False
+    except sqlite3.Error as e:
+        print(f"Database error: {e}")
+        return False
+    
+
 ##############################
 ## UNBENUTZTE DEFINITIONEN: ##
 ##############################
