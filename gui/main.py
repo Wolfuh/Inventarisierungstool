@@ -329,19 +329,19 @@ class MainPage(tk.Frame):
         # Platzierung der Buttons
         login = ctk.CTkButton(header, image=self.imglogin, fg_color=ThemeManager.SRH_Orange,
                               bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
-                              hover=True, hover_color='#e25a1f', text="",
+                              hover=True, hover_color=ThemeManager.hover_Orange, text="",
                               command=lambda: [controller.reset_application()])
         profil = ctk.CTkButton(header, image=self.imgprofil, fg_color=ThemeManager.SRH_Orange,
                                bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
-                               hover=True, hover_color='#e25a1f', text="",
+                               hover=True, hover_color=ThemeManager.hover_Orange, text="",
                                command=lambda: controller.show_frame(Profil))
         help = ctk.CTkButton(header, image=self.imghelp, fg_color=ThemeManager.SRH_Orange,
                              bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
-                             hover=True, hover_color='#e25a1f', text="",
+                             hover=True, hover_color=ThemeManager.hover_Orange, text="",
                              command=lambda: controller.show_frame(Help))
 
         all = ctk.CTkButton(self, text="Alle Anzeigen", fg_color='white', text_color=ThemeManager.SRH_Blau,
-                            font=("Inter", 20), corner_radius=8, hover_color="#C0C0C0",
+                            font=("Inter", 20), corner_radius=8, hover_color=ThemeManager.hover_Hellgrau,
                             command=lambda: handle_group_click(controller, ""))
 
         # global current_group
@@ -366,7 +366,8 @@ class MainPage(tk.Frame):
 
             # Button erstellen
             bildgr = ctk.CTkButton(self, text=f"Gruppe {i}", image=img, fg_color='transparent',
-                                   font=("Inter", 20, 'bold'), text_color='black', compound="bottom", hover_color="#FAFAFA",
+                                   font=("Inter", 20, 'bold'), text_color='black', compound="bottom",
+                                   hover_color=ThemeManager.hover_Hellgrau_Gruppen,
                                    command=lambda group=i: handle_group_click(controller, group))
 
             # Position bestimmen
@@ -748,16 +749,17 @@ class Ubersicht(tk.Frame):
         # Login und Profil Buttons im Header-Bereich, Platzierung der Buttons, Header und Sidebar
         login = ctk.CTkButton(header, image=self.imglogin, fg_color=ThemeManager.SRH_Orange,
                               bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
-                              hover=True, hover_color='#e25a1f', text="",
+                              hover=True, hover_color=ThemeManager.hover_Orange, text="",
                               command=lambda: [controller.reset_application()])
 
         profil = ctk.CTkButton(header, image=self.imgprofil, fg_color=ThemeManager.SRH_Orange,
                                bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
-                               hover=True, hover_color='#e25a1f', text="",
+                               hover=True, hover_color=ThemeManager.hover_Orange, text="",
                                command=lambda: controller.show_frame(Profil))
+
         help = ctk.CTkButton(header, image=self.imghelp, fg_color=ThemeManager.SRH_Orange,
                              bg_color=ThemeManager.SRH_Orange, corner_radius=40, height=10, width=10,
-                             hover=True, hover_color='#e25a1f', text="",
+                             hover=True, hover_color=ThemeManager.hover_Orange, text="",
                              command=lambda: controller.show_frame(Help))
 
         login.place(relx=0.95, rely=0.5, anchor="center")
@@ -765,8 +767,8 @@ class Ubersicht(tk.Frame):
         help.place(relx=0.85, rely=0.5, anchor="center")
 
         mainpage = ctk.CTkButton(self.mainpage_frame, text="↩", fg_color='white', text_color=ThemeManager.SRH_Grey,
-                                 width=5,
-                                 font=("Inter", 50, 'bold'), corner_radius=8, hover_color="#eaeaea",
+                                 width=5,  height=20, font=("Inter", 50, 'bold'), corner_radius=8,
+                                 hover_color=ThemeManager.hover_Hellgrau,
                                  command=lambda: controller.show_frame(MainPage))
         mainpage.place(relx=0, rely=0)
 
@@ -946,9 +948,9 @@ class Ubersicht(tk.Frame):
             dropdown_menu.add_command(label="→ Andere", command=lambda: print("nach anderen sortieren"))
             dropdown_menu.post(Filter_button.winfo_rootx(), Filter_button.winfo_rooty() + Filter_button.winfo_height())
 
-        Filter_button = tk.Button(self.ubersicht_frame, image=self.imgFilter, bd=0, bg='white', fg='black',
-                                  font=("Inter", 20, 'bold'),
-                                  command=show_dropdown_Filter)
+        Filter_button = ctk.CTkButton(self.ubersicht_frame, image=self.imgFilter, fg_color="transparent",
+                                      text="", width=20, height=25, command=show_dropdown_Filter,
+                                      hover_color="#eaeaea")
         Filter_button.place(relx=0, rely=0.1)
 
         # Suche
